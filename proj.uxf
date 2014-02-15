@@ -237,10 +237,11 @@ m2=0..*</panel_attributes>
       <x>180</x>
       <y>260</y>
       <w>250</w>
-      <h>210</h>
+      <h>230</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>230;30;30;190</additional_attributes>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+m2=0..*</panel_attributes>
+    <additional_attributes>30;210;230;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
