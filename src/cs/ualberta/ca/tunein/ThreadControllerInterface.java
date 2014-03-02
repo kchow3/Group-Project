@@ -2,9 +2,7 @@ package cs.ualberta.ca.tunein;
 
 public interface ThreadControllerInterface {
 	
-	public void addTopComment(Commenter user, String aTitle, String aComment, GeoLocation loc);
-	
-	public void addTopComment(Commenter user, String aTitle, String aComment, GeoLocation loc, Image img);
+	public void addTopComment(Comment aComment);
 	
 	public void sortByLocation(GeoLocation loc);
 	

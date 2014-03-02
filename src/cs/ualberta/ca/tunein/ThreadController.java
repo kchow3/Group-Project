@@ -13,15 +13,7 @@ public class ThreadController implements ThreadControllerInterface {
 	
 
 	@Override
-	public void addTopComment(Commenter user, String aTitle, String aComment,
-			GeoLocation loc) 
-	{
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void addTopComment(Commenter user, String aTitle, String aComment,
-			GeoLocation loc, Image img) 
+	public void addTopComment(Comment aComment) 
 	{
 		// TODO Auto-generated method stub
 	}
