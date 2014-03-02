@@ -8,7 +8,7 @@ public class Comment {
 	private Commenter commenter;
 	private String title;
 	private String comment;
-	private ArrayList<Comment> replies;
+	private CommentList replies;
 	private Image img;
 	private Date date;
 	private GeoLocation geolocation;
@@ -23,7 +23,7 @@ public class Comment {
 		this.comment = aComment;
 		this.geolocation = loc;
 		this.date = new Date();
-		this.replies = new ArrayList<Comment>();
+		this.replies = new CommentList();
 		this.hasImage = false;
 	}
 
