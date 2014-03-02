@@ -124,6 +124,11 @@ public class Comment {
 	{
 		this.geolocation = geolocation;
 	}
+	
+	public void addReply(Comment aComment)
+	{
+		this.replies.add(aComment);
+	}
 
 	
 }
