@@ -1,8 +1,8 @@
 package cs.ualberta.ca.tunein;
 
-public class Commentator {
+public class Commenter {
 
-	public Commentator() {
+	public Commenter() {
 		// TODO Auto-generated constructor stub
 	}
 

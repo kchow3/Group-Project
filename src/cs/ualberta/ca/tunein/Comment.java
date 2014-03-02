@@ -22,7 +22,7 @@ public class Comment {
 		this.comment = aComment;
 		this.img = aImage;
 		this.date = new Date();
-		this.geolocation = geolocation;
+		this.geolocation = loc;
 	}
 
 }
