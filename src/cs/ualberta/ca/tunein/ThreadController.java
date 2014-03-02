@@ -10,27 +10,46 @@ public class ThreadController implements ThreadControllerInterface {
 	
 		discussionThread = new Thread();
 	}
+	
 
 	@Override
-	public void sortByLocation(GeoLocation loc) {
+	public void addTopComment(Commenter user, String aTitle, String aComment,
+			GeoLocation loc) 
+	{
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void addTopComment(Commenter user, String aTitle, String aComment,
+			GeoLocation loc, Image img) 
+	{
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void sortByLocation(GeoLocation loc) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sortBySetLocation(GeoLocation loc) {
+	public void sortBySetLocation(GeoLocation loc) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sortByPicture() {
+	public void sortByPicture() 
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sortByDate() {
+	public void sortByDate() 
+	{
 		// TODO Auto-generated method stub
 		
 	}
