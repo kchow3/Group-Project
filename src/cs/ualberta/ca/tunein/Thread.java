@@ -1,9 +1,24 @@
 package cs.ualberta.ca.tunein;
 
-public class Thread {
+import java.util.ArrayList;
 
-	public Thread() {
-		// TODO Auto-generated constructor stub
+public class Thread 
+{
+	private ArrayList<Comment> discussionThread;
+
+	public Thread() 
+	{
+		this.discussionThread = new ArrayList<Comment>();
+	}
+
+	public ArrayList<Comment> getDiscussionThread() 
+	{
+		return discussionThread;
+	}
+
+	public void setDiscussionThread(ArrayList<Comment> discussionThread) 
+	{
+		this.discussionThread = discussionThread;
 	}
 
 }
