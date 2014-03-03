@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package cs.ualberta.ca.tunein;
+package cs.ualberta.ca.tuneintest;
 
 public final class R {
     public static final class attr {
@@ -24,27 +24,10 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int RelativeLayout1=0x7f080008;
-        public static final int action_settings=0x7f08000f;
-        public static final int buttonCreate=0x7f08000d;
-        public static final int buttonFav=0x7f080004;
-        public static final int buttonMenu=0x7f08000b;
-        public static final int buttonNext=0x7f08000e;
-        public static final int buttonPrev=0x7f08000a;
-        public static final int buttonReply=0x7f080002;
-        public static final int buttonView=0x7f080001;
-        public static final int layoutCommentRow=0x7f080000;
-        public static final int listViewTopics=0x7f08000c;
-        public static final int textViewCount=0x7f080007;
-        public static final int textViewDate=0x7f080006;
-        public static final int textViewTitle=0x7f080003;
-        public static final int textViewTopics=0x7f080009;
-        public static final int textViewUser=0x7f080005;
+        public static final int action_settings=0x7f080000;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int comment_view_row=0x7f030001;
-        public static final int topic_list_view=0x7f030002;
     }
     public static final class menu {
         public static final int main=0x7f070000;
