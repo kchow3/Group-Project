@@ -28,7 +28,7 @@ public final class R {
         public static final int buttonFav=0x7f080004;
         public static final int buttonReply=0x7f080002;
         public static final int buttonView=0x7f080001;
-        public static final int layoutTopicRow=0x7f080000;
+        public static final int layoutCommentRow=0x7f080000;
         public static final int textViewCount=0x7f080007;
         public static final int textViewDate=0x7f080006;
         public static final int textViewTitle=0x7f080003;
@@ -36,7 +36,7 @@ public final class R {
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int topic_view_row=0x7f030001;
+        public static final int comment_view_row=0x7f030001;
     }
     public static final class menu {
         public static final int main=0x7f070000;
