@@ -13,7 +13,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:gravity="center_vertical|center_horizontal"
-        android:text="Topics"
+        android:text="Topics By"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="40sp" />
 
@@ -24,6 +24,7 @@
         android:layout_above="@+id/buttonPrev"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textViewTopics"
+        android:layout_marginTop="40dp"
         android:paddingBottom="15dp" >
 
     </ListView>
@@ -58,5 +59,17 @@
         android:layout_toRightOf="@+id/buttonPrev"
         android:minWidth="100dip"
         android:text="Create" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textViewTopics"
+        android:gravity="center"
+        android:height="45dp"
+        android:text="Sort"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
