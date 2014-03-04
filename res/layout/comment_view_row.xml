@@ -47,16 +47,19 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textViewUser"
             android:layout_alignParentRight="true"
-            android:text="Fav" />
+            android:text="Fav"
+            android:width="65dp" />
 
         <TextView
             android:id="@+id/textViewDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/textViewUser"
             android:layout_below="@+id/textViewTitle"
             android:layout_toRightOf="@+id/buttonReply"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:text="Date"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:width="120dp" />
 
         <TextView
             android:id="@+id/textViewUser"
@@ -64,20 +67,65 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/buttonReply"
             android:layout_alignLeft="@+id/textViewDate"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:text="Username"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:width="120dp" />
 
-        <TextView
-            android:id="@+id/textViewCount"
+        <Button
+            android:id="@+id/buttonSave"
+            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/buttonFav"
             android:layout_below="@+id/textViewTitle"
-            android:layout_marginLeft="15dp"
             android:layout_toLeftOf="@+id/buttonFav"
-            android:layout_toRightOf="@+id/textViewDate"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:text="Save"
+            android:width="65dp" />
+
+        <TextView
+            android:id="@+id/textViewFavorited"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewFavCount"
+            android:layout_alignBottom="@+id/textViewFavCount"
+            android:layout_alignParentRight="true"
+            android:height="20dp"
+            android:text="Favorited?"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewFavCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/buttonReply"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="14dp"
+            android:height="20dp"
+            android:text="Fav#"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewSaved"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewFavorited"
+            android:layout_alignBottom="@+id/textViewFavorited"
+            android:layout_alignLeft="@+id/buttonSave"
+            android:height="20dp"
+            android:text="Saved?"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewReplyCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewFavCount"
+            android:layout_alignBottom="@+id/textViewFavCount"
+            android:layout_alignLeft="@+id/textViewUser"
+            android:layout_marginLeft="23dp"
+            android:height="20dp"
+            android:text="Reply#"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
     </RelativeLayout>
 
