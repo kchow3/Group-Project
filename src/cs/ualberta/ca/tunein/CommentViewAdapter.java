@@ -63,6 +63,15 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		holder.buttonReply = (Button) rowView.findViewById(R.id.buttonReply);
 		holder.buttonFav = (Button) rowView.findViewById(R.id.buttonFav);
 		holder.buttonSave = (Button) rowView.findViewById(R.id.buttonSave);
+		
+		
+		
+		
+		
+		//set the holder
+        rowView.setTag(holder);
+		
+		return rowView;
 	}
 	
 }

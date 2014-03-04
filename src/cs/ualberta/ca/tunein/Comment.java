@@ -29,6 +29,10 @@ public class Comment {
 		this.date = new Date();
 		this.replies = new ArrayList<Comment>();
 		this.hasImage = false;
+		this.favorited = false;
+		this.saved = true;
+		this.favoriteCount = 0;
+		this.replyCount = 0;
 	}
 
 	//constructor for creating comment with a picture
@@ -43,6 +47,11 @@ public class Comment {
 		this.date = new Date();
 		this.replies = new ArrayList<Comment>();
 		this.hasImage = true;
+		this.favorited = false;
+		this.saved = true;
+		this.favoriteCount = 0;
+		this.replyCount = 0;
+		
 	}
 
 	public Commenter getCommenter() {
