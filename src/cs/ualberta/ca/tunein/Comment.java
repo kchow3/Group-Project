@@ -1,5 +1,7 @@
 package cs.ualberta.ca.tunein;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -162,6 +164,12 @@ public class Comment {
 	public void increaseReplyCount()
 	{
 		this.replyCount++;
+	}
+	
+	public String dateToString()
+	{
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy ");
+		return df.format(this.date);
 	}
 
 }

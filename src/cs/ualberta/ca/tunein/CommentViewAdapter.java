@@ -64,8 +64,34 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		holder.buttonFav = (Button) rowView.findViewById(R.id.buttonFav);
 		holder.buttonSave = (Button) rowView.findViewById(R.id.buttonSave);
 		
+		//set textviews
+		holder.textViewTitle.setText(commentList.get(position).getTitle());
+		holder.textViewDate.setText(commentList.get(position).dateToString());
+		holder.textViewUser.setText(commentList.get(position).getCommenter().getName());
+		holder.textViewFavCount.setText(Integer.toString(commentList.get(position).getFavoriteCount()));
+		holder.textViewReplyCount.setText(Integer.toString(commentList.get(position).getReplyCount()));
 		
+		//if the comment is favorited then text will show Faved! else it is invisible
+		if(commentList.get(position).isFavorited())
+		{
+			holder.textViewFavorited.setVisibility(View.VISIBLE);
+			holder.textViewFavorited.setText("Faved!");
+		}
+		else
+		{
+			holder.textViewFavorited.setVisibility(View.INVISIBLE);
+		}
 		
+		//if the comment is saved then text will show Saved! else it is invisible
+		if(commentList.get(position).isSaved())
+		{
+			holder.textViewSaved.setVisibility(View.VISIBLE);
+			holder.textViewSaved.setText("Saved!");
+		}
+		else
+		{
+			holder.textViewSaved.setVisibility(View.INVISIBLE);
+		}
 		
 		
 		//set the holder
