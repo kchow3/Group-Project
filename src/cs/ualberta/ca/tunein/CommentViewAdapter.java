@@ -3,6 +3,9 @@ package cs.ualberta.ca.tunein;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -34,6 +37,32 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		super(context, R.layout.comment_view_row, commentList);
 		this.context = context;
 		this.commentList = commentList;
+	}
+	
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent)
+	{
+		//declare a new holder
+		holder = new ViewHolder();
+		
+		//create inflater
+		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
+		//get rowView from inflater
+		View rowView = null;
+		rowView = inflater.inflate(R.layout.comment_view_row, parent, false);
+		
+		holder.textViewTitle = (TextView) rowView.findViewById(R.id.textViewTitle);
+		holder.textViewDate = (TextView) rowView.findViewById(R.id.textViewDate);
+		holder.textViewUser = (TextView) rowView.findViewById(R.id.textViewUser);
+		holder.textViewFavorited = (TextView) rowView.findViewById(R.id.textViewFavorited);
+		holder.textViewFavCount = (TextView) rowView.findViewById(R.id.textViewFavCount);
+		holder.textViewSaved = (TextView) rowView.findViewById(R.id.textViewSaved);
+		holder.textViewReplyCount = (TextView) rowView.findViewById(R.id.textViewReplyCount);
+		holder.buttonView = (Button) rowView.findViewById(R.id.buttonView);
+		holder.buttonReply = (Button) rowView.findViewById(R.id.buttonReply);
+		holder.buttonFav = (Button) rowView.findViewById(R.id.buttonFav);
+		holder.buttonSave = (Button) rowView.findViewById(R.id.buttonSave);
 	}
 	
 }
