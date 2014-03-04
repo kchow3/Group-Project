@@ -45,66 +45,53 @@ public class Comment {
 		this.hasImage = true;
 	}
 
-
 	public Commenter getCommenter() {
 		return commenter;
 	}
-
 
 	public void setCommenter(Commenter commenter) {
 		this.commenter = commenter;
 	}
 
-
 	public String getTitle() {
 		return title;
 	}
-
 
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-
 	public String getComment() {
 		return comment;
 	}
-
 
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
-
 	public ArrayList<Comment> getReplies() {
 		return replies;
 	}
-
 
 	public void setReplies(ArrayList<Comment> replies) {
 		this.replies = replies;
 	}
 
-
 	public Image getImg() {
 		return img;
 	}
-
 
 	public void setImg(Image img) {
 		this.img = img;
 	}
 
-
 	public Date getDate() {
 		return date;
 	}
 
-
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
 
 	public GeoLocation getGeolocation() {
 		return geolocation;
