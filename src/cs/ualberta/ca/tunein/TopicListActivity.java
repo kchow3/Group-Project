@@ -78,6 +78,12 @@ public class TopicListActivity extends Activity {
 		    })
 		    .setNegativeButton("Cancel", null).create();
 		dialog.show();
+		
+		//temp user
+		Commenter user = new Commenter("bob");
+		
+		ThreadController cntrl = new ThreadController(threadList);
+		Comment newComment  = new Comment(user, this.title, this.comment, null);
 	}
 
 }

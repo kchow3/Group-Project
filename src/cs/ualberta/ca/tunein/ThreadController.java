@@ -8,9 +8,9 @@ public class ThreadController implements ThreadControllerInterface {
 
 	private Thread discussionThread;
 	
-	public ThreadController() {
+	public ThreadController(Thread threadList) {
 	
-		discussionThread = new Thread();
+		discussionThread = threadList;
 	}
 
 	@Override
@@ -39,6 +39,13 @@ public class ThreadController implements ThreadControllerInterface {
 	{
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void createTopic(Comment aComment) 
+	{
+		ArrayList<Comment> list = discussionThread.getDiscussionThread();
+		list.add(aComment);
 	}
 	
 }
