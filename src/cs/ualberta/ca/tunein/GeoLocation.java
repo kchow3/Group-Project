@@ -2,16 +2,16 @@ package cs.ualberta.ca.tunein;
 
 public class GeoLocation {
 
-	private int longitude;
-	private int latitude;
+	private long longitude;
+	private long latitude;
 	
-	public GeoLocation(int lon, int lat) 
+	public GeoLocation(long lon, long lat) 
 	{
 		this.longitude = lon;
 		this.latitude = lat;
 	}
 
-	public int getLongitude() {
+	public long getLongitude() {
 		return longitude;
 	}
 
@@ -19,7 +19,7 @@ public class GeoLocation {
 		this.longitude = longitude;
 	}
 
-	public int getLatitude() {
+	public long getLatitude() {
 		return latitude;
 	}
 

@@ -110,6 +110,13 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		return rowView;
 	}
 	
+	//method to refresh the thread listview
+	public void updateThreadView(Thread threadList)
+	{
+		commentList = threadList.getDiscussionThread();
+		notifyDataSetChanged();
+	}
+	
 	private OnClickListener viewBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
