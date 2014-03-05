@@ -33,7 +33,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		Button buttonSave;
     }
 	
-	public CommentViewAdapter(Context context, int resource, ArrayList<Comment> commentList) 
+	public CommentViewAdapter(Context context, ArrayList<Comment> commentList) 
 	{
 		super(context, R.layout.comment_view_row, commentList);
 		this.context = context;
