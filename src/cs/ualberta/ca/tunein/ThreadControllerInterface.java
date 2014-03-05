@@ -1,8 +1,10 @@
 package cs.ualberta.ca.tunein;
 
+import android.view.View;
+
 public interface ThreadControllerInterface {
 	
-	public void addTopComment(Comment aComment);
+	public void createTopic(Comment aComment);
 	
 	public void sortByLocation(GeoLocation loc);
 	
@@ -11,4 +13,5 @@ public interface ThreadControllerInterface {
 	public void sortByPicture();
 	
 	public void sortByDate();
+	
 }

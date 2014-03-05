@@ -2,20 +2,15 @@ package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
 
+import android.view.View;
+
 public class ThreadController implements ThreadControllerInterface {
 
 	private Thread discussionThread;
 	
-	public ThreadController() {
+	public ThreadController(Thread threadList) {
 	
-		discussionThread = new Thread();
-	}
-	
-
-	@Override
-	public void addTopComment(Comment aComment) 
-	{
-		// TODO Auto-generated method stub
+		discussionThread = threadList;
 	}
 
 	@Override
@@ -46,4 +41,11 @@ public class ThreadController implements ThreadControllerInterface {
 		
 	}
 
+	@Override
+	public void createTopic(Comment aComment) 
+	{
+		ArrayList<Comment> list = discussionThread.getDiscussionThread();
+		list.add(aComment);
+	}
+	
 }

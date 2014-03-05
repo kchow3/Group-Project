@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -32,7 +33,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		Button buttonSave;
     }
 	
-	public CommentViewAdapter(Context context, int resource, ArrayList<Comment> commentList) 
+	public CommentViewAdapter(Context context, ArrayList<Comment> commentList) 
 	{
 		super(context, R.layout.comment_view_row, commentList);
 		this.context = context;
@@ -93,11 +94,55 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			holder.textViewSaved.setVisibility(View.INVISIBLE);
 		}
 		
+		//set onclick listners for buttons and the tag for position
+		holder.buttonView.setOnClickListener(viewBtnClick);
+		holder.buttonView.setTag(position);
+		holder.buttonReply.setOnClickListener(replyBtnClick);
+		holder.buttonReply.setTag(position);
+		holder.buttonFav.setOnClickListener(favBtnClick);
+		holder.buttonFav.setTag(position);
+		holder.buttonSave.setOnClickListener(saveBtnClick);
+		holder.buttonSave.setTag(position);
 		
 		//set the holder
         rowView.setTag(holder);
 		
 		return rowView;
 	}
+	
+	//method to refresh the thread listview
+	public void updateThreadView(Thread threadList)
+	{
+		commentList = threadList.getDiscussionThread();
+		notifyDataSetChanged();
+	}
+	
+	private OnClickListener viewBtnClick = new OnClickListener() 
+	{
+	    public void onClick(View v)
+	    {
+	    }
+	};
+	
+	private OnClickListener replyBtnClick = new OnClickListener() 
+	{
+	    public void onClick(View v)
+	    {
+	    }
+	};
+	
+	private OnClickListener favBtnClick = new OnClickListener() 
+	{
+	    public void onClick(View v)
+	    {
+	    }
+	};
+	
+	private OnClickListener saveBtnClick = new OnClickListener() 
+	{
+	    public void onClick(View v)
+	    {
+	    }
+	};
 	
 }
