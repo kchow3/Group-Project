@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/layoutCommentRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/buttonView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/buttonReply"
+            android:text="View" />
+
+        <Button
+            android:id="@+id/buttonReply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/buttonView"
+            android:text="Reply" />
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/buttonReply"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/buttonView"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Title"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Button
+            android:id="@+id/buttonFav"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textViewUser"
+            android:layout_alignParentRight="true"
+            android:text="Fav"
+            android:width="65dp" />
+
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textViewUser"
+            android:layout_below="@+id/textViewTitle"
+            android:layout_toRightOf="@+id/buttonReply"
+            android:text="Date"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:width="120dp" />
+
+        <TextView
+            android:id="@+id/textViewUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/buttonReply"
+            android:layout_alignLeft="@+id/textViewDate"
+            android:text="Username"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:width="120dp" />
+
+        <Button
+            android:id="@+id/buttonSave"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewTitle"
+            android:layout_toLeftOf="@+id/buttonFav"
+            android:text="Save"
+            android:width="65dp" />
+
+        <TextView
+            android:id="@+id/textViewFavorited"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewFavCount"
+            android:layout_alignBottom="@+id/textViewFavCount"
+            android:layout_alignParentRight="true"
+            android:height="20dp"
+            android:text="Favorited?"
+            android:textAppearance="?android:attr/textAppearanceSmall" 
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/textViewFavCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/buttonReply"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="14dp"
+            android:height="20dp"
+            android:text="Fav#"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewSaved"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewFavorited"
+            android:layout_alignBottom="@+id/textViewFavorited"
+            android:layout_alignLeft="@+id/buttonSave"
+            android:height="20dp"
+            android:text="Saved?"
+            android:textAppearance="?android:attr/textAppearanceSmall" 
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/textViewReplyCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewFavCount"
+            android:layout_alignBottom="@+id/textViewFavCount"
+            android:layout_alignLeft="@+id/textViewUser"
+            android:layout_marginLeft="23dp"
+            android:height="20dp"
+            android:text="Reply#"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
