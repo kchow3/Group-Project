@@ -1,0 +1,7 @@
+INDEX VERSION 1.126+/Users/bwylie/Desktop/c301 workspace/.metadata/.plugins/org.eclipse.jdt.core
+484475581.index
+470750473.index
+2609562386.index
+1920580973.index
+4162378621.index
+3926623309.index
