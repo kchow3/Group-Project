@@ -4,29 +4,61 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewReply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/button1"
-        android:text="TextView" />
+        android:layout_toLeftOf="@+id/buttonReplyView"
+        android:height="100dp"
+        android:hint="Reply" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonRowReply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="Button" />
+        android:text="Reply"
+        android:width="68dp" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonReplyView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/button2"
-        android:text="Button" />
+        android:layout_toLeftOf="@+id/buttonRowReply"
+        android:text="View"
+        android:width="10dp" />
+
+    <TextView
+        android:id="@+id/textViewReplyDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonReplyView"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/buttonRowReply"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textViewReplyUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewReplyDate"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textViewReplyDate"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textViewReplyRowCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewReply"
+        android:layout_alignLeft="@+id/textViewReplyUser"
+        android:layout_alignParentRight="true"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
