@@ -20,6 +20,3 @@ proguard/
 
 #bin files
 bin/
-
-#gen files
-gen/
