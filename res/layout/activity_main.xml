@@ -15,7 +15,53 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="TUNE IN"
-        android:textAppearance="?android:attr/textAppearanceLarge" 
-        android:textSize="50sp"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="50sp" />
+
+    <TextView
+        android:id="@+id/location_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/title"
+        android:text="\@"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/pictures_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="145dp"
+        android:layout_height="150dp"
+        android:layout_alignLeft="@+id/myLocation_button"
+        android:layout_below="@+id/myLocation_button"
+        android:text="With Pictures" />
+
+    <Button
+        android:id="@+id/date_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="145dp"
+        android:layout_height="150dp"
+        android:layout_alignTop="@+id/pictures_button"
+        android:layout_toRightOf="@+id/pictures_button"
+        android:text="Date" />
+
+    <Button
+        android:id="@+id/myLocation_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="145dp"
+        android:layout_height="150dp"
+        android:layout_alignLeft="@+id/location_text"
+        android:layout_below="@+id/location_text"
+        android:layout_marginTop="25dp"
+        android:text="My Location" />
+
+    <Button
+        android:id="@+id/otherLocation_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="145dp"
+        android:layout_height="150dp"
+        android:layout_above="@+id/pictures_button"
+        android:layout_toRightOf="@+id/myLocation_button"
+        android:text="Other Location" />
 
 </RelativeLayout>
