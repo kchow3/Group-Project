@@ -9,13 +9,6 @@
     tools:context=".MainActivity" >
 
     <TextView
-<<<<<<< HEAD
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-
-</RelativeLayout>
-=======
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -80,4 +73,3 @@
     </LinearLayout>
 
 </RelativeLayout>
->>>>>>> upstream/master
