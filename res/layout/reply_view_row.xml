@@ -38,7 +38,7 @@
         android:layout_alignLeft="@+id/buttonReplyView"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/buttonRowReply"
-        android:text="Small Text"
+        android:text="Date"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -48,7 +48,7 @@
         android:layout_alignLeft="@+id/textViewReplyDate"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textViewReplyDate"
-        android:text="Small Text"
+        android:text="Username"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -58,7 +58,7 @@
         android:layout_alignBottom="@+id/textViewReply"
         android:layout_alignLeft="@+id/textViewReplyUser"
         android:layout_alignParentRight="true"
-        android:text="Small Text"
+        android:text="Reply #"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
