@@ -36,8 +36,8 @@ public final class R {
         public static final int buttonNext=0x7f080028;
         public static final int buttonPrev=0x7f080027;
         public static final int buttonReply=0x7f080010;
-        public static final int buttonReplyView=0x7f08001f;
-        public static final int buttonRowReply=0x7f080020;
+        public static final int buttonReplyView=0x7f080023;
+        public static final int buttonRowReply=0x7f080021;
         public static final int buttonSave=0x7f080015;
         public static final int buttonView=0x7f08000f;
         public static final int editTextComment=0x7f08001a;
@@ -60,8 +60,8 @@ public final class R {
         public static final int textViewInputTitle=0x7f08001b;
         public static final int textViewReply=0x7f08001e;
         public static final int textViewReplyCount=0x7f080019;
-        public static final int textViewReplyDate=0x7f080021;
-        public static final int textViewReplyRowCount=0x7f080023;
+        public static final int textViewReplyDate=0x7f080020;
+        public static final int textViewReplyRowCount=0x7f08001f;
         public static final int textViewReplyUser=0x7f080022;
         public static final int textViewSaved=0x7f080018;
         public static final int textViewSort=0x7f08002a;
