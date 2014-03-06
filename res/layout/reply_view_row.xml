@@ -8,57 +8,62 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/buttonReplyView"
-        android:height="100dp"
+        android:height="70dp"
         android:hint="Reply" />
-
-    <Button
-        android:id="@+id/buttonRowReply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="Reply"
-        android:width="68dp" />
-
-    <Button
-        android:id="@+id/buttonReplyView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/buttonRowReply"
-        android:text="View"
-        android:width="10dp" />
-
-    <TextView
-        android:id="@+id/textViewReplyDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonReplyView"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/buttonRowReply"
-        android:text="Date"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/textViewReplyUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewReplyDate"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textViewReplyDate"
-        android:text="Username"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/textViewReplyRowCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewReply"
-        android:layout_alignLeft="@+id/textViewReplyUser"
-        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/textViewReplyDate"
+        android:layout_alignBottom="@+id/textViewReplyDate"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/textViewReplyDate"
         android:text="Reply #"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:width="75dp" />
+
+    <Button
+        android:id="@+id/buttonRowReply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewReplyRowCount"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textViewReply"
+        android:height="40dp"
+        android:minHeight="64dp"
+        android:text="Reply" />
+
+    <TextView
+        android:id="@+id/textViewReplyUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/buttonReplyView"
+        android:text="Username"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:width="100dp" />
+
+    <TextView
+        android:id="@+id/textViewReplyDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewReplyUser"
+        android:text="Date"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:width="100dp" />
+
+    <Button
+        android:id="@+id/buttonReplyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewReply"
+        android:layout_toLeftOf="@+id/buttonRowReply"
+        android:height="35dp"
+        android:minHeight="30dp"
+        android:text="View" />
 
 </RelativeLayout>
