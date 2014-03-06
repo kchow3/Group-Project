@@ -53,6 +53,7 @@
         android:src="@drawable/ic_launcher"
         android:visibility="invisible" />
 
+<<<<<<< HEAD
     <Button
         android:id="@+id/buttonGo"
         android:layout_width="wrap_content"
@@ -61,4 +62,6 @@
         android:layout_below="@+id/buttonImage"
         android:text="Go!" />
 
+=======
+>>>>>>> upstream/master
 </RelativeLayout>

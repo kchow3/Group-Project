@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/textViewCommentTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="Title"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textViewCommentUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewCommentTitle"
+        android:text="Username"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:width="125dp" />
+
+    <TextView
+        android:id="@+id/textViewCommentDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/textViewCommentUser"
+        android:layout_below="@+id/textViewCommentUser"
+        android:text="Date"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:width="100dp" />
+
+    <TextView
+        android:id="@+id/textViewCommentFavCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/buttonCommentSave"
+        android:text="Fav #"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:width="70dp" />
+
+    <TextView
+        android:id="@+id/textViewCommentReplyCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewCommentFavCount"
+        android:layout_alignBottom="@+id/textViewCommentFavCount"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/textViewCommentFavCount"
+        android:text="Reply #"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:width="70dp" />
+
+    <TextView
+        android:id="@+id/textViewCommentFaved"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewCommentSaved"
+        android:layout_alignBottom="@+id/textViewCommentSaved"
+        android:layout_alignParentRight="true"
+        android:text="Favorited!"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/buttonCommentFav"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewCommentFaved"
+        android:layout_alignLeft="@+id/textViewCommentFaved"
+        android:layout_alignParentRight="true"
+        android:text="Fav" />
+
+    <Button
+        android:id="@+id/buttonCommentSave"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textViewCommentUser"
+        android:layout_toLeftOf="@+id/textViewCommentFaved"
+        android:text="Save"
+        android:width="70dp" />
+
+    <TextView
+        android:id="@+id/textViewCommentSaved"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewCommentReplyCount"
+        android:layout_alignBottom="@+id/textViewCommentReplyCount"
+        android:layout_alignLeft="@+id/buttonCommentSave"
+        android:layout_marginLeft="14dp"
+        android:text="Saved!"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/textViewCommentBlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textViewCommentFavCount"
+        android:layout_marginTop="15dp"
+        android:height="80dp"
+        android:text="Comment" />
+
+    <ImageView
+        android:id="@+id/imageViewCommentImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textViewCommentDate"
+        android:layout_below="@+id/textViewCommentBlock"
+        android:layout_marginRight="23dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_launcher" />
+
+    <Button
+        android:id="@+id/buttonCommentEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/buttonCommentSave"
+        android:layout_alignTop="@+id/imageViewCommentImage"
+        android:text="Edit" />
+
+    <Button
+        android:id="@+id/buttonCommentReply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonCommentEdit"
+        android:layout_alignBottom="@+id/buttonCommentEdit"
+        android:layout_alignParentRight="true"
+        android:text="Reply" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/imageViewCommentImage"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="100dp" />
+
+    <ExpandableListView
+        android:id="@+id/expandableListViewReply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/imageViewCommentImage"
+        android:layout_marginTop="14dp" >
+    </ExpandableListView>
+
+</RelativeLayout>

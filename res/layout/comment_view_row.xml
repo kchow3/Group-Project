@@ -89,9 +89,15 @@
             android:layout_alignBottom="@+id/textViewFavCount"
             android:layout_alignParentRight="true"
             android:height="20dp"
+<<<<<<< HEAD
             android:text="Favorited?"
             android:textAppearance="?android:attr/textAppearanceSmall" 
             android:visibility="invisible"/>
+=======
+            android:text="Favorited!"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:visibility="invisible" />
+>>>>>>> upstream/master
 
         <TextView
             android:id="@+id/textViewFavCount"
@@ -113,9 +119,15 @@
             android:layout_alignBottom="@+id/textViewFavorited"
             android:layout_alignLeft="@+id/buttonSave"
             android:height="20dp"
+<<<<<<< HEAD
             android:text="Saved?"
             android:textAppearance="?android:attr/textAppearanceSmall" 
             android:visibility="invisible"/>
+=======
+            android:text="Saved!"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:visibility="invisible" />
+>>>>>>> upstream/master
 
         <TextView
             android:id="@+id/textViewReplyCount"
