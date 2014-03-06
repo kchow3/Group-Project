@@ -70,6 +70,16 @@ public class TopicListActivity extends Activity {
 		            	Bitmap bmp = inputImage.getDrawingCache();
 		            	//img = new Image(bmp);
 		            	hasImg = true;
+		            	
+		        		//temp user and geo location
+		        		Commenter user = new Commenter("bob");
+		        		GeoLocation loc = new GeoLocation(5, 10);
+		        		
+		        		ThreadController cntrl = new ThreadController(threadList);
+		        		Comment newComment  = new Comment(user, title, comment, loc);
+		        		cntrl.createTopic(newComment);
+		        		
+		        		viewAdapter.updateThreadView(threadList);
 		            } 
 		            else 
 		            {
@@ -79,16 +89,6 @@ public class TopicListActivity extends Activity {
 		    })
 		    .setNegativeButton("Cancel", null).create();
 		dialog.show();
-		
-		//temp user and geo location
-		Commenter user = new Commenter("bob");
-		GeoLocation loc = new GeoLocation(5, 10);
-		
-		ThreadController cntrl = new ThreadController(threadList);
-		Comment newComment  = new Comment(user, this.title, this.comment, loc);
-		cntrl.createTopic(newComment);
-		
-		viewAdapter.updateThreadView(threadList);
 	}
 
 }
