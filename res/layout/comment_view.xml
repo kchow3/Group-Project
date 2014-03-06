@@ -112,7 +112,7 @@
         android:text="Comment" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/imageViewCommentImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/textViewCommentDate"
@@ -126,7 +126,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/buttonCommentSave"
-        android:layout_alignTop="@+id/imageView1"
+        android:layout_alignTop="@+id/imageViewCommentImage"
         android:text="Edit" />
 
     <Button
@@ -142,8 +142,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/imageView1"
+        android:layout_below="@+id/imageViewCommentImage"
         android:layout_marginLeft="18dp"
         android:layout_marginTop="100dp" />
+
+    <ExpandableListView
+        android:id="@+id/expandableListViewReply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/imageViewCommentImage"
+        android:layout_marginTop="14dp" >
+    </ExpandableListView>
 
 </RelativeLayout>
