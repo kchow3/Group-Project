@@ -87,11 +87,6 @@ public class Comment
 		this.replyCount = 0;
 	}
 
-	
-	/**
-	 * Get the commenter of the comment.
-	 * @return
-	 */
 	public Commenter getCommenter() {
 		return commenter;
 	}
@@ -192,11 +187,17 @@ public class Comment
 		this.replyCount = replyCount;
 	}
 	
+	/**
+	 * Increment the number times the comment was favorited.
+	 */
 	public void increaseFavCount()
 	{
 		this.favoriteCount++;
 	}
 	
+	/**
+	 * Increase the number of times the comment has been replied to.
+	 */
 	public void increaseReplyCount()
 	{
 		this.replyCount++;
