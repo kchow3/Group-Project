@@ -6,6 +6,13 @@ import android.graphics.Typeface;
 import android.view.Menu;
 import android.widget.TextView;
 
+/**
+ * View
+ * MainActivity Class:
+ * This is part of the view for the main title page of the app.
+ * It contains setting a username for the user and setting a sort
+ * option for the comments in the app.
+ */
 public class MainActivity extends Activity {
 	
 	private TextView title;
