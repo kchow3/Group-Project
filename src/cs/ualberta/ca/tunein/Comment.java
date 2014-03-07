@@ -88,6 +88,10 @@ public class Comment
 	}
 
 	
+	/**
+	 * Get the commenter of the comment.
+	 * @return
+	 */
 	public Commenter getCommenter() {
 		return commenter;
 	}
