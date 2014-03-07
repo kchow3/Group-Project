@@ -5,25 +5,51 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Comment {
-	
+/**
+ * Model
+ * Comment Class:
+ * This is class is part of the comment model. Its major function is the attributes
+ * of a comment. The most important attributes of a comment is the title, the comment
+ * text, replies, geo location, and image. This references commenter, geo location and
+ * image classes. This class is used in the comment controller.
+ *
+ */
+public class Comment
+{
+	//user that creates the comment
 	private Commenter commenter;
+	//comment title
 	private String title;
+	//comment body
 	private String comment;
+	//replies to the comment
 	private ArrayList<Comment> replies;
+	//iamge of comment
 	private Image img;
+	//date of comment
 	private Date date;
+	//geo location of comment
 	private GeoLocation geolocation;
+	//does comment have an image
 	private boolean hasImage;
+	//is comment saved
 	private boolean saved;
+	//is comment favorited
 	private boolean favorited;
+	//number of times this comment has been favorited
 	private int favoriteCount;
+	//number of replies to the comment
 	private int replyCount;
 	
-	//constructor for creating a comment with no picture
+	/**
+	 * This constructor constructs a comment without an image.
+	 * @param user The user that comment belongs to.
+	 * @param aTitle The title of the comment.
+	 * @param aComment The comment body.
+	 * @param loc The geo location of comment.
+	 */
 	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc) 
 	{
-		
 		this.commenter = user;
 		this.title = aTitle;
 		this.comment = aComment;
@@ -37,10 +63,16 @@ public class Comment {
 		this.replyCount = 0;
 	}
 
-	//constructor for creating comment with a picture
+	/**
+	 * This constructor constructs a comment with an image.
+	 * @param user The user that comment belongs to.
+	 * @param aTitle The title of the comment.
+	 * @param aComment The comment body.
+	 * @param loc The geo location of comment.
+	 * @param aImage The image of comment.
+	 */
 	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc, Image aImage) 
 	{
-		
 		this.commenter = user;
 		this.title = aTitle;
 		this.comment = aComment;
@@ -53,9 +85,9 @@ public class Comment {
 		this.saved = true;
 		this.favoriteCount = 0;
 		this.replyCount = 0;
-		
 	}
 
+	
 	public Commenter getCommenter() {
 		return commenter;
 	}
@@ -166,6 +198,10 @@ public class Comment {
 		this.replyCount++;
 	}
 	
+	/**
+	 * Converts date to a string using SimpleDateFormat
+	 * @return String of comment date.
+	 */
 	public String dateToString()
 	{
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy ");
