@@ -5,6 +5,16 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.os.Bundle;
 
+/**
+ * View
+ * CommentPageActivity Class:
+ * Part of the view class that contains a comment and its replies.
+ * This is part of the view when a user presses a view button on a 
+ * comment to bring up this page.
+ * TODO: Send an intent of comment properties to another instance 
+ * of this class when user selects view button on a reply and open that
+ * comment.
+ */
 public class CommentPageActivity extends Activity {
 
 	//reply view adapter
