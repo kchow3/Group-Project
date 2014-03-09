@@ -9,6 +9,13 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * View
+ * ReplyViewAdapter Class:
+ * This is part of the view class for comments. This class is used to 
+ * display the replies to a comment using an expandable list view.
+ * This class is not complete yet.
+ */
 public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	
 	private Context context;
@@ -16,6 +23,10 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	private ViewHolder holder;
 	private ArrayList<Comment> replies;
 	
+	/**
+	 * View holder that holds the elements of a
+	 * custom row that improves scrolling.
+	 */
 	public static class ViewHolder
 	{
 		TextView textViewReply;
@@ -27,6 +38,11 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 		Button buttonReplyView;
 	}
 	
+	/**
+	 * Constructor that constructs a ReplyViewAdapter
+	 * @param context The context of the activity that constructs this adapter.
+	 * @param replies The array list of replies to be displayed.
+	 */
 	public ReplyViewAdapter(Context context, ArrayList<Comment> replies)
 	{
 		this.context = context;

@@ -12,6 +12,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * View
+ * TopicListActivity Class:
+ * This is part of the view of displaying the topic list
+ * of comments. This also includes the creation view of creating
+ * topic comments through a dialog box.
+ */
 public class TopicListActivity extends Activity {
 
 	//comment view adapter
@@ -46,7 +53,11 @@ public class TopicListActivity extends Activity {
 		
 	}
 	
-	//create comment btn click opens dialog box for creating topics
+	/**
+	 * This method is to open the create topic comment dialog box
+	 * and create a comment and add to the topic list.
+	 * @param v The view passed in.
+	 */
 	public void createCommentClick(View v)
 	{
 		LayoutInflater inflater = LayoutInflater.from(TopicListActivity.this);
