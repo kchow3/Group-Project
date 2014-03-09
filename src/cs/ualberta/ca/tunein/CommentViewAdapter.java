@@ -112,7 +112,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			holder.textViewSaved.setVisibility(View.INVISIBLE);
 		}
 		
-		//set onclick listners for buttons and the tag for position
+		//set onclick listeners for buttons and the tag for position
 		holder.buttonView.setOnClickListener(viewBtnClick);
 		holder.buttonView.setTag(position);
 		holder.buttonReply.setOnClickListener(replyBtnClick);
