@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ExpandableListView;
+import android.widget.ListView;
 
 /**
  * View
@@ -29,8 +31,20 @@ public class CommentPageActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
+	    this.replies = new ArrayList<Comment>();
+	}
 	
-	    // TODO Auto-generated method stub
+	@Override
+	protected void onResume() 
+	{
+		super.onResume();
+		
+		//setup the reply listview
+		this.viewAdapter = new ReplyViewAdapter(this, replies);
+		ExpandableListView listview = (ExpandableListView) findViewById(R.id.expandableListViewReply);
+		
+		//setup
+		listview.setAdapter(viewAdapter);
 	}
 
 }
