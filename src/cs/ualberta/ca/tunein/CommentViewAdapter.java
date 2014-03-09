@@ -87,8 +87,8 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		holder.textViewTitle.setText(commentList.get(position).getTitle());
 		holder.textViewDate.setText(commentList.get(position).dateToString());
 		holder.textViewUser.setText(commentList.get(position).getCommenter().getName());
-		holder.textViewFavCount.setText(Integer.toString(commentList.get(position).getFavoriteCount()));
-		holder.textViewReplyCount.setText(Integer.toString(commentList.get(position).getReplyCount()));
+		holder.textViewFavCount.setText("Favs: " +Integer.toString(commentList.get(position).getFavoriteCount()));
+		holder.textViewReplyCount.setText("Replies: " + Integer.toString(commentList.get(position).getReplyCount()));
 		
 		//if the comment is favorited then text will show Faved! else it is invisible
 		if(commentList.get(position).isFavorited())

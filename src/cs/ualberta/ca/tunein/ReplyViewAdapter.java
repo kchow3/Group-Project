@@ -2,9 +2,13 @@ package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
 
+import cs.ualberta.ca.tunein.CommentViewAdapter.ViewHolder;
+
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -52,23 +56,52 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Comment> list = replies.get(groupPosition).getReplies();
+		return list.get(childPosition);
 	}
 
 
 	@Override
 	public long getChildId(int groupPosition, int childPosition) {
-		// TODO Auto-generated method stub
-		return 0;
+		return childPosition;
 	}
 
 
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		holder = new ViewHolder();
+		
+		//create inflater
+		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
+		//get rowView from inflater
+		View rowView = null;
+		rowView = inflater.inflate(R.layout.reply_view_row, parent, false);
+		
+		//set all the elements in the custom comment row
+		holder.textViewReply = (TextView) rowView.findViewById(R.id.textViewReply);
+		holder.textViewReplyRowCount = (TextView) rowView.findViewById(R.id.textViewReplyRowCount);
+		holder.textViewReplyUser = (TextView) rowView.findViewById(R.id.textViewReplyUser);
+		holder.textViewReplyDate = (TextView) rowView.findViewById(R.id.textViewReplyDate);
+		holder.buttonRowReply = (Button) rowView.findViewById(R.id.buttonRowReply);
+		holder.buttonReplyView = (Button) rowView.findViewById(R.id.buttonReplyView);
+		
+		//set text of textviews
+		holder.textViewReply.setText(replies.get(groupPosition).getReplies().get(childPosition).getComment());
+		holder.textViewReplyRowCount.setText("Replies: " + Integer.toString(replies.get(groupPosition).getReplies().get(childPosition).getReplyCount()));
+		holder.textViewReplyUser.setText(replies.get(groupPosition).getReplies().get(childPosition).getCommenter().getName());
+		holder.textViewReplyDate.setText(replies.get(groupPosition).getReplies().get(childPosition).dateToString());
+		
+		//set onclick listeners for buttons and the tag for position
+		holder.buttonRowReply.setOnClickListener(replyBtnClick);
+		holder.buttonRowReply.setTag(childPosition);
+		holder.buttonReplyView.setOnClickListener(viewBtnClick);
+		holder.buttonReplyView.setTag(childPosition);
+		
+		
+		return rowView;
 	}
 
 
@@ -120,6 +153,29 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	
+	/**
+	 * This click listener will send user to CommentViewPage of the comment
+	 * that they clicked view on.
+	 */
+	private OnClickListener viewBtnClick = new OnClickListener() 
+	{
+	    public void onClick(View v)
+	    {
+	    }
+	};
+	
+	/**
+	 * This click listener will send user a comment creation dialog box
+	 * so that they can reply to a comment that they clicked reply on.
+	 */
+	private OnClickListener replyBtnClick = new OnClickListener() 
+	{
+	    public void onClick(View v)
+	    {
+	    }
+	};
 	
 	
 }
