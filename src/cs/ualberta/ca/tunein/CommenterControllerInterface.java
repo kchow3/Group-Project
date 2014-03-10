@@ -28,7 +28,7 @@ public interface CommenterControllerInterface {
 	 * This method is for checking if the commenter's 
 	 * user id matches the comment creator's id so that
 	 * they can edit the comment.
-	 * @param id The unique id of a commenter.
+	 * @param commentID The unique id of a commenter.
 	 * @param act The activity that calls this controller.
 	 */
 	public boolean checkValid(String commentID, Activity act);
