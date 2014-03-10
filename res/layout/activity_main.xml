@@ -40,6 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="goTopicListClick"
             android:text="My Location" />
 
         <Button
@@ -47,6 +48,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="goTopicListClick"
             android:text="Other Location" />
     </LinearLayout>
 
@@ -62,6 +64,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="goTopicListClick"
             android:text="With Pictures" />
 
         <Button
@@ -69,7 +72,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="goTopicListClick"
             android:text="Date" />
+
     </LinearLayout>
 
 </RelativeLayout>

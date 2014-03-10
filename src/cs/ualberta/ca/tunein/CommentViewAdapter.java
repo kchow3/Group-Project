@@ -139,7 +139,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	}
 	
 	/**
-	 * This click listner will send user to CommentViewPage of the comment
+	 * This click listener will send user to CommentViewPage of the comment
 	 * that they clicked view on.
 	 */
 	private OnClickListener viewBtnClick = new OnClickListener() 
@@ -150,7 +150,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	};
 	
 	/**
-	 * This click listner will send user a comment creation dialog box
+	 * This click listener will send user a comment creation dialog box
 	 * so that they can reply to a comment that they clicked reply on.
 	 */
 	private OnClickListener replyBtnClick = new OnClickListener() 
@@ -161,7 +161,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	};
 	
 	/**
-	 * This click listner will favortie the comment that the user clicked
+	 * This click listener will favortie the comment that the user clicked
 	 * favorite on.
 	 */
 	private OnClickListener favBtnClick = new OnClickListener() 
@@ -172,7 +172,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	};
 	
 	/**
-	 * This click listner will save the comment that the user clicked save on.
+	 * This click listener will save the comment that the user clicked save on.
 	 */
 	private OnClickListener saveBtnClick = new OnClickListener() 
 	{

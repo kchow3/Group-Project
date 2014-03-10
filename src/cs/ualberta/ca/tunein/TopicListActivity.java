@@ -35,8 +35,6 @@ public class TopicListActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    
-	    threadList = new Thread();
 	}
 	
 	@Override
@@ -44,8 +42,10 @@ public class TopicListActivity extends Activity {
 	{
 		super.onResume();
 		
+		threadList = new Thread();
+		
 		//setup the comment listview
-		viewAdapter = new CommentViewAdapter(this, threadList.getDiscussionThread());
+		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList.getDiscussionThread());
 		ListView listview = (ListView) findViewById(R.id.listViewTopics);
 		
 		//setup adapter

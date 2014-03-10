@@ -25,7 +25,7 @@ public final class R {
     }
     public static final class id {
         public static final int RelativeLayout1=0x7f08002c;
-        public static final int action_settings=0x7f080033;
+        public static final int action_settings=0x7f080032;
         public static final int buttonCommentEdit=0x7f080013;
         public static final int buttonCommentFav=0x7f080010;
         public static final int buttonCommentReply=0x7f080014;
@@ -33,8 +33,7 @@ public final class R {
         public static final int buttonCreate=0x7f080031;
         public static final int buttonFav=0x7f08001a;
         public static final int buttonImage=0x7f080024;
-        public static final int buttonNext=0x7f080030;
-        public static final int buttonPrev=0x7f08002f;
+        public static final int buttonMainMenu=0x7f08002f;
         public static final int buttonReply=0x7f080018;
         public static final int buttonReplyView=0x7f08002b;
         public static final int buttonRowReply=0x7f080029;
@@ -71,7 +70,7 @@ public final class R {
         public static final int textViewReplyRowCount=0x7f080027;
         public static final int textViewReplyUser=0x7f08002a;
         public static final int textViewSaved=0x7f080020;
-        public static final int textViewSort=0x7f080032;
+        public static final int textViewSort=0x7f080030;
         public static final int textViewTitle=0x7f080019;
         public static final int textViewTopics=0x7f08002d;
         public static final int textViewUser=0x7f08001b;

@@ -3,9 +3,11 @@ package cs.ualberta.ca.tunein;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
+import android.view.View;
 import android.widget.TextView;
 
 /**
@@ -48,5 +50,12 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	
+	 public void goTopicListClick(View v)
+	 {
+		 Intent i = new Intent(getApplicationContext(), TopicListActivity.class);
+		 MainActivity.this.startActivity(i);
+	 }
 
 }
