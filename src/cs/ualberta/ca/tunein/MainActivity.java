@@ -2,7 +2,9 @@ package cs.ualberta.ca.tunein;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Typeface;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.widget.TextView;
 
@@ -21,6 +23,16 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		//setup an unique id for the user that is attached to the phone
+		final TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
+		String id = "" + tm.getDeviceId();
+		
+		//new user construction
+		Commenter user = new Commenter(id);
+		CommenterController cntrl = new CommenterController(user);
+		//load user to check for saved user name
+		cntrl.loadUser();
 		
 		//Set Custom fonts
 		Typeface tf = Typeface.createFromAsset(getAssets(), "Fonts/Action-Man/Action_Man.ttf");
