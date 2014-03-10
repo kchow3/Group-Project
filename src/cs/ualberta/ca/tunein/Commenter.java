@@ -8,7 +8,7 @@ package cs.ualberta.ca.tunein;
  * is a name for the commenter. 
  * TODO:add a unique property to the
  * commenter class that is linked to their phone so that only they
- * can change thier comments.
+ * can change their comments.
  */
 public class Commenter {
 

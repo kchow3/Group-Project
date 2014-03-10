@@ -2,8 +2,6 @@ package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
 
-import cs.ualberta.ca.tunein.CommentViewAdapter.ViewHolder;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
