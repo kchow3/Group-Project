@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -46,6 +47,7 @@ public class TopicListActivity extends Activity {
 		
 		//setup the comment listview
 		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList.getDiscussionThread());
+		setContentView(R.layout.topic_list_view);
 		ListView listview = (ListView) findViewById(R.id.listViewTopics);
 		
 		//setup adapter
