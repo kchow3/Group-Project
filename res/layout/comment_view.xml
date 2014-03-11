@@ -128,7 +128,8 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/buttonCommentSave"
         android:layout_alignTop="@+id/imageViewCommentImage"
-        android:text="Edit" />
+        android:text="Edit"
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/buttonCommentReply"

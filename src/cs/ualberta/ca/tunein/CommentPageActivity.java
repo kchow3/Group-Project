@@ -105,19 +105,29 @@ public class CommentPageActivity extends Activity {
 		textViewCommentFavCount.setText("Favs: " + Integer.toString(aComment.getFavoriteCount()));
 		textViewCommentReplyCount.setText("Replies: " + Integer.toString(aComment.getReplyCount()));
 		
+		//Saved! text if comment is saved.
 		if(aComment.isFavorited())
 		{
 			textViewCommentFaved.setVisibility(View.VISIBLE);
 		}
 		
+		//Faved! text if comment is favorited.
 		if(aComment.isSaved())
 		{
 			textViewCommentSaved.setVisibility(View.VISIBLE);
 		}
 		
+		//if there is image load image else invisible
 		if(aComment.isHasImage())
 		{
 			imageViewCommentImage.setVisibility(View.VISIBLE);
+		}
+		
+		//check if comment author for edit
+		CommenterController cntrl = new CommenterController(aComment);
+		if(cntrl.checkValid(aComment.getCommenter().getUniqueID(), this))
+		{
+			buttonCommentEdit.setVisibility(View.VISIBLE);
 		}
 		
 	}
