@@ -4,10 +4,21 @@ import java.util.ArrayList;
 
 import android.view.View;
 
+/**
+ * Controller
+ * ThreadController Class:
+ * This is part of the controller that controls a list of
+ * comments and modifies the comments in the list passed to
+ * the controller.
+ */
 public class ThreadController implements ThreadControllerInterface {
 
 	private Thread discussionThread;
 	
+	/**
+	 * Constructor constructs a contoller for the list of comments.
+	 * @param threadList List of comments that will be modified.
+	 */
 	public ThreadController(Thread threadList) {
 	
 		discussionThread = threadList;

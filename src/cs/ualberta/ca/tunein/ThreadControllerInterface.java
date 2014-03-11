@@ -2,16 +2,45 @@ package cs.ualberta.ca.tunein;
 
 import android.view.View;
 
+/**
+ * Controller
+ * ThreadControllerInterface Class:
+ * This is the interface for the ThreadController and 
+ * is implemented by controllers to modify comments in
+ * a list.
+ */
 public interface ThreadControllerInterface {
 	
+	/**
+	 * This method creates a new topic comment in the list.
+	 * @param aComment The comment to be added.
+	 */
 	public void createTopic(Comment aComment);
 	
+	/**
+	 * This method sorts the list of comments by the
+	 * user's location.
+	 * @param loc The location that the comments will be sorted.
+	 */
 	public void sortByLocation(GeoLocation loc);
 	
+	/**
+	 * This method sorts the list of comments by a set
+	 * location.
+	 * @param loc The location that the comments will be sorted.
+	 */
 	public void sortBySetLocation(GeoLocation loc);
 	
+	/**
+	 * This method sorts the list of comments by the criteria
+	 * of having pictures and date.
+	 */
 	public void sortByPicture();
 	
+	/**
+	 * This method sorts the list of comments by the date
+	 * of comments.
+	 */
 	public void sortByDate();
 	
 }

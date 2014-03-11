@@ -1,12 +1,29 @@
 package cs.ualberta.ca.tunein;
 
-public class Commenter {
+import java.io.Serializable;
+
+import android.app.Application;
+
+/**
+ * Model
+ * Commenter Class:
+ * This is a model class for the user that creates a comment.
+ * This class is mainly used by getting passed in User model
+ * info and uses that to create a comment author.
+ */
+public class Commenter implements Serializable{
 
 	private String name;
+	private String uniqueID; 
 	
-	public Commenter(String name) 
+	/**
+	 * Constructor that constructs a commenter.
+	 * @param name The username of the commenter.
+	 */
+	public Commenter(String id) 
 	{
-		this.name = name;
+		this.name = "Anonymous";
+		this.uniqueID = id;
 	}
 
 	public String getName() {
@@ -15,6 +32,10 @@ public class Commenter {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getUniqueID() {
+		return uniqueID;
 	}
 	
 

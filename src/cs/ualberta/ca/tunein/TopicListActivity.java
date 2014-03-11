@@ -5,13 +5,22 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * View
+ * TopicListActivity Class:
+ * This is part of the view of displaying the topic list
+ * of comments. This also includes the creation view of creating
+ * topic comments through a dialog box.
+ */
 public class TopicListActivity extends Activity {
 
 	//comment view adapter
@@ -22,7 +31,6 @@ public class TopicListActivity extends Activity {
 	private String title;
 	private String comment;
 	private Image img;
-	private boolean hasImg;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -38,7 +46,8 @@ public class TopicListActivity extends Activity {
 		super.onResume();
 		
 		//setup the comment listview
-		viewAdapter = new CommentViewAdapter(this, threadList.getDiscussionThread());
+		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList.getDiscussionThread());
+		setContentView(R.layout.topic_list_view);
 		ListView listview = (ListView) findViewById(R.id.listViewTopics);
 		
 		//setup adapter
@@ -46,7 +55,18 @@ public class TopicListActivity extends Activity {
 		
 	}
 	
-	//create comment btn click opens dialog box for creating topics
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+	/**
+	 * This method is to open the create topic comment dialog box
+	 * and create a comment and add to the topic list.
+	 * @param v The view passed in.
+	 */
 	public void createCommentClick(View v)
 	{
 		LayoutInflater inflater = LayoutInflater.from(TopicListActivity.this);
@@ -64,26 +84,34 @@ public class TopicListActivity extends Activity {
 		            title = inputTitle.getText().toString();
 		            comment = inputComment.getText().toString();
 		            
+		            //create comment with image 
 		            if (inputImage.getVisibility() == View.VISIBLE) 
 		            {
 		            	inputImage.buildDrawingCache();
 		            	Bitmap bmp = inputImage.getDrawingCache();
-		            	//img = new Image(bmp);
-		            	hasImg = true;
-		            	
+		            	img = new Image(bmp);
+	            	
 		        		//temp user and geo location
+		        		Commenter user = new Commenter("bob");
+		        		GeoLocation loc = new GeoLocation(5, 10);
+		        		
+		        		ThreadController cntrl = new ThreadController(threadList);
+		        		Comment newComment  = new Comment(user, title, comment, loc, img);
+		        		cntrl.createTopic(newComment);
+		        		
+		        		viewAdapter.updateThreadView(threadList);
+		            } 
+		            else 
+		            {	                
+		              //temp user and geo location
 		        		Commenter user = new Commenter("bob");
 		        		GeoLocation loc = new GeoLocation(5, 10);
 		        		
 		        		ThreadController cntrl = new ThreadController(threadList);
 		        		Comment newComment  = new Comment(user, title, comment, loc);
 		        		cntrl.createTopic(newComment);
-		        		
+
 		        		viewAdapter.updateThreadView(threadList);
-		            } 
-		            else 
-		            {
-		                hasImg = false;
 		            }
 		        }
 		    })

@@ -3,6 +3,7 @@ package cs.ualberta.ca.tunein;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +12,28 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * View
+ * CommentViewAdapter Class:
+ * This class is used to create the list view for the topic list
+ * that contains comments. This class is used in the TopicListActivity
+ * to create a list view and load in comments.
+ */
 public class CommentViewAdapter extends ArrayAdapter<Comment>{
-
+	
+	//public string that tags the extra of the comment that is passed to CommentPageActivity
+	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
+	
 	private Context context;
 	//holder for the elements in the row
 	private ViewHolder holder;
 	private ArrayList<Comment> commentList;
 	
+	/**
+	 * This static class is used for holding the elements of
+	 * a custom comment row. This is used for smoother scrolling
+	 * of the list view.
+	 */
 	private static class ViewHolder 
 	{
 		TextView textViewTitle;
@@ -33,6 +49,11 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		Button buttonSave;
     }
 	
+	/**
+	 * Constructor constructs a CommentViewAdapter.
+	 * @param context The context of the activity that calls this class.
+	 * @param commentList The comment list that is to be in the list view.
+	 */
 	public CommentViewAdapter(Context context, ArrayList<Comment> commentList) 
 	{
 		super(context, R.layout.comment_view_row, commentList);
@@ -53,6 +74,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		View rowView = null;
 		rowView = inflater.inflate(R.layout.comment_view_row, parent, false);
 		
+		//set all the elements in the custom comment row
 		holder.textViewTitle = (TextView) rowView.findViewById(R.id.textViewTitle);
 		holder.textViewDate = (TextView) rowView.findViewById(R.id.textViewDate);
 		holder.textViewUser = (TextView) rowView.findViewById(R.id.textViewUser);
@@ -65,12 +87,12 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		holder.buttonFav = (Button) rowView.findViewById(R.id.buttonFav);
 		holder.buttonSave = (Button) rowView.findViewById(R.id.buttonSave);
 		
-		//set textviews
+		//set text of textviews
 		holder.textViewTitle.setText(commentList.get(position).getTitle());
 		holder.textViewDate.setText(commentList.get(position).dateToString());
 		holder.textViewUser.setText(commentList.get(position).getCommenter().getName());
-		holder.textViewFavCount.setText(Integer.toString(commentList.get(position).getFavoriteCount()));
-		holder.textViewReplyCount.setText(Integer.toString(commentList.get(position).getReplyCount()));
+		holder.textViewFavCount.setText("Favs: " +Integer.toString(commentList.get(position).getFavoriteCount()));
+		holder.textViewReplyCount.setText("Replies: " + Integer.toString(commentList.get(position).getReplyCount()));
 		
 		//if the comment is favorited then text will show Faved! else it is invisible
 		if(commentList.get(position).isFavorited())
@@ -94,7 +116,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			holder.textViewSaved.setVisibility(View.INVISIBLE);
 		}
 		
-		//set onclick listners for buttons and the tag for position
+		//set onclick listeners for buttons and the tag for position
 		holder.buttonView.setOnClickListener(viewBtnClick);
 		holder.buttonView.setTag(position);
 		holder.buttonReply.setOnClickListener(replyBtnClick);
@@ -110,20 +132,36 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		return rowView;
 	}
 	
-	//method to refresh the thread listview
+	/**
+	 * This method is used to refresh the list view
+	 * @param threadList The comment list that the list view will show.
+	 */
 	public void updateThreadView(Thread threadList)
 	{
 		commentList = threadList.getDiscussionThread();
 		notifyDataSetChanged();
 	}
 	
+	/**
+	 * This click listener will send user to CommentViewPage of the comment
+	 * that they clicked view on.
+	 */
 	private OnClickListener viewBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
 	    {
+	    	int index = (Integer) v.getTag();
+	    	Comment aComment = commentList.get(index);
+	    	Intent intent = new Intent(context, CommentPageActivity.class);
+	    	intent.putExtra(EXTRA_COMMENT, aComment);
+	    	context.startActivity(intent);
 	    }
 	};
 	
+	/**
+	 * This click listener will send user a comment creation dialog box
+	 * so that they can reply to a comment that they clicked reply on.
+	 */
 	private OnClickListener replyBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
@@ -131,6 +169,10 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    }
 	};
 	
+	/**
+	 * This click listener will favortie the comment that the user clicked
+	 * favorite on.
+	 */
 	private OnClickListener favBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
@@ -138,6 +180,9 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    }
 	};
 	
+	/**
+	 * This click listener will save the comment that the user clicked save on.
+	 */
 	private OnClickListener saveBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
