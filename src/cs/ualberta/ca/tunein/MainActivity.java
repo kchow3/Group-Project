@@ -31,9 +31,8 @@ public class MainActivity extends Activity {
 		String id = "" + tm.getDeviceId();
 		String name = "Anonymous";
 		
-		//not working code.
-		//((User) this.getApplication()).setName(name);
-		//((User) this.getApplication()).setUniqueID(id);
+		((User) this.getApplication()).setName(name);
+		((User) this.getApplication()).setUniqueID(id);
 		
 		UserController cntrl = new UserController();
 		//load user to check for saved user name

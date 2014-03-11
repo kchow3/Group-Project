@@ -1,5 +1,7 @@
 package cs.ualberta.ca.tunein;
 
+import android.app.Activity;
+
 
 /**
  * Controller
@@ -22,60 +24,46 @@ public class CommentController implements CommentControllerInterface {
 		this.comment = aComment;
 	}
 
-	/* (non-Javadoc)
-	 * @see cs.ualberta.ca.tunein.CommentControllerInterface#editText(java.lang.String)
-	 */
 	@Override
 	public void editText(String text) {
 		comment.setComment(text);
 	}
 
-	/* (non-Javadoc)
-	 * @see cs.ualberta.ca.tunein.CommentControllerInterface#changeLoc(cs.ualberta.ca.tunein.GeoLocation)
-	 */
 	@Override
 	public void changeLoc(GeoLocation loc) {
 		comment.setGeolocation(loc);
 	}
 
-	/* (non-Javadoc)
-	 * @see cs.ualberta.ca.tunein.CommentControllerInterface#addImg(cs.ualberta.ca.tunein.Image)
-	 */
 	@Override
 	public void addImg(Image img) {
 		comment.setImg(img);
 	}
 	
-	/* (non-Javadoc)
-	 * @see cs.ualberta.ca.tunein.CommentControllerInterface#addReply(cs.ualberta.ca.tunein.Comment)
-	 */
 	@Override
 	public void addReply(Comment aComment) {
 		comment.addReply(aComment);
 	}
 
-	/* (non-Javadoc)
-	 * @see cs.ualberta.ca.tunein.CommentControllerInterface#addtoCache(cs.ualberta.ca.tunein.Comment)
-	 */
 	@Override
 	public void addtoCache(Comment aComment) {
 		// TODO Auto-generated method stub
 	}
 	
-	/* (non-Javadoc)
-	 * @see cs.ualberta.ca.tunein.CommentControllerInterface#favorite(cs.ualberta.ca.tunein.Comment)
-	 */
 	@Override
 	public void favorite(Comment aComment) {
 		// TODO Auto-generated method stub
 	}
 
-	/* (non-Javadoc)
-	 * @see cs.ualberta.ca.tunein.CommentControllerInterface#editTitle(java.lang.String)
-	 */
 	@Override
 	public void editTitle(String text) {
 		comment.setTitle(text);
+	}
+	
+	@Override
+	public boolean checkValid(Activity act) {
+		//id of the current viewer
+		String currentID = ((User) act.getApplication()).getUniqueID();
+		return comment.getCommenter().getUniqueID().equals(currentID);
 	}
 
 }

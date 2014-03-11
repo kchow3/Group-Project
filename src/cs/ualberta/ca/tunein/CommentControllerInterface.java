@@ -1,5 +1,7 @@
 package cs.ualberta.ca.tunein;
 
+import android.app.Activity;
+
 /**
  * Controller
  * CommentControllerInterface Interface:
@@ -48,5 +50,14 @@ public interface CommentControllerInterface {
 	 * @param text The new title of the comment.
 	 */
 	public void editTitle(String text);
+	
+	/**
+	 * This method is for checking if the user's 
+	 * user id matches the comment creator's id so that
+	 * they can edit the comment.
+	 * @param commentID The unique id of a commenter.
+	 * @param act The activity that calls this controller.
+	 */
+	public boolean checkValid(Activity act);
 	
 }

@@ -3,6 +3,7 @@ package cs.ualberta.ca.tunein;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,9 @@ import android.widget.TextView;
  * This class is not complete yet.
  */
 public class ReplyViewAdapter extends BaseExpandableListAdapter{
+	
+	//public string that tags the extra of the comment that is passed to CommentPageActivity
+	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
 	
 	private Context context;
 	//holder for elements in the row
@@ -93,10 +97,12 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 		holder.textViewReplyDate.setText(replies.get(groupPosition).getReplies().get(childPosition).dateToString());
 		
 		//set onclick listeners for buttons and the tag for position
+		//int array to send indexes
+		int arr[] = {groupPosition, childPosition};
 		holder.buttonRowReply.setOnClickListener(replyChildBtnClick);
-		holder.buttonRowReply.setTag(childPosition);
+		holder.buttonRowReply.setTag(arr);
 		holder.buttonReplyView.setOnClickListener(viewChildBtnClick);
-		holder.buttonReplyView.setTag(childPosition);
+		holder.buttonReplyView.setTag(arr);
 		
 		//set the holder
         rowView.setTag(holder);
@@ -191,6 +197,11 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	{
 	    public void onClick(View v)
 	    {
+	    	int index[] = (int[])v.getTag();
+	    	Comment aComment = replies.get(index[0]).getReplies().get(index[1]);
+	    	Intent intent = new Intent(context, CommentPageActivity.class);
+	    	intent.putExtra(EXTRA_COMMENT, aComment);
+	    	context.startActivity(intent);
 	    }
 	};
 	
@@ -213,6 +224,11 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	{
 	    public void onClick(View v)
 	    {
+	    	int index = (Integer) v.getTag();
+	    	Comment aComment = replies.get(index);
+	    	Intent intent = new Intent(context, CommentPageActivity.class);
+	    	intent.putExtra(EXTRA_COMMENT, aComment);
+	    	context.startActivity(intent);
 	    }
 	};
 	

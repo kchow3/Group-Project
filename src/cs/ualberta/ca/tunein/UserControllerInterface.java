@@ -18,18 +18,14 @@ public interface UserControllerInterface {
 	public void loadUser();
 	
 	/**
+	 * This method saves the user info.
+	 */
+	public void saveUser();
+	
+	/**
 	 * This method changes the username of the
 	 * user using the app.
 	 * @param name The new username.
 	 */
 	public void changeUsername(String name, Activity act);
-	
-	/**
-	 * This method is for checking if the user's 
-	 * user id matches the comment creator's id so that
-	 * they can edit the comment.
-	 * @param commentID The unique id of a commenter.
-	 * @param act The activity that calls this controller.
-	 */
-	public boolean checkValid(String commentID, Activity act);
 }
