@@ -1,5 +1,6 @@
 package cs.ualberta.ca.tunein;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.Date;
  * image classes. This class is used in the comment controller.
  *
  */
-public class Comment
+public class Comment implements Serializable
 {
 	//user that creates the comment
 	private Commenter commenter;
