@@ -35,14 +35,14 @@ public class TopicListActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
+	    
+	    threadList = new Thread();
 	}
 	
 	@Override
 	protected void onResume()
 	{
 		super.onResume();
-		
-		threadList = new Thread();
 		
 		//setup the comment listview
 		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList.getDiscussionThread());

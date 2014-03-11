@@ -1,5 +1,7 @@
 package cs.ualberta.ca.tunein;
 
+import java.io.Serializable;
+
 import android.app.Application;
 
 /**
@@ -14,7 +16,7 @@ import android.app.Application;
  * String id = ((Commenter) this.getApplication()).getUniqueID();
  * to get the id.
  */
-public class Commenter extends Application{
+public class Commenter extends Application implements Serializable{
 
 	private String name;
 	private String uniqueID; 
