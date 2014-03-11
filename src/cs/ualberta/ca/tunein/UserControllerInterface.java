@@ -18,6 +18,11 @@ public interface UserControllerInterface {
 	public void loadUser();
 	
 	/**
+	 * This method saves the user info.
+	 */
+	public void saveUser();
+	
+	/**
 	 * This method changes the username of the
 	 * user using the app.
 	 * @param name The new username.

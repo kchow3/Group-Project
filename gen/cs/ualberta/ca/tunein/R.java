@@ -40,7 +40,7 @@ public final class R {
         public static final int buttonRowReply=0x7f08002b;
         public static final int buttonSave=0x7f08001f;
         public static final int buttonView=0x7f080019;
-        public static final int date_button=0x7f080006;
+        public static final int date_button=0x7f080008;
         public static final int editTextComment=0x7f080024;
         public static final int edit_username=0x7f080003;
         public static final int expandableListViewReply=0x7f080017;
@@ -50,9 +50,9 @@ public final class R {
         public static final int layoutCommentRow=0x7f080018;
         public static final int listViewTopics=0x7f080030;
         public static final int location_text=0x7f080001;
-        public static final int myLocation_button=0x7f080009;
-        public static final int otherLocation_button=0x7f080007;
-        public static final int pictures_button=0x7f080008;
+        public static final int myLocation_button=0x7f080007;
+        public static final int otherLocation_button=0x7f080006;
+        public static final int pictures_button=0x7f080009;
         public static final int textViewCommentBlock=0x7f080013;
         public static final int textViewCommentDate=0x7f08000c;
         public static final int textViewCommentFavCount=0x7f08000d;
