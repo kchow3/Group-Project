@@ -124,6 +124,7 @@ public class CommentPageActivity extends Activity {
 		}
 		
 		
+		
 	}
 
 }

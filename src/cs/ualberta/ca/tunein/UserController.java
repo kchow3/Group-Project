@@ -2,12 +2,9 @@ package cs.ualberta.ca.tunein;
 
 import android.app.Activity;
 
-public class UserController implements CommenterControllerInterface {
-
-	private Commenter user;
+public class UserController implements UserControllerInterface {
 	
-	public UserController(Commenter aUser) {
-		this.user = aUser;
+	public UserController() {
 	}
 
 	@Override
@@ -16,13 +13,13 @@ public class UserController implements CommenterControllerInterface {
 	}
 
 	@Override
-	public void changeUsername(String name) {
-		this.user.setName(name);
+	public void changeUsername(String name, Activity act) {
+		((User) act.getApplication()).setName(name);
 	}
 
 	@Override
 	public boolean checkValid(String commentID, Activity act) {
-		String currentID = ((Commenter) act.getApplication()).getUniqueID();
+		String currentID = ((User) act.getApplication()).getUniqueID();
 		
 		return commentID.equals(currentID);
 	}

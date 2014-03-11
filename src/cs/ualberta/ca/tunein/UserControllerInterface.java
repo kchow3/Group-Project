@@ -1,52 +1,35 @@
 package cs.ualberta.ca.tunein;
 
+import android.app.Activity;
+
 /**
  * Controller
- * CommentControllerInterface Interface:
- * This interface is for implementing a CommentController.
+ * UserControllerInterface Class:
+ * This class is an interface for the UserController.
+ * The purpose of this class is to modify the User model
+ * and load/check user credentials.
  */
 public interface UserControllerInterface {
 
 	/**
-	 * This method is used to favorite a comment.
-	 * @param aComment The comment that is favorited.
+	 * This method loads the user info when there
+	 * is a save of user info.
 	 */
-	public void favorite(Comment aComment);
+	public void loadUser();
 	
 	/**
-	 * This method edits the comment body of a comment.
-	 * @param text The new text that will replace the old text.
+	 * This method changes the username of the
+	 * user using the app.
+	 * @param name The new username.
 	 */
-	public void editText(String text);
+	public void changeUsername(String name, Activity act);
 	
 	/**
-	 * This method changes the geolocation of the comment.
-	 * @param loc The new location that the comment will be changed to.
+	 * This method is for checking if the user's 
+	 * user id matches the comment creator's id so that
+	 * they can edit the comment.
+	 * @param commentID The unique id of a commenter.
+	 * @param act The activity that calls this controller.
 	 */
-	public void changeLoc(GeoLocation loc);
-	
-	/**
-	 * This method adds/changes the image of the comment.
-	 * @param img The new image that will be set in the comment.
-	 */
-	public void addImg(Image img);
-	
-	/**
-	 * This method adds the comment to the cache.
-	 * @param aComment The comment that will be added to the cache.
-	 */
-	public void addtoCache(Comment aComment);
-	
-	/**
-	 * This method adds a reply comment to the comment.
-	 * @param aComment The reply of the comment.
-	 */
-	public void addReply(Comment aComment);
-	
-	/**
-	 * This method changes the title of the comment.
-	 * @param text The new title of the comment.
-	 */
-	public void editTitle(String text);
-	
+	public boolean checkValid(String commentID, Activity act);
 }

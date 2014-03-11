@@ -8,15 +8,10 @@ import android.app.Application;
  * Model
  * Commenter Class:
  * This is a model class for the user that creates a comment.
- * This class is not complete yet. The only attributes right now
- * is a name for the commenter. To access this class throughout the
- * whole app you can use 
- * String username = ((Commenter) this.getApplication()).getName();
- * to retrieve the username and 
- * String id = ((Commenter) this.getApplication()).getUniqueID();
- * to get the id.
+ * This class is mainly used by getting passed in User model
+ * info and uses that to create a comment author.
  */
-public class Commenter extends Application implements Serializable{
+public class Commenter implements Serializable{
 
 	private String name;
 	private String uniqueID; 
