@@ -26,7 +26,7 @@ public final class R {
     public static final class id {
         public static final int RelativeLayout1=0x7f08002e;
         public static final int action_settings=0x7f080034;
-        public static final int button1=0x7f080009;
+        public static final int button1=0x7f080004;
         public static final int buttonCommentEdit=0x7f080015;
         public static final int buttonCommentFav=0x7f080012;
         public static final int buttonCommentReply=0x7f080016;
@@ -40,19 +40,19 @@ public final class R {
         public static final int buttonRowReply=0x7f08002b;
         public static final int buttonSave=0x7f08001f;
         public static final int buttonView=0x7f080019;
-        public static final int date_button=0x7f080003;
+        public static final int date_button=0x7f080006;
         public static final int editTextComment=0x7f080024;
-        public static final int edit_username=0x7f080008;
+        public static final int edit_username=0x7f080003;
         public static final int expandableListViewReply=0x7f080017;
-        public static final int fav_button=0x7f080002;
+        public static final int fav_button=0x7f080005;
         public static final int imageViewCommentImage=0x7f080014;
         public static final int imageViewUpload=0x7f080027;
         public static final int layoutCommentRow=0x7f080018;
         public static final int listViewTopics=0x7f080030;
         public static final int location_text=0x7f080001;
-        public static final int myLocation_button=0x7f080006;
-        public static final int otherLocation_button=0x7f080004;
-        public static final int pictures_button=0x7f080005;
+        public static final int myLocation_button=0x7f080009;
+        public static final int otherLocation_button=0x7f080007;
+        public static final int pictures_button=0x7f080008;
         public static final int textViewCommentBlock=0x7f080013;
         public static final int textViewCommentDate=0x7f08000c;
         public static final int textViewCommentFavCount=0x7f08000d;
@@ -76,7 +76,7 @@ public final class R {
         public static final int textViewTopics=0x7f08002f;
         public static final int textViewUser=0x7f08001d;
         public static final int title=0x7f080000;
-        public static final int username_text=0x7f080007;
+        public static final int username_text=0x7f080002;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
