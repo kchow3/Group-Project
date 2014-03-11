@@ -1,5 +1,7 @@
 package cs.ualberta.ca.tunein;
 
-public class User {
+import android.app.Application;
+
+public class User extends Application {
 
 }

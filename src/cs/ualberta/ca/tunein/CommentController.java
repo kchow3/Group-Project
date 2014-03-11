@@ -9,7 +9,7 @@ package cs.ualberta.ca.tunein;
  * To use this controller create a new CommentController object with a comment
  * and using that controller modify the comment sent to the controller.
  */
-public class CommentController implements CommentControllerInterface {
+public class CommentController implements UserControllerInterface {
 
 	private Comment comment;
 	

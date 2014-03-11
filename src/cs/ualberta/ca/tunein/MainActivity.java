@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 		
 		//new user construction
 		Commenter user = new Commenter(id);
-		CommenterController cntrl = new CommenterController(user);
+		UserController cntrl = new UserController(user);
 		//load user to check for saved user name
 		cntrl.loadUser();
 		

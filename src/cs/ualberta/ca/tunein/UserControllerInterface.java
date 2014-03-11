@@ -5,7 +5,7 @@ package cs.ualberta.ca.tunein;
  * CommentControllerInterface Interface:
  * This interface is for implementing a CommentController.
  */
-public interface CommentControllerInterface {
+public interface UserControllerInterface {
 
 	/**
 	 * This method is used to favorite a comment.

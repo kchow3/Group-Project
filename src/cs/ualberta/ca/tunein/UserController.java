@@ -2,11 +2,11 @@ package cs.ualberta.ca.tunein;
 
 import android.app.Activity;
 
-public class CommenterController implements CommenterControllerInterface {
+public class UserController implements CommenterControllerInterface {
 
 	private Commenter user;
 	
-	public CommenterController(Commenter aUser) {
+	public UserController(Commenter aUser) {
 		this.user = aUser;
 	}
 

@@ -123,12 +123,6 @@ public class CommentPageActivity extends Activity {
 			imageViewCommentImage.setVisibility(View.VISIBLE);
 		}
 		
-		//check if comment author for edit
-		CommenterController cntrl = new CommenterController(aComment);
-		if(cntrl.checkValid(aComment.getCommenter().getUniqueID(), this))
-		{
-			buttonCommentEdit.setVisibility(View.VISIBLE);
-		}
 		
 	}
 
