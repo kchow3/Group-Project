@@ -41,6 +41,7 @@ public class CommentPageActivity extends Activity {
 		
 		//setup the reply listview
 		this.viewAdapter = new ReplyViewAdapter(this, replies);
+		setContentView(R.layout.comment_view);
 		ExpandableListView listview = (ExpandableListView) findViewById(R.id.expandableListViewReply);
 		
 		//setup

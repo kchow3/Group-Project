@@ -92,6 +92,8 @@ public class TopicListActivity extends Activity {
 		        		Comment newComment  = new Comment(user, title, comment, loc);
 		        		cntrl.createTopic(newComment);
 		        		
+		        		Log.v("thread size", Integer.toString(threadList.getDiscussionThread().size()));
+		        		
 		        		viewAdapter.updateThreadView(threadList);
 		            } 
 		            else 

@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="326dp" >
 
     <EditText
         android:id="@+id/editTextComment"
@@ -38,18 +43,18 @@
         android:id="@+id/buttonImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageViewUpload"
-        android:layout_marginLeft="34dp"
-        android:layout_toRightOf="@+id/imageViewUpload"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/editTextComment"
         android:text="Upload Image" />
 
     <ImageView
         android:id="@+id/imageViewUpload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignLeft="@+id/editTextComment"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="36dp"
-        android:src="@drawable/ic_launcher"
-        android:visibility="invisible" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="22dp"
+        android:src="@drawable/ic_launcher" />
+
 </RelativeLayout>
+</ScrollView>
