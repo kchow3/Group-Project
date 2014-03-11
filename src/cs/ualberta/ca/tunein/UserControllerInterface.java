@@ -4,12 +4,12 @@ import android.app.Activity;
 
 /**
  * Controller
- * CommenterControllerInterface Class:
- * This class is an interface for the CommenterController.
- * The purpose of this class is to modify the Commenter model
+ * UserControllerInterface Class:
+ * This class is an interface for the UserController.
+ * The purpose of this class is to modify the User model
  * and load/check user credentials.
  */
-public interface CommenterControllerInterface {
+public interface UserControllerInterface {
 
 	/**
 	 * This method loads the user info when there
@@ -22,10 +22,10 @@ public interface CommenterControllerInterface {
 	 * user using the app.
 	 * @param name The new username.
 	 */
-	public void changeUsername(String name);
+	public void changeUsername(String name, Activity act);
 	
 	/**
-	 * This method is for checking if the commenter's 
+	 * This method is for checking if the user's 
 	 * user id matches the comment creator's id so that
 	 * they can edit the comment.
 	 * @param commentID The unique id of a commenter.

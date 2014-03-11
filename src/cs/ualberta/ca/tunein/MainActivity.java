@@ -29,10 +29,13 @@ public class MainActivity extends Activity {
 		//setup an unique id for the user that is attached to the phone
 		final TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
 		String id = "" + tm.getDeviceId();
+		String name = "Anonymous";
 		
-		//new user construction
-		Commenter user = new Commenter(id);
-		CommenterController cntrl = new CommenterController(user);
+		//not working code.
+		//((User) this.getApplication()).setName(name);
+		//((User) this.getApplication()).setUniqueID(id);
+		
+		UserController cntrl = new UserController();
 		//load user to check for saved user name
 		cntrl.loadUser();
 		

@@ -3,6 +3,7 @@ package cs.ualberta.ca.tunein;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,10 @@ import android.widget.TextView;
  * to create a list view and load in comments.
  */
 public class CommentViewAdapter extends ArrayAdapter<Comment>{
-
+	
+	//public string that tags the extra of the comment that is passed to CommentPageActivity
+	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
+	
 	private Context context;
 	//holder for the elements in the row
 	private ViewHolder holder;
@@ -146,6 +150,11 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	{
 	    public void onClick(View v)
 	    {
+	    	int index = (Integer) v.getTag();
+	    	Comment aComment = commentList.get(index);
+	    	Intent intent = new Intent(context, CommentPageActivity.class);
+	    	intent.putExtra(EXTRA_COMMENT, aComment);
+	    	context.startActivity(intent);
 	    }
 	};
 	

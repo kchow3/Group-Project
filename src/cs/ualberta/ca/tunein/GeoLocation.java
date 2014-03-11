@@ -1,12 +1,14 @@
 package cs.ualberta.ca.tunein;
 
+import java.io.Serializable;
+
 /**
  * Model
  * GeoLocation Class:
  * This class is a model of the geolocation of a comment.
  * This class is not comeplete yet.
  */
-public class GeoLocation {
+public class GeoLocation implements Serializable{
 
 	private long longitude;
 	private long latitude;

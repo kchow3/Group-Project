@@ -1,5 +1,7 @@
 package cs.ualberta.ca.tunein;
 
+import java.io.Serializable;
+
 import android.graphics.Bitmap;
 
 /**
@@ -9,7 +11,7 @@ import android.graphics.Bitmap;
  * bitmap to store the image of a comment.
  * This is not yet complete.
  */
-public class Image {
+public class Image implements Serializable{
 
 	private Bitmap bitMap;
 	
