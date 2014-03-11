@@ -17,12 +17,4 @@ public class UserController implements UserControllerInterface {
 		((User) act.getApplication()).setName(name);
 	}
 
-	@Override
-	public boolean checkValid(String commentID, Activity act) {
-		String currentID = ((User) act.getApplication()).getUniqueID();
-		
-		return commentID.equals(currentID);
-	}
-
-
 }

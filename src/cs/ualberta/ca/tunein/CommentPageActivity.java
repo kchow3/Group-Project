@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -123,8 +124,58 @@ public class CommentPageActivity extends Activity {
 			imageViewCommentImage.setVisibility(View.VISIBLE);
 		}
 		
+		CommentController cntrl = new CommentController(aComment);
+		if(cntrl.checkValid(this))
+		{
+			buttonCommentEdit.setVisibility(View.VISIBLE);
+		}
 		
-		
+		buttonCommentFav.setOnClickListener(favBtnClick);
+		buttonCommentSave.setOnClickListener(saveBtnClick);
+		buttonCommentEdit.setOnClickListener(editBtnClick);
+		buttonCommentReply.setOnClickListener(replyBtnClick);
 	}
+	
+	/**
+	 * This click listener will add the comment to user's favorites.
+	 */
+	private OnClickListener favBtnClick = new OnClickListener() 
+	{
+	    public void onClick(View v)
+	    {
+	    }
+	};
+	
+	/**
+	 * This click listener will saved the comment to user's cache.
+	 */
+	private OnClickListener saveBtnClick = new OnClickListener() 
+	{
+	    public void onClick(View v)
+	    {
+	    }
+	};
+	
+	/**
+	 * This click listener will go to edit page to edit the comment
+	 * if they are the comment author.
+	 */
+	private OnClickListener editBtnClick = new OnClickListener() 
+	{
+	    public void onClick(View v)
+	    {
+	    }
+	};
+	
+	/**
+	 * This click listner will go to reply page to create a reply comment
+	 * to the comment that is being viewed.
+	 */
+	private OnClickListener replyBtnClick = new OnClickListener() 
+	{
+	    public void onClick(View v)
+	    {
+	    }
+	};
 
 }
