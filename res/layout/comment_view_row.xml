@@ -89,7 +89,6 @@
             android:layout_alignBottom="@+id/textViewFavCount"
             android:layout_alignParentRight="true"
             android:height="20dp"
-
             android:text="Favorited!"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:visibility="invisible" />
@@ -114,7 +113,6 @@
             android:layout_alignBottom="@+id/textViewFavorited"
             android:layout_alignLeft="@+id/buttonSave"
             android:height="20dp"
-
             android:text="Saved!"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:visibility="invisible" />

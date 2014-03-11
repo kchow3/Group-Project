@@ -30,7 +30,6 @@ public class TopicListActivity extends Activity {
 	private String title;
 	private String comment;
 	private Image img;
-	private boolean hasImg;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -77,28 +76,34 @@ public class TopicListActivity extends Activity {
 		            title = inputTitle.getText().toString();
 		            comment = inputComment.getText().toString();
 		            
+		            //create comment with image 
 		            if (inputImage.getVisibility() == View.VISIBLE) 
 		            {
 		            	inputImage.buildDrawingCache();
 		            	Bitmap bmp = inputImage.getDrawingCache();
-		            	//img = new Image(bmp);
-		            	hasImg = true;
+		            	img = new Image(bmp);
 	            	
 		        		//temp user and geo location
 		        		Commenter user = new Commenter("bob");
 		        		GeoLocation loc = new GeoLocation(5, 10);
 		        		
 		        		ThreadController cntrl = new ThreadController(threadList);
-		        		Comment newComment  = new Comment(user, title, comment, loc);
+		        		Comment newComment  = new Comment(user, title, comment, loc, img);
 		        		cntrl.createTopic(newComment);
-		        		
-		        		Log.v("thread size", Integer.toString(threadList.getDiscussionThread().size()));
 		        		
 		        		viewAdapter.updateThreadView(threadList);
 		            } 
 		            else 
-		            {
-		                hasImg = false;
+		            {	                
+		              //temp user and geo location
+		        		Commenter user = new Commenter("bob");
+		        		GeoLocation loc = new GeoLocation(5, 10);
+		        		
+		        		ThreadController cntrl = new ThreadController(threadList);
+		        		Comment newComment  = new Comment(user, title, comment, loc);
+		        		cntrl.createTopic(newComment);
+
+		        		viewAdapter.updateThreadView(threadList);
 		            }
 		        }
 		    })

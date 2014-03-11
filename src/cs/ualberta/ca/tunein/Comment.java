@@ -58,7 +58,7 @@ public class Comment
 		this.replies = new ArrayList<Comment>();
 		this.hasImage = false;
 		this.favorited = false;
-		this.saved = true;
+		this.saved = false;
 		this.favoriteCount = 0;
 		this.replyCount = 0;
 	}
@@ -82,7 +82,7 @@ public class Comment
 		this.replies = new ArrayList<Comment>();
 		this.hasImage = true;
 		this.favorited = false;
-		this.saved = true;
+		this.saved = false;
 		this.favoriteCount = 0;
 		this.replyCount = 0;
 	}

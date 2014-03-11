@@ -54,7 +54,9 @@
         android:layout_alignLeft="@+id/editTextComment"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="22dp"
-        android:src="@drawable/ic_launcher" />
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_launcher"
+        android:visibility="invisible" />
 
 </RelativeLayout>
 </ScrollView>
