@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,7 +149,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 				
 		//get rowView from inflater
 		View rowView = null;
-		rowView = inflater.inflate(R.layout.comment_view_row, parent, false);
+		rowView = inflater.inflate(R.layout.reply_view_row, parent, false);
 		
 		//set all the elements in the custom comment row
 		holder.textViewReply = (TextView) rowView.findViewById(R.id.textViewReply);
@@ -242,6 +243,11 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	    {
 	    }
 	};
+
+	public void updateThreadView(ArrayList<Comment> replies) {
+		this.replies = replies;
+		notifyDataSetChanged();
+	}
 	
 	
 }

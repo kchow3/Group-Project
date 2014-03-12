@@ -3,11 +3,16 @@ package cs.ualberta.ca.tunein;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,6 +40,7 @@ public class CommentPageActivity extends Activity {
 	//reply list
 	private ArrayList<Comment> replies;
 	
+	//variables for seeting up textviews/buttons/imageview
 	private TextView textViewCommentTitle;
 	private TextView textViewCommentUser;
 	private TextView textViewCommentDate;
@@ -50,6 +56,11 @@ public class CommentPageActivity extends Activity {
 	private Button buttonCommentReply;
 	
 	private ImageView imageViewCommentImage;
+	
+	//variables for creating a reply
+	private String title;
+	private String text;
+	private Image img;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -175,6 +186,62 @@ public class CommentPageActivity extends Activity {
 	{
 	    public void onClick(View v)
 	    {
+	    	LayoutInflater inflater = LayoutInflater.from(CommentPageActivity.this);
+			final View createView = inflater.inflate(R.layout.create_comment_view, null);
+
+			final TextView inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
+			final TextView inputComment = (EditText) createView.findViewById(R.id.editTextComment);
+			final ImageView inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
+			
+			AlertDialog dialog = new AlertDialog.Builder(CommentPageActivity.this)
+			    .setTitle("Create Comment")
+			    .setView(createView)
+			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			        public void onClick(DialogInterface dialog, int whichButton) {
+			            title = inputTitle.getText().toString();
+			            text = inputComment.getText().toString();
+			            
+			            //create comment with image else one with no image
+			            if (inputImage.getVisibility() == View.VISIBLE) 
+			            {
+			            	inputImage.buildDrawingCache();
+			            	Bitmap bmp = inputImage.getDrawingCache();
+			            	img = new Image(bmp);
+		            	
+			        		//temp geo location
+			            	String username = ((User)getApplication()).getName();
+			            	String id = ((User) getApplication()).getUniqueID();
+			        		Commenter user = new Commenter(username, id);
+			        		
+			        		GeoLocation loc = new GeoLocation(5, 10);
+			        		
+			        		Comment newComment  = new Comment(user, title, text, loc, img);
+			        		CommentController cntrl = new CommentController(aComment);
+			        		cntrl.addReply(newComment);
+			        		
+			        		replies = aComment.getReplies();
+			        		viewAdapter.updateThreadView(replies);
+			            } 
+			            else 
+			            {	                
+			            	//temp geo location
+			            	String username = ((User)getApplication()).getName();
+			            	String id = ((User) getApplication()).getUniqueID();
+			        		Commenter user = new Commenter(username, id);
+			        		
+			        		GeoLocation loc = new GeoLocation(5, 10);
+			        		
+			        		Comment newComment  = new Comment(user, title, text, loc, img);
+			        		CommentController cntrl = new CommentController(aComment);
+			        		cntrl.addReply(newComment);
+			        		
+			        		replies = aComment.getReplies();
+			        		viewAdapter.updateThreadView(replies);
+			            }
+			        }
+			    })
+			    .setNegativeButton("Cancel", null).create();
+			dialog.show();
 	    }
 	};
 

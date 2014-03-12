@@ -91,8 +91,10 @@ public class TopicListActivity extends Activity {
 		            	Bitmap bmp = inputImage.getDrawingCache();
 		            	img = new Image(bmp);
 	            	
-		        		//temp user and geo location
-		        		Commenter user = new Commenter("bob");
+		        		//temp geo location
+		            	String username = ((User)getApplication()).getName();
+		            	String id = ((User) getApplication()).getUniqueID();
+		        		Commenter user = new Commenter(username, id);
 		        		GeoLocation loc = new GeoLocation(5, 10);
 		        		
 		        		ThreadController cntrl = new ThreadController(threadList);
@@ -103,8 +105,10 @@ public class TopicListActivity extends Activity {
 		            } 
 		            else 
 		            {	                
-		              //temp user and geo location
-		        		Commenter user = new Commenter("bob");
+		            	//temp geo location
+		            	String username = ((User)getApplication()).getName();
+		            	String id = ((User) getApplication()).getUniqueID();
+		        		Commenter user = new Commenter(username, id);
 		        		GeoLocation loc = new GeoLocation(5, 10);
 		        		
 		        		ThreadController cntrl = new ThreadController(threadList);
