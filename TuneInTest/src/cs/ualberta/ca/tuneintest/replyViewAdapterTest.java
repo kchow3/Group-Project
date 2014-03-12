@@ -1,7 +1,17 @@
 package cs.ualberta.ca.tuneintest;
 
-import junit.framework.TestCase;
+import java.util.Date;
 
-public class replyViewAdapterTest extends TestCase {
-//Need to add tests to see if comment children and groups are correctly displayed and identified
+import android.test.ActivityInstrumentationTestCase2;
+import cs.ualberta.ca.tunein.MainActivity;
+import cs.ualberta.ca.tunein.ReplyViewAdapter;
+
+public class replyViewAdapterTest extends ActivityInstrumentationTestCase2<MainActivity> {
+	
+	public replyViewAdapterTest() {
+		super(MainActivity.class);
+	}
+	
+//Need to add tests for all properties of the ReplyViewAdapter class
+
 }
