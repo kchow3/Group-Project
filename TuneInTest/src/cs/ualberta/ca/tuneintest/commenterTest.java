@@ -1,7 +1,17 @@
 package cs.ualberta.ca.tuneintest;
 
-import junit.framework.TestCase;
+import java.util.Date;
 
-public class commenterTest extends TestCase {
-//Need to add test to see if username of the commenter is displayed properly
+import android.test.ActivityInstrumentationTestCase2;
+import cs.ualberta.ca.tunein.MainActivity;
+import cs.ualberta.ca.tunein.Commenter;
+
+public class commenterTest extends ActivityInstrumentationTestCase2<MainActivity> {
+	
+	public commenterTest() {
+		super(MainActivity.class);
+	}
+	
+//Need to add tests for all properties of the Commenter class
+
 }
