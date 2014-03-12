@@ -222,6 +222,68 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	{
 	    public void onClick(View v)
 	    {
+	    	final int index[] = (int[])v.getTag();
+	    	LayoutInflater inflater = LayoutInflater.from(context);
+			final View createView = inflater.inflate(R.layout.create_comment_view, null);
+
+			final TextView inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
+			final TextView inputComment = (EditText) createView.findViewById(R.id.editTextComment);
+			final ImageView inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
+			
+			AlertDialog dialog = new AlertDialog.Builder(context)
+			    .setTitle("Create Comment")
+			    .setView(createView)
+			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			        public void onClick(DialogInterface dialog, int whichButton) {
+			            String title = inputTitle.getText().toString();
+			            String text = inputComment.getText().toString();
+			            
+			            //create comment with image else one with no image
+			            if (inputImage.getVisibility() == View.VISIBLE) 
+			            {
+			            	inputImage.buildDrawingCache();
+			            	Bitmap bmp = inputImage.getDrawingCache();
+			            	Image img = new Image(bmp);
+		            	
+			            	//temp geo location
+			            	String username = ((User)((Activity) context).getApplication()).getName();
+			            	String id = ((User)((Activity) context).getApplication()).getUniqueID();
+			        		Commenter user = new Commenter(username, id);
+			        		
+			        		GeoLocation loc = new GeoLocation(5, 10);
+			        		
+			        		//current comment that is replied to using tag and get parent position
+			        		Comment currentComment = replies.get(index[0]).getReplies().get(index[1]);
+			        		//new comment reply
+			        		Comment newComment  = new Comment(user, title, text, loc);
+			        		CommentController cntrl = new CommentController(currentComment);
+			        		cntrl.addReply(newComment);
+			        		
+			        		updateReplyView(replies);
+			            } 
+			            else 
+			            {	                
+			            	//temp geo location
+			            	String username = ((User)((Activity) context).getApplication()).getName();
+			            	String id = ((User)((Activity) context).getApplication()).getUniqueID();
+			        		Commenter user = new Commenter(username, id);
+			        		
+			        		GeoLocation loc = new GeoLocation(5, 10);
+			        		
+			        		//current comment that is replied to using tag and get parent position
+			        		Comment currentComment = replies.get(index[0]).getReplies().get(index[1]);
+			        		//new comment reply
+			        		Comment newComment  = new Comment(user, title, text, loc);
+			        		CommentController cntrl = new CommentController(currentComment);
+			        		cntrl.addReply(newComment);
+			        		
+			        		updateReplyView(replies);
+			        		
+			            }
+			        }
+			    })
+			    .setNegativeButton("Cancel", null).create();
+			dialog.show();
 	    }
 	};
 	
