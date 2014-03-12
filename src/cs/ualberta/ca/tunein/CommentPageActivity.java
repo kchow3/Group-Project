@@ -235,6 +235,7 @@ public class CommentPageActivity extends Activity {
 			        		
 			        		replies = aComment.getReplies();
 			        		viewAdapter.updateReplyView(replies);
+			        		setupComment();
 			            }
 			        }
 			    })
@@ -242,5 +243,6 @@ public class CommentPageActivity extends Activity {
 			dialog.show();
 	    }
 	};
+	
 	
 }
