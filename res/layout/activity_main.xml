@@ -14,11 +14,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
         android:text="TUNE IN"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="50sp" />
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/location_text"
@@ -26,22 +25,31 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
         android:layout_toLeftOf="@+id/title"
-        android:text="\@"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="\@" />
 
-    <Button
-        android:id="@+id/fav_button"
-        android:layout_width="125sp"
-        android:layout_height="50sp"
-        android:layout_centerInParent="true"
-        android:onClick="goTopicListClick"
-        android:text="Favourites" />
+    <LinearLayout
+        android:id="@+id/linearLayout0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" >
+
+        <Button
+            android:id="@+id/fav_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".20"
+            android:onClick="goTopicListClick"
+            android:text="Favourites" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/fav_button"
+        android:layout_below="@+id/name_button"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" >
 
@@ -49,7 +57,7 @@
             android:id="@+id/otherLocation_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".25"
+            android:layout_weight=".20"
             android:onClick="goTopicListClick"
             android:text="Other Location" />
 
@@ -57,7 +65,7 @@
             android:id="@+id/myLocation_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".25"
+            android:layout_weight=".20"
             android:onClick="goTopicListClick"
             android:text="My Location" />
     </LinearLayout>
@@ -65,7 +73,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fav_button"
+        android:layout_below="@+id/linearLayout0"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" >
 
@@ -73,7 +81,7 @@
             android:id="@+id/date_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".25"
+            android:layout_weight=".20"
             android:onClick="goTopicListClick"
             android:text="Date" />
 
@@ -81,39 +89,34 @@
             android:id="@+id/pictures_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".25"
+            android:layout_weight=".20"
             android:onClick="goTopicListClick"
             android:text="With Pictures" />
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/edit_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/name_button"
-        android:layout_alignRight="@+id/linearLayout1"
-        android:layout_toRightOf="@+id/username_text"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
-
-    <TextView
-        android:id="@+id/username_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/linearLayout1"
-        android:layout_below="@+id/location_text"
-        android:text="Username:" />
 
     <Button
         android:id="@+id/name_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout1"
         android:layout_alignLeft="@+id/linearLayout1"
         android:layout_below="@+id/username_text"
         android:layout_toLeftOf="@+id/edit_username"
         android:text="Set" />
+
+    <EditText
+        android:id="@+id/edit_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/location_text"
+        android:layout_toRightOf="@+id/username_text"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/username_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/edit_username"
+        android:layout_alignLeft="@+id/linearLayout1"
+        android:text="Username:" />
 
 </RelativeLayout>
