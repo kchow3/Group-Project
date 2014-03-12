@@ -272,22 +272,21 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
 		            	
-			        		//temp geo location
+			            	//temp geo location
 			            	String username = ((User)((Activity) context).getApplication()).getName();
 			            	String id = ((User)((Activity) context).getApplication()).getUniqueID();
 			        		Commenter user = new Commenter(username, id);
 			        		
 			        		GeoLocation loc = new GeoLocation(5, 10);
 			        		
-			        		//old comment that is replied to
-			        		Comment oldComment = replies.get(i);
+			        		//current comment that is replied to using tag and get parent position
+			        		Comment currentComment = replies.get(i);
 			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc, img);
-			        		CommentController cntrl = new CommentController(oldComment);
+			        		Comment newComment  = new Comment(user, title, text, loc);
+			        		CommentController cntrl = new CommentController(currentComment);
 			        		cntrl.addReply(newComment);
 			        		
-			        		replies.add(newComment);
-			        		refreshReplyView();
+			        		updateReplyView(replies);
 			            } 
 			            else 
 			            {	                
@@ -298,15 +297,15 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			        		
 			        		GeoLocation loc = new GeoLocation(5, 10);
 			        		
-			        		//old comment that is replied to using tag and get parent position
-			        		Comment oldComment = replies.get(i);
+			        		//current comment that is replied to using tag and get parent position
+			        		Comment currentComment = replies.get(i);
 			        		//new comment reply
 			        		Comment newComment  = new Comment(user, title, text, loc);
-			        		CommentController cntrl = new CommentController(oldComment);
+			        		CommentController cntrl = new CommentController(currentComment);
 			        		cntrl.addReply(newComment);
 			        		
-			        		replies.get(i).addReply(newComment);
-			        		refreshReplyView();
+			        		updateReplyView(replies);
+			        		
 			            }
 			        }
 			    })
@@ -324,14 +323,5 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 		this.replies = replies;
 		notifyDataSetChanged();
 	}
-	
-	/**
-	 * Method to only refresh the view, this method
-	 * is only used in the ReplyViewAdapter class.
-	 */
-	private void refreshReplyView() {
-		notifyDataSetChanged();
-	}
-	
 	
 }

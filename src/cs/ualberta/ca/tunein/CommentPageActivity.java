@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -78,12 +79,14 @@ public class CommentPageActivity extends Activity {
 		
 		//setup
 		listview.setAdapter(viewAdapter);
+		viewAdapter.updateReplyView(replies);
 	}
 	
 	private void getInputComment()
 	{
 		Intent intent = getIntent();
 		this.aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
+		replies = aComment.getReplies();
 	}
 	
 	private void setupComment()
@@ -239,5 +242,5 @@ public class CommentPageActivity extends Activity {
 			dialog.show();
 	    }
 	};
-
+	
 }
