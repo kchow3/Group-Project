@@ -119,4 +119,12 @@
         android:layout_alignLeft="@+id/linearLayout1"
         android:text="Username:" />
 
+    <TextView
+        android:id="@+id/viewtopics_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/name_button"
+        android:layout_toRightOf="@+id/name_button"
+        android:text="How would you like to sort topics?" />
+
 </RelativeLayout>
