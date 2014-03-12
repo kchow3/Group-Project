@@ -1,7 +1,17 @@
 package cs.ualberta.ca.tuneintest;
 
-import junit.framework.TestCase;
+import java.util.Date;
 
-public class topicListActivityTest extends TestCase {
-//Need to add test to see if create comment button opens a dialog box for creating topics
+import android.test.ActivityInstrumentationTestCase2;
+import cs.ualberta.ca.tunein.MainActivity;
+import cs.ualberta.ca.tunein.TopicListActivity;
+
+public class topicListActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
+	
+	public topicListActivityTest() {
+		super(MainActivity.class);
+	}
+	
+//Need to add tests for all properties of the TopicListActivity class
+
 }
