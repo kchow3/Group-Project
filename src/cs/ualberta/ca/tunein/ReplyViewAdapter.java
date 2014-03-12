@@ -2,8 +2,12 @@ package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +15,8 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -29,6 +35,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	//holder for elements in the row
 	private ViewHolder holder;
 	private ArrayList<Comment> replies;
+	private ArrayList<Comment> childReplies;
 	
 	/**
 	 * View holder that holds the elements of a
@@ -54,6 +61,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	{
 		this.context = context;
 		this.replies = replies;
+		this.childReplies = new ArrayList<Comment>();
 	}
 
 
@@ -241,11 +249,87 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	{
 	    public void onClick(View v)
 	    {
+	    	final int i = (Integer) v.getTag();
+	    	LayoutInflater inflater = LayoutInflater.from(context);
+			final View createView = inflater.inflate(R.layout.create_comment_view, null);
+
+			final TextView inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
+			final TextView inputComment = (EditText) createView.findViewById(R.id.editTextComment);
+			final ImageView inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
+			
+			AlertDialog dialog = new AlertDialog.Builder(context)
+			    .setTitle("Create Comment")
+			    .setView(createView)
+			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			        public void onClick(DialogInterface dialog, int whichButton) {
+			            String title = inputTitle.getText().toString();
+			            String text = inputComment.getText().toString();
+			            
+			            //create comment with image else one with no image
+			            if (inputImage.getVisibility() == View.VISIBLE) 
+			            {
+			            	inputImage.buildDrawingCache();
+			            	Bitmap bmp = inputImage.getDrawingCache();
+			            	Image img = new Image(bmp);
+		            	
+			        		//temp geo location
+			            	String username = ((User)((Activity) context).getApplication()).getName();
+			            	String id = ((User)((Activity) context).getApplication()).getUniqueID();
+			        		Commenter user = new Commenter(username, id);
+			        		
+			        		GeoLocation loc = new GeoLocation(5, 10);
+			        		
+			        		//old comment that is replied to
+			        		Comment oldComment = replies.get(i);
+			        		//new comment reply
+			        		Comment newComment  = new Comment(user, title, text, loc, img);
+			        		CommentController cntrl = new CommentController(oldComment);
+			        		cntrl.addReply(newComment);
+			        		
+			        		replies.add(newComment);
+			        		refreshReplyView();
+			            } 
+			            else 
+			            {	                
+			            	//temp geo location
+			            	String username = ((User)((Activity) context).getApplication()).getName();
+			            	String id = ((User)((Activity) context).getApplication()).getUniqueID();
+			        		Commenter user = new Commenter(username, id);
+			        		
+			        		GeoLocation loc = new GeoLocation(5, 10);
+			        		
+			        		//old comment that is replied to using tag and get parent position
+			        		Comment oldComment = replies.get(i);
+			        		//new comment reply
+			        		Comment newComment  = new Comment(user, title, text, loc);
+			        		CommentController cntrl = new CommentController(oldComment);
+			        		cntrl.addReply(newComment);
+			        		
+			        		replies.get(i).addReply(newComment);
+			        		refreshReplyView();
+			            }
+			        }
+			    })
+			    .setNegativeButton("Cancel", null).create();
+			dialog.show();
 	    }
 	};
 
-	public void updateThreadView(ArrayList<Comment> replies) {
+	/**
+	 * Method to refresh the view and change the reference in
+	 * this adapter to the one passed in.
+	 * @param replies The new replies list.
+	 */
+	public void updateReplyView(ArrayList<Comment> replies) {
 		this.replies = replies;
+		notifyDataSetChanged();
+	}
+	
+	/**
+	 * Method to only refresh the view, this method
+	 * is only used in the ReplyViewAdapter class.
+	 */
+	private void refreshReplyView() {
 		notifyDataSetChanged();
 	}
 	

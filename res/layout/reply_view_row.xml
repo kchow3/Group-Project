@@ -25,17 +25,6 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:width="75dp" />
 
-    <Button
-        android:id="@+id/buttonRowReply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewReplyRowCount"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textViewReply"
-        android:height="40dp"
-        android:minHeight="64dp"
-        android:text="Reply" />
-
     <TextView
         android:id="@+id/textViewReplyUser"
         android:layout_width="wrap_content"
@@ -65,5 +54,16 @@
         android:height="35dp"
         android:minHeight="30dp"
         android:text="View" />
+
+    <Button
+        android:id="@+id/buttonRowReply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/buttonReplyView"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/buttonReplyView"
+        android:height="40dp"
+        android:minHeight="64dp"
+        android:text="Reply" />
 
 </RelativeLayout>

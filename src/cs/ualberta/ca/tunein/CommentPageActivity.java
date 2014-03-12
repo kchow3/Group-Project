@@ -57,11 +57,6 @@ public class CommentPageActivity extends Activity {
 	
 	private ImageView imageViewCommentImage;
 	
-	//variables for creating a reply
-	private String title;
-	private String text;
-	private Image img;
-	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -198,15 +193,15 @@ public class CommentPageActivity extends Activity {
 			    .setView(createView)
 			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			        public void onClick(DialogInterface dialog, int whichButton) {
-			            title = inputTitle.getText().toString();
-			            text = inputComment.getText().toString();
+			            String title = inputTitle.getText().toString();
+			            String text = inputComment.getText().toString();
 			            
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
-			            	img = new Image(bmp);
+			            	Image img = new Image(bmp);
 		            	
 			        		//temp geo location
 			            	String username = ((User)getApplication()).getName();
@@ -220,7 +215,7 @@ public class CommentPageActivity extends Activity {
 			        		cntrl.addReply(newComment);
 			        		
 			        		replies = aComment.getReplies();
-			        		viewAdapter.updateThreadView(replies);
+			        		viewAdapter.updateReplyView(replies);
 			            } 
 			            else 
 			            {	                
@@ -231,12 +226,12 @@ public class CommentPageActivity extends Activity {
 			        		
 			        		GeoLocation loc = new GeoLocation(5, 10);
 			        		
-			        		Comment newComment  = new Comment(user, title, text, loc, img);
+			        		Comment newComment  = new Comment(user, title, text, loc);
 			        		CommentController cntrl = new CommentController(aComment);
 			        		cntrl.addReply(newComment);
 			        		
 			        		replies = aComment.getReplies();
-			        		viewAdapter.updateThreadView(replies);
+			        		viewAdapter.updateReplyView(replies);
 			            }
 			        }
 			    })
