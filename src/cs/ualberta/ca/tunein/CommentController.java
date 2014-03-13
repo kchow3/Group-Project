@@ -42,6 +42,7 @@ public class CommentController implements CommentControllerInterface {
 	@Override
 	public void addReply(Comment aComment) {
 		comment.addReply(aComment);
+		comment.increaseReplyCount();
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class CommentController implements CommentControllerInterface {
 	
 	@Override
 	public void favorite(Comment aComment) {
-		// TODO Auto-generated method stub
+		comment.increaseFavCount();
 	}
 
 	@Override

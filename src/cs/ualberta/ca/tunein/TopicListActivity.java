@@ -1,5 +1,6 @@
 package cs.ualberta.ca.tunein;
 
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -26,7 +27,7 @@ public class TopicListActivity extends Activity {
 	//comment view adapter
 	private CommentViewAdapter viewAdapter;
 	//discussion thread list
-	private Thread threadList;
+	private ThreadList threadList;
 	//variables for adding topic
 	private String title;
 	private String comment;
@@ -37,7 +38,7 @@ public class TopicListActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    
-	    threadList = new Thread();
+	    threadList = new ThreadList();
 	}
 	
 	@Override
@@ -51,6 +52,7 @@ public class TopicListActivity extends Activity {
 		ListView listview = (ListView) findViewById(R.id.listViewTopics);
 		
 		//setup adapter
+		threadList.setAdapter(viewAdapter);
 		listview.setAdapter(viewAdapter);
 		
 	}
@@ -91,8 +93,10 @@ public class TopicListActivity extends Activity {
 		            	Bitmap bmp = inputImage.getDrawingCache();
 		            	img = new Image(bmp);
 	            	
-		        		//temp user and geo location
-		        		Commenter user = new Commenter("bob");
+		        		//temp geo location
+		            	String username = ((User)getApplication()).getName();
+		            	String id = ((User) getApplication()).getUniqueID();
+		        		Commenter user = new Commenter(username, id);
 		        		GeoLocation loc = new GeoLocation(5, 10);
 		        		
 		        		ThreadController cntrl = new ThreadController(threadList);
@@ -100,11 +104,15 @@ public class TopicListActivity extends Activity {
 		        		cntrl.createTopic(newComment);
 		        		
 		        		viewAdapter.updateThreadView(threadList);
+		        		
+		        		ElasticSearchOperations.pushCommentModel(newComment);
 		            } 
 		            else 
 		            {	                
-		              //temp user and geo location
-		        		Commenter user = new Commenter("bob");
+		            	//temp geo location
+		            	String username = ((User)getApplication()).getName();
+		            	String id = ((User) getApplication()).getUniqueID();
+		        		Commenter user = new Commenter(username, id);
 		        		GeoLocation loc = new GeoLocation(5, 10);
 		        		
 		        		ThreadController cntrl = new ThreadController(threadList);
@@ -112,6 +120,8 @@ public class TopicListActivity extends Activity {
 		        		cntrl.createTopic(newComment);
 
 		        		viewAdapter.updateThreadView(threadList);
+		        		
+		        		ElasticSearchOperations.pushCommentModel(newComment);
 		            }
 		        }
 		    })

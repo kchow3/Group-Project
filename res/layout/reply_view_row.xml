@@ -7,11 +7,12 @@
         android:id="@+id/textViewReply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:focusable="false"
         android:height="70dp"
-        android:hint="Reply" />
+        android:hint="Reply"
+        android:width="275dp" />
 
     <TextView
         android:id="@+id/textViewReplyRowCount"
@@ -23,18 +24,8 @@
         android:layout_toRightOf="@+id/textViewReplyDate"
         android:text="Reply #"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:width="75dp" />
-
-    <Button
-        android:id="@+id/buttonRowReply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewReplyRowCount"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textViewReply"
-        android:height="40dp"
-        android:minHeight="64dp"
-        android:text="Reply" />
+        android:width="75dp" 
+        android:focusable="false"/>
 
     <TextView
         android:id="@+id/textViewReplyUser"
@@ -44,7 +35,8 @@
         android:layout_alignTop="@+id/buttonReplyView"
         android:text="Username"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:width="100dp" />
+        android:width="100dp" 
+        android:focusable="false"/>
 
     <TextView
         android:id="@+id/textViewReplyDate"
@@ -54,7 +46,8 @@
         android:layout_below="@+id/textViewReplyUser"
         android:text="Date"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:width="100dp" />
+        android:width="100dp" 
+        android:focusable="false"/>
 
     <Button
         android:id="@+id/buttonReplyView"
@@ -62,8 +55,25 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewReply"
         android:layout_toLeftOf="@+id/buttonRowReply"
+        android:focusable="false"
+        android:gravity="center"
         android:height="35dp"
         android:minHeight="30dp"
-        android:text="View" />
+        android:text="View"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/buttonRowReply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/buttonReplyView"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/buttonReplyView"
+        android:focusable="false"
+        android:gravity="center"
+        android:height="40dp"
+        android:minHeight="64dp"
+        android:text="Reply"
+        android:textSize="15sp" />
 
 </RelativeLayout>

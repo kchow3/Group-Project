@@ -1,7 +1,17 @@
 package cs.ualberta.ca.tuneintest;
 
-import junit.framework.TestCase;
+import java.util.Date;
 
-public class imageTest extends TestCase {
-//Need to add test to see if bitmap is properly processed and displayed
+import android.test.ActivityInstrumentationTestCase2;
+import cs.ualberta.ca.tunein.MainActivity;
+import cs.ualberta.ca.tunein.Image;
+
+public class imageTest extends ActivityInstrumentationTestCase2<MainActivity> {
+	
+	public imageTest() {
+		super(MainActivity.class);
+	}
+	
+//Need to add tests for all properties of the Image class
+
 }
