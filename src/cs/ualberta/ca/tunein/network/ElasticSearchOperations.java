@@ -34,8 +34,8 @@ import cs.ualberta.ca.tunein.TopicListActivity;
  */
 public class ElasticSearchOperations {
 
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/testing";
-	//public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/testing/";
+	//public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn/";
 	public static final String LOG_TAG = "ElasticSearch";
 
 	private static Gson GSON = null;
@@ -46,7 +46,7 @@ public class ElasticSearchOperations {
 	 * @param model
 	 *            a Comment
 	 */
-	public static void pushCommentModel(final Comment model) {
+	public static void postCommentModel(final Comment model) {
 		if (GSON == null)
 			constructGson();
 
@@ -56,6 +56,49 @@ public class ElasticSearchOperations {
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
 				HttpPost request = new HttpPost(SERVER_URL);
+
+				try {
+					request.setEntity(new StringEntity(GSON.toJson(model)));
+					Log.v("GSON", GSON.toJson(model));
+				} catch (UnsupportedEncodingException exception) {
+					Log.w(LOG_TAG,
+							"Error encoding PicPostModel: "
+									+ exception.getMessage());
+					return;
+				}
+
+				HttpResponse response;
+				try {
+					response = client.execute(request);
+					Log.i(LOG_TAG, "Response: "
+							+ response.getStatusLine().toString());
+				} catch (IOException exception) {
+					Log.w(LOG_TAG,
+							"Error sending PicPostModel: "
+									+ exception.getMessage());
+				}
+				
+				String responseJson = "";
+				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Comment>>() {
+				}.getType();
+				final ElasticSearchSearchResponse<Comment> returnedData = GSON
+						.fromJson(responseJson, elasticSearchSearchResponseType);
+			}
+		};
+
+		thread.start();
+	}
+	
+	public static void putCommentModel(final Comment model) {
+		if (GSON == null)
+			constructGson();
+
+		Thread thread = new Thread() {
+
+			@Override
+			public void run() {
+				HttpClient client = new DefaultHttpClient();
+				HttpPost request = new HttpPost(SERVER_URL + model.getElasticID());
 
 				try {
 					request.setEntity(new StringEntity(GSON.toJson(model)));
@@ -104,7 +147,7 @@ public class ElasticSearchOperations {
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_URL + "/_search/");
+				HttpPost request = new HttpPost(SERVER_URL + "_search/");
 				String query = "{\"query\": {\"query_string\": {\"default_field\": \"title\",\"query\": \"*"
 						+ "" + "*\"}}}";
 				String responseJson = "";
@@ -133,7 +176,7 @@ public class ElasticSearchOperations {
 						responseJson += output;
 						output = reader.readLine();
 					}
-					Log.v("GSON", responseJson);
+					//Log.v("GSON", responseJson);
 				} catch (IOException exception) {
 					Log.w(LOG_TAG, "Error receiving search query response: "
 							+ exception.getMessage());

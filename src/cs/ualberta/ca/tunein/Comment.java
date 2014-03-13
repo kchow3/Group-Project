@@ -41,6 +41,8 @@ public class Comment implements Serializable
 	private int favoriteCount;
 	//number of replies to the comment
 	private int replyCount;
+	//id of Elastic Search
+	private String elasticID;
 	
 	/**
 	 * This constructor constructs a comment without an image.
@@ -188,6 +190,14 @@ public class Comment implements Serializable
 		this.replyCount = replyCount;
 	}
 	
+	public String getElasticID() {
+		return elasticID;
+	}
+
+	public void setElasticID(String elasticID) {
+		this.elasticID = elasticID;
+	}
+
 	/**
 	 * Increment the number times the comment was favorited.
 	 */
@@ -213,5 +223,7 @@ public class Comment implements Serializable
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy ");
 		return df.format(this.date);
 	}
+	
+	
 
 }

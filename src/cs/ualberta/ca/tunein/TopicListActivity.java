@@ -84,7 +84,7 @@ public class TopicListActivity extends Activity {
 		    .setTitle("Create Comment")
 		    .setView(createView)
 		    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-		        public void onClick(DialogInterface dialog, int whichButton) {
+		        public void onClick(DialogInterface dialog, int whichButton) { 
 		            title = inputTitle.getText().toString();
 		            comment = inputComment.getText().toString();
 		            
@@ -107,7 +107,7 @@ public class TopicListActivity extends Activity {
 		        		
 		        		viewAdapter.updateThreadView(threadList);
 		        		
-		        		ElasticSearchOperations.pushCommentModel(newComment);
+		        		ElasticSearchOperations.postCommentModel(newComment);
 		            } 
 		            else 
 		            {	                
@@ -123,7 +123,7 @@ public class TopicListActivity extends Activity {
 
 		        		viewAdapter.updateThreadView(threadList);
 		        		
-		        		ElasticSearchOperations.pushCommentModel(newComment);
+		        		ElasticSearchOperations.postCommentModel(newComment);
 		            }
 		        }
 		    })
