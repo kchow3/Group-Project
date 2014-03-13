@@ -1,8 +1,19 @@
 package cs.ualberta.ca.tuneintest;
 
-import junit.framework.TestCase;
 
-public class commentTest extends TestCase {
+import cs.ualberta.ca.tunein.CommentPageActivity;
+import cs.ualberta.ca.tunein.Comment;
+
+//import junit.framework.TestCase;
+import android.test.ActivityInstrumentationTestCase2;
+
+public class commentTest extends ActivityInstrumentationTestCase2<CommentPageActivity> {
+	
+	public commentTest() {
+		super(CommentPageActivity.class);
+	}
+	
+	
 //Need to add the following tests: commenter's name displays properly
 //comment title displays properly
 //replies display properly
