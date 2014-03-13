@@ -58,6 +58,7 @@ public class ElasticSearchOperations {
 
 				try {
 					request.setEntity(new StringEntity(GSON.toJson(model)));
+					Log.v("GSON", GSON.toJson(model));
 				} catch (UnsupportedEncodingException exception) {
 					Log.w(LOG_TAG,
 							"Error encoding PicPostModel: "
