@@ -45,7 +45,7 @@ public class ElasticSearchOperations {
 	 * @param model
 	 *            a Comment
 	 */
-	public static void pushPicPostModel(final Comment model) {
+	public static void pushCommentModel(final Comment model) {
 		if (GSON == null)
 			constructGson();
 

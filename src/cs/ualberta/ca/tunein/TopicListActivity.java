@@ -1,5 +1,6 @@
 package cs.ualberta.ca.tunein;
 
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -103,6 +104,8 @@ public class TopicListActivity extends Activity {
 		        		cntrl.createTopic(newComment);
 		        		
 		        		viewAdapter.updateThreadView(threadList);
+		        		
+		        		ElasticSearchOperations.pushCommentModel(newComment);
 		            } 
 		            else 
 		            {	                
@@ -117,6 +120,8 @@ public class TopicListActivity extends Activity {
 		        		cntrl.createTopic(newComment);
 
 		        		viewAdapter.updateThreadView(threadList);
+		        		
+		        		ElasticSearchOperations.pushCommentModel(newComment);
 		            }
 		        }
 		    })

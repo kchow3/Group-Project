@@ -2,6 +2,8 @@ package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
 
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -144,6 +146,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 */
 	public void updateThreadView(ThreadList threadList)
 	{
+		ElasticSearchOperations.searchForPicPostModels("", threadList, (TopicListActivity) context);
 		commentList = threadList.getDiscussionThread();
 		notifyDataSetChanged();
 	}
