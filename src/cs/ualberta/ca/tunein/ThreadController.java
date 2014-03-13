@@ -13,13 +13,13 @@ import android.view.View;
  */
 public class ThreadController implements ThreadControllerInterface {
 
-	private Thread discussionThread;
+	private ThreadList discussionThread;
 	
 	/**
 	 * Constructor constructs a contoller for the list of comments.
 	 * @param threadList List of comments that will be modified.
 	 */
-	public ThreadController(Thread threadList) {
+	public ThreadController(ThreadList threadList) {
 	
 		discussionThread = threadList;
 	}

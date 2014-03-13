@@ -20,9 +20,9 @@ public class Commenter implements Serializable{
 	 * Constructor that constructs a commenter.
 	 * @param name The username of the commenter.
 	 */
-	public Commenter(String id) 
+	public Commenter(String name, String id) 
 	{
-		this.name = "Anonymous";
+		this.name = name;
 		this.uniqueID = id;
 	}
 
