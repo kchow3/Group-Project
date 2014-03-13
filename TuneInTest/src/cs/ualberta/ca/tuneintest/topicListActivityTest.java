@@ -15,9 +15,8 @@ public class topicListActivityTest extends ActivityInstrumentationTestCase2<Topi
 	}
 	
 	public void testCreateButton() {
-	    getInstrumentation().waitForIdleSync();
 		Button button = (Button) getActivity().findViewById(cs.ualberta.ca.tunein.R.id.buttonCreate);
-		//button.callOnClick();
+		button.callOnClick();
 		
 	}
 //Need to add test to see if create comment button opens a dialog box for creating topics
