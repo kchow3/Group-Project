@@ -14,14 +14,14 @@ public class commentTest extends ActivityInstrumentationTestCase2<MainActivity> 
 		super(MainActivity.class);
 	}
 	
-	public void TestEquals() {
+	public void testEquals() {
 		Commenter commenter = new Commenter("Anonymous", "ABC");
 		GeoLocation loc = new GeoLocation(0, 0);
 		
 		Comment comment0 = new Comment(commenter , "Sample Title", "sample comment", loc);
 		Comment comment1 = new Comment(commenter, "Other Title", "other content", loc);
 		
-		assertTrue("different comments are not equal", comment0.equals(comment1));
+		assertFalse("different comments are not equal", comment0.equals(comment1));
 	}
 	
 //Need to add tests for all properties of the Comment class
