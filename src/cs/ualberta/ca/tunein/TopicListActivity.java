@@ -46,6 +46,9 @@ public class TopicListActivity extends Activity {
 	{
 		super.onResume();
 		
+		ThreadController cntrl = new ThreadController(threadList);
+		cntrl.getOnlineTopics(this);
+		
 		//setup the comment listview
 		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList.getDiscussionThread());
 		setContentView(R.layout.topic_list_view);
@@ -54,7 +57,6 @@ public class TopicListActivity extends Activity {
 		//setup adapter
 		threadList.setAdapter(viewAdapter);
 		listview.setAdapter(viewAdapter);
-		
 	}
 	
 	@Override

@@ -146,7 +146,6 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 */
 	public void updateThreadView(ThreadList threadList)
 	{
-		ElasticSearchOperations.searchForPicPostModels("", threadList, (TopicListActivity) context);
 		commentList = threadList.getDiscussionThread();
 		notifyDataSetChanged();
 	}
