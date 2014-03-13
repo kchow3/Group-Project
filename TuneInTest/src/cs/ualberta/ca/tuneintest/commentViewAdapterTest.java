@@ -1,8 +1,17 @@
 package cs.ualberta.ca.tuneintest;
 
-import junit.framework.TestCase;
+import java.util.Date;
 
-public class commentViewAdapterTest extends TestCase {
-//Need to add tests to see if fav and save notifications display correctly
-//Need to add tests to see if the thread view updates with the new fav/save info updated
+import android.test.ActivityInstrumentationTestCase2;
+import cs.ualberta.ca.tunein.MainActivity;
+import cs.ualberta.ca.tunein.CommentViewAdapter;
+
+public class commentViewAdapterTest extends ActivityInstrumentationTestCase2<MainActivity> {
+	
+	public commentViewAdapterTest() {
+		super(MainActivity.class);
+	}
+	
+//Need to add tests for all properties of the CommentViewAdapter class
+
 }

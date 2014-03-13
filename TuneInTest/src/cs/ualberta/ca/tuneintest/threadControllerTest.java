@@ -1,8 +1,17 @@
 package cs.ualberta.ca.tuneintest;
 
-import junit.framework.TestCase;
+import java.util.Date;
 
-public class threadControllerTest extends TestCase {
-//Need to add test to see if each sorting button shows the correctly sorted list of comments 
-//For example test if sortByLocation sorts comments closest to user
+import android.test.ActivityInstrumentationTestCase2;
+import cs.ualberta.ca.tunein.MainActivity;
+import cs.ualberta.ca.tunein.ThreadController;
+
+public class threadControllerTest extends ActivityInstrumentationTestCase2<MainActivity> {
+	
+	public threadControllerTest() {
+		super(MainActivity.class);
+	}
+	
+//Need to add tests for all properties of the ThreadController class
+
 }

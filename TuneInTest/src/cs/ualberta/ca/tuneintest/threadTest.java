@@ -1,7 +1,17 @@
 package cs.ualberta.ca.tuneintest;
 
-import junit.framework.TestCase;
+import java.util.Date;
 
-public class threadTest extends TestCase {
-//Need to add test to see if discussion thread are correctly set and received
+import android.test.ActivityInstrumentationTestCase2;
+import cs.ualberta.ca.tunein.MainActivity;
+import cs.ualberta.ca.tunein.Thread;
+
+public class threadTest extends ActivityInstrumentationTestCase2<MainActivity> {
+	
+	public threadTest() {
+		super(MainActivity.class);
+	}
+	
+//Need to add tests for all properties of the Thread class
+
 }

@@ -1,19 +1,18 @@
 package cs.ualberta.ca.tuneintest;
 
+import java.util.Date;
 
-import cs.ualberta.ca.tunein.CommentPageActivity;
+import android.test.ActivityInstrumentationTestCase2;
+import cs.ualberta.ca.tunein.MainActivity;
 import cs.ualberta.ca.tunein.Comment;
 
-//import junit.framework.TestCase;
-import android.test.ActivityInstrumentationTestCase2;
-
-public class commentTest extends ActivityInstrumentationTestCase2<CommentPageActivity> {
+public class commentTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	
 	public commentTest() {
-		super(CommentPageActivity.class);
+		super(MainActivity.class);
 	}
 	
-	
+//Need to add tests for all properties of the Comment class
 //Need to add the following tests: commenter's name displays properly
 //comment title displays properly
 //replies display properly
@@ -22,5 +21,6 @@ public class commentTest extends ActivityInstrumentationTestCase2<CommentPageAct
 //geo location info can be seen and is accurate
 //fav and save info can be seen
 //reply count is displayed properly
+
 
 }

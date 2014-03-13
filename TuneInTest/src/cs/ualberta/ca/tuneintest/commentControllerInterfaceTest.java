@@ -1,8 +1,17 @@
 package cs.ualberta.ca.tuneintest;
 
-import junit.framework.TestCase;
+import java.util.Date;
 
-public class commentControllerInterfaceTest extends TestCase {
-//Need to add tests that verify the function calls of each button in the CommentControllerInterface
-//For example, the favorite button adds a comment to the user's favorite list
+import android.test.ActivityInstrumentationTestCase2;
+import cs.ualberta.ca.tunein.MainActivity;
+import cs.ualberta.ca.tunein.CommentControllerInterface;
+
+public class commentControllerInterfaceTest extends ActivityInstrumentationTestCase2<MainActivity> {
+	
+	public commentControllerInterfaceTest() {
+		super(MainActivity.class);
+	}
+	
+//Need to add tests for all properties of the CommentControllerInterface class
+
 }

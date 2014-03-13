@@ -1,7 +1,6 @@
 package cs.ualberta.ca.tuneintest;
 
 import cs.ualberta.ca.tunein.TopicListActivity;
-//import junit.framework.TestCase;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
