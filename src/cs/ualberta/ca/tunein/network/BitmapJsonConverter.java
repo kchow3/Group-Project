@@ -18,30 +18,30 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 /**
-* Provides custom base64 serialization / deserialization for Bitmaps.
-* Algorithm taken from: http://stackoverflow.com/questions/9224056/android-bitmap-to-base64-string
-* @author zjullion
-*/
-
-
+ * Provides custom base64 serialization / deserialization for Bitmaps. Algorithm
+ * taken from:
+ * http://stackoverflow.com/questions/9224056/android-bitmap-to-base64-string
+ * 
+ * @author zjullion
+ */
 public class BitmapJsonConverter implements JsonDeserializer<Bitmap>,
-JsonSerializer<Bitmap> {
-
+		JsonSerializer<Bitmap> {
 
 	@Override
-	public JsonElement serialize(Bitmap src, Type typeOfSrc, JsonSerializationContext context) {
-	ByteArrayOutputStream stream = new ByteArrayOutputStream();
-	src.compress(Bitmap.CompressFormat.JPEG, 80, stream);
-	String base64Encoded = Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP);
-	return new JsonPrimitive(base64Encoded);
+	public JsonElement serialize(Bitmap src, Type typeOfSrc,
+			JsonSerializationContext context) {
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		src.compress(Bitmap.CompressFormat.JPEG, 80, stream);
+		String base64Encoded = Base64.encodeToString(stream.toByteArray(),
+				Base64.NO_WRAP);
+		return new JsonPrimitive(base64Encoded);
 	}
 
-
 	@Override
-	public Bitmap deserialize(JsonElement src, Type typeOfSrc, JsonDeserializationContext context)
-	throws JsonParseException {
-	String base64Encoded = src.getAsJsonPrimitive().getAsString();
-	byte[] data = Base64.decode(base64Encoded, Base64.NO_WRAP);
-	return BitmapFactory.decodeByteArray(data, 0, data.length);
+	public Bitmap deserialize(JsonElement src, Type typeOfSrc,
+			JsonDeserializationContext context) throws JsonParseException {
+		String base64Encoded = src.getAsJsonPrimitive().getAsString();
+		byte[] data = Base64.decode(base64Encoded, Base64.NO_WRAP);
+		return BitmapFactory.decodeByteArray(data, 0, data.length);
 	}
 }

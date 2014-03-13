@@ -8,14 +8,14 @@ import java.util.ArrayList;
  * This class is part of the comment model and holds a
  * list of comments.
  */
-public class Thread 
+public class ThreadList 
 {
 	private ArrayList<Comment> discussionThread;
 
 	/**
 	 * Constructor that constructs a new list of comments.
 	 */
-	public Thread() 
+	public ThreadList() 
 	{
 		this.discussionThread = new ArrayList<Comment>();
 	}

@@ -26,7 +26,7 @@ public class TopicListActivity extends Activity {
 	//comment view adapter
 	private CommentViewAdapter viewAdapter;
 	//discussion thread list
-	private Thread threadList;
+	private ThreadList threadList;
 	//variables for adding topic
 	private String title;
 	private String comment;
@@ -37,7 +37,7 @@ public class TopicListActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    
-	    threadList = new Thread();
+	    threadList = new ThreadList();
 	}
 	
 	@Override

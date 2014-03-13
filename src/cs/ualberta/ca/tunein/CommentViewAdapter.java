@@ -142,7 +142,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * This method is used to refresh the list view
 	 * @param threadList The comment list that the list view will show.
 	 */
-	public void updateThreadView(Thread threadList)
+	public void updateThreadView(ThreadList threadList)
 	{
 		commentList = threadList.getDiscussionThread();
 		notifyDataSetChanged();
