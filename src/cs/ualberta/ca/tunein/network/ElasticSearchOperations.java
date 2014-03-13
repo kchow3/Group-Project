@@ -22,12 +22,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import cs.ualberta.ca.tunein.Comment;
+import cs.ualberta.ca.tunein.ThreadList;
+import cs.ualberta.ca.tunein.TopicListActivity;
+
 /**
  * Handles sending PicPostModels to the server and executing searches on the
  * server. Most of the code in this class is based on:
  * https://github.com/rayzhangcl/ESDemo
- * 
- * @author zjullion
  */
 public class ElasticSearchOperations {
 
@@ -38,12 +40,12 @@ public class ElasticSearchOperations {
 	private static Gson GSON = null;
 
 	/**
-	 * Sends a PicPostModel to the server. Does nothing if the request fails.
+	 * Sends a Comment to the server. Does nothing if the request fails.
 	 * 
 	 * @param model
-	 *            a PicPostModel
+	 *            a Comment
 	 */
-	public static void pushPicPostModel(final PicPostModel model) {
+	public static void pushPicPostModel(final Comment model) {
 		if (GSON == null)
 			constructGson();
 
@@ -80,19 +82,19 @@ public class ElasticSearchOperations {
 	}
 
 	/**
-	 * Searches the server for PicPostModels with the given searchTerm in their
+	 * Searches the server for Comments with the given searchTerm in their
 	 * text.
 	 * 
 	 * @param searchTerm
 	 *            the single world term to search for
 	 * @param model
-	 *            the PicPosterModelList to clear and then fill with the new
+	 *            the ThreadLis to clear and then fill with the new
 	 *            data
 	 * @param activity
-	 *            a PicPosterActivity
+	 *            a TopicListActivity
 	 */
 	public static void searchForPicPostModels(final String searchTerm,
-			final PicPosterModelList model, final PicPosterActivity activity) {
+			final ThreadList modelList, final TopicListActivity activity) {
 		if (GSON == null)
 			constructGson();
 
@@ -135,16 +137,16 @@ public class ElasticSearchOperations {
 					return;
 				}
 
-				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<PicPostModel>>() {
+				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Comment>>() {
 				}.getType();
-				final ElasticSearchSearchResponse<PicPostModel> returnedData = GSON
+				final ElasticSearchSearchResponse<Comment> returnedData = GSON
 						.fromJson(responseJson, elasticSearchSearchResponseType);
 
 				Runnable updateModel = new Runnable() {
 					@Override
 					public void run() {
-						model.clear();
-						model.addPicPostCollection(returnedData.getSources());
+						modelList.clear();
+						modelList.addCommentCollection(returnedData.getSources());
 					}
 				};
 

@@ -1,6 +1,9 @@
 package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
+import java.util.Collection;
+
+import android.widget.ArrayAdapter;
 
 /**
  * Model
@@ -11,6 +14,7 @@ import java.util.ArrayList;
 public class ThreadList 
 {
 	private ArrayList<Comment> discussionThread;
+	private ArrayAdapter<Comment> adapter;
 
 	/**
 	 * Constructor that constructs a new list of comments.
@@ -29,5 +33,18 @@ public class ThreadList
 	{
 		this.discussionThread = discussionThread;
 	}
-
+	
+	public void setAdapter(ArrayAdapter<Comment> adapter) {
+		this.adapter = adapter;
+	}
+	
+	public void addCommentCollection(Collection<Comment> posts) {
+		this.discussionThread.addAll(posts);
+		this.adapter.notifyDataSetChanged();
+	}
+	
+	public void clear() {
+		this.discussionThread.clear();
+		this.adapter.notifyDataSetChanged();
+	}
 }

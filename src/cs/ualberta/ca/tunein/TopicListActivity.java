@@ -51,6 +51,7 @@ public class TopicListActivity extends Activity {
 		ListView listview = (ListView) findViewById(R.id.listViewTopics);
 		
 		//setup adapter
+		threadList.setAdapter(viewAdapter);
 		listview.setAdapter(viewAdapter);
 		
 	}
