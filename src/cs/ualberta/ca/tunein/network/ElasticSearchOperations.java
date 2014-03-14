@@ -83,6 +83,8 @@ public class ElasticSearchOperations {
 				}.getType();
 				final ElasticSearchSearchResponse<Comment> returnedData = GSON
 						.fromJson(responseJson, elasticSearchSearchResponseType);
+				Log.v("ID", (returnedData.getID()));
+				model.setElasticID(returnedData.getID());
 			}
 		};
 
