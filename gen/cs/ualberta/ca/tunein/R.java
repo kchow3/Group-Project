@@ -41,7 +41,7 @@ public final class R {
         public static final int buttonView=0x7f08001c;
         public static final int date_button=0x7f080008;
         public static final int editTextComment=0x7f080027;
-        public static final int edit_username=0x7f08000b;
+        public static final int edit_username=0x7f08000a;
         public static final int expandableListViewReply=0x7f08001a;
         public static final int fav_button=0x7f080004;
         public static final int imageViewCommentImage=0x7f080017;
@@ -52,7 +52,7 @@ public final class R {
         public static final int listViewTopics=0x7f080033;
         public static final int location_text=0x7f080001;
         public static final int myLocation_button=0x7f080007;
-        public static final int name_button=0x7f080005;
+        public static final int name_button=0x7f08000c;
         public static final int otherLocation_button=0x7f080006;
         public static final int pictures_button=0x7f080009;
         public static final int textViewCommentBlock=0x7f080016;
@@ -78,8 +78,8 @@ public final class R {
         public static final int textViewTopics=0x7f080032;
         public static final int textViewUser=0x7f080020;
         public static final int title=0x7f080000;
-        public static final int username_text=0x7f08000a;
-        public static final int viewtopics_text=0x7f08000c;
+        public static final int username_text=0x7f08000b;
+        public static final int viewtopics_text=0x7f080005;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
