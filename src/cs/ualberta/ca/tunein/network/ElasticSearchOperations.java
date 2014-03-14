@@ -79,10 +79,10 @@ public class ElasticSearchOperations {
 				}
 				
 				String responseJson = "";
-				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Comment>>() {
-				}.getType();
-				final ElasticSearchSearchResponse<Comment> returnedData = GSON
-						.fromJson(responseJson, elasticSearchSearchResponseType);
+				
+				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
+				ElasticSearchResponse<Comment> esResponse = GSON.fromJson(request, elasticSearchResponseType);
+				
 				Log.v("ID", (returnedData.getID()));
 				model.setElasticID(returnedData.getID());
 			}

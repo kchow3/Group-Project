@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,7 +71,6 @@ public class CommentPageActivity extends Activity {
 	{
 		super.onResume();
 		setContentView(R.layout.comment_view);
-		getInputComment();
 		setupComment();
 		
 		//setup the reply listview
