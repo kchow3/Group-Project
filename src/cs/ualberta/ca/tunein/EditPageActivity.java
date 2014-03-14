@@ -3,6 +3,7 @@ package cs.ualberta.ca.tunein;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -19,8 +20,8 @@ import android.widget.TextView;
  */
 public class EditPageActivity extends Activity {
 
-	//public string that tags the extra of the comment that is passed to CommentPageActivity
-	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
+	//public string that tags the extra of the comment that is passed to EditPageActivity
+	public final static String EXTRA_EDIT = "cs.ualberta.ca.tunein.commentEdit";
 	
 	//comment passed through intent when clicking on a view comment button
 	private Comment aComment;
@@ -58,7 +59,7 @@ public class EditPageActivity extends Activity {
 	private void getInputComment()
 	{
 		Intent intent = getIntent();
-		this.aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
+		this.aComment = (Comment) intent.getSerializableExtra(EXTRA_EDIT);
 	}
 	
 	/**

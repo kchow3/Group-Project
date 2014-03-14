@@ -30,6 +30,8 @@ public class CommentPageActivity extends Activity {
 
 	//public string that tags the extra of the comment that is passed to CommentPageActivity
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
+	//public string that tags the extra of the comment that is passed to EditPageActivity
+	public final static String EXTRA_EDIT = "cs.ualberta.ca.tunein.commentEdit";
 	
 	//reply view adapter
 	private ReplyViewAdapter viewAdapter;
@@ -60,6 +62,7 @@ public class CommentPageActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    this.replies = new ArrayList<Comment>();
+	    getInputComment();
 	}
 	
 	@Override
@@ -170,6 +173,9 @@ public class CommentPageActivity extends Activity {
 	{
 	    public void onClick(View v)
 	    {
+	    	Intent intent = new Intent(getApplicationContext(), EditPageActivity.class);
+	    	intent.putExtra(EXTRA_EDIT, aComment);
+	    	startActivity(intent);
 	    }
 	};
 	

@@ -30,7 +30,8 @@
         android:gravity="top|left"
         android:height="115dp"
         android:hint="Comment"
-        android:lines="5" />
+        android:lines="5" 
+        android:inputType="textFilter|textMultiLine"/>
 
     <TextView
         android:id="@+id/textViewEditLong"
