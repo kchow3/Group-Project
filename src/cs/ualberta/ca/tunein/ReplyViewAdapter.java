@@ -35,7 +35,6 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	//holder for elements in the row
 	private ViewHolder holder;
 	private ArrayList<Comment> replies;
-	private ArrayList<Comment> childReplies;
 	
 	/**
 	 * View holder that holds the elements of a
@@ -61,7 +60,6 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	{
 		this.context = context;
 		this.replies = replies;
-		this.childReplies = new ArrayList<Comment>();
 	}
 
 
