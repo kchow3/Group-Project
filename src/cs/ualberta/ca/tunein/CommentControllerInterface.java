@@ -69,12 +69,6 @@ public interface CommentControllerInterface {
 	 * point at their parent comment (the comment that
 	 * they are replying to).
 	 */
-	public void setParentComment(Comment parent);
-	
-	/**
-	 * This method is for updating elastic search with the
-	 * comment that the controller is modifying.
-	 */
-	public void updateOnlineComment();
+	public void setParentComment(String id);
 	
 }

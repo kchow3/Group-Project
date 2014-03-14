@@ -130,5 +130,11 @@ public class TopicListActivity extends Activity {
 		    .setNegativeButton("Cancel", null).create();
 		dialog.show();
 	}
+	
+	 
+	 public void MainPageBtnClick(View v)
+	 {
+		 finish();
+	 }
 
 }

@@ -91,6 +91,7 @@ public class ElasticSearchOperations {
 				Log.v("ID:", elasticID);
 
 				model.setElasticID(elasticID);
+				putCommentModel(model);
 			}
 		};
 
@@ -106,8 +107,9 @@ public class ElasticSearchOperations {
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_URL + model.getElasticID());
-
+				HttpPost request = new HttpPost(SERVER_URL + model.getElasticID() + " -d " + GSON.toJson(model));
+				Log.v("query", SERVER_URL + model.getElasticID() + " -d " + GSON.toJson(model));
+				/*
 				try {
 					request.setEntity(new StringEntity(GSON.toJson(model)));
 					Log.v("GSON", GSON.toJson(model));
@@ -117,7 +119,7 @@ public class ElasticSearchOperations {
 									+ exception.getMessage());
 					return;
 				}
-
+				*/
 				HttpResponse response;
 				try {
 					response = client.execute(request);

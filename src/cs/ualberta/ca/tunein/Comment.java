@@ -43,8 +43,8 @@ public class Comment implements Serializable
 	private int replyCount;
 	//id of Elastic Search
 	private String elasticID;
-	//parent topic level comment if this is child else null
-	private Comment topicParent;
+	//id of the top level comment topic
+	private String topicID;
 	
 	/**
 	 * This constructor constructs a comment without an image.
@@ -67,7 +67,7 @@ public class Comment implements Serializable
 		this.favoriteCount = 0;
 		this.replyCount = 0;
 		this.elasticID = null;
-		this.topicParent = null;
+		this.topicID = null;
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class Comment implements Serializable
 		this.favoriteCount = 0;
 		this.replyCount = 0;
 		this.elasticID = null;
-		this.topicParent = null;
+		this.topicID = null;
 	}
 
 	public Commenter getCommenter() {
@@ -230,12 +230,13 @@ public class Comment implements Serializable
 		return df.format(this.date);
 	}
 
-	public Comment getTopicParent() {
-		return topicParent;
+	public String getTopicID() {
+		return topicID;
 	}
 
-	public void setTopicParent(Comment topicParent) {
-		this.topicParent = topicParent;
+	public void setTopicID(String topicID) {
+		this.topicID = topicID;
 	}
+	
 
 }

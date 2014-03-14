@@ -59,10 +59,5 @@ public class MainActivity extends Activity {
 		 Intent i = new Intent(getApplicationContext(), TopicListActivity.class);
 		 MainActivity.this.startActivity(i);
 	 }
-	 
-	 public void MainPageBtnClick()
-	 {
-		 finish();
-	 }
 
 }

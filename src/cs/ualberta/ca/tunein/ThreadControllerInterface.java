@@ -51,4 +51,10 @@ public interface ThreadControllerInterface {
 	 */
 	public void getOnlineTopics(Activity act);
 	
+	/**
+	 * This method is for updating elastic search with the
+	 * comment that needs modifying.
+	 */
+	public void updateOnlineComment(String topicID);
+	
 }

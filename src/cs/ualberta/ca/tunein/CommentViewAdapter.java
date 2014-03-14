@@ -218,7 +218,12 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			        		//new comment reply
 			        		Comment newComment  = new Comment(user, title, text, loc);
 			        		CommentController cntrl = new CommentController(currentComment);
+			        		
+			        		CommentController newCntrl = new CommentController(newComment);
+			        		newCntrl.setParentComment(currentComment);
+			        		
 			        		cntrl.addReply(newComment);
+			        		cntrl.updateOnlineComment();
 			        		
 			        		refreshThreadView();
 			            } 
@@ -236,7 +241,12 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			        		//new comment reply
 			        		Comment newComment  = new Comment(user, title, text, loc);
 			        		CommentController cntrl = new CommentController(currentComment);
+			        		
+			        		CommentController newCntrl = new CommentController(newComment);
+			        		newCntrl.setParentComment(currentComment);
+			        		
 			        		cntrl.addReply(newComment);
+			        		cntrl.updateOnlineComment();
 			        		
 			        		refreshThreadView();
 			            }

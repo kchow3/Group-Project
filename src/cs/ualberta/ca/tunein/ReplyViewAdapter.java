@@ -260,6 +260,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			        		newCntrl.setParentComment(currentComment);
 			        		
 			        		cntrl.addReply(newComment);
+			        		cntrl.updateOnlineComment();
 			        		
 			        		updateReplyView(replies);
 			            } 
@@ -282,6 +283,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			        		newCntrl.setParentComment(currentComment);
 			        		
 			        		cntrl.addReply(newComment);
+			        		cntrl.updateOnlineComment();
 			        		
 			        		updateReplyView(replies);
 			        		
@@ -357,6 +359,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			        		newCntrl.setParentComment(currentComment);
 			        		
 			        		cntrl.addReply(newComment);
+			        		cntrl.updateOnlineComment();
 			        		
 			        		updateReplyView(replies);
 			            } 
@@ -379,6 +382,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			        		newCntrl.setParentComment(currentComment);
 			        		
 			        		cntrl.addReply(newComment);
+			        		cntrl.updateOnlineComment();
 			        		
 			        		updateReplyView(replies);
 			        		

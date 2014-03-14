@@ -223,6 +223,7 @@ public class CommentPageActivity extends Activity {
 			        		newCntrl.setParentComment(aComment);
 			        		
 			        		cntrl.addReply(newComment);
+			        		cntrl.updateOnlineComment();
 			     		        		
 			        		replies = aComment.getReplies();
 			        		viewAdapter.updateReplyView(replies);
@@ -243,6 +244,7 @@ public class CommentPageActivity extends Activity {
 			        		newCntrl.setParentComment(aComment);
 			        		
 			        		cntrl.addReply(newComment);
+			        		cntrl.updateOnlineComment();
 			        		
 			        		replies = aComment.getReplies();
 			        		viewAdapter.updateReplyView(replies);
