@@ -10,6 +10,6 @@ public class commenterTest extends ActivityInstrumentationTestCase2<MainActivity
 		super(MainActivity.class);
 	}
 	
-//Commenter class currently only has getters and setters; nothing to test.
+//Commenter class currently just has getters and setters; nothing to test
 
 }
