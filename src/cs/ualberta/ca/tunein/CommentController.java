@@ -68,10 +68,4 @@ public class CommentController implements CommentControllerInterface {
 		String currentID = ((User) act.getApplication()).getUniqueID();
 		return comment.getCommenter().getUniqueID().equals(currentID);
 	}
-	
-	@Override
-	public void setParentComment(String id) {
-		comment.setTopicID(id);
-	}
-
 }

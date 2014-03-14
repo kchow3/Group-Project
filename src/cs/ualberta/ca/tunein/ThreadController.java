@@ -61,22 +61,4 @@ public class ThreadController implements ThreadControllerInterface {
 		ArrayList<Comment> list = discussionThread.getDiscussionThread();
 		list.add(aComment);
 	}
-
-	@Override
-	public void getOnlineTopics(Activity act) {
-		//get comments from elastic search
-		ElasticSearchOperations.getCommentPosts(discussionThread, act);
-	}
-	
-	@Override
-	public void updateOnlineComment(String id) {
-		
-		for(int i = 0; i < discussionThread.getDiscussionThread().size(); i++)
-		{
-			if(discussionThread.getDiscussionThread().get(i).equals(id))
-			{
-				ElasticSearchOperations.putCommentModel(discussionThread.getDiscussionThread().get(i));
-			}
-		}
-	}
 }

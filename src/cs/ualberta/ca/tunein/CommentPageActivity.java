@@ -2,6 +2,8 @@ package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
 
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -31,13 +33,17 @@ public class CommentPageActivity extends Activity {
 
 	//public string that tags the extra of the comment that is passed to CommentPageActivity
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
-	//public string that tags the extra of the comment that is passed to EditPageActivity
+	//public string that tags the extra of the comment to be edited that is passed to EditPageActivity
 	public final static String EXTRA_EDIT = "cs.ualberta.ca.tunein.commentEdit";
+	//public string that tags the extra of the topic comment that is passed to CommentPageActivity
+	public final static String EXTRA_TOPIC_COMMENT = "cs.ualberta.ca.tunein.topicComment";
 	
 	//reply view adapter
 	private ReplyViewAdapter viewAdapter;
 	//comment passed through intent when clicking on a view comment button
 	private Comment aComment;
+	//parent topic comment corresponding to the comment being viewed
+	private Comment topicComment;
 	//reply list
 	private ArrayList<Comment> replies;
 	
@@ -74,7 +80,7 @@ public class CommentPageActivity extends Activity {
 		setupComment();
 		
 		//setup the reply listview
-		this.viewAdapter = new ReplyViewAdapter(this, replies);
+		this.viewAdapter = new ReplyViewAdapter(this, replies, topicComment);
 		ExpandableListView listview = (ExpandableListView) findViewById(R.id.expandableListViewReply);
 		
 		//setup
@@ -86,6 +92,7 @@ public class CommentPageActivity extends Activity {
 	{
 		Intent intent = getIntent();
 		this.aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
+		this.topicComment = (Comment) intent.getSerializableExtra(EXTRA_TOPIC_COMMENT);
 		replies = aComment.getReplies();
 	}
 	
@@ -218,12 +225,9 @@ public class CommentPageActivity extends Activity {
 			        		
 			        		Comment newComment  = new Comment(user, title, text, loc, img);
 			        		CommentController cntrl = new CommentController(aComment);
-			        		
-			        		CommentController newCntrl = new CommentController(newComment);
-			        		newCntrl.setParentComment(aComment);
-			        		
 			        		cntrl.addReply(newComment);
-			        		cntrl.updateOnlineComment();
+			        		
+			        		ElasticSearchOperations.putCommentModel(topicComment);
 			     		        		
 			        		replies = aComment.getReplies();
 			        		viewAdapter.updateReplyView(replies);
@@ -239,16 +243,15 @@ public class CommentPageActivity extends Activity {
 			        		
 			        		Comment newComment  = new Comment(user, title, text, loc);
 			        		CommentController cntrl = new CommentController(aComment);
-			        		
-			        		CommentController newCntrl = new CommentController(newComment);
-			        		newCntrl.setParentComment(aComment);
+
+			        		cntrl.addReply(newComment);
 			        		
 			        		cntrl.addReply(newComment);
-			        		cntrl.updateOnlineComment();
 			        		
+			        		ElasticSearchOperations.putCommentModel(topicComment);
+			     		        		
 			        		replies = aComment.getReplies();
 			        		viewAdapter.updateReplyView(replies);
-			        		setupComment();
 			            }
 			        }
 			    })

@@ -2,6 +2,8 @@ package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
 
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -30,11 +32,15 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	
 	//public string that tags the extra of the comment that is passed to CommentPageActivity
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
+	//public string that tags the extra of the topic comment that is passed to CommentPageActivity
+	public final static String EXTRA_TOPIC_COMMENT = "cs.ualberta.ca.tunein.topicComment";
 	
 	private Context context;
 	//holder for elements in the row
 	private ViewHolder holder;
 	private ArrayList<Comment> replies;
+	//parent topic comment corresponding to the comment being viewed
+	private Comment topicComment;
 	
 	/**
 	 * View holder that holds the elements of a
@@ -56,10 +62,11 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	 * @param context The context of the activity that constructs this adapter.
 	 * @param replies The array list of replies to be displayed.
 	 */
-	public ReplyViewAdapter(Context context, ArrayList<Comment> replies)
+	public ReplyViewAdapter(Context context, ArrayList<Comment> replies, Comment topComment)
 	{
 		this.context = context;
 		this.replies = replies;
+		this.topicComment = topComment;
 	}
 
 
@@ -208,6 +215,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	    	Comment aComment = replies.get(index[0]).getReplies().get(index[1]);
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
 	    	intent.putExtra(EXTRA_COMMENT, aComment);
+	    	intent.putExtra(EXTRA_TOPIC_COMMENT, topicComment);
 	    	context.startActivity(intent);
 	    }
 	};
@@ -253,14 +261,11 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			        		//current comment that is replied to using tag and get parent position
 			        		Comment currentComment = replies.get(index[0]).getReplies().get(index[1]);
 			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc);
+			        		Comment newComment  = new Comment(user, title, text, loc, img);
 			        		CommentController cntrl = new CommentController(currentComment);
-			        		
-			        		CommentController newCntrl = new CommentController(newComment);
-			        		newCntrl.setParentComment(currentComment);
-			        		
 			        		cntrl.addReply(newComment);
-			        		cntrl.updateOnlineComment();
+			        		
+			        		ElasticSearchOperations.putCommentModel(topicComment);
 			        		
 			        		updateReplyView(replies);
 			            } 
@@ -278,12 +283,9 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			        		//new comment reply
 			        		Comment newComment  = new Comment(user, title, text, loc);
 			        		CommentController cntrl = new CommentController(currentComment);
-			        		
-			        		CommentController newCntrl = new CommentController(newComment);
-			        		newCntrl.setParentComment(currentComment);
-			        		
 			        		cntrl.addReply(newComment);
-			        		cntrl.updateOnlineComment();
+			        		
+			        		ElasticSearchOperations.putCommentModel(topicComment);
 			        		
 			        		updateReplyView(replies);
 			        		
@@ -307,6 +309,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	    	Comment aComment = replies.get(index);
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
 	    	intent.putExtra(EXTRA_COMMENT, aComment);
+	    	intent.putExtra(EXTRA_TOPIC_COMMENT, topicComment);
 	    	context.startActivity(intent);
 	    }
 	};
@@ -352,14 +355,11 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			        		//current comment that is replied to using tag and get parent position
 			        		Comment currentComment = replies.get(i);
 			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc);
+			        		Comment newComment  = new Comment(user, title, text, loc, img);
 			        		CommentController cntrl = new CommentController(currentComment);
-			        		
-			        		CommentController newCntrl = new CommentController(newComment);
-			        		newCntrl.setParentComment(currentComment);
-			        		
 			        		cntrl.addReply(newComment);
-			        		cntrl.updateOnlineComment();
+			        		
+			        		ElasticSearchOperations.putCommentModel(topicComment);
 			        		
 			        		updateReplyView(replies);
 			            } 
@@ -377,12 +377,9 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			        		//new comment reply
 			        		Comment newComment  = new Comment(user, title, text, loc);
 			        		CommentController cntrl = new CommentController(currentComment);
-			        		
-			        		CommentController newCntrl = new CommentController(newComment);
-			        		newCntrl.setParentComment(currentComment);
-			        		
 			        		cntrl.addReply(newComment);
-			        		cntrl.updateOnlineComment();
+			        		
+			        		ElasticSearchOperations.putCommentModel(topicComment);
 			        		
 			        		updateReplyView(replies);
 			        		

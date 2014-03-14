@@ -64,11 +64,4 @@ public interface CommentControllerInterface {
 	 */
 	public boolean checkValid(Activity act);
 	
-	/**
-	 * This method is for setting up a comment to
-	 * point at their parent comment (the comment that
-	 * they are replying to).
-	 */
-	public void setParentComment(String id);
-	
 }

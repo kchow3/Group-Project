@@ -31,6 +31,8 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	
 	//public string that tags the extra of the comment that is passed to CommentPageActivity
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
+	//public string that tags the extra of the topic comment that is passed to CommentPageActivity
+	public final static String EXTRA_TOPIC_COMMENT = "cs.ualberta.ca.tunein.topicComment";
 	
 	private Context context;
 	//holder for the elements in the row
@@ -171,6 +173,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    	Comment aComment = commentList.get(index);
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
 	    	intent.putExtra(EXTRA_COMMENT, aComment);
+	    	intent.putExtra(EXTRA_TOPIC_COMMENT, aComment);
 	    	context.startActivity(intent);
 	    }
 	};
@@ -216,14 +219,11 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			        		//current comment that is replied to using tag and get parent position
 			        		Comment currentComment = commentList.get(i);
 			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc);
+			        		Comment newComment  = new Comment(user, title, text, loc, img);
 			        		CommentController cntrl = new CommentController(currentComment);
-			        		
-			        		CommentController newCntrl = new CommentController(newComment);
-			        		newCntrl.setParentComment(currentComment);
-			        		
 			        		cntrl.addReply(newComment);
-			        		cntrl.updateOnlineComment();
+			        		
+			        		ElasticSearchOperations.putCommentModel(currentComment);
 			        		
 			        		refreshThreadView();
 			            } 
@@ -240,13 +240,10 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			        		Comment currentComment = commentList.get(i);
 			        		//new comment reply
 			        		Comment newComment  = new Comment(user, title, text, loc);
-			        		CommentController cntrl = new CommentController(currentComment);
-			        		
-			        		CommentController newCntrl = new CommentController(newComment);
-			        		newCntrl.setParentComment(currentComment);
-			        		
+			        		CommentController cntrl = new CommentController(currentComment);      		
 			        		cntrl.addReply(newComment);
-			        		cntrl.updateOnlineComment();
+			        		
+			        		ElasticSearchOperations.putCommentModel(currentComment);
 			        		
 			        		refreshThreadView();
 			            }
