@@ -43,6 +43,8 @@ public class Comment implements Serializable
 	private int replyCount;
 	//id of Elastic Search
 	private String elasticID;
+	//parent topic level comment if this is child else null
+	private Comment topicParent;
 	
 	/**
 	 * This constructor constructs a comment without an image.
@@ -64,6 +66,8 @@ public class Comment implements Serializable
 		this.saved = false;
 		this.favoriteCount = 0;
 		this.replyCount = 0;
+		this.elasticID = null;
+		this.topicParent = null;
 	}
 
 	/**
@@ -88,6 +92,8 @@ public class Comment implements Serializable
 		this.saved = false;
 		this.favoriteCount = 0;
 		this.replyCount = 0;
+		this.elasticID = null;
+		this.topicParent = null;
 	}
 
 	public Commenter getCommenter() {
@@ -222,6 +228,14 @@ public class Comment implements Serializable
 	{
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy ");
 		return df.format(this.date);
+	}
+
+	public Comment getTopicParent() {
+		return topicParent;
+	}
+
+	public void setTopicParent(Comment topicParent) {
+		this.topicParent = topicParent;
 	}
 	
 	
