@@ -3,6 +3,7 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="MainPageBtnClick"
     android:orientation="vertical" >
 
     <TextView
@@ -47,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/buttonMainMenu"
         android:minWidth="100dip"
         android:onClick="createCommentClick"
         android:text="Create"
