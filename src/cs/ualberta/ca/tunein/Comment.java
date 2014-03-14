@@ -44,7 +44,7 @@ public class Comment implements Serializable
 	//id of Elastic Search
 	private String elasticID;
 	//parent topic level comment if this is child else null
-	private boolean topicParent;
+	private Comment topicParent;
 	
 	/**
 	 * This constructor constructs a comment without an image.
@@ -53,7 +53,7 @@ public class Comment implements Serializable
 	 * @param aComment The comment body.
 	 * @param loc The geo location of comment.
 	 */
-	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc, boolean topicLevel) 
+	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc) 
 	{
 		this.commenter = user;
 		this.title = aTitle;
@@ -67,7 +67,7 @@ public class Comment implements Serializable
 		this.favoriteCount = 0;
 		this.replyCount = 0;
 		this.elasticID = null;
-		this.topicParent = topicLevel;
+		this.topicParent = null;
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class Comment implements Serializable
 	 * @param loc The geo location of comment.
 	 * @param aImage The image of comment.
 	 */
-	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc, Image aImage, boolean topicLevel) 
+	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc, Image aImage) 
 	{
 		this.commenter = user;
 		this.title = aTitle;
@@ -93,7 +93,7 @@ public class Comment implements Serializable
 		this.favoriteCount = 0;
 		this.replyCount = 0;
 		this.elasticID = null;
-		this.topicParent = topicLevel;
+		this.topicParent = null;
 	}
 
 	public Commenter getCommenter() {
@@ -230,11 +230,11 @@ public class Comment implements Serializable
 		return df.format(this.date);
 	}
 
-	public boolean isTopicParent() {
+	public Comment getTopicParent() {
 		return topicParent;
 	}
 
-	public void setTopicParent(boolean topicParent) {
+	public void setTopicParent(Comment topicParent) {
 		this.topicParent = topicParent;
 	}
 

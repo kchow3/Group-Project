@@ -255,6 +255,10 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			        		//new comment reply
 			        		Comment newComment  = new Comment(user, title, text, loc);
 			        		CommentController cntrl = new CommentController(currentComment);
+			        		
+			        		CommentController newCntrl = new CommentController(newComment);
+			        		newCntrl.setParentComment(currentComment);
+			        		
 			        		cntrl.addReply(newComment);
 			        		
 			        		updateReplyView(replies);
@@ -273,6 +277,10 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			        		//new comment reply
 			        		Comment newComment  = new Comment(user, title, text, loc);
 			        		CommentController cntrl = new CommentController(currentComment);
+			        		
+			        		CommentController newCntrl = new CommentController(newComment);
+			        		newCntrl.setParentComment(currentComment);
+			        		
 			        		cntrl.addReply(newComment);
 			        		
 			        		updateReplyView(replies);
@@ -344,6 +352,10 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			        		//new comment reply
 			        		Comment newComment  = new Comment(user, title, text, loc);
 			        		CommentController cntrl = new CommentController(currentComment);
+			        		
+			        		CommentController newCntrl = new CommentController(newComment);
+			        		newCntrl.setParentComment(currentComment);
+			        		
 			        		cntrl.addReply(newComment);
 			        		
 			        		updateReplyView(replies);
@@ -362,6 +374,10 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			        		//new comment reply
 			        		Comment newComment  = new Comment(user, title, text, loc);
 			        		CommentController cntrl = new CommentController(currentComment);
+			        		
+			        		CommentController newCntrl = new CommentController(newComment);
+			        		newCntrl.setParentComment(currentComment);
+			        		
 			        		cntrl.addReply(newComment);
 			        		
 			        		updateReplyView(replies);

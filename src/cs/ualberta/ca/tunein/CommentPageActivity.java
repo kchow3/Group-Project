@@ -218,8 +218,12 @@ public class CommentPageActivity extends Activity {
 			        		
 			        		Comment newComment  = new Comment(user, title, text, loc, img);
 			        		CommentController cntrl = new CommentController(aComment);
-			        		cntrl.addReply(newComment);
 			        		
+			        		CommentController newCntrl = new CommentController(newComment);
+			        		newCntrl.setParentComment(aComment);
+			        		
+			        		cntrl.addReply(newComment);
+			     		        		
 			        		replies = aComment.getReplies();
 			        		viewAdapter.updateReplyView(replies);
 			            } 
@@ -234,6 +238,10 @@ public class CommentPageActivity extends Activity {
 			        		
 			        		Comment newComment  = new Comment(user, title, text, loc);
 			        		CommentController cntrl = new CommentController(aComment);
+			        		
+			        		CommentController newCntrl = new CommentController(newComment);
+			        		newCntrl.setParentComment(aComment);
+			        		
 			        		cntrl.addReply(newComment);
 			        		
 			        		replies = aComment.getReplies();

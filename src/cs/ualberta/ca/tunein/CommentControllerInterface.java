@@ -7,6 +7,10 @@ import android.app.Activity;
  * CommentControllerInterface Interface:
  * This interface is for implementing a CommentController.
  */
+/**
+ * @author kchow3
+ *
+ */
 public interface CommentControllerInterface {
 
 	/**
@@ -59,5 +63,18 @@ public interface CommentControllerInterface {
 	 * @param act The activity that calls this controller.
 	 */
 	public boolean checkValid(Activity act);
+	
+	/**
+	 * This method is for setting up a comment to
+	 * point at their parent comment (the comment that
+	 * they are replying to).
+	 */
+	public void setParentComment(Comment parent);
+	
+	/**
+	 * This method is for updating elastic search with the
+	 * comment that the controller is modifying.
+	 */
+	public void updateOnlineComment();
 	
 }

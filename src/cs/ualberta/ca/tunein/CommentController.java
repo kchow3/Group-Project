@@ -1,5 +1,6 @@
 package cs.ualberta.ca.tunein;
 
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.app.Activity;
 
 
@@ -65,6 +66,29 @@ public class CommentController implements CommentControllerInterface {
 		//id of the current viewer
 		String currentID = ((User) act.getApplication()).getUniqueID();
 		return comment.getCommenter().getUniqueID().equals(currentID);
+	}
+	
+	@Override
+	public void setParentComment(Comment parent) {
+		comment.setTopicParent(parent);
+	}
+
+	@Override
+	public void updateOnlineComment() {
+		
+		Comment aComment = comment;
+		
+		//keep checking for null which will identity the topic level comment
+		while(aComment.getTopicParent() != null)
+		{
+			aComment = aComment.getTopicParent();
+		}
+		
+		//found the topic level comment so update using its elasticsearch id
+		if(aComment.getTopicParent() == null)
+		{
+			ElasticSearchOperations.putCommentModel(aComment);
+		}
 	}
 
 }

@@ -34,7 +34,7 @@ import cs.ualberta.ca.tunein.TopicListActivity;
  */
 public class ElasticSearchOperations {
 
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/idtest/";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/replytest/";
 	//public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn/";
 	public static final String LOG_TAG = "ElasticSearch";
 
