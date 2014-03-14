@@ -34,7 +34,7 @@ import cs.ualberta.ca.tunein.TopicListActivity;
  */
 public class ElasticSearchOperations {
 
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/testing/";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/idtest/";
 	//public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn/";
 	public static final String LOG_TAG = "ElasticSearch";
 
@@ -67,7 +67,7 @@ public class ElasticSearchOperations {
 					return;
 				}
 
-				HttpResponse response;
+				HttpResponse response = null;
 				try {
 					response = client.execute(request);
 					Log.i(LOG_TAG, "Response: "
@@ -78,13 +78,19 @@ public class ElasticSearchOperations {
 									+ exception.getMessage());
 				}
 				
-				String responseJson = "";
-				
+				String jsonResponse = null;
+				try {
+					jsonResponse = getEntityContent(response);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
-				ElasticSearchResponse<Comment> esResponse = GSON.fromJson(request, elasticSearchResponseType);
+				ElasticSearchResponse<Comment> esResponse = GSON.fromJson(jsonResponse, elasticSearchResponseType);
 				
-				Log.v("ID", (returnedData.getID()));
-				model.setElasticID(returnedData.getID());
+				String elasticID = esResponse.getID();
+				Log.v("ID:", elasticID);
+
+				model.setElasticID(elasticID);
 			}
 		};
 
@@ -213,5 +219,19 @@ public class ElasticSearchOperations {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
 		GSON = builder.create();
+	}
+	
+	/**
+	 * get the http response and return json string
+	 */
+	private static String getEntityContent(HttpResponse response) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				(response.getEntity().getContent())));
+		String output;
+		String json = "";
+		while ((output = br.readLine()) != null) {
+			json += output;
+		}
+		return json;
 	}
 }
