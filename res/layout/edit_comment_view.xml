@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <EditText
+        android:id="@+id/textViewEditTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:gravity="center"
+        android:height="50dp"
+        android:hint="Title"
+        android:textAppearance="?android:attr/textAppearanceLarge" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/textViewEditComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textViewEditTitle"
+        android:layout_marginTop="17dp"
+        android:gravity="top|left"
+        android:height="115dp"
+        android:hint="Comment"
+        android:lines="5" 
+        android:inputType="textFilter|textMultiLine"/>
+
+    <TextView
+        android:id="@+id/textViewEditLong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/imageViewEditImage"
+        android:layout_marginTop="14dp"
+        android:text="Longitude: "
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textViewEditLat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewEditLong"
+        android:layout_marginTop="16dp"
+        android:text="Latitude: "
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textViewEditX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewEditLat"
+        android:layout_toLeftOf="@+id/buttonEditLocation"
+        android:layout_toRightOf="@+id/textViewEditLong"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Button
+        android:id="@+id/buttonEditLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewEditLat"
+        android:layout_alignParentRight="true"
+        android:text="Edit Location" />
+
+    <TextView
+        android:id="@+id/textViewEditY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewEditLat"
+        android:layout_alignBottom="@+id/textViewEditLat"
+        android:layout_alignRight="@+id/textViewEditX"
+        android:layout_toRightOf="@+id/textViewEditLong"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Button
+        android:id="@+id/buttonEditCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="Cancel"
+        android:width="160dp" />
+
+    <Button
+        android:id="@+id/buttonEditSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Submit"
+        android:width="160dp" />
+
+    <ImageView
+        android:id="@+id/imageViewEditImage"
+        android:layout_width="135dp"
+        android:layout_height="120dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewEditComment"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="15dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_launcher"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/buttonEditImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageViewEditImage"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="17dp"
+        android:text="Upload Image" />
+
+</RelativeLayout>

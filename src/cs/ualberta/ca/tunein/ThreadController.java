@@ -2,6 +2,9 @@ package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
 
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
+
+import android.app.Activity;
 import android.view.View;
 
 /**
@@ -57,6 +60,12 @@ public class ThreadController implements ThreadControllerInterface {
 	{
 		ArrayList<Comment> list = discussionThread.getDiscussionThread();
 		list.add(aComment);
+	}
+
+	@Override
+	public void getOnlineTopics(Activity act) {
+		//get comments from elastic search
+		ElasticSearchOperations.getCommentPosts(discussionThread, act);
 	}
 	
 }

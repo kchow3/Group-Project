@@ -25,14 +25,13 @@ import android.widget.TextView;
  * Part of the view class that contains a comment and its replies.
  * This is part of the view when a user presses a view button on a 
  * comment to bring up this page.
- * TODO: Send an intent of comment properties to another instance 
- * of this class when user selects view button on a reply and open that
- * comment.
  */
 public class CommentPageActivity extends Activity {
 
 	//public string that tags the extra of the comment that is passed to CommentPageActivity
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
+	//public string that tags the extra of the comment that is passed to EditPageActivity
+	public final static String EXTRA_EDIT = "cs.ualberta.ca.tunein.commentEdit";
 	
 	//reply view adapter
 	private ReplyViewAdapter viewAdapter;
@@ -41,7 +40,7 @@ public class CommentPageActivity extends Activity {
 	//reply list
 	private ArrayList<Comment> replies;
 	
-	//variables for seeting up textviews/buttons/imageview
+	//variables for setting up textviews/buttons/imageview
 	private TextView textViewCommentTitle;
 	private TextView textViewCommentUser;
 	private TextView textViewCommentDate;
@@ -63,6 +62,7 @@ public class CommentPageActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    this.replies = new ArrayList<Comment>();
+	    getInputComment();
 	}
 	
 	@Override
@@ -173,6 +173,9 @@ public class CommentPageActivity extends Activity {
 	{
 	    public void onClick(View v)
 	    {
+	    	Intent intent = new Intent(getApplicationContext(), EditPageActivity.class);
+	    	intent.putExtra(EXTRA_EDIT, aComment);
+	    	startActivity(intent);
 	    }
 	};
 	

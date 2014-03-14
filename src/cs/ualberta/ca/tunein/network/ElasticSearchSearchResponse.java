@@ -20,6 +20,13 @@ public class ElasticSearchSearchResponse<T> {
 	public Collection<ElasticSearchResponse<T>> getHits() {
 		return hits.getHits();
 	}
+	
+	public String getID()
+	{
+		String id;
+		ElasticSearchResponse<T> essrt = (ElasticSearchResponse<T>) getHits();
+		return essrt.getID();
+	}
 
 	public Collection<T> getSources() {
 		Collection<T> out = new ArrayList<T>();

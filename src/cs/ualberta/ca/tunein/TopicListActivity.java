@@ -46,6 +46,9 @@ public class TopicListActivity extends Activity {
 	{
 		super.onResume();
 		
+		ThreadController cntrl = new ThreadController(threadList);
+		cntrl.getOnlineTopics(this);
+		
 		//setup the comment listview
 		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList.getDiscussionThread());
 		setContentView(R.layout.topic_list_view);
@@ -54,7 +57,6 @@ public class TopicListActivity extends Activity {
 		//setup adapter
 		threadList.setAdapter(viewAdapter);
 		listview.setAdapter(viewAdapter);
-		
 	}
 	
 	@Override
@@ -82,7 +84,7 @@ public class TopicListActivity extends Activity {
 		    .setTitle("Create Comment")
 		    .setView(createView)
 		    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-		        public void onClick(DialogInterface dialog, int whichButton) {
+		        public void onClick(DialogInterface dialog, int whichButton) { 
 		            title = inputTitle.getText().toString();
 		            comment = inputComment.getText().toString();
 		            
@@ -105,7 +107,7 @@ public class TopicListActivity extends Activity {
 		        		
 		        		viewAdapter.updateThreadView(threadList);
 		        		
-		        		ElasticSearchOperations.pushCommentModel(newComment);
+		        		ElasticSearchOperations.postCommentModel(newComment);
 		            } 
 		            else 
 		            {	                
@@ -121,7 +123,7 @@ public class TopicListActivity extends Activity {
 
 		        		viewAdapter.updateThreadView(threadList);
 		        		
-		        		ElasticSearchOperations.pushCommentModel(newComment);
+		        		ElasticSearchOperations.postCommentModel(newComment);
 		            }
 		        }
 		    })
