@@ -17,6 +17,14 @@ public class commentControllerTest extends ActivityInstrumentationTestCase2<Main
 		super(MainActivity.class);
 	}
 	
+	private MainActivity activity;
+	
+	protected void setUp() throws Exception {
+		 super.setUp();
+		 setActivityInitialTouchMode(false);
+		 activity = getActivity();
+	}
+	
 	Commenter commenter = new Commenter("myName", "ID");
 	GeoLocation loc = new GeoLocation(0, 0);
 	Comment comment = new Comment(commenter , "Title", "Comment", loc);
@@ -60,8 +68,12 @@ public class commentControllerTest extends ActivityInstrumentationTestCase2<Main
 	
 	public void testCheckValid() {
 		String new_ID = "Different ID";
-		Activity act = this.getActivity(); //not sure about how to format this test
-		commentcontroller.checkValid(act);
+		commentcontroller.checkValid(activity);
 		assertFalse("User ID should match Unique ID", commenter.getUniqueID().equals(new_ID));
+	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+	    super.tearDown();
 	}
 }
