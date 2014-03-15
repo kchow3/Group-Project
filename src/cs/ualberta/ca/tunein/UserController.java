@@ -1,6 +1,8 @@
 package cs.ualberta.ca.tunein;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 /**
  * Controller
@@ -14,18 +16,31 @@ public class UserController implements UserControllerInterface {
 	}
 
 	@Override
-	public void loadUser() {
-		// TODO Auto-generated method stub
+	public String loadUsername(Activity act) {
+    	SharedPreferences prefs = act.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+    	return prefs.getString("cs.ualberta.ca.tunein.username", "Anonymous");
 	}
 	
 	@Override
-	public void saveUser() {
-		// TODO Auto-generated method stub
+	public String loadUserid(Activity act) {
+    	SharedPreferences prefs = act.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+    	return prefs.getString("cs.ualberta.ca.tunein.userid", "");
+	}
+	
+	@Override
+	public void saveUserid(String id, Activity act) {
+    	SharedPreferences prefs = act.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+    	prefs.edit().putString("cs.ualberta.ca.tunein.userid", id).commit();
 	}
 
 	@Override
 	public void changeUsername(String name, Activity act) {
-		((User) act.getApplication()).setName(name);
+    	SharedPreferences prefs = act.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+    	prefs.edit().putString("cs.ualberta.ca.tunein.username", name).commit();
 	}
 
 }

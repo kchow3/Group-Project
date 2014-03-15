@@ -28,15 +28,12 @@ public class MainActivity extends Activity {
 		
 		//setup an unique id for the user that is attached to the phone
 		final TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
-		String id = "" + tm.getDeviceId();
-		String name = "Anonymous";
-		
-		((User) this.getApplication()).setName(name);
-		((User) this.getApplication()).setUniqueID(id);
+		String deviceId = "" + tm.getDeviceId();
+		String androidId = "" + android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+		String id = deviceId + androidId;
 		
 		UserController cntrl = new UserController();
-		//load user to check for saved user name
-		cntrl.loadUser();
+		cntrl.saveUserid(id, this);
 		
 		//Set Custom fonts
 		Typeface tf = Typeface.createFromAsset(getAssets(), "Fonts/Action-Man/Action_Man.ttf");

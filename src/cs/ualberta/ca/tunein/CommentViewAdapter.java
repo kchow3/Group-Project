@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -210,8 +211,9 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			            	Image img = new Image(bmp);
 		            	
 			            	//temp geo location
-			            	String username = ((User)((Activity) context).getApplication()).getName();
-			            	String id = ((User)((Activity) context).getApplication()).getUniqueID();
+			            	UserController userCntrl = new UserController();
+			            	String username = userCntrl.loadUsername((Activity)context);
+			            	String id = userCntrl.loadUserid((Activity)context);
 			        		Commenter user = new Commenter(username, id);
 			        		
 			        		GeoLocation loc = new GeoLocation(5, 10);
@@ -230,8 +232,9 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			            else 
 			            {	                
 			            	//temp geo location
-			            	String username = ((User)((Activity) context).getApplication()).getName();
-			            	String id = ((User)((Activity) context).getApplication()).getUniqueID();
+			            	UserController userCntrl = new UserController();
+			            	String username = userCntrl.loadUsername((Activity)context);
+			            	String id = userCntrl.loadUserid((Activity)context);
 			        		Commenter user = new Commenter(username, id);
 			        		
 			        		GeoLocation loc = new GeoLocation(5, 10);

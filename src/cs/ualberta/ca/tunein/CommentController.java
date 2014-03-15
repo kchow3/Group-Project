@@ -2,6 +2,8 @@ package cs.ualberta.ca.tunein;
 
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 
@@ -65,7 +67,9 @@ public class CommentController implements CommentControllerInterface {
 	@Override
 	public boolean checkValid(Activity act) {
 		//id of the current viewer
-		String currentID = ((User) act.getApplication()).getUniqueID();
+		SharedPreferences prefs = act.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+		String currentID = prefs.getString("cs.ualberta.ca.tunein.userid", "");
 		return comment.getCommenter().getUniqueID().equals(currentID);
 	}
 }

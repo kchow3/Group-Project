@@ -12,15 +12,21 @@ import android.app.Activity;
 public interface UserControllerInterface {
 
 	/**
-	 * This method loads the user info when there
-	 * is a save of user info.
+	 * This method loads the username info from
+	 * shared preferences.
 	 */
-	public void loadUser();
+	public String loadUsername(Activity act);
 	
 	/**
-	 * This method saves the user info.
+	 * This method loads the userid info from
+	 * shared preferences.
 	 */
-	public void saveUser();
+	public String loadUserid(Activity act);
+	
+	/**
+	 * This method saves the userid info.
+	 */
+	public void saveUserid(String id, Activity act);
 	
 	/**
 	 * This method changes the username of the

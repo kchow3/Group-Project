@@ -8,15 +8,18 @@ import android.app.Application;
  * This class is a model of the user, which is anyone
  * viewing the app.
  * To access this class throughout the whole app you can use 
- * String username = ((User) this.getApplication()).getName();
- * to retrieve the username and 
- * String id = ((User) this.getApplication()).getUniqueID();
- * to get the id. The this is referring to the activity.
+ * shared preferences.
  */
-public class User extends Application {
+public class User{
 
 	private String name;
 	private String uniqueID; 
+	
+	public User(String name, String id)
+	{
+		this.name = name;
+		this.uniqueID = id;
+	}
 	
 	public String getName() {
 		return name;

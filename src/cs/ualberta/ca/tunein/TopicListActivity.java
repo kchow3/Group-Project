@@ -3,7 +3,9 @@ package cs.ualberta.ca.tunein;
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -96,8 +98,9 @@ public class TopicListActivity extends Activity {
 		            	img = new Image(bmp);
 	            	
 		        		//temp geo location
-		            	String username = ((User)getApplication()).getName();
-		            	String id = ((User) getApplication()).getUniqueID();
+		            	UserController userCntrl = new UserController();
+		            	String username = userCntrl.loadUsername(TopicListActivity.this);
+		            	String id = userCntrl.loadUserid(TopicListActivity.this);
 		        		Commenter user = new Commenter(username, id);
 		        		GeoLocation loc = new GeoLocation(5, 10);
 		        		
@@ -111,8 +114,9 @@ public class TopicListActivity extends Activity {
 		            else 
 		            {	                
 		            	//temp geo location
-		            	String username = ((User)getApplication()).getName();
-		            	String id = ((User) getApplication()).getUniqueID();
+		            	UserController userCntrl = new UserController();
+		            	String username = userCntrl.loadUsername(TopicListActivity.this);
+		            	String id = userCntrl.loadUserid(TopicListActivity.this);
 		        		Commenter user = new Commenter(username, id);
 		        		GeoLocation loc = new GeoLocation(5, 10);
 		        		
