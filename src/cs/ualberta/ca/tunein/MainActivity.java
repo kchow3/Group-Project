@@ -31,6 +31,8 @@ public class MainActivity extends Activity {
 	Button buttonTopicList;
 	Button fav_button;
 	Button buttonCache;
+	
+	TextView edit_username;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +69,17 @@ public class MainActivity extends Activity {
 		fav_button = (Button) findViewById(R.id.fav_button);
 		buttonCache = (Button) findViewById(R.id.buttonCache);
 		
+		edit_username = (TextView) findViewById(R.id.edit_username);
+		
+		UserController cntrl = new UserController();
+		edit_username.setText(cntrl.loadUsername(this));
+		
 		name_button.setOnClickListener(renameBtnClick);
 		otherLocation_button.setOnClickListener(otherLocationBtnClick);
 		myLocation_button.setOnClickListener(myLocationBtnClick);
 		date_button.setOnClickListener(date_buttonBtnClick);
 		pictures_button.setOnClickListener(pictures_buttonBtnClick);
-		buttonTopicList.setOnClickListener(TopicListBtnClick);
+		buttonTopicList.setOnClickListener(topicListBtnClick);
 		fav_button.setOnClickListener(favBtnClick);
 		buttonCache.setOnClickListener(cacheBtnClick);
 
@@ -85,15 +92,17 @@ public class MainActivity extends Activity {
 	}
 	
 	/**
-	 * This click listener will go back to the main menu page.
+	 * This click listener will rename the user.
 	 */
 	private OnClickListener renameBtnClick = new OnClickListener() {
 		public void onClick(View v) {
+			UserController cntrl = new UserController();
+			cntrl.changeUsername(edit_username.getText().toString(), MainActivity.this);
 		}
 	};
 	
 	/**
-	 * This click listener will go back to the main menu page.
+	 * This click listener will go topic list page and sort by other location.
 	 */
 	private OnClickListener otherLocationBtnClick = new OnClickListener() {
 		public void onClick(View v) {
@@ -101,7 +110,7 @@ public class MainActivity extends Activity {
 	};
 	
 	/**
-	 * This click listener will go back to the main menu page.
+	 * This click listener will go topic list page and sort by user location.
 	 */
 	private OnClickListener myLocationBtnClick = new OnClickListener() {
 		public void onClick(View v) {
@@ -109,7 +118,7 @@ public class MainActivity extends Activity {
 	};
 	
 	/**
-	 * This click listener will go back to the main menu page.
+	 * This click listener will go topic list page and sort by date.
 	 */
 	private OnClickListener date_buttonBtnClick = new OnClickListener() {
 		public void onClick(View v) {
@@ -117,7 +126,7 @@ public class MainActivity extends Activity {
 	};
 	
 	/**
-	 * This click listener will go back to the main menu page.
+	 * This click listener will go topic list page and sort by pictures.
 	 */
 	private OnClickListener pictures_buttonBtnClick = new OnClickListener() {
 		public void onClick(View v) {
@@ -125,7 +134,7 @@ public class MainActivity extends Activity {
 	};
 	
 	/**
-	 * This click listener will go back to the main menu page.
+	 * This click listener will go back to the favorite page.
 	 */
 	private OnClickListener favBtnClick = new OnClickListener() {
 		public void onClick(View v) {
@@ -133,7 +142,7 @@ public class MainActivity extends Activity {
 	};
 	
 	/**
-	 * This click listener will go back to the main menu page.
+	 * This click listener will go back to the cache page.
 	 */
 	private OnClickListener cacheBtnClick = new OnClickListener() {
 		public void onClick(View v) {
@@ -143,11 +152,10 @@ public class MainActivity extends Activity {
 	/**
 	 * This click listener will go back to the main menu page.
 	 */
-	private OnClickListener TopicListBtnClick = new OnClickListener() {
+	private OnClickListener topicListBtnClick = new OnClickListener() {
 		public void onClick(View v) {
-			Intent i = new Intent(getApplicationContext(),
-					TopicListActivity.class);
-			MainActivity.this.startActivity(i);
+			Intent i = new Intent(MainActivity.this, TopicListActivity.class);
+			startActivity(i);
 		}
 	};
 
