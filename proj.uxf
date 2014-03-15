@@ -529,11 +529,11 @@ m2=1</panel_attributes>
     <coordinates>
       <x>260</x>
       <y>470</y>
-      <w>232</w>
+      <w>284</w>
       <h>100</h>
     </coordinates>
     <panel_attributes>lt=-
-Intent</panel_attributes>
+Called by onResume()&gt;</panel_attributes>
     <additional_attributes>30;80;190;80;190;30</additional_attributes>
   </element>
   <element>
@@ -778,5 +778,16 @@ m2=0..*</panel_attributes>
     </coordinates>
     <panel_attributes>Uses data from &gt;</panel_attributes>
     <additional_attributes>30;30;100;30;100;180;320;180;320;110;1020;110;1020;200</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>230</x>
+      <y>920</y>
+      <w>1290</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>&lt; Used in Method</panel_attributes>
+    <additional_attributes>30;130;30;220;1270;220;1270;30</additional_attributes>
   </element>
 </diagram>
