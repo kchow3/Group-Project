@@ -2,12 +2,15 @@ package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
 
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,23 +28,26 @@ import android.widget.TextView;
  * Part of the view class that contains a comment and its replies.
  * This is part of the view when a user presses a view button on a 
  * comment to bring up this page.
- * TODO: Send an intent of comment properties to another instance 
- * of this class when user selects view button on a reply and open that
- * comment.
  */
 public class CommentPageActivity extends Activity {
 
 	//public string that tags the extra of the comment that is passed to CommentPageActivity
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
+	//public string that tags the extra of the comment to be edited that is passed to EditPageActivity
+	public final static String EXTRA_EDIT = "cs.ualberta.ca.tunein.commentEdit";
+	//public string that tags the extra of the topic comment that is passed to CommentPageActivity
+	public final static String EXTRA_TOPIC_COMMENT = "cs.ualberta.ca.tunein.topicComment";
 	
 	//reply view adapter
 	private ReplyViewAdapter viewAdapter;
 	//comment passed through intent when clicking on a view comment button
 	private Comment aComment;
+	//parent topic comment corresponding to the comment being viewed
+	private Comment topicComment;
 	//reply list
 	private ArrayList<Comment> replies;
 	
-	//variables for seeting up textviews/buttons/imageview
+	//variables for setting up textviews/buttons/imageview
 	private TextView textViewCommentTitle;
 	private TextView textViewCommentUser;
 	private TextView textViewCommentDate;
@@ -63,6 +69,7 @@ public class CommentPageActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    this.replies = new ArrayList<Comment>();
+	    getInputComment();
 	}
 	
 	@Override
@@ -70,11 +77,10 @@ public class CommentPageActivity extends Activity {
 	{
 		super.onResume();
 		setContentView(R.layout.comment_view);
-		getInputComment();
 		setupComment();
 		
 		//setup the reply listview
-		this.viewAdapter = new ReplyViewAdapter(this, replies);
+		this.viewAdapter = new ReplyViewAdapter(this, replies, topicComment);
 		ExpandableListView listview = (ExpandableListView) findViewById(R.id.expandableListViewReply);
 		
 		//setup
@@ -86,6 +92,7 @@ public class CommentPageActivity extends Activity {
 	{
 		Intent intent = getIntent();
 		this.aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
+		this.topicComment = (Comment) intent.getSerializableExtra(EXTRA_TOPIC_COMMENT);
 		replies = aComment.getReplies();
 	}
 	
@@ -173,6 +180,9 @@ public class CommentPageActivity extends Activity {
 	{
 	    public void onClick(View v)
 	    {
+	    	Intent intent = new Intent(getApplicationContext(), EditPageActivity.class);
+	    	intent.putExtra(EXTRA_EDIT, aComment);
+	    	startActivity(intent);
 	    }
 	};
 	
@@ -217,6 +227,8 @@ public class CommentPageActivity extends Activity {
 			        		CommentController cntrl = new CommentController(aComment);
 			        		cntrl.addReply(newComment);
 			        		
+			        		ElasticSearchOperations.putCommentModel(topicComment);
+			     		        		
 			        		replies = aComment.getReplies();
 			        		viewAdapter.updateReplyView(replies);
 			            } 
@@ -231,11 +243,15 @@ public class CommentPageActivity extends Activity {
 			        		
 			        		Comment newComment  = new Comment(user, title, text, loc);
 			        		CommentController cntrl = new CommentController(aComment);
+
 			        		cntrl.addReply(newComment);
 			        		
+			        		cntrl.addReply(newComment);
+			        		
+			        		ElasticSearchOperations.putCommentModel(topicComment);
+			     		        		
 			        		replies = aComment.getReplies();
 			        		viewAdapter.updateReplyView(replies);
-			        		setupComment();
 			            }
 			        }
 			    })

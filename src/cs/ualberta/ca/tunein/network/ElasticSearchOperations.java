@@ -15,6 +15,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.util.Log;
 
@@ -33,8 +34,8 @@ import cs.ualberta.ca.tunein.TopicListActivity;
  */
 public class ElasticSearchOperations {
 
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/testing";
-	//public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/replytest/";
+	//public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn/";
 	public static final String LOG_TAG = "ElasticSearch";
 
 	private static Gson GSON = null;
@@ -45,7 +46,7 @@ public class ElasticSearchOperations {
 	 * @param model
 	 *            a Comment
 	 */
-	public static void pushCommentModel(final Comment model) {
+	public static void postCommentModel(final Comment model) {
 		if (GSON == null)
 			constructGson();
 
@@ -58,6 +59,60 @@ public class ElasticSearchOperations {
 
 				try {
 					request.setEntity(new StringEntity(GSON.toJson(model)));
+					Log.v("GSON", GSON.toJson(model));
+				} catch (UnsupportedEncodingException exception) {
+					Log.w(LOG_TAG,
+							"Error encoding PicPostModel: "
+									+ exception.getMessage());
+					return;
+				}
+
+				HttpResponse response = null;
+				try {
+					response = client.execute(request);
+					Log.i(LOG_TAG, "Response: "
+							+ response.getStatusLine().toString());
+				} catch (IOException exception) {
+					Log.w(LOG_TAG,
+							"Error sending PicPostModel: "
+									+ exception.getMessage());
+				}
+				
+				String jsonResponse = null;
+				try {
+					jsonResponse = getEntityContent(response);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
+				ElasticSearchResponse<Comment> esResponse = GSON.fromJson(jsonResponse, elasticSearchResponseType);
+				
+				String elasticID = esResponse.getID();
+				Log.v("ID:", elasticID);
+
+				model.setElasticID(elasticID);
+				putCommentModel(model);
+			}
+		};
+
+		thread.start();
+	}
+	
+	public static void putCommentModel(final Comment model) {
+		if (GSON == null)
+			constructGson();
+
+		Thread thread = new Thread() {
+
+			@Override
+			public void run() {
+				HttpClient client = new DefaultHttpClient();
+				HttpPost request = new HttpPost(SERVER_URL + model.getElasticID() + "/");
+				String query = GSON.toJson(model);
+				Log.w("Query", query);
+				try {
+					request.setEntity(new StringEntity(query));
+					Log.v("GSON", GSON.toJson(model));
 				} catch (UnsupportedEncodingException exception) {
 					Log.w(LOG_TAG,
 							"Error encoding PicPostModel: "
@@ -93,8 +148,7 @@ public class ElasticSearchOperations {
 	 * @param activity
 	 *            a TopicListActivity
 	 */
-	public static void searchForPicPostModels(final String searchTerm,
-			final ThreadList modelList, final TopicListActivity activity) {
+	public static void getCommentPosts(final ThreadList modelList, final Activity activity) {
 		if (GSON == null)
 			constructGson();
 
@@ -103,11 +157,12 @@ public class ElasticSearchOperations {
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_URL + "_search");
-				String query = "{\"query\": {\"query_string\": {\"default_field\": \"text\",\"query\": \"*"
-						+ searchTerm + "*\"}}}";
+				HttpPost request = new HttpPost(SERVER_URL + "_search/");
+				String query = "{\"query\": {\"query_string\": {\"default_field\": \"title\",\"query\": \"*"
+						+ "" + "*\"}}}";
 				String responseJson = "";
 
+				Log.w(LOG_TAG, "query is: " + query);
 				try {
 					request.setEntity(new StringEntity(query));
 				} catch (UnsupportedEncodingException exception) {
@@ -116,7 +171,7 @@ public class ElasticSearchOperations {
 									+ exception.getMessage());
 					return;
 				}
-
+				
 				try {
 					HttpResponse response = client.execute(request);
 					Log.i(LOG_TAG, "Response: "
@@ -131,6 +186,7 @@ public class ElasticSearchOperations {
 						responseJson += output;
 						output = reader.readLine();
 					}
+					//Log.v("GSON", responseJson);
 				} catch (IOException exception) {
 					Log.w(LOG_TAG, "Error receiving search query response: "
 							+ exception.getMessage());
@@ -165,5 +221,19 @@ public class ElasticSearchOperations {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
 		GSON = builder.create();
+	}
+	
+	/**
+	 * get the http response and return json string
+	 */
+	private static String getEntityContent(HttpResponse response) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				(response.getEntity().getContent())));
+		String output;
+		String json = "";
+		while ((output = br.readLine()) != null) {
+			json += output;
+		}
+		return json;
 	}
 }

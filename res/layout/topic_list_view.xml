@@ -50,7 +50,7 @@
         android:minWidth="100dip"
         android:onClick="createCommentClick"
         android:text="Create"
-        android:width="155dp" />
+        android:width="160dp" />
 
     <Button
         android:id="@+id/buttonMainMenu"
@@ -60,6 +60,7 @@
         android:layout_alignParentLeft="true"
         android:minWidth="100dip"
         android:text="MainMenu"
-        android:width="155dp" />
+        android:width="160dp" 
+        android:onClick="MainPageBtnClick"/>
 
 </RelativeLayout>

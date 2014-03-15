@@ -41,6 +41,8 @@ public class Comment implements Serializable
 	private int favoriteCount;
 	//number of replies to the comment
 	private int replyCount;
+	//id of Elastic Search
+	private String elasticID;
 	
 	/**
 	 * This constructor constructs a comment without an image.
@@ -62,6 +64,7 @@ public class Comment implements Serializable
 		this.saved = false;
 		this.favoriteCount = 0;
 		this.replyCount = 0;
+		this.elasticID = null;
 	}
 
 	/**
@@ -86,6 +89,7 @@ public class Comment implements Serializable
 		this.saved = false;
 		this.favoriteCount = 0;
 		this.replyCount = 0;
+		this.elasticID = null;
 	}
 
 	public Commenter getCommenter() {
@@ -188,6 +192,14 @@ public class Comment implements Serializable
 		this.replyCount = replyCount;
 	}
 	
+	public String getElasticID() {
+		return elasticID;
+	}
+
+	public void setElasticID(String elasticID) {
+		this.elasticID = elasticID;
+	}
+
 	/**
 	 * Increment the number times the comment was favorited.
 	 */
