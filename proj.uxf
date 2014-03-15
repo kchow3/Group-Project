@@ -635,13 +635,14 @@ Intent</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>1280</x>
-      <y>400</y>
-      <w>160</w>
-      <h>260</h>
+      <x>1230</x>
+      <y>380</y>
+      <w>210</w>
+      <h>280</h>
     </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>30;240;30;30;140;30</additional_attributes>
+    <panel_attributes>lt=-
+&lt;Pulls data from</panel_attributes>
+    <additional_attributes>80;260;80;50;190;50</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -715,7 +716,7 @@ m2=1</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1250</x>
-      <y>280</y>
+      <y>270</y>
       <w>170</w>
       <h>70</h>
     </coordinates>
@@ -790,11 +791,11 @@ m2=1</panel_attributes>
       <x>1280</x>
       <y>140</y>
       <w>150</w>
-      <h>160</h>
+      <h>150</h>
     </coordinates>
     <panel_attributes>lt=-
 &lt;Returns Type</panel_attributes>
-    <additional_attributes>80;140;80;30</additional_attributes>
+    <additional_attributes>80;130;80;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -818,5 +819,27 @@ m2=0..*</panel_attributes>
     </coordinates>
     <panel_attributes>Calls return type&gt;</panel_attributes>
     <additional_attributes>30;130;110;130;110;30;170;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1150</x>
+      <y>200</y>
+      <w>430</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>&lt; Returns Type</panel_attributes>
+    <additional_attributes>30;50;410;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>250</x>
+      <y>440</y>
+      <w>1040</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>Uses data from &gt;</panel_attributes>
+    <additional_attributes>30;30;100;30;100;180;320;180;320;110;1020;110;1020;200</additional_attributes>
   </element>
 </diagram>
