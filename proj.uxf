@@ -64,21 +64,6 @@ Bitmap bitMap
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>340</x>
-      <y>1070</y>
-      <w>210</w>
-      <h>70</h>
-    </coordinates>
-    <panel_attributes>_reply_
---
-Comment SourceComment
---
-+ void jumptoParent()</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
       <x>590</x>
       <y>620</y>
       <w>200</w>
@@ -118,18 +103,6 @@ Comment SourceComment
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>480</x>
-      <y>870</y>
-      <w>130</w>
-      <h>220</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-
-extends</panel_attributes>
-    <additional_attributes>110;50;60;50;60;200</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
       <x>590</x>
       <y>1050</y>
       <w>50</w>
@@ -165,18 +138,6 @@ m2=0..1</panel_attributes>
     <panel_attributes>lt=&lt;&lt;&lt;-
 m2=0..*</panel_attributes>
     <additional_attributes>440;110;440;30;30;30</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>490</x>
-      <y>810</y>
-      <w>120</w>
-      <h>280</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;-
-m2=0..*</panel_attributes>
-    <additional_attributes>100;30;30;30;30;260</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -305,18 +266,6 @@ m2=0..*</panel_attributes>
     <panel_attributes>lt=&lt;&lt;&lt;-
 m2=0..1</panel_attributes>
     <additional_attributes>30;30;330;30</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>260</x>
-      <y>790</y>
-      <w>150</w>
-      <h>300</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;-
-m2=0..*</panel_attributes>
-    <additional_attributes>30;30;130;30;130;280</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
@@ -550,18 +499,6 @@ ThreadListControllerInterface
 + void sortByPicture()
 + void sortBySetLocation(GeoLocation)</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>450</x>
-      <y>470</y>
-      <w>50</w>
-      <h>620</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;-
-m2=0..*</panel_attributes>
-    <additional_attributes>30;30;30;600</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
