@@ -117,6 +117,9 @@ public class EditPageActivity extends Activity {
 	{
 	    public void onClick(View v)
 	    {
+	    	Intent returnIntent = new Intent();
+	    	returnIntent.putExtra("editResult", aComment);
+	    	setResult(RESULT_CANCELED,returnIntent);     
 	    	finish();
 	    }
 	};
@@ -130,6 +133,10 @@ public class EditPageActivity extends Activity {
 	    	cntrl.editText(textViewEditComment.getText().toString());
 	    	//change geolocation
 	    	//change/add image
+	    	
+	    	Intent returnIntent = new Intent();
+	    	returnIntent.putExtra("editResult", aComment);
+	    	setResult(RESULT_OK,returnIntent);     
 	    	finish();
 	    }
 	};

@@ -88,6 +88,21 @@ public class CommentPageActivity extends Activity {
 		viewAdapter.updateReplyView(replies);
 	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		  if (requestCode == 1) {
+
+		     if(resultCode == RESULT_OK){      
+		         aComment = (Comment) data.getSerializableExtra("editResult");   
+		         setupComment();
+		     }
+		     if (resultCode == RESULT_CANCELED) {
+		    	 //edit cancelled
+		     }
+		  }
+		}
+	
 	private void getInputComment()
 	{
 		Intent intent = getIntent();
@@ -182,7 +197,7 @@ public class CommentPageActivity extends Activity {
 	    {
 	    	Intent intent = new Intent(getApplicationContext(), EditPageActivity.class);
 	    	intent.putExtra(EXTRA_EDIT, aComment);
-	    	startActivity(intent);
+	    	startActivityForResult(intent, 1);
 	    }
 	};
 	
@@ -244,8 +259,6 @@ public class CommentPageActivity extends Activity {
 			        		Comment newComment  = new Comment(user, title, text, loc);
 			        		CommentController cntrl = new CommentController(aComment);
 
-			        		cntrl.addReply(newComment);
-			        		
 			        		cntrl.addReply(newComment);
 			        		
 			        		ElasticSearchOperations.putCommentModel(topicComment);

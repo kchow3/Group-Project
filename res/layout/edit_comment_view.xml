@@ -14,7 +14,8 @@
         android:gravity="center"
         android:height="50dp"
         android:hint="Title"
-        android:textAppearance="?android:attr/textAppearanceLarge" >
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:inputType="textFilter" >
 
         <requestFocus />
     </EditText>
