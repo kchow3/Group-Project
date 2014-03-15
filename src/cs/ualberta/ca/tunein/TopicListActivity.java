@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,6 +37,8 @@ public class TopicListActivity extends Activity {
 	private String comment;
 	private Image img;
 	
+	private Button buttonMainMenu;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,10 @@ public class TopicListActivity extends Activity {
 	protected void onResume()
 	{
 		super.onResume();
+		
+		//setup buttons
+		buttonMainMenu = (Button) findViewById(R.id.buttonMainMenu);
+		buttonMainMenu.setOnClickListener(mainmenuBtnClick);
 		
 		ThreadController cntrl = new ThreadController(threadList);
 		cntrl.getOnlineTopics(this);
@@ -132,11 +140,14 @@ public class TopicListActivity extends Activity {
 		    .setNegativeButton("Cancel", null).create();
 		dialog.show();
 	}
-	
-	 
-	 public void MainPageBtnClick(View v)
-	 {
-		 finish();
-	 }
+
+	/**
+	 * This click listener will go back to the main menu page.
+	 */
+	private OnClickListener mainmenuBtnClick = new OnClickListener() {
+		public void onClick(View v) {
+			finish();
+		}
+	};
 
 }

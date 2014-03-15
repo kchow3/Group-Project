@@ -8,6 +8,8 @@ import android.graphics.Typeface;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -20,11 +22,21 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 	
 	private TextView title;
+	
+	Button name_button;
+	Button otherLocation_button;
+	Button myLocation_button;
+	Button date_button;
+	Button pictures_button;
+	Button buttonTopicList;
+	Button fav_button;
+	Button buttonCache;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		setupPage();
 		
 		//setup an unique id for the user that is attached to the phone
 		final TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
@@ -34,12 +46,6 @@ public class MainActivity extends Activity {
 		
 		UserController cntrl = new UserController();
 		cntrl.saveUserid(id, this);
-		
-		//Set Custom fonts
-		Typeface tf = Typeface.createFromAsset(getAssets(), "Fonts/Action-Man/Action_Man.ttf");
-		
-		title = (TextView) findViewById(R.id.title);
-		title.setTypeface(tf);
 
 	}
 
@@ -50,11 +56,99 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
+	private void setupPage()
+	{
+		name_button = (Button) findViewById(R.id.name_button);
+		otherLocation_button = (Button) findViewById(R.id.otherLocation_button);
+		myLocation_button = (Button) findViewById(R.id.myLocation_button);
+		date_button = (Button) findViewById(R.id.date_button);
+		pictures_button = (Button) findViewById(R.id.pictures_button);
+		buttonTopicList = (Button) findViewById(R.id.buttonTopicList);
+		fav_button = (Button) findViewById(R.id.fav_button);
+		buttonCache = (Button) findViewById(R.id.buttonCache);
+		
+		name_button.setOnClickListener(renameBtnClick);
+		otherLocation_button.setOnClickListener(otherLocationBtnClick);
+		myLocation_button.setOnClickListener(myLocationBtnClick);
+		date_button.setOnClickListener(date_buttonBtnClick);
+		pictures_button.setOnClickListener(pictures_buttonBtnClick);
+		buttonTopicList.setOnClickListener(TopicListBtnClick);
+		fav_button.setOnClickListener(favBtnClick);
+		buttonCache.setOnClickListener(cacheBtnClick);
+
+		// Set Custom fonts
+		Typeface tf = Typeface.createFromAsset(getAssets(),
+				"Fonts/Action-Man/Action_Man.ttf");
+
+		title = (TextView) findViewById(R.id.title);
+		title.setTypeface(tf);
+	}
 	
-	 public void goTopicListClick(View v)
-	 {
-		 Intent i = new Intent(getApplicationContext(), TopicListActivity.class);
-		 MainActivity.this.startActivity(i);
-	 }
+	/**
+	 * This click listener will go back to the main menu page.
+	 */
+	private OnClickListener renameBtnClick = new OnClickListener() {
+		public void onClick(View v) {
+		}
+	};
+	
+	/**
+	 * This click listener will go back to the main menu page.
+	 */
+	private OnClickListener otherLocationBtnClick = new OnClickListener() {
+		public void onClick(View v) {
+		}
+	};
+	
+	/**
+	 * This click listener will go back to the main menu page.
+	 */
+	private OnClickListener myLocationBtnClick = new OnClickListener() {
+		public void onClick(View v) {
+		}
+	};
+	
+	/**
+	 * This click listener will go back to the main menu page.
+	 */
+	private OnClickListener date_buttonBtnClick = new OnClickListener() {
+		public void onClick(View v) {
+		}
+	};
+	
+	/**
+	 * This click listener will go back to the main menu page.
+	 */
+	private OnClickListener pictures_buttonBtnClick = new OnClickListener() {
+		public void onClick(View v) {
+		}
+	};
+	
+	/**
+	 * This click listener will go back to the main menu page.
+	 */
+	private OnClickListener favBtnClick = new OnClickListener() {
+		public void onClick(View v) {
+		}
+	};
+	
+	/**
+	 * This click listener will go back to the main menu page.
+	 */
+	private OnClickListener cacheBtnClick = new OnClickListener() {
+		public void onClick(View v) {
+		}
+	};
+	
+	/**
+	 * This click listener will go back to the main menu page.
+	 */
+	private OnClickListener TopicListBtnClick = new OnClickListener() {
+		public void onClick(View v) {
+			Intent i = new Intent(getApplicationContext(),
+					TopicListActivity.class);
+			MainActivity.this.startActivity(i);
+		}
+	};
 
 }

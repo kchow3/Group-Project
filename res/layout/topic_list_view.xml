@@ -60,7 +60,6 @@
         android:layout_alignParentLeft="true"
         android:minWidth="100dip"
         android:text="MainMenu"
-        android:width="160dp" 
-        android:onClick="MainPageBtnClick"/>
+        android:width="160dp" />
 
 </RelativeLayout>
