@@ -47,8 +47,10 @@ public interface ThreadControllerInterface {
 	
 	/**
 	 * This method gets the comments from elastics search
-	 * @param act The activty of the listview to load into.
+	 * 
+	 * @param act
+	 *            The activty of the listview to load into.
 	 */
 	public void getOnlineTopics(Activity act);
-	
+
 }

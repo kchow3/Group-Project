@@ -34,7 +34,7 @@ import cs.ualberta.ca.tunein.TopicListActivity;
  */
 public class ElasticSearchOperations {
 
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/testing/";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/replytest/";
 	//public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn/";
 	public static final String LOG_TAG = "ElasticSearch";
 
@@ -67,7 +67,7 @@ public class ElasticSearchOperations {
 					return;
 				}
 
-				HttpResponse response;
+				HttpResponse response = null;
 				try {
 					response = client.execute(request);
 					Log.i(LOG_TAG, "Response: "
@@ -78,13 +78,20 @@ public class ElasticSearchOperations {
 									+ exception.getMessage());
 				}
 				
-				String responseJson = "";
-				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Comment>>() {
-				}.getType();
-				final ElasticSearchSearchResponse<Comment> returnedData = GSON
-						.fromJson(responseJson, elasticSearchSearchResponseType);
-				Log.v("ID", (returnedData.getID()));
-				model.setElasticID(returnedData.getID());
+				String jsonResponse = null;
+				try {
+					jsonResponse = getEntityContent(response);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
+				ElasticSearchResponse<Comment> esResponse = GSON.fromJson(jsonResponse, elasticSearchResponseType);
+				
+				String elasticID = esResponse.getID();
+				Log.v("ID:", elasticID);
+
+				model.setElasticID(elasticID);
+				putCommentModel(model);
 			}
 		};
 
@@ -100,10 +107,11 @@ public class ElasticSearchOperations {
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_URL + model.getElasticID());
-
+				HttpPost request = new HttpPost(SERVER_URL + model.getElasticID() + "/");
+				String query = 	"{\"script\" : \"ctx._source." + GSON.toJson(model) + "}";
+				
 				try {
-					request.setEntity(new StringEntity(GSON.toJson(model)));
+					request.setEntity(new StringEntity(query));
 					Log.v("GSON", GSON.toJson(model));
 				} catch (UnsupportedEncodingException exception) {
 					Log.w(LOG_TAG,
@@ -213,5 +221,19 @@ public class ElasticSearchOperations {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
 		GSON = builder.create();
+	}
+	
+	/**
+	 * get the http response and return json string
+	 */
+	private static String getEntityContent(HttpResponse response) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				(response.getEntity().getContent())));
+		String output;
+		String json = "";
+		while ((output = br.readLine()) != null) {
+			json += output;
+		}
+		return json;
 	}
 }

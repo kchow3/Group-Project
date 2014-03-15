@@ -61,11 +61,10 @@ public class ThreadController implements ThreadControllerInterface {
 		ArrayList<Comment> list = discussionThread.getDiscussionThread();
 		list.add(aComment);
 	}
-
+	
 	@Override
 	public void getOnlineTopics(Activity act) {
-		//get comments from elastic search
+		// get comments from elastic search
 		ElasticSearchOperations.getCommentPosts(discussionThread, act);
 	}
-	
 }

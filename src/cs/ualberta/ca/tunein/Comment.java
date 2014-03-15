@@ -64,6 +64,7 @@ public class Comment implements Serializable
 		this.saved = false;
 		this.favoriteCount = 0;
 		this.replyCount = 0;
+		this.elasticID = null;
 	}
 
 	/**
@@ -88,6 +89,7 @@ public class Comment implements Serializable
 		this.saved = false;
 		this.favoriteCount = 0;
 		this.replyCount = 0;
+		this.elasticID = null;
 	}
 
 	public Commenter getCommenter() {
@@ -223,7 +225,5 @@ public class Comment implements Serializable
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy ");
 		return df.format(this.date);
 	}
-	
-	
 
 }

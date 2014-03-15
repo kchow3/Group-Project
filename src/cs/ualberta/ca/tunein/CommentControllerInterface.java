@@ -7,6 +7,10 @@ import android.app.Activity;
  * CommentControllerInterface Interface:
  * This interface is for implementing a CommentController.
  */
+/**
+ * @author kchow3
+ *
+ */
 public interface CommentControllerInterface {
 
 	/**

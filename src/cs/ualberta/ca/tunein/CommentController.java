@@ -1,6 +1,8 @@
 package cs.ualberta.ca.tunein;
 
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.app.Activity;
+import android.util.Log;
 
 
 /**
@@ -66,5 +68,4 @@ public class CommentController implements CommentControllerInterface {
 		String currentID = ((User) act.getApplication()).getUniqueID();
 		return comment.getCommenter().getUniqueID().equals(currentID);
 	}
-
 }
