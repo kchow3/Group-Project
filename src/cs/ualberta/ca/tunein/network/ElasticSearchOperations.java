@@ -108,8 +108,8 @@ public class ElasticSearchOperations {
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
 				HttpPost request = new HttpPost(SERVER_URL + model.getElasticID() + "/");
-				String query = 	"{\"script\" : \"ctx._source." + GSON.toJson(model) + "}";
-				
+				String query = GSON.toJson(model);
+				Log.w("Query", query);
 				try {
 					request.setEntity(new StringEntity(query));
 					Log.v("GSON", GSON.toJson(model));
