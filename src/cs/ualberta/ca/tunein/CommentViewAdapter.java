@@ -32,8 +32,6 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	
 	//public string that tags the extra of the comment that is passed to CommentPageActivity
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
-	//public string that tags the extra of the topic comment that is passed to CommentPageActivity
-	public final static String EXTRA_TOPIC_COMMENT = "cs.ualberta.ca.tunein.topicComment";
 	
 	private Context context;
 	//holder for the elements in the row
@@ -174,7 +172,6 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    	Comment aComment = commentList.get(index);
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
 	    	intent.putExtra(EXTRA_COMMENT, aComment);
-	    	intent.putExtra(EXTRA_TOPIC_COMMENT, aComment);
 	    	context.startActivity(intent);
 	    }
 	};

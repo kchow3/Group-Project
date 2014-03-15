@@ -44,11 +44,6 @@ public class TopicListActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    
-	    setContentView(R.layout.topic_list_view);
-		//setup buttons
-	    buttonMainMenu = (Button)findViewById(R.id.buttonMainMenu);
-		buttonMainMenu.setOnClickListener(mainmenuBtnClick);
-	    
 	    threadList = new ThreadList();
 	}
 	
@@ -56,6 +51,11 @@ public class TopicListActivity extends Activity {
 	protected void onResume()
 	{
 		super.onResume();
+		
+	    setContentView(R.layout.topic_list_view);
+		//setup buttons
+	    buttonMainMenu = (Button)findViewById(R.id.buttonMainMenu);
+		buttonMainMenu.setOnClickListener(mainmenuBtnClick);
 		
 		ThreadController cntrl = new ThreadController(threadList);
 		cntrl.getOnlineTopics(this);
