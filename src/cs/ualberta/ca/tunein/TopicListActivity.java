@@ -104,10 +104,9 @@ public class TopicListActivity extends Activity {
 		        		ThreadController cntrl = new ThreadController(threadList);
 		        		Comment newComment  = new Comment(user, title, comment, loc, img);
 		        		cntrl.createTopic(newComment);
+		        		ElasticSearchOperations.postCommentModel(newComment);
 		        		
 		        		viewAdapter.updateThreadView(threadList);
-		        		
-		        		ElasticSearchOperations.postCommentModel(newComment);
 		            } 
 		            else 
 		            {	                
@@ -120,10 +119,9 @@ public class TopicListActivity extends Activity {
 		        		ThreadController cntrl = new ThreadController(threadList);
 		        		Comment newComment  = new Comment(user, title, comment, loc);
 		        		cntrl.createTopic(newComment);
-
-		        		viewAdapter.updateThreadView(threadList);
-		        		
 		        		ElasticSearchOperations.postCommentModel(newComment);
+
+		        		viewAdapter.updateThreadView(threadList);        		
 		            }
 		        }
 		    })

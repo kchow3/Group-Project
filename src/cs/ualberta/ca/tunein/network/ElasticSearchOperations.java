@@ -107,11 +107,11 @@ public class ElasticSearchOperations {
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_URL + model.getElasticID() + " -d " + GSON.toJson(model));
-				Log.v("query", SERVER_URL + model.getElasticID() + " -d " + GSON.toJson(model));
-				/*
+				HttpPost request = new HttpPost(SERVER_URL + model.getElasticID() + "/");
+				String query = 	"{\"script\" : \"ctx._source." + GSON.toJson(model) + "}";
+				
 				try {
-					request.setEntity(new StringEntity(GSON.toJson(model)));
+					request.setEntity(new StringEntity(query));
 					Log.v("GSON", GSON.toJson(model));
 				} catch (UnsupportedEncodingException exception) {
 					Log.w(LOG_TAG,
@@ -119,7 +119,7 @@ public class ElasticSearchOperations {
 									+ exception.getMessage());
 					return;
 				}
-				*/
+
 				HttpResponse response;
 				try {
 					response = client.execute(request);
