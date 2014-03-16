@@ -64,7 +64,7 @@ public class TopicListActivity extends Activity {
 	    setupTopicView();
 		cntrl.getOnlineTopics(this);
 		//setup the comment listview
-		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList.getDiscussionThread());
+		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList, sortType);
 		ListView listview = (ListView) findViewById(R.id.listViewTopics);
 		
 		//setup adapter

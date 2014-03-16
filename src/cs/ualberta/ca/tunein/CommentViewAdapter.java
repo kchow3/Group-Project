@@ -38,7 +38,10 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	private Context context;
 	//holder for the elements in the row
 	private ViewHolder holder;
+	private ThreadList threadList;
 	private ArrayList<Comment> commentList;
+	private ThreadController threadCntrl;
+	private String sort;
 	
 	//dialog elements
 	private View createView;
@@ -71,11 +74,14 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * @param context The context of the activity that calls this class.
 	 * @param commentList The comment list that is to be in the list view.
 	 */
-	public CommentViewAdapter(Context context, ArrayList<Comment> commentList) 
+	public CommentViewAdapter(Context context, ThreadList list, String sort) 
 	{
-		super(context, R.layout.comment_view_row, commentList);
+		super(context, R.layout.comment_view_row, list.getDiscussionThread());
+		this.commentList = list.getDiscussionThread();
+		this.threadList = list;
 		this.context = context;
-		this.commentList = commentList;
+		this.sort = sort;
+		threadCntrl = new ThreadController(list, sort);
 	}
 	
 	@Override
@@ -155,6 +161,9 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 */
 	public void updateThreadView(ThreadList threadList)
 	{
+		this.threadList = threadList;
+		threadCntrl = new ThreadController(threadList, this.sort);
+		threadCntrl.sortChooser();
 		commentList = threadList.getDiscussionThread();
 		notifyDataSetChanged();
 	}
@@ -212,11 +221,13 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
 			        		cntrl.addReplyImg(currentComment, (Activity) context, title, text, img, false);
+			        		
 			            } 
 			            else 
 			            {	                	        		  		
 			        		cntrl.addReply(currentComment, (Activity) context, title, text, false);
 			            }
+			            threadCntrl.sortChooser();
 			            refreshThreadView();
 			        }
 			    })

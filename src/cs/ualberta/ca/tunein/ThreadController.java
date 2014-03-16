@@ -74,7 +74,7 @@ public class ThreadController {
 		ArrayList<Comment> thread = discussionThread.getDiscussionThread();
 		Collections.sort(thread, new Comparator<Comment>() {
 			  public int compare(Comment o1, Comment o2) {
-			      return o1.getReplyCount() - o2.getReplyCount();
+			      return o2.getReplyCount() - o1.getReplyCount();
 			  }
 			});	
 	}
