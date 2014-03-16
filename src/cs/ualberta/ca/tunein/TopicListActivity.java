@@ -1,15 +1,11 @@
 package cs.ualberta.ca.tunein;
 
-import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -62,7 +58,7 @@ public class TopicListActivity extends Activity {
 		super.onResume();
 
 	    setupTopicView();
-		cntrl.getOnlineTopics(this);
+		threadList = cntrl.getOnlineTopics(this);
 		//setup the comment listview
 		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList, sortType);
 		ListView listview = (ListView) findViewById(R.id.listViewTopics);

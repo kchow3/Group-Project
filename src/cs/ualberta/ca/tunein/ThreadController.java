@@ -133,9 +133,10 @@ public class ThreadController {
 		sortChooser();
 	}
 	
-	public void getOnlineTopics(Activity act) {
+	public ThreadList getOnlineTopics(Activity act) {
 		// get comments from elastic search
 		ElasticSearchOperations.getCommentPosts(discussionThread, act);
 		sortChooser();
+		return discussionThread;
 	}
 }
