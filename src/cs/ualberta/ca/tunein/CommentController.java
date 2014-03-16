@@ -1,5 +1,6 @@
 package cs.ualberta.ca.tunein;
 
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -42,9 +43,37 @@ public class CommentController implements CommentControllerInterface {
 	}
 	
 	@Override
-	public void addReply(Comment aComment) {
+	public void addReplyImg(Comment currentComment, Activity act, String title, String text, Image img) {
+		
+		UserController userCntrl = new UserController();
+    	String username = userCntrl.loadUsername(act);
+    	String id = userCntrl.loadUserid(act);
+		Commenter user = new Commenter(username, id);
+		
+		GeoLocation loc = new GeoLocation(20, 30);
+		
+		Comment aComment = new Comment(user, title, text, loc, img);
 		comment.addReply(aComment);
 		comment.increaseReplyCount();
+		
+		ElasticSearchOperations.putCommentModel(currentComment);
+	}
+	
+	@Override
+	public void addReply(Comment currentComment, Activity act, String title, String text) {
+		
+		UserController userCntrl = new UserController();
+    	String username = userCntrl.loadUsername(act);
+    	String id = userCntrl.loadUserid(act);
+		Commenter user = new Commenter(username, id);
+		
+		GeoLocation loc = new GeoLocation(20, 30);
+		
+		Comment aComment = new Comment(user, title, text, loc);
+		comment.addReply(aComment);
+		comment.increaseReplyCount();
+		
+		ElasticSearchOperations.putCommentModel(currentComment);
 	}
 
 	@Override

@@ -44,10 +44,16 @@ public interface CommentControllerInterface {
 	public void addtoCache(Comment aComment);
 	
 	/**
-	 * This method adds a reply comment to the comment.
+	 * This method adds a reply comment with a image to the comment.
 	 * @param aComment The reply of the comment.
 	 */
-	public void addReply(Comment aComment);
+	public void addReplyImg(Comment currentComment, Activity act, String title, String text, Image img);
+	
+	/**
+	 * This method adds a reply comment with no a image to the comment.
+	 * @param aComment The reply of the comment.
+	 */
+	public void addReply(Comment currentComment, Activity act, String title, String text);
 	
 	/**
 	 * This method changes the title of the comment.

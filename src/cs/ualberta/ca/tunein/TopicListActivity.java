@@ -108,15 +108,13 @@ public class TopicListActivity extends Activity {
 		            	inputImage.buildDrawingCache();
 		            	Bitmap bmp = inputImage.getDrawingCache();
 		            	img = new Image(bmp);
-		        		this.cntrl.createTopicImg(TopicListActivity.this, title, comment, img);
+		        		cntrl.createTopicImg(TopicListActivity.this, title, comment, img);
    		
 		        		viewAdapter.updateThreadView(threadList);
 		            } 
 		            else 
 		            {	                
-		        		cntrl.createTopic(TopicListActivity.this, title, comment,);
-		        		ElasticSearchOperations.postCommentModel(newComment);
-
+		        		cntrl.createTopic(TopicListActivity.this, title, comment);
 		        		viewAdapter.updateThreadView(threadList);        		
 		            }
 		        }
