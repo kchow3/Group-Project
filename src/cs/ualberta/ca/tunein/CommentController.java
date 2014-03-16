@@ -31,8 +31,9 @@ public class CommentController{
 		comment.setComment(text);
 	}
 
-	public void changeLoc(GeoLocation loc) {
-		comment.setGeolocation(loc);
+	public void changeLoc(Double lon, Double lat) {
+		comment.getGeolocation().setLongitude(lon);
+		comment.getGeolocation().setLatitude(lat);
 	}
 
 	public void addImg(Image img) {
@@ -95,5 +96,10 @@ public class CommentController{
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
 		String currentID = prefs.getString("cs.ualberta.ca.tunein.userid", "");
 		return comment.getCommenter().getUniqueID().equals(currentID);
+	}
+	
+	public void updateElasticSearch(Comment aComment)
+	{
+		ElasticSearchOperations.putCommentModel(aComment);
 	}
 }

@@ -50,6 +50,8 @@ public class CommentPageActivity extends Activity {
 	private ArrayList<Comment> replies;
 	//comment controller
 	private CommentController cntrl;
+	//boolean to check if current comment is repy to reply
+	private boolean isReplyReply;
 	
 	//variables for setting up textviews/buttons/imageview
 	private TextView textViewCommentTitle;
@@ -88,7 +90,7 @@ public class CommentPageActivity extends Activity {
 		super.onResume();
 		setContentView(R.layout.comment_view);
 		setupComment();
-		
+		replies = aComment.getReplies();
 		//setup the reply listview
 		this.viewAdapter = new ReplyViewAdapter(this, replies, topicComment);
 		ExpandableListView listview = (ExpandableListView) findViewById(R.id.expandableListViewReply);
@@ -97,7 +99,6 @@ public class CommentPageActivity extends Activity {
 		listview.setAdapter(viewAdapter);
 		viewAdapter.updateReplyView(replies);
 	}
-	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -105,6 +106,12 @@ public class CommentPageActivity extends Activity {
 
 		     if(resultCode == RESULT_OK){      
 		         aComment = (Comment) data.getSerializableExtra("editResult"); 
+		         cntrl = new CommentController(aComment);
+		         if(!isReplyReply)
+		         {
+		        	 topicComment = aComment;
+		         }
+		         cntrl.updateElasticSearch(topicComment);
 		         setupComment();
 		     }
 		     if (resultCode == RESULT_CANCELED) {
@@ -112,11 +119,10 @@ public class CommentPageActivity extends Activity {
 		     }
 		  }
 		}
-	
 	private void getInputComment()
 	{
 		Intent intent = getIntent();
-		boolean isReplyReply = intent.getBooleanExtra("isReplyReply", false);
+		isReplyReply = intent.getBooleanExtra("isReplyReply", false);
 		if(isReplyReply)
 		{
 			this.topicComment = (Comment) intent.getSerializableExtra(EXTRA_TOPIC_COMMENT);
@@ -126,14 +132,6 @@ public class CommentPageActivity extends Activity {
 			this.topicComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
 		}
 		this.aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
-		replies = aComment.getReplies();
-	}
-	
-	private void getReplyInput()
-	{
-		Intent intent = getIntent();
-		this.aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
-		this.topicComment = (Comment) intent.getSerializableExtra(EXTRA_TOPIC_COMMENT);
 		replies = aComment.getReplies();
 	}
 	
@@ -181,7 +179,7 @@ public class CommentPageActivity extends Activity {
 			imageViewCommentImage.setVisibility(View.VISIBLE);
 		}
 		
-		CommentController cntrl = new CommentController(aComment);
+		cntrl = new CommentController(aComment);
 		if(cntrl.checkValid(this))
 		{
 			buttonCommentEdit.setVisibility(View.VISIBLE);

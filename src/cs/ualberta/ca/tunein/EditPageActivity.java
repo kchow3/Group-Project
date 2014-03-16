@@ -1,12 +1,17 @@
 package cs.ualberta.ca.tunein;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,20 +27,27 @@ public class EditPageActivity extends Activity {
 
 	//public string that tags the extra of the comment that is passed to EditPageActivity
 	public final static String EXTRA_EDIT = "cs.ualberta.ca.tunein.commentEdit";
+	//public string that tags the extra of the topic comment that is passed to CommentPageActivity
+	public final static String EXTRA_TOPIC_COMMENT = "cs.ualberta.ca.tunein.topicComment";
 	
 	//comment passed through intent when clicking on a view comment button
 	private Comment aComment;
 	
 	//variables for setting up textviews/buttons/imageview
-		private TextView textViewEditTitle;
-		private TextView textViewEditComment;
-		private TextView textViewEditX;
-		private TextView textViewEditY;
-		private Button buttonEditImage;
-		private Button buttonEditLocation;
-		private Button buttonEditCancel;
-		private Button buttonEditSubmit;
-		private ImageView imageViewEditImage;
+	private TextView textViewEditTitle;
+	private TextView textViewEditComment;
+	private TextView textViewEditX;
+	private TextView textViewEditY;
+	private Button buttonEditImage;
+	private Button buttonEditLocation;
+	private Button buttonEditCancel;
+	private Button buttonEditSubmit;
+	private ImageView imageViewEditImage;
+	
+	//dialog elements
+	private View createView;
+	private TextView inputLong;
+	private TextView inputLat;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -82,8 +94,8 @@ public class EditPageActivity extends Activity {
 		
 		textViewEditTitle.setText(aComment.getTitle());
 		textViewEditComment.setText(aComment.getComment());
-		textViewEditX.setText(String.format("%.5f", aComment.getGeolocation().getLongitude()));
-		textViewEditY.setText(String.format("%.5f", aComment.getGeolocation().getLatitude()));
+		textViewEditX.setText(String.valueOf(aComment.getGeolocation().getLongitude()));
+		textViewEditY.setText(String.valueOf(aComment.getGeolocation().getLatitude()));
 		
 		//if there is image load image else invisible
 		if(aComment.isHasImage())
@@ -100,8 +112,7 @@ public class EditPageActivity extends Activity {
 	private OnClickListener imageBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
-	    {
-	    	
+	    {    	
 	    	//set visibility to VISIBLE after adding image
 	    }
 	};
@@ -110,6 +121,20 @@ public class EditPageActivity extends Activity {
 	{
 	    public void onClick(View v)
 	    {
+	    	setupDialogs();
+			AlertDialog dialog = new AlertDialog.Builder(EditPageActivity.this)
+			    .setTitle("Create Comment")
+			    .setView(createView)
+			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			        public void onClick(DialogInterface dialog, int whichButton) {
+			            String lon = inputLong.getText().toString();
+			            String lat = inputLat.getText().toString();
+			            textViewEditX.setText(lon);
+			            textViewEditY.setText(lat);
+			        }
+			    })
+			    .setNegativeButton("Cancel", null).create();
+			dialog.show();
 	    }
 	};
 
@@ -131,9 +156,8 @@ public class EditPageActivity extends Activity {
 	    	CommentController cntrl = new CommentController(aComment);
 	    	cntrl.editTitle(textViewEditTitle.getText().toString());
 	    	cntrl.editText(textViewEditComment.getText().toString());
-	    	//change geolocation
-	    	//change/add image
-	    	
+	    	cntrl.changeLoc(Double.parseDouble(textViewEditX.getText().toString()),
+	    			Double.parseDouble(textViewEditY.getText().toString()));
 	    	Intent returnIntent = new Intent();
 	    	returnIntent.putExtra("editResult", aComment);
 	    	setResult(RESULT_OK,returnIntent);     
@@ -141,5 +165,12 @@ public class EditPageActivity extends Activity {
 	    }
 	};
 
+	private void setupDialogs()
+	{
+		LayoutInflater inflater = LayoutInflater.from(EditPageActivity.this);
+		createView = inflater.inflate(R.layout.location_change, null);
 
+		inputLong = (EditText) createView.findViewById(R.id.textViewInputChangeLong);
+		inputLat = (EditText) createView.findViewById(R.id.textViewInputChangeLat);
+	}
 }
