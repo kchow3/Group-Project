@@ -14,7 +14,7 @@ import android.view.View;
  * comments and modifies the comments in the list passed to
  * the controller.
  */
-public class ThreadController implements ThreadControllerInterface {
+public class ThreadController {
 
 	private ThreadList discussionThread;
 	
@@ -27,35 +27,30 @@ public class ThreadController implements ThreadControllerInterface {
 		discussionThread = threadList;
 	}
 
-	@Override
 	public void sortByLocation(GeoLocation loc) 
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void sortBySetLocation(GeoLocation loc) 
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void sortByPicture() 
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void sortByDate() 
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void createTopicImg(Activity act, String title, String comment, Image img) 
 	{
 		ArrayList<Comment> list = discussionThread.getDiscussionThread();
@@ -72,7 +67,6 @@ public class ThreadController implements ThreadControllerInterface {
 		ElasticSearchOperations.postCommentModel(aComment);
 	}
 	
-	@Override
 	public void createTopic(Activity act, String title, String comment) 
 	{
 		ArrayList<Comment> list = discussionThread.getDiscussionThread();
@@ -89,7 +83,6 @@ public class ThreadController implements ThreadControllerInterface {
 		ElasticSearchOperations.postCommentModel(aComment);
 	}
 	
-	@Override
 	public void getOnlineTopics(Activity act) {
 		// get comments from elastic search
 		ElasticSearchOperations.getCommentPosts(discussionThread, act);
