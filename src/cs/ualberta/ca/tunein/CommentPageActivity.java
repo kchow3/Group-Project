@@ -66,6 +66,12 @@ public class CommentPageActivity extends Activity {
 	
 	private ImageView imageViewCommentImage;
 	
+	//dialog elements
+	private View createView;
+	private TextView inputTitle;
+	private TextView inputComment;
+	private ImageView inputImage;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -211,13 +217,7 @@ public class CommentPageActivity extends Activity {
 	{
 	    public void onClick(View v)
 	    {
-	    	LayoutInflater inflater = LayoutInflater.from(CommentPageActivity.this);
-			final View createView = inflater.inflate(R.layout.create_comment_view, null);
-
-			final TextView inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
-			final TextView inputComment = (EditText) createView.findViewById(R.id.editTextComment);
-			final ImageView inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
-			
+	    	setupDialogs();
 			AlertDialog dialog = new AlertDialog.Builder(CommentPageActivity.this)
 			    .setTitle("Create Comment")
 			    .setView(createView)
@@ -226,29 +226,22 @@ public class CommentPageActivity extends Activity {
 			            String title = inputTitle.getText().toString();
 			            String text = inputComment.getText().toString();
 			            
+		        		cntrl = new CommentController(aComment);
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
-			            	Image img = new Image(bmp);
-		            	
-			        		cntrl = new CommentController(aComment);
+			            	Image img = new Image(bmp);            	
 			        		cntrl.addReplyImg(topicComment, CommentPageActivity.this, title, text, img);
-
-			        		replies = aComment.getReplies();
-			        		viewAdapter.updateReplyView(replies);
-			        		setupComment();
 			            } 
 			            else 
 			            {	                
-			        		cntrl = new CommentController(aComment);
 			        		cntrl.addReply(topicComment, CommentPageActivity.this, title, text);
-
-			        		replies = aComment.getReplies();
-			        		viewAdapter.updateReplyView(replies);
-			        		setupComment();
 			            }
+			            replies = aComment.getReplies();
+			            viewAdapter.updateReplyView(replies);
+		        		setupComment();
 			        }
 			    })
 			    .setNegativeButton("Cancel", null).create();
@@ -256,5 +249,16 @@ public class CommentPageActivity extends Activity {
 	    }
 	};
 	
-	
+	/**
+	 * This method is for setting up the dialog boxes.
+	 */
+	private void setupDialogs()
+	{
+		LayoutInflater inflater = LayoutInflater.from(CommentPageActivity.this);
+		createView = inflater.inflate(R.layout.create_comment_view, null);
+
+		inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
+		inputComment = (EditText) createView.findViewById(R.id.editTextComment);
+		inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
+	}
 }

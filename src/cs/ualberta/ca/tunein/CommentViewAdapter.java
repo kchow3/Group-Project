@@ -40,6 +40,12 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	private ViewHolder holder;
 	private ArrayList<Comment> commentList;
 	
+	//dialog elements
+	private View createView;
+	private TextView inputTitle;
+	private TextView inputComment;
+	private ImageView inputImage;
+	
 	/**
 	 * This static class is used for holding the elements of
 	 * a custom comment row. This is used for smoother scrolling
@@ -187,13 +193,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    public void onClick(View v)
 	    {
 	    	final int i = (Integer)v.getTag();
-	    	LayoutInflater inflater = LayoutInflater.from(context);
-			final View createView = inflater.inflate(R.layout.create_comment_view, null);
-
-			final TextView inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
-			final TextView inputComment = (EditText) createView.findViewById(R.id.editTextComment);
-			final ImageView inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
-			
+	    	setupDialogs();
 			AlertDialog dialog = new AlertDialog.Builder(context)
 			    .setTitle("Create Comment")
 			    .setView(createView)
@@ -202,27 +202,21 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			            String title = inputTitle.getText().toString();
 			            String text = inputComment.getText().toString();
 			            
+			            Comment currentComment = commentList.get(i);
+		        		cntrl = new CommentController(currentComment);
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
-			            	
-			        		//current comment that is replied to using tag and get parent position
-			        		Comment currentComment = commentList.get(i);
-			        		cntrl = new CommentController(currentComment);
 			        		cntrl.addReplyImg(currentComment, (Activity) context, title, text, img);
-			        		refreshThreadView();
 			            } 
 			            else 
-			            {	                	        		
-			        		//current comment that is replied to using tag and get parent position
-			        		Comment currentComment = commentList.get(i);
-			        		cntrl = new CommentController(currentComment);      		
+			            {	                	        		  		
 			        		cntrl.addReply(currentComment, (Activity) context, title, text);
-			        		refreshThreadView();
 			            }
+			            refreshThreadView();
 			        }
 			    })
 			    .setNegativeButton("Cancel", null).create();
@@ -251,4 +245,16 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    }
 	};
 	
+	/**
+	 * This method is for setting up the dialog boxes.
+	 */
+	private void setupDialogs()
+	{
+		LayoutInflater inflater = LayoutInflater.from(context);
+		createView = inflater.inflate(R.layout.create_comment_view, null);
+
+		inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
+		inputComment = (EditText) createView.findViewById(R.id.editTextComment);
+		inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
+	}
 }

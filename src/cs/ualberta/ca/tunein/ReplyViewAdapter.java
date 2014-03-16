@@ -339,6 +339,9 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 		notifyDataSetChanged();
 	}
 	
+	/**
+	 * This method is for setting up the dialog boxes.
+	 */
 	private void setupDialogs()
 	{
 		LayoutInflater inflater = LayoutInflater.from(context);
