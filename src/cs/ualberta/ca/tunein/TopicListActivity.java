@@ -106,12 +106,11 @@ public class TopicListActivity extends Activity {
 		            	Bitmap bmp = inputImage.getDrawingCache();
 		            	img = new Image(bmp);
 	            	
-		        		//temp geo location
 		            	UserController userCntrl = new UserController();
 		            	String username = userCntrl.loadUsername(TopicListActivity.this);
 		            	String id = userCntrl.loadUserid(TopicListActivity.this);
 		        		Commenter user = new Commenter(username, id);
-		        		GeoLocation loc = new GeoLocation(5, 10);
+		        		GeoLocation loc = new GeoLocation(TopicListActivity.this);
 		        		
 		        		ThreadController cntrl = new ThreadController(threadList);
 		        		Comment newComment  = new Comment(user, title, comment, loc, img);
@@ -122,12 +121,11 @@ public class TopicListActivity extends Activity {
 		            } 
 		            else 
 		            {	                
-		            	//temp geo location
 		            	UserController userCntrl = new UserController();
 		            	String username = userCntrl.loadUsername(TopicListActivity.this);
 		            	String id = userCntrl.loadUserid(TopicListActivity.this);
 		        		Commenter user = new Commenter(username, id);
-		        		GeoLocation loc = new GeoLocation(5, 10);
+		        		GeoLocation loc = new GeoLocation(TopicListActivity.this);
 		        		
 		        		ThreadController cntrl = new ThreadController(threadList);
 		        		Comment newComment  = new Comment(user, title, comment, loc);

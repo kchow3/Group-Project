@@ -252,13 +252,12 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
 		            	
-			            	//temp geo location
 			            	UserController userCntrl = new UserController();
 			            	String username = userCntrl.loadUsername((Activity)context);
 			            	String id = userCntrl.loadUserid((Activity)context);
 			        		Commenter user = new Commenter(username, id);
 			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
+			        		GeoLocation loc = new GeoLocation(context);
 			        		
 			        		//current comment that is replied to using tag and get parent position
 			        		Comment currentComment = replies.get(index[0]).getReplies().get(index[1]);
@@ -273,13 +272,12 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            } 
 			            else 
 			            {	                
-			            	//temp geo location
 			            	UserController userCntrl = new UserController();
 			            	String username = userCntrl.loadUsername((Activity)context);
 			            	String id = userCntrl.loadUserid((Activity)context);
 			        		Commenter user = new Commenter(username, id);
 			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
+			        		GeoLocation loc = new GeoLocation(context);
 			        		
 			        		//current comment that is replied to using tag and get parent position
 			        		Comment currentComment = replies.get(index[0]).getReplies().get(index[1]);
@@ -348,13 +346,12 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
 		            	
-			            	//temp geo location
 			            	UserController userCntrl = new UserController();
 			            	String username = userCntrl.loadUsername((Activity)context);
 			            	String id = userCntrl.loadUserid((Activity)context);
 			        		Commenter user = new Commenter(username, id);
 			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
+			        		GeoLocation loc = new GeoLocation(context);
 			        		
 			        		//current comment that is replied to using tag and get parent position
 			        		Comment currentComment = replies.get(i);
@@ -369,13 +366,12 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            } 
 			            else 
 			            {	                
-			            	//temp geo location
 			            	UserController userCntrl = new UserController();
 			            	String username = userCntrl.loadUsername((Activity)context);
 			            	String id = userCntrl.loadUserid((Activity)context);
 			        		Commenter user = new Commenter(username, id);
 			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
+			        		GeoLocation loc = new GeoLocation(context);
 			        		
 			        		//current comment that is replied to using tag and get parent position
 			        		Comment currentComment = replies.get(i);

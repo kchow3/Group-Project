@@ -231,13 +231,12 @@ public class CommentPageActivity extends Activity {
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
 		            	
-			        		//temp geo location
 			            	UserController userCntrl = new UserController();
 			            	String username = userCntrl.loadUsername(CommentPageActivity.this);
 			            	String id = userCntrl.loadUserid((Activity)CommentPageActivity.this);
 			        		Commenter user = new Commenter(username, id);
 			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
+			        		GeoLocation loc = new GeoLocation(CommentPageActivity.this);
 			        		
 			        		Comment newComment  = new Comment(user, title, text, loc, img);
 			        		CommentController cntrl = new CommentController(aComment);
@@ -247,16 +246,16 @@ public class CommentPageActivity extends Activity {
 			     		        		
 			        		replies = aComment.getReplies();
 			        		viewAdapter.updateReplyView(replies);
+			        		setupComment();
 			            } 
 			            else 
 			            {	                
-			            	//temp geo location
 			            	UserController userCntrl = new UserController();
 			            	String username = userCntrl.loadUsername(CommentPageActivity.this);
 			            	String id = userCntrl.loadUserid((Activity)CommentPageActivity.this);
 			        		Commenter user = new Commenter(username, id);
 			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
+			        		GeoLocation loc = new GeoLocation(CommentPageActivity.this);
 			        		
 			        		Comment newComment  = new Comment(user, title, text, loc);
 			        		CommentController cntrl = new CommentController(aComment);
@@ -268,6 +267,7 @@ public class CommentPageActivity extends Activity {
 			     		        		
 			        		replies = aComment.getReplies();
 			        		viewAdapter.updateReplyView(replies);
+			        		setupComment();
 			            }
 			        }
 			    })
