@@ -45,6 +45,12 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	//comment controller
 	private CommentController cntrl;
 	
+	//dialog elements
+	private View createView;
+	private TextView inputTitle;
+	private TextView inputComment;
+	private ImageView inputImage;
+	
 	/**
 	 * View holder that holds the elements of a
 	 * custom row that improves scrolling.
@@ -232,12 +238,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	    public void onClick(View v)
 	    {
 	    	final int index[] = (int[])v.getTag();
-	    	LayoutInflater inflater = LayoutInflater.from(context);
-			final View createView = inflater.inflate(R.layout.create_comment_view, null);
-
-			final TextView inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
-			final TextView inputComment = (EditText) createView.findViewById(R.id.editTextComment);
-			final ImageView inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
+	    	setupDialogs();
 			
 			AlertDialog dialog = new AlertDialog.Builder(context)
 			    .setTitle("Create Comment")
@@ -247,27 +248,21 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            String title = inputTitle.getText().toString();
 			            String text = inputComment.getText().toString();
 			            
+		        		Comment currentComment = replies.get(index[0]).getReplies().get(index[1]);
+		        		cntrl = new CommentController(currentComment);
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
-			            	Image img = new Image(bmp);
-			        		
-			        		//current comment that is replied to using tag and get parent position
-			        		Comment currentComment = replies.get(index[0]).getReplies().get(index[1]);
-			        		cntrl = new CommentController(currentComment);
+			            	Image img = new Image(bmp);        
 			        		cntrl.addReplyImg(topicComment, (Activity) context, title, text, img);
-			        		updateReplyView(replies);
 			            } 
 			            else 
 			            {	                
-			        		//current comment that is replied to using tag and get parent position
-			        		Comment currentComment = replies.get(index[0]).getReplies().get(index[1]);
-			        		cntrl = new CommentController(currentComment);
 			        		cntrl.addReply(topicComment, (Activity) context, title, text);
-			        		updateReplyView(replies);
 			            }
+		        		updateReplyView(replies);
 			        }
 			    })
 			    .setNegativeButton("Cancel", null).create();
@@ -301,13 +296,8 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	    public void onClick(View v)
 	    {
 	    	final int i = (Integer) v.getTag();
-	    	LayoutInflater inflater = LayoutInflater.from(context);
-			final View createView = inflater.inflate(R.layout.create_comment_view, null);
-
-			final TextView inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
-			final TextView inputComment = (EditText) createView.findViewById(R.id.editTextComment);
-			final ImageView inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
-			
+	    	setupDialogs();
+	    	
 			AlertDialog dialog = new AlertDialog.Builder(context)
 			    .setTitle("Create Comment")
 			    .setView(createView)
@@ -316,27 +306,22 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            String title = inputTitle.getText().toString();
 			            String text = inputComment.getText().toString();
 			            
+			          //current comment that is replied to using tag and get parent position
+		        		Comment currentComment = replies.get(i);
+		        		cntrl = new CommentController(currentComment);
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
-
-			        		//current comment that is replied to using tag and get parent position
-			        		Comment currentComment = replies.get(i);
-			        		cntrl = new CommentController(currentComment);
 			        		cntrl.addReplyImg(topicComment, (Activity) context, title, text, img);
-			        		updateReplyView(replies);
 			            } 
 			            else 
 			            {	                
-			        		//current comment that is replied to using tag and get parent position
-			        		Comment currentComment = replies.get(i);
-			        		cntrl = new CommentController(currentComment);
 			        		cntrl.addReply(topicComment, (Activity) context, title, text);
-			        		updateReplyView(replies);
 			            }
+			            updateReplyView(replies);
 			        }
 			    })
 			    .setNegativeButton("Cancel", null).create();
@@ -352,6 +337,16 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	public void updateReplyView(ArrayList<Comment> replies) {
 		this.replies = replies;
 		notifyDataSetChanged();
+	}
+	
+	private void setupDialogs()
+	{
+		LayoutInflater inflater = LayoutInflater.from(context);
+		createView = inflater.inflate(R.layout.create_comment_view, null);
+
+		inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
+		inputComment = (EditText) createView.findViewById(R.id.editTextComment);
+		inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
 	}
 	
 }
