@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * View
@@ -98,6 +99,14 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			UserController cntrl = new UserController();
 			cntrl.changeUsername(edit_username.getText().toString(), MainActivity.this);
+			
+			//toast massage to confirm username change
+			Context context = getApplicationContext();
+			CharSequence text = "Username changed.";
+			int duration = Toast.LENGTH_SHORT;
+
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
 		}
 	};
 	
