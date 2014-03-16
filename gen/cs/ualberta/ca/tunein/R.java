@@ -83,8 +83,8 @@ public final class R {
         public static final int textViewFavCount=0x7f080027;
         public static final int textViewFavorited=0x7f080026;
         public static final int textViewGoDirect=0x7f08000f;
-        public static final int textViewInputChangeLat=0x7f08003d;
-        public static final int textViewInputChangeLong=0x7f08003c;
+        public static final int textViewInputChangeLat=0x7f08003c;
+        public static final int textViewInputChangeLong=0x7f08003d;
         public static final int textViewInputTitle=0x7f08002b;
         public static final int textViewReply=0x7f08003e;
         public static final int textViewReplyCount=0x7f080029;
