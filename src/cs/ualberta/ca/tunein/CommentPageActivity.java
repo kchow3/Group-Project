@@ -46,6 +46,8 @@ public class CommentPageActivity extends Activity {
 	private Comment topicComment;
 	//reply list
 	private ArrayList<Comment> replies;
+	//comment controller
+	private CommentController cntrl;
 	
 	//variables for setting up textviews/buttons/imageview
 	private TextView textViewCommentTitle;
@@ -231,40 +233,18 @@ public class CommentPageActivity extends Activity {
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
 		            	
-			            	UserController userCntrl = new UserController();
-			            	String username = userCntrl.loadUsername(CommentPageActivity.this);
-			            	String id = userCntrl.loadUserid((Activity)CommentPageActivity.this);
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(CommentPageActivity.this);
-			        		
-			        		Comment newComment  = new Comment(user, title, text, loc, img);
-			        		CommentController cntrl = new CommentController(aComment);
-			        		cntrl.addReply(newComment);
-			        		
-			        		ElasticSearchOperations.putCommentModel(topicComment);
-			     		        		
+			        		cntrl = new CommentController(aComment);
+			        		cntrl.addReplyImg(topicComment, CommentPageActivity.this, title, text, img);
+
 			        		replies = aComment.getReplies();
 			        		viewAdapter.updateReplyView(replies);
 			        		setupComment();
 			            } 
 			            else 
 			            {	                
-			            	UserController userCntrl = new UserController();
-			            	String username = userCntrl.loadUsername(CommentPageActivity.this);
-			            	String id = userCntrl.loadUserid((Activity)CommentPageActivity.this);
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(CommentPageActivity.this);
-			        		
-			        		Comment newComment  = new Comment(user, title, text, loc);
-			        		CommentController cntrl = new CommentController(aComment);
+			        		cntrl = new CommentController(aComment);
+			        		cntrl.addReply(topicComment, CommentPageActivity.this, title, text);
 
-			        		cntrl.addReply(newComment);
-			        		Log.v("replies", Integer.toString(aComment.getReplyCount()));
-			        		Log.v("topic replies", Integer.toString(topicComment.getReplyCount()));
-			        		ElasticSearchOperations.putCommentModel(topicComment);
-			     		        		
 			        		replies = aComment.getReplies();
 			        		viewAdapter.updateReplyView(replies);
 			        		setupComment();
