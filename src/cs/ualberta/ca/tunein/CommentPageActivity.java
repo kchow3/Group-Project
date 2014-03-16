@@ -37,6 +37,8 @@ public class CommentPageActivity extends Activity {
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
 	//public string that tags the extra of the comment to be edited that is passed to EditPageActivity
 	public final static String EXTRA_EDIT = "cs.ualberta.ca.tunein.commentEdit";
+	//public string that tags the extra of the topic comment that is passed to CommentPageActivity
+	public final static String EXTRA_TOPIC_COMMENT = "cs.ualberta.ca.tunein.topicComment";
 	
 	//reply view adapter
 	private ReplyViewAdapter viewAdapter;
@@ -114,8 +116,24 @@ public class CommentPageActivity extends Activity {
 	private void getInputComment()
 	{
 		Intent intent = getIntent();
+		boolean isReplyReply = intent.getBooleanExtra("isReplyReply", false);
+		if(isReplyReply)
+		{
+			this.topicComment = (Comment) intent.getSerializableExtra(EXTRA_TOPIC_COMMENT);
+		}
+		else
+		{
+			this.topicComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
+		}
 		this.aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
-		this.topicComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
+		replies = aComment.getReplies();
+	}
+	
+	private void getReplyInput()
+	{
+		Intent intent = getIntent();
+		this.aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
+		this.topicComment = (Comment) intent.getSerializableExtra(EXTRA_TOPIC_COMMENT);
 		replies = aComment.getReplies();
 	}
 	

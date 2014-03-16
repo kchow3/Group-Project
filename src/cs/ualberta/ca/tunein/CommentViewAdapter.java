@@ -180,6 +180,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    	Comment aComment = commentList.get(index);
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
 	    	intent.putExtra(EXTRA_COMMENT, aComment);
+	    	intent.putExtra("isReplyReply", false);
 	    	context.startActivity(intent);
 	    }
 	};

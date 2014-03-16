@@ -225,6 +225,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
 	    	intent.putExtra(EXTRA_COMMENT, aComment);
 	    	intent.putExtra(EXTRA_TOPIC_COMMENT, topicComment);
+	    	intent.putExtra("isReplyReply", true);
 	    	context.startActivity(intent);
 	    }
 	};
