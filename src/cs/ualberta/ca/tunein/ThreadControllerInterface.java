@@ -14,10 +14,16 @@ import android.view.View;
 public interface ThreadControllerInterface {
 	
 	/**
-	 * This method creates a new topic comment in the list.
+	 * This method creates a new topic comment with image in the list.
 	 * @param aComment The comment to be added.
 	 */
-	public void createTopic(Comment aComment);
+	public void createTopicImg(Activity act, String title, String comment, Image img);
+	
+	/**
+	 * This method creates a new topic comment with no image in the list.
+	 * @param aComment The comment to be added.
+	 */
+	public void createTopic(Activity act, String title, String comment);
 	
 	/**
 	 * This method sorts the list of comments by the

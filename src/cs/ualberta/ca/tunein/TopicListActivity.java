@@ -32,6 +32,8 @@ public class TopicListActivity extends Activity {
 	private CommentViewAdapter viewAdapter;
 	//discussion thread list
 	private ThreadList threadList;
+	//thread controller
+	private ThreadController cntrl;
 	//variables for adding topic
 	private String title;
 	private String comment;
@@ -45,6 +47,7 @@ public class TopicListActivity extends Activity {
 	    super.onCreate(savedInstanceState);
 	    
 	    threadList = new ThreadList();
+	    cntrl = new ThreadController(threadList);
 	}
 	
 	@Override
@@ -105,31 +108,13 @@ public class TopicListActivity extends Activity {
 		            	inputImage.buildDrawingCache();
 		            	Bitmap bmp = inputImage.getDrawingCache();
 		            	img = new Image(bmp);
-	            	
-		            	UserController userCntrl = new UserController();
-		            	String username = userCntrl.loadUsername(TopicListActivity.this);
-		            	String id = userCntrl.loadUserid(TopicListActivity.this);
-		        		Commenter user = new Commenter(username, id);
-		        		GeoLocation loc = new GeoLocation(TopicListActivity.this);
-		        		
-		        		ThreadController cntrl = new ThreadController(threadList);
-		        		Comment newComment  = new Comment(user, title, comment, loc, img);
-		        		cntrl.createTopic(newComment);
-		        		ElasticSearchOperations.postCommentModel(newComment);
-		        		
+		        		this.cntrl.createTopicImg(TopicListActivity.this, title, comment, img);
+   		
 		        		viewAdapter.updateThreadView(threadList);
 		            } 
 		            else 
 		            {	                
-		            	UserController userCntrl = new UserController();
-		            	String username = userCntrl.loadUsername(TopicListActivity.this);
-		            	String id = userCntrl.loadUserid(TopicListActivity.this);
-		        		Commenter user = new Commenter(username, id);
-		        		GeoLocation loc = new GeoLocation(TopicListActivity.this);
-		        		
-		        		ThreadController cntrl = new ThreadController(threadList);
-		        		Comment newComment  = new Comment(user, title, comment, loc);
-		        		cntrl.createTopic(newComment);
+		        		cntrl.createTopic(TopicListActivity.this, title, comment,);
 		        		ElasticSearchOperations.postCommentModel(newComment);
 
 		        		viewAdapter.updateThreadView(threadList);        		

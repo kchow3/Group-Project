@@ -22,12 +22,10 @@ public class GeoLocation implements Serializable{
 	 * @param lon
 	 * @param lat
 	 */
-	public GeoLocation(Context context) 
+	public GeoLocation(double lon, double lat) 
 	{
-		LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		this.longitude = location.getLongitude();
-		this.latitude = location.getLatitude();
+		this.longitude = lon;
+		this.latitude = lat;
 	}
 
 	public double getLongitude() {
