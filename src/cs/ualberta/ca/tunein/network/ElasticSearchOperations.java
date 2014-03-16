@@ -212,7 +212,7 @@ public class ElasticSearchOperations {
 
 		thread.start();
 	}
-
+	
 	/**
 	 * Constructs a Gson with a custom serializer / desserializer registered for
 	 * Bitmaps.

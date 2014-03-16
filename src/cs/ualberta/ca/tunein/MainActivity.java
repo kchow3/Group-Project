@@ -131,6 +131,10 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener date_buttonBtnClick = new OnClickListener() {
 		public void onClick(View v) {
+			Intent i = new Intent(getApplicationContext(),
+					TopicListActivity.class);
+			i.putExtra("SORT", "Date");
+			MainActivity.this.startActivity(i);
 		}
 	};
 	
@@ -165,6 +169,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			Intent i = new Intent(getApplicationContext(),
 					TopicListActivity.class);
+			i.putExtra("SORT", "Freshness");
 			MainActivity.this.startActivity(i);
 		}
 	};

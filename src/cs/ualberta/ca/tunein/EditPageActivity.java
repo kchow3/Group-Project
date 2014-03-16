@@ -143,7 +143,6 @@ public class EditPageActivity extends Activity {
 	    public void onClick(View v)
 	    {
 	    	Intent returnIntent = new Intent();
-	    	returnIntent.putExtra("editResult", aComment);
 	    	setResult(RESULT_CANCELED,returnIntent);     
 	    	finish();
 	    }

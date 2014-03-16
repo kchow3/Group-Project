@@ -257,11 +257,11 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);        
-			        		cntrl.addReplyImg(topicComment, (Activity) context, title, text, img);
+			        		cntrl.addReplyImg(topicComment, (Activity) context, title, text, img, true);
 			            } 
 			            else 
 			            {	                
-			        		cntrl.addReply(topicComment, (Activity) context, title, text);
+			        		cntrl.addReply(topicComment, (Activity) context, title, text, true);
 			            }
 		        		updateReplyView(replies);
 			        }
@@ -317,11 +317,11 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
-			        		cntrl.addReplyImg(topicComment, (Activity) context, title, text, img);
+			        		cntrl.addReplyImg(topicComment, (Activity) context, title, text, img, true);
 			            } 
 			            else 
 			            {	                
-			        		cntrl.addReply(topicComment, (Activity) context, title, text);
+			        		cntrl.addReply(topicComment, (Activity) context, title, text, true);
 			            }
 			            updateReplyView(replies);
 			        }

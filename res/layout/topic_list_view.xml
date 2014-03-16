@@ -38,7 +38,6 @@
         android:layout_below="@+id/textViewTopics"
         android:gravity="center"
         android:height="45dp"
-        android:text="Sort"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button

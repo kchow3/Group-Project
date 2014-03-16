@@ -211,11 +211,11 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
-			        		cntrl.addReplyImg(currentComment, (Activity) context, title, text, img);
+			        		cntrl.addReplyImg(currentComment, (Activity) context, title, text, img, false);
 			            } 
 			            else 
 			            {	                	        		  		
-			        		cntrl.addReply(currentComment, (Activity) context, title, text);
+			        		cntrl.addReply(currentComment, (Activity) context, title, text, false);
 			            }
 			            refreshThreadView();
 			        }

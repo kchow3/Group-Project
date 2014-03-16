@@ -40,7 +40,7 @@ public class CommentController{
 		comment.setImg(img);
 	}
 	
-	public void addReplyImg(Comment currentComment, Activity act, String title, String text, Image img) {
+	public void addReplyImg(Comment currentComment, Activity act, String title, String text, Image img, boolean isReply) {
 		
 		UserController userCntrl = new UserController();
     	String username = userCntrl.loadUsername(act);
@@ -54,12 +54,16 @@ public class CommentController{
 		Comment aComment = new Comment(user, title, text, loc, img);
 		comment.addReply(aComment);
 		comment.increaseReplyCount();
-		currentComment.increaseReplyCount();
+		
+		if(isReply)
+		{
+			aComment.increaseReplyCount();
+		}
 		
 		ElasticSearchOperations.putCommentModel(currentComment);
 	}
 	
-	public void addReply(Comment currentComment, Activity act, String title, String text) {
+	public void addReply(Comment currentComment, Activity act, String title, String text, boolean isReply) {
 		
 		UserController userCntrl = new UserController();
     	String username = userCntrl.loadUsername(act);
@@ -73,7 +77,11 @@ public class CommentController{
 		Comment aComment = new Comment(user, title, text, loc);
 		comment.addReply(aComment);
 		comment.increaseReplyCount();
-		currentComment.increaseReplyCount();
+		
+		if(isReply)
+		{
+			aComment.increaseReplyCount();
+		}
 		
 		ElasticSearchOperations.putCommentModel(currentComment);
 	}

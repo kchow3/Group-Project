@@ -125,13 +125,13 @@ public class CommentPageActivity extends Activity {
 		isReplyReply = intent.getBooleanExtra("isReplyReply", false);
 		if(isReplyReply)
 		{
-			this.topicComment = (Comment) intent.getSerializableExtra(EXTRA_TOPIC_COMMENT);
+			topicComment = (Comment) intent.getSerializableExtra(EXTRA_TOPIC_COMMENT);
 		}
 		else
 		{
-			this.topicComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
+			topicComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
 		}
-		this.aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
+		aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
 		replies = aComment.getReplies();
 	}
 	
@@ -221,6 +221,7 @@ public class CommentPageActivity extends Activity {
 	    {
 	    	Intent intent = new Intent(getApplicationContext(), EditPageActivity.class);
 	    	intent.putExtra(EXTRA_EDIT, aComment);
+	    	intent.putExtra(EXTRA_TOPIC_COMMENT, topicComment);
 	    	startActivityForResult(intent, 1);
 	    }
 	};
@@ -249,11 +250,11 @@ public class CommentPageActivity extends Activity {
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);            	
-			        		cntrl.addReplyImg(topicComment, CommentPageActivity.this, title, text, img);
+			        		cntrl.addReplyImg(topicComment, CommentPageActivity.this, title, text, img, isReplyReply);
 			            } 
 			            else 
 			            {	                
-			        		cntrl.addReply(topicComment, CommentPageActivity.this, title, text);
+			        		cntrl.addReply(topicComment, CommentPageActivity.this, title, text, isReplyReply);
 			            }
 			            replies = aComment.getReplies();
 			            viewAdapter.updateReplyView(replies);

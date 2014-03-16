@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -34,38 +35,36 @@ public class TopicListActivity extends Activity {
 	private ThreadList threadList;
 	//thread controller
 	private ThreadController cntrl;
+	//string of the sort requirement
+	private String sortType;
 	//variables for adding topic
 	private String title;
 	private String comment;
 	private Image img;
 	
 	private Button buttonMainMenu;
+	private TextView textViewSort;
 	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    
+	    Intent intent = getIntent();
+		sortType = intent.getStringExtra("SORT");
 	    threadList = new ThreadList();
-	    cntrl = new ThreadController(threadList);
+		setContentView(R.layout.topic_list_view);
+	    cntrl = new ThreadController(threadList, sortType);
 	}
 	
 	@Override
 	protected void onResume()
 	{
 		super.onResume();
-		
-	    setContentView(R.layout.topic_list_view);
-		//setup buttons
-	    buttonMainMenu = (Button)findViewById(R.id.buttonMainMenu);
-		buttonMainMenu.setOnClickListener(mainmenuBtnClick);
-		
-		ThreadController cntrl = new ThreadController(threadList);
+
+	    setupTopicView();
 		cntrl.getOnlineTopics(this);
-		
 		//setup the comment listview
 		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList.getDiscussionThread());
-		setContentView(R.layout.topic_list_view);
 		ListView listview = (ListView) findViewById(R.id.listViewTopics);
 		
 		//setup adapter
@@ -78,6 +77,16 @@ public class TopicListActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	private void setupTopicView()
+	{
+		//setup buttons
+	    buttonMainMenu = (Button)findViewById(R.id.buttonMainMenu);
+		buttonMainMenu.setOnClickListener(mainmenuBtnClick);
+		//setuptextview
+		textViewSort = (TextView)findViewById(R.id.textViewSort);
+		textViewSort.setText(sortType);
 	}
 	
 	/**
@@ -109,7 +118,6 @@ public class TopicListActivity extends Activity {
 		            	Bitmap bmp = inputImage.getDrawingCache();
 		            	img = new Image(bmp);
 		        		cntrl.createTopicImg(TopicListActivity.this, title, comment, img);
-   		
 		        		viewAdapter.updateThreadView(threadList);
 		            } 
 		            else 

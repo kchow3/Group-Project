@@ -1,11 +1,12 @@
 package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 
 import android.app.Activity;
-import android.view.View;
 
 /**
  * Controller
@@ -17,26 +18,28 @@ import android.view.View;
 public class ThreadController {
 
 	private ThreadList discussionThread;
+	private GeoLocation loc;
+	private String sortName;
 	
 	/**
 	 * Constructor constructs a contoller for the list of comments.
 	 * @param threadList List of comments that will be modified.
 	 */
-	public ThreadController(ThreadList threadList) {
+	public ThreadController(ThreadList threadList , String sort) {
 	
 		discussionThread = threadList;
+		sortName = sort;
 	}
 
-	public void sortByLocation(GeoLocation loc) 
+	public void sortByLocation() 
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void sortBySetLocation(GeoLocation loc) 
+	public void sortBySetLocation() 
 	{
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void sortByPicture() 
@@ -45,10 +48,51 @@ public class ThreadController {
 		
 	}
 
+	
+	/**
+	 * Method to sort thread list by date.
+	 * Code taken from:
+	 * http://stackoverflow.com/questions/5927109/sort-objects-in-arraylist-by-date
+	 */
 	public void sortByDate() 
 	{
-		// TODO Auto-generated method stub
+		ArrayList<Comment> thread = discussionThread.getDiscussionThread();
+		Collections.sort(thread, new Comparator<Comment>() {
+			  public int compare(Comment o1, Comment o2) {
+			      return o2.getDate().compareTo(o1.getDate());
+			  }
+			});	
+	}
+	
+	public void sortByScore()
+	{
 		
+	}
+	
+	public void sortByFresh()
+	{
+		ArrayList<Comment> thread = discussionThread.getDiscussionThread();
+		Collections.sort(thread, new Comparator<Comment>() {
+			  public int compare(Comment o1, Comment o2) {
+			      return o1.getReplyCount() - o2.getReplyCount();
+			  }
+			});	
+	}
+	
+	public void sortChooser()
+	{
+		if(sortName.equals("My Location"))
+			sortByLocation();
+		if(sortName.equals("Set Location"))
+			sortBySetLocation();
+		if(sortName.equals("Picture"))
+			sortByPicture();
+		if(sortName.equals("Date"))
+			sortByDate();
+		if(sortName.equals("Score"))
+			sortByScore();
+		if(sortName.equals("Freshness"))
+			sortByFresh();
 	}
 
 	public void createTopicImg(Activity act, String title, String comment, Image img) 
@@ -67,6 +111,7 @@ public class ThreadController {
 		Comment aComment = new Comment(user, title, comment, loc, img);
 		list.add(aComment);
 		ElasticSearchOperations.postCommentModel(aComment);
+		sortChooser();
 	}
 	
 	public void createTopic(Activity act, String title, String comment) 
@@ -85,10 +130,12 @@ public class ThreadController {
 		Comment aComment = new Comment(user, title, comment, loc);
 		list.add(aComment);
 		ElasticSearchOperations.postCommentModel(aComment);
+		sortChooser();
 	}
 	
 	public void getOnlineTopics(Activity act) {
 		// get comments from elastic search
 		ElasticSearchOperations.getCommentPosts(discussionThread, act);
+		sortChooser();
 	}
 }
