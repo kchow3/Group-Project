@@ -46,7 +46,9 @@ public class CommentController{
     	String id = userCntrl.loadUserid(act);
 		Commenter user = new Commenter(username, id);
 		
-		GeoLocation loc = new GeoLocation(20, 30);
+		GeoLocation loc = new GeoLocation();
+		GeoLocationController geoCntrl = new GeoLocationController(loc);
+		geoCntrl.getLocation(act);
 		
 		Comment aComment = new Comment(user, title, text, loc, img);
 		comment.addReply(aComment);
@@ -63,7 +65,9 @@ public class CommentController{
     	String id = userCntrl.loadUserid(act);
 		Commenter user = new Commenter(username, id);
 		
-		GeoLocation loc = new GeoLocation(20, 30);
+		GeoLocation loc = new GeoLocation();
+		GeoLocationController geoCntrl = new GeoLocationController(loc);
+		geoCntrl.getLocation(act);
 		
 		Comment aComment = new Comment(user, title, text, loc);
 		comment.addReply(aComment);

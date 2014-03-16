@@ -60,7 +60,9 @@ public class ThreadController {
     	String id = userCntrl.loadUserid(act);
 		Commenter user = new Commenter(username, id);
 		
-		GeoLocation loc = new GeoLocation(20, 30);
+		GeoLocation loc = new GeoLocation();
+		GeoLocationController geoCntrl = new GeoLocationController(loc);
+		geoCntrl.getLocation(act);
 		
 		Comment aComment = new Comment(user, title, comment, loc, img);
 		list.add(aComment);
@@ -76,7 +78,9 @@ public class ThreadController {
     	String id = userCntrl.loadUserid(act);
 		Commenter user = new Commenter(username, id);
 		
-		GeoLocation loc = new GeoLocation(20, 30);
+		GeoLocation loc = new GeoLocation();
+		GeoLocationController geoCntrl = new GeoLocationController(loc);
+		geoCntrl.getLocation(act);
 		
 		Comment aComment = new Comment(user, title, comment, loc);
 		list.add(aComment);

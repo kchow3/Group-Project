@@ -22,10 +22,8 @@ public class GeoLocation implements Serializable{
 	 * @param lon
 	 * @param lat
 	 */
-	public GeoLocation(double lon, double lat) 
+	public GeoLocation() 
 	{
-		this.longitude = lon;
-		this.latitude = lat;
 	}
 
 	public double getLongitude() {
