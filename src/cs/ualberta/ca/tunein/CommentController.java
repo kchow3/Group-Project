@@ -27,19 +27,41 @@ public class CommentController{
 		this.comment = aComment;
 	}
 
+	/**
+	 * Method to edit the text of a comment.
+	 * @param text The edited text.
+	 */
 	public void editText(String text) {
 		comment.setComment(text);
 	}
 
+	/**
+	 * Method to change the location of a comment.
+	 * @param lon The longitude.
+	 * @param lat The latitude.
+	 */
 	public void changeLoc(Double lon, Double lat) {
 		comment.getGeolocation().setLongitude(lon);
 		comment.getGeolocation().setLatitude(lat);
 	}
 
+	/**
+	 * Method to add an image to comment.
+	 * @param img The image. to be added.
+	 */
 	public void addImg(Image img) {
 		comment.setImg(img);
 	}
 	
+	/**
+	 * Method to create a reply to a comment with image.
+	 * @param currentComment The topic comment that the reply will belong to.
+	 * @param act The activity that calls this method.
+	 * @param title The title of the comment.
+	 * @param text The text of the comment.
+	 * @param img The image of the comment.
+	 * @param isReply Check if the added comment will be reply of reply.
+	 */
 	public void addReplyImg(Comment currentComment, Activity act, String title, String text, Image img, boolean isReply) {
 		
 		UserController userCntrl = new UserController();
@@ -63,6 +85,15 @@ public class CommentController{
 		ElasticSearchOperations.putCommentModel(currentComment);
 	}
 	
+	
+	/**
+	 * Method to create a reply to a comment with image.
+	 * @param currentComment The topic comment that the reply will belong to.
+	 * @param act The activity that calls this method.
+	 * @param title The title of the comment.
+	 * @param text The text of the comment.
+	 * @param isReply Check if the added comment will be reply of reply.
+	 */
 	public void addReply(Comment currentComment, Activity act, String title, String text, boolean isReply) {
 		
 		UserController userCntrl = new UserController();
@@ -86,18 +117,36 @@ public class CommentController{
 		ElasticSearchOperations.putCommentModel(currentComment);
 	}
 
+	/**
+	 * Method of adding comment to cache.
+	 * @param aComment The comment to be added.
+	 */
 	public void addtoCache(Comment aComment) {
 		// TODO Auto-generated method stub
 	}
 	
+	/**
+	 * Method of adding comment to favorites.
+	 * @param aComment The comment to be added.
+	 */
 	public void favorite(Comment aComment) {
 		comment.increaseFavCount();
 	}
 
+	/**
+	 * Method of editing a comments title.
+	 * @param text The new title.
+	 */
 	public void editTitle(String text) {
 		comment.setTitle(text);
 	}
 	
+	/**
+	 * Method to check if the current user is the comment author
+	 * this is used to check credentials.
+	 * @param act Activity that this method is called from.
+	 * @return The resulting boolean of the check.
+	 */
 	public boolean checkValid(Activity act) {
 		//id of the current viewer
 		SharedPreferences prefs = act.getSharedPreferences(

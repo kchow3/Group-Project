@@ -31,24 +31,31 @@ public class ThreadController {
 		sortName = sort;
 	}
 
+	/**
+	 * Method to sort topics by location.
+	 */
 	public void sortByLocation() 
 	{
 		// TODO Auto-generated method stub
-		
 	}
 
+	/**
+	 * Method to sort topics by set location.
+	 */
 	public void sortBySetLocation() 
 	{
 		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * Method to sort topics by pictures
+	 */
 	public void sortByPicture() 
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
-	
 	/**
 	 * Method to sort thread list by date.
 	 * Code taken from:
@@ -64,11 +71,17 @@ public class ThreadController {
 			});	
 	}
 	
+	/**
+	 * Method to sort topics by a scoring system.
+	 */
 	public void sortByScore()
 	{
 		
 	}
 	
+	/**
+	 * Method to sort the topics by freshness(hotness or #replies)
+	 */
 	public void sortByFresh()
 	{
 		ArrayList<Comment> thread = discussionThread.getDiscussionThread();
@@ -79,6 +92,10 @@ public class ThreadController {
 			});	
 	}
 	
+	/**
+	 * Method that sorts the topic list based on the current 
+	 * sort criteria.
+	 */
 	public void sortChooser()
 	{
 		if(sortName.equals("My Location"))
@@ -95,6 +112,13 @@ public class ThreadController {
 			sortByFresh();
 	}
 
+	/**
+	 * Method to create a topic comment with image.
+	 * @param act The activity calling to create comment.
+	 * @param title Title of comment.
+	 * @param comment Text of comment.
+	 * @param img The image of the comment.
+	 */
 	public void createTopicImg(Activity act, String title, String comment, Image img) 
 	{
 		ArrayList<Comment> list = discussionThread.getDiscussionThread();
@@ -114,6 +138,12 @@ public class ThreadController {
 		sortChooser();
 	}
 	
+	/**
+	 * Method to create a topic comment with no image.
+	 * @param act The activity calling to create comment.
+	 * @param title Title of comment.
+	 * @param comment Text of comment.
+	 */
 	public void createTopic(Activity act, String title, String comment) 
 	{
 		ArrayList<Comment> list = discussionThread.getDiscussionThread();
@@ -133,6 +163,12 @@ public class ThreadController {
 		sortChooser();
 	}
 	
+	/**
+	 * Retrieve the list of topic comments that are currently
+	 * on elasticsearch.
+	 * @param act The activity that calls this method
+	 * @return The sorted discussion thread.
+	 */
 	public ThreadList getOnlineTopics(Activity act) {
 		// get comments from elastic search
 		ElasticSearchOperations.getCommentPosts(discussionThread, act);

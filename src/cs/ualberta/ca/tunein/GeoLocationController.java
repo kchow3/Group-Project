@@ -38,7 +38,7 @@ public class GeoLocationController {
 	 * This code is from:
 	 * http://stackoverflow.com/questions/3145089/what-is-the-simplest-and-most-robust-way-to-get-the-users-current-location-in-a?rq=1
 	 * 
-	 * @param context
+	 * @param context The application context of the current activity.
 	 * @return
 	 */
 	public void getLocation(Context context)

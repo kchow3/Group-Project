@@ -18,9 +18,7 @@ public class GeoLocation implements Serializable{
 	private double latitude;
 	
 	/**
-	 * Constructor constructs a geolocation with longitude and latitude
-	 * @param lon
-	 * @param lat
+	 * Constructor constructs a geolocation
 	 */
 	public GeoLocation() 
 	{

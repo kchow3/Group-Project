@@ -147,7 +147,7 @@ public class MainActivity extends Activity {
 	};
 	
 	/**
-	 * This click listener will go back to the favorite page.
+	 * This click listener will go to the favorite page.
 	 */
 	private OnClickListener favBtnClick = new OnClickListener() {
 		public void onClick(View v) {
@@ -155,7 +155,7 @@ public class MainActivity extends Activity {
 	};
 	
 	/**
-	 * This click listener will go back to the cache page.
+	 * This click listener will go to the cache page.
 	 */
 	private OnClickListener cacheBtnClick = new OnClickListener() {
 		public void onClick(View v) {
@@ -163,7 +163,7 @@ public class MainActivity extends Activity {
 	};
 	
 	/**
-	 * This click listener will go back to the main menu page.
+	 * This click listener will go to the topic page sorted based on freshness(replies).
 	 */
 	private OnClickListener topicListBtnClick = new OnClickListener() {
 		public void onClick(View v) {
