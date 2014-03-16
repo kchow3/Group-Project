@@ -42,6 +42,8 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	private ArrayList<Comment> replies;
 	//parent topic comment corresponding to the comment being viewed
 	private Comment topicComment;
+	//comment controller
+	private CommentController cntrl;
 	
 	/**
 	 * View holder that holds the elements of a
@@ -251,45 +253,20 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
-		            	
-			            	UserController userCntrl = new UserController();
-			            	String username = userCntrl.loadUsername((Activity)context);
-			            	String id = userCntrl.loadUserid((Activity)context);
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(context);
 			        		
 			        		//current comment that is replied to using tag and get parent position
 			        		Comment currentComment = replies.get(index[0]).getReplies().get(index[1]);
-			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc, img);
-			        		CommentController cntrl = new CommentController(currentComment);
-			        		cntrl.addReply(newComment);
-			        		
-			        		ElasticSearchOperations.putCommentModel(topicComment);
-			        		
+			        		cntrl = new CommentController(currentComment);
+			        		cntrl.addReplyImg(topicComment, (Activity) context, title, text, img);
 			        		updateReplyView(replies);
 			            } 
 			            else 
 			            {	                
-			            	UserController userCntrl = new UserController();
-			            	String username = userCntrl.loadUsername((Activity)context);
-			            	String id = userCntrl.loadUserid((Activity)context);
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(context);
-			        		
 			        		//current comment that is replied to using tag and get parent position
 			        		Comment currentComment = replies.get(index[0]).getReplies().get(index[1]);
-			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc);
-			        		CommentController cntrl = new CommentController(currentComment);
-			        		cntrl.addReply(newComment);
-			        		
-			        		ElasticSearchOperations.putCommentModel(topicComment);
-			        		
+			        		cntrl = new CommentController(currentComment);
+			        		cntrl.addReply(topicComment, (Activity) context, title, text);
 			        		updateReplyView(replies);
-			        		
 			            }
 			        }
 			    })
@@ -345,45 +322,20 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
-		            	
-			            	UserController userCntrl = new UserController();
-			            	String username = userCntrl.loadUsername((Activity)context);
-			            	String id = userCntrl.loadUserid((Activity)context);
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(context);
-			        		
+
 			        		//current comment that is replied to using tag and get parent position
 			        		Comment currentComment = replies.get(i);
-			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc, img);
-			        		CommentController cntrl = new CommentController(currentComment);
-			        		cntrl.addReply(newComment);
-			        		
-			        		ElasticSearchOperations.putCommentModel(topicComment);
-			        		
+			        		cntrl = new CommentController(currentComment);
+			        		cntrl.addReplyImg(topicComment, (Activity) context, title, text, img);
 			        		updateReplyView(replies);
 			            } 
 			            else 
 			            {	                
-			            	UserController userCntrl = new UserController();
-			            	String username = userCntrl.loadUsername((Activity)context);
-			            	String id = userCntrl.loadUserid((Activity)context);
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(context);
-			        		
 			        		//current comment that is replied to using tag and get parent position
 			        		Comment currentComment = replies.get(i);
-			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc);
-			        		CommentController cntrl = new CommentController(currentComment);
-			        		cntrl.addReply(newComment);
-			        		
-			        		ElasticSearchOperations.putCommentModel(topicComment);
-			        		
+			        		cntrl = new CommentController(currentComment);
+			        		cntrl.addReply(topicComment, (Activity) context, title, text);
 			        		updateReplyView(replies);
-			        		
 			            }
 			        }
 			    })
