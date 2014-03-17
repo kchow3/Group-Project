@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,21 +27,33 @@ import android.widget.TextView;
  * This class is used to create the list view for the topic list
  * that contains comments. This class is used in the TopicListActivity
  * to create a list view and load in comments.
+ * Intent code from:
+ * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
  */
 public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	
 	//public string that tags the extra of the comment that is passed to CommentPageActivity
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
 	
+	//comment controller
+	private CommentController cntrl;
 	private Context context;
 	//holder for the elements in the row
 	private ViewHolder holder;
 	private ArrayList<Comment> commentList;
 	
+	//dialog elements
+	private View createView;
+	private TextView inputTitle;
+	private TextView inputComment;
+	private ImageView inputImage;
+	
 	/**
 	 * This static class is used for holding the elements of
 	 * a custom comment row. This is used for smoother scrolling
 	 * of the list view.
+	 * Code from :
+	 * http://developer.android.com/training/improving-layouts/smooth-scrolling.html
 	 */
 	private static class ViewHolder 
 	{
@@ -62,11 +75,11 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * @param context The context of the activity that calls this class.
 	 * @param commentList The comment list that is to be in the list view.
 	 */
-	public CommentViewAdapter(Context context, ArrayList<Comment> commentList) 
+	public CommentViewAdapter(Context context, ThreadList commentList) 
 	{
-		super(context, R.layout.comment_view_row, commentList);
+		super(context, R.layout.comment_view_row, commentList.getDiscussionThread());
 		this.context = context;
-		this.commentList = commentList;
+		this.commentList = commentList.getDiscussionThread();
 	}
 	
 	@Override
@@ -171,6 +184,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    	Comment aComment = commentList.get(index);
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
 	    	intent.putExtra(EXTRA_COMMENT, aComment);
+	    	intent.putExtra("isReplyReply", false);
 	    	context.startActivity(intent);
 	    }
 	};
@@ -178,19 +192,15 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	/**
 	 * This click listener will send user a comment creation dialog box
 	 * so that they can reply to a comment that they clicked reply on.
+	 * Bitmap code:
+	 * http://stackoverflow.com/questions/4715044/android-how-to-convert-whole-imageview-to-bitmap
 	 */
 	private OnClickListener replyBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
 	    {
 	    	final int i = (Integer)v.getTag();
-	    	LayoutInflater inflater = LayoutInflater.from(context);
-			final View createView = inflater.inflate(R.layout.create_comment_view, null);
-
-			final TextView inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
-			final TextView inputComment = (EditText) createView.findViewById(R.id.editTextComment);
-			final ImageView inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
-			
+	    	setupDialogs();
 			AlertDialog dialog = new AlertDialog.Builder(context)
 			    .setTitle("Create Comment")
 			    .setView(createView)
@@ -199,12 +209,15 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			            String title = inputTitle.getText().toString();
 			            String text = inputComment.getText().toString();
 			            
+			            Comment currentComment = commentList.get(i);
+		        		cntrl = new CommentController(currentComment);
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
+<<<<<<< HEAD
 		            	
 			            	//temp geo location
 			            	String username = ((User)((Activity) context).getApplication()).getName();
@@ -241,7 +254,16 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			        		cntrl.addReply(newComment);
 			        		
 			        		refreshThreadView();
+=======
+			        		cntrl.addReplyImg(currentComment, (Activity) context, title, text, img, false);
+			        		
+			            } 
+			            else 
+			            {	                	        		  		
+			        		cntrl.addReply(currentComment, (Activity) context, title, text, false);
+>>>>>>> 646cd9c9266ee3f5dca8f6a1b2be8d9d4abf2e9e
 			            }
+			            refreshThreadView();
 			        }
 			    })
 			    .setNegativeButton("Cancel", null).create();
@@ -270,4 +292,16 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    }
 	};
 	
+	/**
+	 * This method is for setting up the dialog boxes.
+	 */
+	private void setupDialogs()
+	{
+		LayoutInflater inflater = LayoutInflater.from(context);
+		createView = inflater.inflate(R.layout.create_comment_view, null);
+
+		inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
+		inputComment = (EditText) createView.findViewById(R.id.editTextComment);
+		inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
+	}
 }

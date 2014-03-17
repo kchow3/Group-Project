@@ -40,7 +40,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".20"
-            android:onClick="goTopicListClick"
             android:text="Other Location" />
 
         <Button
@@ -48,7 +47,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".20"
-            android:onClick="goTopicListClick"
             android:text="My Location" />
     </LinearLayout>
 
@@ -65,7 +63,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".20"
-            android:onClick="goTopicListClick"
             android:text="Date" />
 
         <Button
@@ -73,7 +70,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".20"
-            android:onClick="goTopicListClick"
             android:text="With Pictures" />
     </LinearLayout>
 
@@ -130,7 +126,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_weight=".20"
-        android:onClick="goTopicListClick"
         android:text="Favorites" />
 
     <Button

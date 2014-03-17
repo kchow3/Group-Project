@@ -2,6 +2,10 @@ package cs.ualberta.ca.tunein;
 
 import java.io.Serializable;
 
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
+
 /**
  * Model
  * GeoLocation Class:
@@ -14,21 +18,17 @@ public class GeoLocation implements Serializable{
 	private double latitude;
 	
 	/**
-	 * Constructor constructs a geolocation with longitude and latitude
-	 * @param lon
-	 * @param lat
+	 * Constructor constructs a geolocation
 	 */
-	public GeoLocation(double lon, double lat) 
+	public GeoLocation() 
 	{
-		this.longitude = lon;
-		this.latitude = lat;
 	}
 
 	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(int longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
@@ -36,7 +36,7 @@ public class GeoLocation implements Serializable{
 		return latitude;
 	}
 
-	public void setLatitude(int latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 

@@ -43,8 +43,6 @@ public class Comment implements Serializable
 	private int replyCount;
 	//id of Elastic Search
 	private String elasticID;
-	//id of the top level comment topic
-	private String topicID;
 	
 	/**
 	 * This constructor constructs a comment without an image.
@@ -67,7 +65,6 @@ public class Comment implements Serializable
 		this.favoriteCount = 0;
 		this.replyCount = 0;
 		this.elasticID = null;
-		this.topicID = null;
 	}
 
 	/**
@@ -93,7 +90,6 @@ public class Comment implements Serializable
 		this.favoriteCount = 0;
 		this.replyCount = 0;
 		this.elasticID = null;
-		this.topicID = null;
 	}
 
 	public Commenter getCommenter() {
@@ -229,14 +225,5 @@ public class Comment implements Serializable
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy ");
 		return df.format(this.date);
 	}
-
-	public String getTopicID() {
-		return topicID;
-	}
-
-	public void setTopicID(String topicID) {
-		this.topicID = topicID;
-	}
-	
 
 }

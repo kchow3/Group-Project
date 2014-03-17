@@ -2,10 +2,14 @@ package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
 
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,20 +30,32 @@ import android.widget.TextView;
  * Part of the view class that contains a comment and its replies.
  * This is part of the view when a user presses a view button on a 
  * comment to bring up this page.
+ * Dialog code from:
+ * http://stackoverflow.com/questions/4279787/how-can-i-pass-values-between-a-dialog-and-an-activity
+ * Intent code from:
+ * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
  */
 public class CommentPageActivity extends Activity {
 
 	//public string that tags the extra of the comment that is passed to CommentPageActivity
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
-	//public string that tags the extra of the comment that is passed to EditPageActivity
+	//public string that tags the extra of the comment to be edited that is passed to EditPageActivity
 	public final static String EXTRA_EDIT = "cs.ualberta.ca.tunein.commentEdit";
+	//public string that tags the extra of the topic comment that is passed to CommentPageActivity
+	public final static String EXTRA_TOPIC_COMMENT = "cs.ualberta.ca.tunein.topicComment";
 	
 	//reply view adapter
 	private ReplyViewAdapter viewAdapter;
 	//comment passed through intent when clicking on a view comment button
 	private Comment aComment;
+	//parent topic comment corresponding to the comment being viewed
+	private Comment topicComment;
 	//reply list
 	private ArrayList<Comment> replies;
+	//comment controller
+	private CommentController cntrl;
+	//boolean to check if current comment is repy to reply
+	private boolean isReplyReply;
 	
 	//variables for setting up textviews/buttons/imageview
 	private TextView textViewCommentTitle;
@@ -58,6 +74,12 @@ public class CommentPageActivity extends Activity {
 	
 	private ImageView imageViewCommentImage;
 	
+	//dialog elements
+	private View createView;
+	private TextView inputTitle;
+	private TextView inputComment;
+	private ImageView inputImage;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -72,23 +94,58 @@ public class CommentPageActivity extends Activity {
 		super.onResume();
 		setContentView(R.layout.comment_view);
 		setupComment();
-		
+		replies = aComment.getReplies();
 		//setup the reply listview
-		this.viewAdapter = new ReplyViewAdapter(this, replies);
+		this.viewAdapter = new ReplyViewAdapter(this, replies, topicComment);
 		ExpandableListView listview = (ExpandableListView) findViewById(R.id.expandableListViewReply);
 		
 		//setup
 		listview.setAdapter(viewAdapter);
 		viewAdapter.updateReplyView(replies);
 	}
-	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		  if (requestCode == 1) {
+
+		     if(resultCode == RESULT_OK){      
+		         aComment = (Comment) data.getSerializableExtra("editResult"); 
+		         cntrl = new CommentController(aComment);
+		         if(!isReplyReply)
+		         {
+		        	 topicComment = aComment;
+		         }
+		         cntrl.updateElasticSearch(topicComment);
+		         setupComment();
+		     }
+		     if (resultCode == RESULT_CANCELED) {
+		    	 //edit cancelled
+		     }
+		  }
+		}
+	/**
+	 * Method to get input from intents.
+	 */
 	private void getInputComment()
 	{
 		Intent intent = getIntent();
-		this.aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
+		isReplyReply = intent.getBooleanExtra("isReplyReply", false);
+		//intent sent from reply to reply for updating the topic comment.
+		if(isReplyReply)
+		{
+			topicComment = (Comment) intent.getSerializableExtra(EXTRA_TOPIC_COMMENT);
+		}
+		else
+		{
+			topicComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
+		}
+		aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
 		replies = aComment.getReplies();
 	}
 	
+	/**
+	 * Setup elements on the CommentPage
+	 */
 	private void setupComment()
 	{
 		//setup comment info
@@ -133,7 +190,7 @@ public class CommentPageActivity extends Activity {
 			imageViewCommentImage.setVisibility(View.VISIBLE);
 		}
 		
-		CommentController cntrl = new CommentController(aComment);
+		cntrl = new CommentController(aComment);
 		if(cntrl.checkValid(this))
 		{
 			buttonCommentEdit.setVisibility(View.VISIBLE);
@@ -175,25 +232,22 @@ public class CommentPageActivity extends Activity {
 	    {
 	    	Intent intent = new Intent(getApplicationContext(), EditPageActivity.class);
 	    	intent.putExtra(EXTRA_EDIT, aComment);
-	    	startActivity(intent);
+	    	intent.putExtra(EXTRA_TOPIC_COMMENT, topicComment);
+	    	startActivityForResult(intent, 1);
 	    }
 	};
 	
 	/**
 	 * This click listner will go to reply page to create a reply comment
 	 * to the comment that is being viewed.
+	 * Bitmap code from:
+	 * http://stackoverflow.com/questions/4715044/android-how-to-convert-whole-imageview-to-bitmap
 	 */
 	private OnClickListener replyBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
 	    {
-	    	LayoutInflater inflater = LayoutInflater.from(CommentPageActivity.this);
-			final View createView = inflater.inflate(R.layout.create_comment_view, null);
-
-			final TextView inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
-			final TextView inputComment = (EditText) createView.findViewById(R.id.editTextComment);
-			final ImageView inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
-			
+	    	setupDialogs();
 			AlertDialog dialog = new AlertDialog.Builder(CommentPageActivity.this)
 			    .setTitle("Create Comment")
 			    .setView(createView)
@@ -202,54 +256,22 @@ public class CommentPageActivity extends Activity {
 			            String title = inputTitle.getText().toString();
 			            String text = inputComment.getText().toString();
 			            
+		        		cntrl = new CommentController(aComment);
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
-			            	Image img = new Image(bmp);
-		            	
-			        		//temp geo location
-			            	String username = ((User)getApplication()).getName();
-			            	String id = ((User) getApplication()).getUniqueID();
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
-			        		
-			        		Comment newComment  = new Comment(user, title, text, loc, img);
-			        		CommentController cntrl = new CommentController(aComment);
-			        		
-			        		CommentController newCntrl = new CommentController(newComment);
-			        		newCntrl.setParentComment(aComment);
-			        		
-			        		cntrl.addReply(newComment);
-			        		cntrl.updateOnlineComment();
-			     		        		
-			        		replies = aComment.getReplies();
-			        		viewAdapter.updateReplyView(replies);
+			            	Image img = new Image(bmp);            	
+			        		cntrl.addReplyImg(topicComment, CommentPageActivity.this, title, text, img, isReplyReply);
 			            } 
 			            else 
 			            {	                
-			            	//temp geo location
-			            	String username = ((User)getApplication()).getName();
-			            	String id = ((User) getApplication()).getUniqueID();
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
-			        		
-			        		Comment newComment  = new Comment(user, title, text, loc);
-			        		CommentController cntrl = new CommentController(aComment);
-			        		
-			        		CommentController newCntrl = new CommentController(newComment);
-			        		newCntrl.setParentComment(aComment);
-			        		
-			        		cntrl.addReply(newComment);
-			        		cntrl.updateOnlineComment();
-			        		
-			        		replies = aComment.getReplies();
-			        		viewAdapter.updateReplyView(replies);
-			        		setupComment();
+			        		cntrl.addReply(topicComment, CommentPageActivity.this, title, text, isReplyReply);
 			            }
+			            replies = aComment.getReplies();
+			            viewAdapter.updateReplyView(replies);
+		        		setupComment();
 			        }
 			    })
 			    .setNegativeButton("Cancel", null).create();
@@ -257,5 +279,16 @@ public class CommentPageActivity extends Activity {
 	    }
 	};
 	
-	
+	/**
+	 * This method is for setting up the dialog boxes.
+	 */
+	private void setupDialogs()
+	{
+		LayoutInflater inflater = LayoutInflater.from(CommentPageActivity.this);
+		createView = inflater.inflate(R.layout.create_comment_view, null);
+
+		inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
+		inputComment = (EditText) createView.findViewById(R.id.editTextComment);
+		inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
+	}
 }

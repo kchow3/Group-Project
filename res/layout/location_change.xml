@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ScrollView
+        android:id="@+id/scrollViewChangeCommentLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="130dp" >
+
+            <TextView
+                android:id="@+id/textViewChangeLong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="21dp"
+                android:text="Longitude: "
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textViewChangeLat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@+id/textViewChangeLong"
+                android:layout_below="@+id/textViewChangeLong"
+                android:layout_marginTop="24dp"
+                android:text="Latitude: "
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <EditText
+                android:id="@+id/textViewInputChangeLat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textViewChangeLat"
+                android:layout_alignBottom="@+id/textViewChangeLat"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/textViewChangeLat"
+                android:ems="10"
+                android:hint="Input Latitude"
+                android:inputType="number|numberSigned|numberDecimal"
+                android:textAppearance="?android:attr/textAppearanceMedium" >
+
+                <requestFocus />
+            </EditText>
+
+            <EditText
+                android:id="@+id/textViewInputChangeLong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textViewChangeLong"
+                android:layout_alignBottom="@+id/textViewChangeLong"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/textViewChangeLong"
+                android:ems="10"
+                android:hint="Input Longitude"
+                android:inputType="number|numberSigned|numberDecimal"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

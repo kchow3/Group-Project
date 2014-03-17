@@ -2,11 +2,14 @@ package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
 
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,20 +28,42 @@ import android.widget.TextView;
  * This is part of the view class for comments. This class is used to 
  * display the replies to a comment using an expandable list view.
  * This class is not complete yet.
+ * Dialog code from:
+ * http://stackoverflow.com/questions/4279787/how-can-i-pass-values-between-a-dialog-and-an-activity
+ * Bitmap code from:
+ * http://stackoverflow.com/questions/4715044/android-how-to-convert-whole-imageview-to-bitmap
+ * expandable listview code from:
+ * http://androidtrainningcenter.blogspot.in/2012/07/android-expandable-listview-simple.html
+ * http://www.dreamincode.net/forums/topic/270612-how-to-get-started-with-expandablelistview/
+ * Intent code from:
+ * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
  */
 public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	
 	//public string that tags the extra of the comment that is passed to CommentPageActivity
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
+	//public string that tags the extra of the topic comment that is passed to CommentPageActivity
+	public final static String EXTRA_TOPIC_COMMENT = "cs.ualberta.ca.tunein.topicComment";
 	
 	private Context context;
 	//holder for elements in the row
 	private ViewHolder holder;
 	private ArrayList<Comment> replies;
+	//parent topic comment corresponding to the comment being viewed
+	private Comment topicComment;
+	//comment controller
+	private CommentController cntrl;
+	
+	//dialog elements
+	private View createView;
+	private TextView inputTitle;
+	private TextView inputComment;
+	private ImageView inputImage;
 	
 	/**
 	 * View holder that holds the elements of a
 	 * custom row that improves scrolling.
+	 * Code from http://developer.android.com/training/improving-layouts/smooth-scrolling.html
 	 */
 	public static class ViewHolder
 	{
@@ -56,10 +81,11 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	 * @param context The context of the activity that constructs this adapter.
 	 * @param replies The array list of replies to be displayed.
 	 */
-	public ReplyViewAdapter(Context context, ArrayList<Comment> replies)
+	public ReplyViewAdapter(Context context, ArrayList<Comment> replies, Comment topComment)
 	{
 		this.context = context;
 		this.replies = replies;
+		this.topicComment = topComment;
 	}
 
 
@@ -208,6 +234,8 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	    	Comment aComment = replies.get(index[0]).getReplies().get(index[1]);
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
 	    	intent.putExtra(EXTRA_COMMENT, aComment);
+	    	intent.putExtra(EXTRA_TOPIC_COMMENT, topicComment);
+	    	intent.putExtra("isReplyReply", true);
 	    	context.startActivity(intent);
 	    }
 	};
@@ -221,12 +249,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	    public void onClick(View v)
 	    {
 	    	final int index[] = (int[])v.getTag();
-	    	LayoutInflater inflater = LayoutInflater.from(context);
-			final View createView = inflater.inflate(R.layout.create_comment_view, null);
-
-			final TextView inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
-			final TextView inputComment = (EditText) createView.findViewById(R.id.editTextComment);
-			final ImageView inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
+	    	setupDialogs();
 			
 			AlertDialog dialog = new AlertDialog.Builder(context)
 			    .setTitle("Create Comment")
@@ -236,58 +259,21 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            String title = inputTitle.getText().toString();
 			            String text = inputComment.getText().toString();
 			            
+		        		Comment currentComment = replies.get(index[0]).getReplies().get(index[1]);
+		        		cntrl = new CommentController(currentComment);
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
-			            	Image img = new Image(bmp);
-		            	
-			            	//temp geo location
-			            	String username = ((User)((Activity) context).getApplication()).getName();
-			            	String id = ((User)((Activity) context).getApplication()).getUniqueID();
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
-			        		
-			        		//current comment that is replied to using tag and get parent position
-			        		Comment currentComment = replies.get(index[0]).getReplies().get(index[1]);
-			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc);
-			        		CommentController cntrl = new CommentController(currentComment);
-			        		
-			        		CommentController newCntrl = new CommentController(newComment);
-			        		newCntrl.setParentComment(currentComment);
-			        		
-			        		cntrl.addReply(newComment);
-			        		cntrl.updateOnlineComment();
-			        		
-			        		updateReplyView(replies);
+			            	Image img = new Image(bmp);        
+			        		cntrl.addReplyImg(topicComment, (Activity) context, title, text, img, true);
 			            } 
 			            else 
 			            {	                
-			            	//temp geo location
-			            	String username = ((User)((Activity) context).getApplication()).getName();
-			            	String id = ((User)((Activity) context).getApplication()).getUniqueID();
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
-			        		
-			        		//current comment that is replied to using tag and get parent position
-			        		Comment currentComment = replies.get(index[0]).getReplies().get(index[1]);
-			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc);
-			        		CommentController cntrl = new CommentController(currentComment);
-			        		
-			        		CommentController newCntrl = new CommentController(newComment);
-			        		newCntrl.setParentComment(currentComment);
-			        		
-			        		cntrl.addReply(newComment);
-			        		cntrl.updateOnlineComment();
-			        		
-			        		updateReplyView(replies);
-			        		
+			        		cntrl.addReply(topicComment, (Activity) context, title, text, true);
 			            }
+		        		updateReplyView(replies);
 			        }
 			    })
 			    .setNegativeButton("Cancel", null).create();
@@ -307,6 +293,8 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	    	Comment aComment = replies.get(index);
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
 	    	intent.putExtra(EXTRA_COMMENT, aComment);
+	    	intent.putExtra(EXTRA_TOPIC_COMMENT, topicComment);
+	    	intent.putExtra("isReplyReply", true);
 	    	context.startActivity(intent);
 	    }
 	};
@@ -320,13 +308,8 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	    public void onClick(View v)
 	    {
 	    	final int i = (Integer) v.getTag();
-	    	LayoutInflater inflater = LayoutInflater.from(context);
-			final View createView = inflater.inflate(R.layout.create_comment_view, null);
-
-			final TextView inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
-			final TextView inputComment = (EditText) createView.findViewById(R.id.editTextComment);
-			final ImageView inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
-			
+	    	setupDialogs();
+	    	
 			AlertDialog dialog = new AlertDialog.Builder(context)
 			    .setTitle("Create Comment")
 			    .setView(createView)
@@ -335,58 +318,22 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            String title = inputTitle.getText().toString();
 			            String text = inputComment.getText().toString();
 			            
+			          //current comment that is replied to using tag and get parent position
+		        		Comment currentComment = replies.get(i);
+		        		cntrl = new CommentController(currentComment);
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
-		            	
-			            	//temp geo location
-			            	String username = ((User)((Activity) context).getApplication()).getName();
-			            	String id = ((User)((Activity) context).getApplication()).getUniqueID();
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
-			        		
-			        		//current comment that is replied to using tag and get parent position
-			        		Comment currentComment = replies.get(i);
-			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc);
-			        		CommentController cntrl = new CommentController(currentComment);
-			        		
-			        		CommentController newCntrl = new CommentController(newComment);
-			        		newCntrl.setParentComment(currentComment);
-			        		
-			        		cntrl.addReply(newComment);
-			        		cntrl.updateOnlineComment();
-			        		
-			        		updateReplyView(replies);
+			        		cntrl.addReplyImg(topicComment, (Activity) context, title, text, img, true);
 			            } 
 			            else 
 			            {	                
-			            	//temp geo location
-			            	String username = ((User)((Activity) context).getApplication()).getName();
-			            	String id = ((User)((Activity) context).getApplication()).getUniqueID();
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
-			        		
-			        		//current comment that is replied to using tag and get parent position
-			        		Comment currentComment = replies.get(i);
-			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc);
-			        		CommentController cntrl = new CommentController(currentComment);
-			        		
-			        		CommentController newCntrl = new CommentController(newComment);
-			        		newCntrl.setParentComment(currentComment);
-			        		
-			        		cntrl.addReply(newComment);
-			        		cntrl.updateOnlineComment();
-			        		
-			        		updateReplyView(replies);
-			        		
+			        		cntrl.addReply(topicComment, (Activity) context, title, text, true);
 			            }
+			            updateReplyView(replies);
 			        }
 			    })
 			    .setNegativeButton("Cancel", null).create();
@@ -402,6 +349,19 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	public void updateReplyView(ArrayList<Comment> replies) {
 		this.replies = replies;
 		notifyDataSetChanged();
+	}
+	
+	/**
+	 * This method is for setting up the dialog boxes.
+	 */
+	private void setupDialogs()
+	{
+		LayoutInflater inflater = LayoutInflater.from(context);
+		createView = inflater.inflate(R.layout.create_comment_view, null);
+
+		inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
+		inputComment = (EditText) createView.findViewById(R.id.editTextComment);
+		inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
 	}
 	
 }
