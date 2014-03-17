@@ -7,6 +7,8 @@ import java.util.Comparator;
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 /**
  * Controller
@@ -25,12 +27,11 @@ public class ThreadController {
 	 * Constructor constructs a contoller for the list of comments.
 	 * @param threadList List of comments that will be modified.
 	 */
-	public ThreadController(ThreadList threadList , String sort) {
+	public ThreadController(ThreadList threadList) {
 	
 		discussionThread = threadList;
-		sortName = sort;
 	}
-
+	
 	/**
 	 * Method to sort topics by location.
 	 */
@@ -84,8 +85,7 @@ public class ThreadController {
 	 */
 	public void sortByFresh()
 	{
-		ArrayList<Comment> thread = discussionThread.getDiscussionThread();
-		Collections.sort(thread, new Comparator<Comment>() {
+		Collections.sort(discussionThread.getDiscussionThread(), new Comparator<Comment>() {
 			  public int compare(Comment o1, Comment o2) {
 			      return o2.getReplyCount() - o1.getReplyCount();
 			  }
@@ -95,9 +95,13 @@ public class ThreadController {
 	/**
 	 * Method that sorts the topic list based on the current 
 	 * sort criteria.
+	 * @param act The activity that calls this method
 	 */
-	public void sortChooser()
+	public void sortChooser(Activity act)
 	{
+		SharedPreferences prefs = act.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+		sortName = prefs.getString("cs.ualberta.ca.tunein.sort", "Freshness");
 		if(sortName.equals("My Location"))
 			sortByLocation();
 		if(sortName.equals("Set Location"))
@@ -135,7 +139,7 @@ public class ThreadController {
 		Comment aComment = new Comment(user, title, comment, loc, img);
 		list.add(aComment);
 		ElasticSearchOperations.postCommentModel(aComment);
-		sortChooser();
+		sortChooser(act);
 	}
 	
 	/**
@@ -160,7 +164,7 @@ public class ThreadController {
 		Comment aComment = new Comment(user, title, comment, loc);
 		list.add(aComment);
 		ElasticSearchOperations.postCommentModel(aComment);
-		sortChooser();
+		sortChooser(act);
 	}
 	
 	/**
@@ -169,10 +173,9 @@ public class ThreadController {
 	 * @param act The activity that calls this method
 	 * @return The sorted discussion thread.
 	 */
-	public ThreadList getOnlineTopics(Activity act) {
+	public void getOnlineTopics(Activity act) {
 		// get comments from elastic search
 		ElasticSearchOperations.getCommentPosts(discussionThread, act);
-		sortChooser();
-		return discussionThread;
+		sortChooser(act);
 	}
 }

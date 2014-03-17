@@ -1,11 +1,15 @@
 package cs.ualberta.ca.tunein;
 
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -45,22 +49,23 @@ public class TopicListActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    Intent intent = getIntent();
-		sortType = intent.getStringExtra("SORT");
-	    threadList = new ThreadList();
+	    SharedPreferences prefs = this.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+	    sortType = prefs.getString("cs.ualberta.ca.tunein.sort", "Freshness");
 		setContentView(R.layout.topic_list_view);
-	    cntrl = new ThreadController(threadList, sortType);
 	}
 	
 	@Override
 	protected void onResume()
 	{
 		super.onResume();
-
 	    setupTopicView();
-		threadList = cntrl.getOnlineTopics(this);
+	    
+	    threadList = new ThreadList();
+	    cntrl = new ThreadController(threadList);
+		cntrl.getOnlineTopics(this);
 		//setup the comment listview
-		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList, sortType);
+		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList);
 		ListView listview = (ListView) findViewById(R.id.listViewTopics);
 		
 		//setup adapter

@@ -38,10 +38,8 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	private Context context;
 	//holder for the elements in the row
 	private ViewHolder holder;
-	private ThreadList threadList;
 	private ArrayList<Comment> commentList;
 	private ThreadController threadCntrl;
-	private String sort;
 	
 	//dialog elements
 	private View createView;
@@ -74,14 +72,12 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * @param context The context of the activity that calls this class.
 	 * @param commentList The comment list that is to be in the list view.
 	 */
-	public CommentViewAdapter(Context context, ThreadList list, String sort) 
+	public CommentViewAdapter(Context context, ThreadList commentList) 
 	{
-		super(context, R.layout.comment_view_row, list.getDiscussionThread());
-		this.commentList = list.getDiscussionThread();
-		this.threadList = list;
+		super(context, R.layout.comment_view_row, commentList.getDiscussionThread());
 		this.context = context;
-		this.sort = sort;
-		threadCntrl = new ThreadController(list, sort);
+		this.commentList = commentList.getDiscussionThread();
+		this.threadCntrl = new ThreadController(commentList);
 	}
 	
 	@Override
@@ -161,10 +157,9 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 */
 	public void updateThreadView(ThreadList threadList)
 	{
-		this.threadList = threadList;
-		threadCntrl = new ThreadController(threadList, this.sort);
-		threadCntrl.sortChooser();
 		commentList = threadList.getDiscussionThread();
+		this.threadCntrl = new ThreadController(threadList);
+		threadCntrl.sortChooser((Activity) context);
 		notifyDataSetChanged();
 	}
 	
@@ -174,6 +169,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 */
 	private void refreshThreadView()
 	{
+		threadCntrl.sortChooser((Activity) context);
 		notifyDataSetChanged();
 	}
 	
@@ -227,7 +223,6 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			            {	                	        		  		
 			        		cntrl.addReply(currentComment, (Activity) context, title, text, false);
 			            }
-			            threadCntrl.sortChooser();
 			            refreshThreadView();
 			        }
 			    })

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
@@ -133,7 +134,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			Intent i = new Intent(getApplicationContext(),
 					TopicListActivity.class);
-			i.putExtra("SORT", "Date");
+			setSort("Date");
 			MainActivity.this.startActivity(i);
 		}
 	};
@@ -169,9 +170,16 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			Intent i = new Intent(getApplicationContext(),
 					TopicListActivity.class);
-			i.putExtra("SORT", "Freshness");
+			setSort("Freshness");
 			MainActivity.this.startActivity(i);
 		}
 	};
+	
+	private void setSort(String sort)
+	{
+		SharedPreferences prefs = this.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+		prefs.edit().putString("cs.ualberta.ca.tunein.sort", sort).commit();
+	}
 
 }
