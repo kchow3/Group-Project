@@ -18,7 +18,7 @@ public class editPageActivityTest extends ActivityInstrumentationTestCase2<MainA
 		super(MainActivity.class);
 	}
 	
-	public void testEdit()
+	/**public void testEdit()
 	{
 		Commenter user = new Commenter("Bob", "testid29fniudofh");
 		GeoLocation loc1 = new GeoLocation(1, 2);
@@ -39,6 +39,6 @@ public class editPageActivityTest extends ActivityInstrumentationTestCase2<MainA
 		
 		assertEquals("Latitude should be 5", aComment.getGeolocation().getLatitude(), loc2.getLatitude());
 		assertNotSame("Latitude shouldn't be 2", aComment.getGeolocation().getLatitude(), loc1.getLatitude());
-	}
+	}**/
 	
 }

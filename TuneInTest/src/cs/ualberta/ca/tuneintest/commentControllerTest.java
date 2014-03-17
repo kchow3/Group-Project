@@ -19,7 +19,7 @@ public class commentControllerTest extends ActivityInstrumentationTestCase2<Main
 	
 	private MainActivity activity;
 	
-	protected void setUp() throws Exception {
+	/**protected void setUp() throws Exception {
 		 super.setUp();
 		 setActivityInitialTouchMode(false);
 		 activity = getActivity();
@@ -75,5 +75,5 @@ public class commentControllerTest extends ActivityInstrumentationTestCase2<Main
 	@Override
 	protected void tearDown() throws Exception {
 	    super.tearDown();
-	}
+	}**/
 }
