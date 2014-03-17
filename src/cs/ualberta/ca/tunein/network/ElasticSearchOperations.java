@@ -213,6 +213,71 @@ public class ElasticSearchOperations {
 		thread.start();
 	}
 	
+	public static void getCommentPostsByReplyCount(final ThreadList modelList, final Activity activity) {
+		if (GSON == null)
+			constructGson();
+
+		Thread thread = new Thread() {
+
+			@Override
+			public void run() {
+				HttpClient client = new DefaultHttpClient();
+				HttpPost request = new HttpPost(SERVER_URL + "_search/");
+				String query = "{ \"query\": { \"query_string\": { \"default_field\": \"title\", \"query\"" +
+						": \"**\" } } , \"sort\": [ { \"replyCount\": { \"order\": \"desc\" } } ] }";
+				String responseJson = "";
+
+				Log.w(LOG_TAG, "query is: " + query);
+				try {
+					request.setEntity(new StringEntity(query));
+				} catch (UnsupportedEncodingException exception) {
+					Log.w(LOG_TAG,
+							"Error encoding search query: "
+									+ exception.getMessage());
+					return;
+				}
+				
+				try {
+					HttpResponse response = client.execute(request);
+					Log.i(LOG_TAG, "Response: "
+							+ response.getStatusLine().toString());
+
+					HttpEntity entity = response.getEntity();
+					BufferedReader reader = new BufferedReader(
+							new InputStreamReader(entity.getContent()));
+
+					String output = reader.readLine();
+					while (output != null) {
+						responseJson += output;
+						output = reader.readLine();
+					}
+					//Log.v("GSON", responseJson);
+				} catch (IOException exception) {
+					Log.w(LOG_TAG, "Error receiving search query response: "
+							+ exception.getMessage());
+					return;
+				}
+
+				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Comment>>() {
+				}.getType();
+				final ElasticSearchSearchResponse<Comment> returnedData = GSON
+						.fromJson(responseJson, elasticSearchSearchResponseType);
+
+				Runnable updateModel = new Runnable() {
+					@Override
+					public void run() {
+						modelList.clear();
+						modelList.addCommentCollection(returnedData.getSources());
+					}
+				};
+
+				activity.runOnUiThread(updateModel);
+			}
+		};
+
+		thread.start();
+	}
+	
 	/**
 	 * Constructs a Gson with a custom serializer / desserializer registered for
 	 * Bitmaps.

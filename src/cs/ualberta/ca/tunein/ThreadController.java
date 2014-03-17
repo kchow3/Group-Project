@@ -109,7 +109,7 @@ public class ThreadController {
 		if(sortName.equals("Picture"))
 			sortByPicture();
 		if(sortName.equals("Date"))
-			sortByDate();
+			//sortByDate();
 		if(sortName.equals("Score"))
 			sortByScore();
 		if(sortName.equals("Freshness"))
@@ -175,7 +175,7 @@ public class ThreadController {
 	 */
 	public void getOnlineTopics(Activity act) {
 		// get comments from elastic search
-		ElasticSearchOperations.getCommentPosts(discussionThread, act);
+		ElasticSearchOperations.getCommentPostsByReplyCount(discussionThread, act);
 		sortChooser(act);
 	}
 }
