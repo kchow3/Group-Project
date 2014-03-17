@@ -20,6 +20,10 @@ import android.widget.Toast;
  * This is part of the view for the main title page of the app.
  * It contains setting a username for the user and setting a sort
  * option for the comments in the app.
+ * User id code from:
+ * http://stackoverflow.com/questions/2785485/is-there-a-unique-android-device-id
+ * Intent code from:
+ * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
  */
 public class MainActivity extends Activity {
 	
@@ -60,6 +64,11 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
+	/**
+	 * Method to setup the main activity page.
+	 * Font code from:
+	 * http://stackoverflow.com/questions/9327053/using-custom-font-in-android-textview-using-xml
+	 */
 	private void setupPage()
 	{
 		name_button = (Button) findViewById(R.id.name_button);
@@ -95,6 +104,8 @@ public class MainActivity extends Activity {
 	
 	/**
 	 * This click listener will rename the user.
+	 * toast code from:
+	 * http://developer.android.com/guide/topics/ui/notifiers/toasts.html
 	 */
 	private OnClickListener renameBtnClick = new OnClickListener() {
 		public void onClick(View v) {

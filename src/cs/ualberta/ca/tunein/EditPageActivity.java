@@ -22,6 +22,8 @@ import android.widget.TextView;
  * editable. To access the edit comment page the user has
  * to be a comment author and will have the option to click
  * edit when viewing a comment.
+ * Dialog code from:
+ * http://stackoverflow.com/questions/4279787/how-can-i-pass-values-between-a-dialog-and-an-activity
  */
 public class EditPageActivity extends Activity {
 
@@ -117,6 +119,9 @@ public class EditPageActivity extends Activity {
 	    }
 	};
 	
+	/**
+	 * Click listener for changing a location.
+	 */
 	private OnClickListener locationBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
@@ -138,6 +143,9 @@ public class EditPageActivity extends Activity {
 	    }
 	};
 
+	/**
+	 * Cancel edit button click listener.
+	 */
 	private OnClickListener cancelBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
@@ -148,6 +156,11 @@ public class EditPageActivity extends Activity {
 	    }
 	};
 
+	/**
+	 * Edit the comment with confirm click
+	 * return intent code from:
+	 * http://stackoverflow.com/questions/10407159/android-how-to-manage-start-activity-for-result
+	 */
 	private OnClickListener submitBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)

@@ -155,6 +155,11 @@ public class CommentController{
 		return comment.getCommenter().getUniqueID().equals(currentID);
 	}
 	
+	/**
+	 * Method to update elastic search by pushing the
+	 * comment to elastic search.
+	 * @param aComment Comment to be posted.
+	 */
 	public void updateElasticSearch(Comment aComment)
 	{
 		ElasticSearchOperations.putCommentModel(aComment);

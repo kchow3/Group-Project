@@ -81,18 +81,6 @@ public class ThreadController {
 	}
 	
 	/**
-	 * Method to sort the topics by freshness(hotness or #replies)
-	 */
-	public void sortByFresh()
-	{
-		Collections.sort(discussionThread.getDiscussionThread(), new Comparator<Comment>() {
-			  public int compare(Comment o1, Comment o2) {
-			      return o2.getReplyCount() - o1.getReplyCount();
-			  }
-			});	
-	}
-	
-	/**
 	 * Method that sorts the topic list based on the current 
 	 * sort criteria.
 	 * @param act The activity that calls this method
@@ -109,11 +97,10 @@ public class ThreadController {
 		if(sortName.equals("Picture"))
 			sortByPicture();
 		if(sortName.equals("Date"))
-			//sortByDate();
+			sortByDate();
 		if(sortName.equals("Score"))
 			sortByScore();
-		if(sortName.equals("Freshness"))
-			sortByFresh();
+		if(sortName.equals("Freshness"));
 	}
 
 	/**

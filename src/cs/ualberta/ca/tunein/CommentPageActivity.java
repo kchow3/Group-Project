@@ -30,6 +30,10 @@ import android.widget.TextView;
  * Part of the view class that contains a comment and its replies.
  * This is part of the view when a user presses a view button on a 
  * comment to bring up this page.
+ * Dialog code from:
+ * http://stackoverflow.com/questions/4279787/how-can-i-pass-values-between-a-dialog-and-an-activity
+ * Intent code from:
+ * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
  */
 public class CommentPageActivity extends Activity {
 
@@ -119,10 +123,14 @@ public class CommentPageActivity extends Activity {
 		     }
 		  }
 		}
+	/**
+	 * Method to get input from intents.
+	 */
 	private void getInputComment()
 	{
 		Intent intent = getIntent();
 		isReplyReply = intent.getBooleanExtra("isReplyReply", false);
+		//intent sent from reply to reply for updating the topic comment.
 		if(isReplyReply)
 		{
 			topicComment = (Comment) intent.getSerializableExtra(EXTRA_TOPIC_COMMENT);
@@ -135,6 +143,9 @@ public class CommentPageActivity extends Activity {
 		replies = aComment.getReplies();
 	}
 	
+	/**
+	 * Setup elements on the CommentPage
+	 */
 	private void setupComment()
 	{
 		//setup comment info
@@ -229,6 +240,8 @@ public class CommentPageActivity extends Activity {
 	/**
 	 * This click listner will go to reply page to create a reply comment
 	 * to the comment that is being viewed.
+	 * Bitmap code from:
+	 * http://stackoverflow.com/questions/4715044/android-how-to-convert-whole-imageview-to-bitmap
 	 */
 	private OnClickListener replyBtnClick = new OnClickListener() 
 	{

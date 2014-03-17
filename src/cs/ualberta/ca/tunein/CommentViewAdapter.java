@@ -27,6 +27,8 @@ import android.widget.TextView;
  * This class is used to create the list view for the topic list
  * that contains comments. This class is used in the TopicListActivity
  * to create a list view and load in comments.
+ * Intent code from:
+ * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
  */
 public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	
@@ -51,6 +53,8 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * This static class is used for holding the elements of
 	 * a custom comment row. This is used for smoother scrolling
 	 * of the list view.
+	 * Code from :
+	 * http://developer.android.com/training/improving-layouts/smooth-scrolling.html
 	 */
 	private static class ViewHolder 
 	{
@@ -158,8 +162,6 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	public void updateThreadView(ThreadList threadList)
 	{
 		commentList = threadList.getDiscussionThread();
-		this.threadCntrl = new ThreadController(threadList);
-		threadCntrl.sortChooser((Activity) context);
 		notifyDataSetChanged();
 	}
 	
@@ -169,7 +171,6 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 */
 	private void refreshThreadView()
 	{
-		threadCntrl.sortChooser((Activity) context);
 		notifyDataSetChanged();
 	}
 	
@@ -193,6 +194,8 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	/**
 	 * This click listener will send user a comment creation dialog box
 	 * so that they can reply to a comment that they clicked reply on.
+	 * Bitmap code:
+	 * http://stackoverflow.com/questions/4715044/android-how-to-convert-whole-imageview-to-bitmap
 	 */
 	private OnClickListener replyBtnClick = new OnClickListener() 
 	{

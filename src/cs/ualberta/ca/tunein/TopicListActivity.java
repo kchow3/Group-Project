@@ -1,15 +1,13 @@
 package cs.ualberta.ca.tunein;
 
-import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -26,6 +24,8 @@ import android.widget.TextView;
  * This is part of the view of displaying the topic list
  * of comments. This also includes the creation view of creating
  * topic comments through a dialog box.
+ * Dialog code from:
+ * http://stackoverflow.com/questions/4279787/how-can-i-pass-values-between-a-dialog-and-an-activity
  */
 public class TopicListActivity extends Activity {
 
@@ -93,6 +93,7 @@ public class TopicListActivity extends Activity {
 	/**
 	 * This method is to open the create topic comment dialog box
 	 * and create a comment and add to the topic list.
+	 * Bitmap code from http://stackoverflow.com/questions/4715044/android-how-to-convert-whole-imageview-to-bitmap
 	 * @param v The view passed in.
 	 */
 	public void createCommentClick(View v)

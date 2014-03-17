@@ -28,7 +28,7 @@ import cs.ualberta.ca.tunein.ThreadList;
 import cs.ualberta.ca.tunein.TopicListActivity;
 
 /**
- * Handles sending PicPostModels to the server and executing searches on the
+ * Handles sending Coments to the server and executing searches on the
  * server. Most of the code in this class is based on:
  * https://github.com/rayzhangcl/ESDemo
  */
@@ -98,6 +98,11 @@ public class ElasticSearchOperations {
 		thread.start();
 	}
 	
+	/**
+	 * Method used for updating a comment on elasticsearch by posting using
+	 * the elastic id.
+	 * @param model comment to be posted
+	 */
 	public static void putCommentModel(final Comment model) {
 		if (GSON == null)
 			constructGson();
@@ -137,11 +142,7 @@ public class ElasticSearchOperations {
 	}
 
 	/**
-	 * Searches the server for Comments with the given searchTerm in their
-	 * text.
-	 * 
-	 * @param searchTerm
-	 *            the single world term to search for
+	 * Searches the server for Comments 
 	 * @param model
 	 *            the ThreadLis to clear and then fill with the new
 	 *            data
@@ -213,6 +214,14 @@ public class ElasticSearchOperations {
 		thread.start();
 	}
 	
+	/**
+	 * Method to get comments from elasticsearch and sort them based on
+	 * reply count which will give us comments that are currently "hot"
+	 * Code from:
+	 * http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-sort.html
+	 * @param modelList ThreadList that will be filled.
+	 * @param activity Activity that calls this method.
+	 */
 	public static void getCommentPostsByReplyCount(final ThreadList modelList, final Activity activity) {
 		if (GSON == null)
 			constructGson();
@@ -224,7 +233,7 @@ public class ElasticSearchOperations {
 				HttpClient client = new DefaultHttpClient();
 				HttpPost request = new HttpPost(SERVER_URL + "_search/");
 				String query = "{ \"query\": { \"query_string\": { \"default_field\": \"title\", \"query\"" +
-						": \"**\" } } , \"sort\": [ { \"replyCount\": { \"order\": \"desc\" } } ] }";
+						": \"**\" } } , \"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 				String responseJson = "";
 
 				Log.w(LOG_TAG, "query is: " + query);

@@ -28,6 +28,15 @@ import android.widget.TextView;
  * This is part of the view class for comments. This class is used to 
  * display the replies to a comment using an expandable list view.
  * This class is not complete yet.
+ * Dialog code from:
+ * http://stackoverflow.com/questions/4279787/how-can-i-pass-values-between-a-dialog-and-an-activity
+ * Bitmap code from:
+ * http://stackoverflow.com/questions/4715044/android-how-to-convert-whole-imageview-to-bitmap
+ * expandable listview code from:
+ * http://androidtrainningcenter.blogspot.in/2012/07/android-expandable-listview-simple.html
+ * http://www.dreamincode.net/forums/topic/270612-how-to-get-started-with-expandablelistview/
+ * Intent code from:
+ * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
  */
 public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	
@@ -54,6 +63,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	/**
 	 * View holder that holds the elements of a
 	 * custom row that improves scrolling.
+	 * Code from http://developer.android.com/training/improving-layouts/smooth-scrolling.html
 	 */
 	public static class ViewHolder
 	{
