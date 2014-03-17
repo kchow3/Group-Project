@@ -59,6 +59,8 @@ public class TopicListActivity extends Activity {
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
 	    sortType = prefs.getString("cs.ualberta.ca.tunein.sort", "Freshness");
 		setContentView(R.layout.topic_list_view);
+	    threadList = new ThreadList();
+	    cntrl = new ThreadController(threadList);
 	}
 	
 	@Override
@@ -67,12 +69,10 @@ public class TopicListActivity extends Activity {
 		super.onResume();
 	    setupTopicView();
 	    
-	    threadList = new ThreadList();
-	    cntrl = new ThreadController(threadList);
 		cntrl.getOnlineTopics(this);
 		cntrl.sortChooser(this);
 		//setup the comment listview
-		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList);
+		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList, cntrl);
 		ListView listview = (ListView) findViewById(R.id.listViewTopics);
 		
 		//setup adapter

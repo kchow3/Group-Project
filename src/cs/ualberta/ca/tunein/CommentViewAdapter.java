@@ -41,6 +41,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	//holder for the elements in the row
 	private ViewHolder holder;
 	private ArrayList<Comment> commentList;
+	private ThreadController thCntrl;
 	
 	//dialog elements
 	private View createView;
@@ -75,11 +76,12 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * @param context The context of the activity that calls this class.
 	 * @param commentList The comment list that is to be in the list view.
 	 */
-	public CommentViewAdapter(Context context, ThreadList commentList) 
+	public CommentViewAdapter(Context context, ThreadList commentList, ThreadController cntrl) 
 	{
 		super(context, R.layout.comment_view_row, commentList.getDiscussionThread());
 		this.context = context;
 		this.commentList = commentList.getDiscussionThread();
+		this.thCntrl = cntrl;
 	}
 	
 	@Override
@@ -217,52 +219,14 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
-<<<<<<< HEAD
-		            	
-			            	//temp geo location
-			            	String username = ((User)((Activity) context).getApplication()).getName();
-			            	String id = ((User)((Activity) context).getApplication()).getUniqueID();
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
-			        		
-			        		//current comment that is replied to using tag and get parent position
-			        		Comment currentComment = commentList.get(i);
-			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc);
-			        		CommentController cntrl = new CommentController(currentComment);
-		
-			        		cntrl.addReply(newComment);
-			        		
-			        		refreshThreadView();
-			            } 
-			            else 
-			            {	                
-			            	//temp geo location
-			            	String username = ((User)((Activity) context).getApplication()).getName();
-			            	String id = ((User)((Activity) context).getApplication()).getUniqueID();
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
-			        		
-			        		//current comment that is replied to using tag and get parent position
-			        		Comment currentComment = commentList.get(i);
-			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc);
-			        		CommentController cntrl = new CommentController(currentComment);
-			        		
-			        		cntrl.addReply(newComment);
-			        		
-			        		refreshThreadView();
-=======
+			            	
 			        		cntrl.addReplyImg(currentComment, (Activity) context, title, text, img, false);
-			        		
 			            } 
 			            else 
-			            {	                	        		  		
+			            {	                        		
 			        		cntrl.addReply(currentComment, (Activity) context, title, text, false);
->>>>>>> 646cd9c9266ee3f5dca8f6a1b2be8d9d4abf2e9e
-			            }
+			        		
+			            } 
 			            refreshThreadView();
 			        }
 			    })

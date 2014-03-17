@@ -64,8 +64,7 @@ public class ThreadController {
 	 */
 	public void sortByDate() 
 	{
-		ArrayList<Comment> thread = discussionThread.getDiscussionThread();
-		Collections.sort(thread, new Comparator<Comment>() {
+		Collections.sort(discussionThread.getDiscussionThread(), new Comparator<Comment>() {
 			  public int compare(Comment o1, Comment o2) {
 			      return o2.getDate().compareTo(o1.getDate());
 			  }
