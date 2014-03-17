@@ -72,7 +72,7 @@ public class TopicListActivity extends Activity {
 		cntrl.getOnlineTopics(this);
 		cntrl.sortChooser(this);
 		//setup the comment listview
-		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList, cntrl);
+		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList);
 		ListView listview = (ListView) findViewById(R.id.listViewTopics);
 		
 		//setup adapter

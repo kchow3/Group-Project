@@ -41,7 +41,6 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	//holder for the elements in the row
 	private ViewHolder holder;
 	private ArrayList<Comment> commentList;
-	private ThreadController thCntrl;
 	
 	//dialog elements
 	private View createView;
@@ -76,12 +75,11 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * @param context The context of the activity that calls this class.
 	 * @param commentList The comment list that is to be in the list view.
 	 */
-	public CommentViewAdapter(Context context, ThreadList commentList, ThreadController cntrl) 
+	public CommentViewAdapter(Context context, ThreadList commentList) 
 	{
 		super(context, R.layout.comment_view_row, commentList.getDiscussionThread());
 		this.context = context;
 		this.commentList = commentList.getDiscussionThread();
-		this.thCntrl = cntrl;
 	}
 	
 	@Override
