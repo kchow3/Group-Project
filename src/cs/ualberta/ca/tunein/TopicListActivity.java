@@ -42,6 +42,12 @@ public class TopicListActivity extends Activity {
 	private String comment;
 	private Image img;
 	
+	//dialog elements
+	private View createView;
+	private TextView inputTitle;
+	private TextView inputComment;
+	private ImageView inputImage;
+	
 	private Button buttonMainMenu;
 	private TextView textViewSort;
 	
@@ -64,6 +70,7 @@ public class TopicListActivity extends Activity {
 	    threadList = new ThreadList();
 	    cntrl = new ThreadController(threadList);
 		cntrl.getOnlineTopics(this);
+		cntrl.sortChooser(this);
 		//setup the comment listview
 		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList);
 		ListView listview = (ListView) findViewById(R.id.listViewTopics);
@@ -98,13 +105,7 @@ public class TopicListActivity extends Activity {
 	 */
 	public void createCommentClick(View v)
 	{
-		LayoutInflater inflater = LayoutInflater.from(TopicListActivity.this);
-		final View createView = inflater.inflate(R.layout.create_comment_view, null);
-
-		final TextView inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
-		final TextView inputComment = (EditText) createView.findViewById(R.id.editTextComment);
-		final ImageView inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
-		
+		setupDialogs();
 		AlertDialog dialog = new AlertDialog.Builder(TopicListActivity.this)
 		    .setTitle("Create Comment")
 		    .setView(createView)
@@ -120,13 +121,12 @@ public class TopicListActivity extends Activity {
 		            	Bitmap bmp = inputImage.getDrawingCache();
 		            	img = new Image(bmp);
 		        		cntrl.createTopicImg(TopicListActivity.this, title, comment, img);
-		        		viewAdapter.updateThreadView(threadList);
 		            } 
 		            else 
 		            {	                
-		        		cntrl.createTopic(TopicListActivity.this, title, comment);
-		        		viewAdapter.updateThreadView(threadList);        		
+		        		cntrl.createTopic(TopicListActivity.this, title, comment);     		
 		            }
+		            viewAdapter.updateThreadView(threadList);
 		        }
 		    })
 		    .setNegativeButton("Cancel", null).create();
@@ -141,5 +141,18 @@ public class TopicListActivity extends Activity {
 			finish();
 		}
 	};
+	
+	/**
+	 * This method is for setting up the dialog boxes.
+	 */
+	private void setupDialogs()
+	{
+		LayoutInflater inflater = LayoutInflater.from(TopicListActivity.this);
+		createView = inflater.inflate(R.layout.create_comment_view, null);
+
+		inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
+		inputComment = (EditText) createView.findViewById(R.id.editTextComment);
+		inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
+	}
 
 }

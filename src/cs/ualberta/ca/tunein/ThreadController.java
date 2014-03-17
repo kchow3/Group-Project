@@ -100,7 +100,8 @@ public class ThreadController {
 			sortByDate();
 		if(sortName.equals("Score"))
 			sortByScore();
-		if(sortName.equals("Freshness"));
+		if(sortName.equals("Freshness"))
+			ElasticSearchOperations.getCommentPostsByReplyCount(discussionThread, act);
 	}
 
 	/**
@@ -163,6 +164,5 @@ public class ThreadController {
 	public void getOnlineTopics(Activity act) {
 		// get comments from elastic search
 		ElasticSearchOperations.getCommentPostsByReplyCount(discussionThread, act);
-		sortChooser(act);
 	}
 }

@@ -28,7 +28,7 @@ public class Comment implements Serializable
 	//iamge of comment
 	private Image img;
 	//date of comment
-	private Date commentDate;
+	private Date date;
 	//geo location of comment
 	private GeoLocation geolocation;
 	//does comment have an image
@@ -57,7 +57,7 @@ public class Comment implements Serializable
 		this.title = aTitle;
 		this.comment = aComment;
 		this.geolocation = loc;
-		this.commentDate = new Date();
+		this.date = new Date();
 		this.replies = new ArrayList<Comment>();
 		this.hasImage = false;
 		this.favorited = false;
@@ -82,7 +82,7 @@ public class Comment implements Serializable
 		this.comment = aComment;
 		this.geolocation = loc;
 		this.img = aImage;
-		this.commentDate = new Date();
+		this.date = new Date();
 		this.replies = new ArrayList<Comment>();
 		this.hasImage = true;
 		this.favorited = false;
@@ -133,11 +133,11 @@ public class Comment implements Serializable
 	}
 
 	public Date getDate() {
-		return commentDate;
+		return date;
 	}
 
 	public void setDate(Date date) {
-		this.commentDate = date;
+		this.date = date;
 	}
 
 	public GeoLocation getGeolocation() {
@@ -223,7 +223,7 @@ public class Comment implements Serializable
 	public String dateToString()
 	{
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy ");
-		return df.format(this.commentDate);
+		return df.format(this.date);
 	}
 
 }
