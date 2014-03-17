@@ -217,52 +217,14 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
-<<<<<<< HEAD
-		            	
-			            	//temp geo location
-			            	String username = ((User)((Activity) context).getApplication()).getName();
-			            	String id = ((User)((Activity) context).getApplication()).getUniqueID();
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
-			        		
-			        		//current comment that is replied to using tag and get parent position
-			        		Comment currentComment = commentList.get(i);
-			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc);
-			        		CommentController cntrl = new CommentController(currentComment);
-		
-			        		cntrl.addReply(newComment);
-			        		
-			        		refreshThreadView();
-			            } 
-			            else 
-			            {	                
-			            	//temp geo location
-			            	String username = ((User)((Activity) context).getApplication()).getName();
-			            	String id = ((User)((Activity) context).getApplication()).getUniqueID();
-			        		Commenter user = new Commenter(username, id);
-			        		
-			        		GeoLocation loc = new GeoLocation(5, 10);
-			        		
-			        		//current comment that is replied to using tag and get parent position
-			        		Comment currentComment = commentList.get(i);
-			        		//new comment reply
-			        		Comment newComment  = new Comment(user, title, text, loc);
-			        		CommentController cntrl = new CommentController(currentComment);
-			        		
-			        		cntrl.addReply(newComment);
-			        		
-			        		refreshThreadView();
-=======
+			            	
 			        		cntrl.addReplyImg(currentComment, (Activity) context, title, text, img, false);
-			        		
 			            } 
 			            else 
-			            {	                	        		  		
+			            {	                        		
 			        		cntrl.addReply(currentComment, (Activity) context, title, text, false);
->>>>>>> 646cd9c9266ee3f5dca8f6a1b2be8d9d4abf2e9e
-			            }
+			        		
+			            } 
 			            refreshThreadView();
 			        }
 			    })
