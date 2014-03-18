@@ -151,12 +151,16 @@ public class ElasticSearchOperations {
 	 * @param activity
 	 *            a TopicListActivity
 	 */
-	public static void getCommentPosts(final String elasticID, Comment model, final Activity activity) {
+	public static void getCommentPosts(final String parentID, final Comment model, final Activity activity) {
 		if (GSON == null)
 			constructGson();
 
+		Thread thread = new Thread() {
+
+			@Override
+			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				HttpGet request = new HttpGet(SERVER_URL + elasticID);
+				HttpGet request = new HttpGet(SERVER_URL + parentID);
 				String responseJson = "";
 
 				try {
@@ -176,7 +180,19 @@ public class ElasticSearchOperations {
 				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
 				// Now we expect to get a Recipe response
 				final ElasticSearchResponse<Comment> esResponse = GSON.fromJson(responseJson, elasticSearchResponseType);
-				model = esResponse.getSource();
+				
+				Runnable updateModel = new Runnable() {
+					@Override
+					public void run() {
+						model.setupComment(esResponse.getSource());
+					}
+				};
+
+				activity.runOnUiThread(updateModel);
+			}
+		};
+
+		thread.start();
 	}
 	
 	/**

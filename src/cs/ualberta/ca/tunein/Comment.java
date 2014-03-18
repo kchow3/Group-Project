@@ -239,4 +239,21 @@ public class Comment implements Serializable
 		return df.format(this.date);
 	}
 
+	public void setupComment(Comment source) {
+		this.commenter = source.getCommenter();
+		this.title = source.getTitle();
+		this.comment = source.getComment();
+		this.geolocation = source.getGeolocation();
+		this.date = source.getDate();
+		this.replies = source.getReplies();
+		this.hasImage = source.isHasImage();
+		this.favorited = source.isFavorited();
+		this.saved = source.isSaved();
+		this.favoriteCount = source.getFavoriteCount();
+		this.replyCount = source.getReplyCount();
+		this.elasticID = source.getElasticID();
+		this.parentID = source.getParentID();
+		
+	}
+
 }

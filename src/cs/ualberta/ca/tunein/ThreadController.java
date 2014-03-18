@@ -126,7 +126,7 @@ public class ThreadController {
 		Comment aComment = new Comment(user, title, comment, loc, img, "0");
 		list.add(aComment);
 		ElasticSearchOperations.postCommentModel(aComment);
-		sortChooser(act);
+		//sortChooser(act);
 	}
 	
 	/**
@@ -151,7 +151,7 @@ public class ThreadController {
 		Comment aComment = new Comment(user, title, comment, loc, "0");
 		list.add(aComment);
 		ElasticSearchOperations.postCommentModel(aComment);
-		sortChooser(act);
+		//sortChooser(act);
 	}
 	
 	/**
