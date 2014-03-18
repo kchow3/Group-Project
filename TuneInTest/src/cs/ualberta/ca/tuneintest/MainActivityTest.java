@@ -30,5 +30,19 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		this.sendKeys(KeyEvent.KEYCODE_BACK);
 	}
 	
+	public void testtopicbutton() {
+		activity = getActivity();
+		
+		ActivityMonitor monitor = getInstrumentation().addMonitor(cs.ualberta.ca.tunein.TopicListActivity.class.getName(), null, false);
+		
+		Button button = (Button) activity.findViewById(cs.ualberta.ca.tunein.R.id.buttonTopicList);
+		TouchUtils.clickView(this, button);
+		
+		cs.ualberta.ca.tunein.TopicListActivity secondActivity = (cs.ualberta.ca.tunein.TopicListActivity) monitor
+		          .waitForActivityWithTimeout(5);
+		assertNotNull(secondActivity);
+		this.sendKeys(KeyEvent.KEYCODE_BACK);
+	}
+	
 
 }

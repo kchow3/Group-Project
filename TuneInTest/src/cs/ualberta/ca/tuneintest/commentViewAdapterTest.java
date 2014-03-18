@@ -19,13 +19,11 @@ public class commentViewAdapterTest extends ActivityInstrumentationTestCase2<Top
 		super(TopicListActivity.class);
 	}
 	
-	public void testviewingcomment() {
+	public void testViewingCommentButton() {
 		activity = getActivity();
 		
-		//ActivityMonitor monitor = getInstrumentation().addMonitor(cs.ualberta.ca.tunein.TopicListActivity.class.getName(), null, false);
 		ActivityMonitor monitor = getInstrumentation().addMonitor(cs.ualberta.ca.tunein.CommentPageActivity.class.getName(), null, false);
 		
-		//Button button = (Button) activity.findViewById(cs.ualberta.ca.tunein.R.id.otherLocation_button);
 		Button button = (Button) activity.findViewById(cs.ualberta.ca.tunein.R.id.buttonView);
 		TouchUtils.clickView(this, button);
 		
@@ -34,6 +32,16 @@ public class commentViewAdapterTest extends ActivityInstrumentationTestCase2<Top
 		assertNotNull(secondActivity);
 		this.sendKeys(KeyEvent.KEYCODE_BACK);
 	}
+	
+	public void testReplyButton(){
+		activity = getActivity();
+		Button button = (Button) activity.findViewById(cs.ualberta.ca.tunein.R.id.buttonReply);
+		TouchUtils.clickView(this, button);
+		this.sendKeys(KeyEvent.KEYCODE_BACK);
+		
+	}
+	
+	
 	
 //Need to add tests for all properties of the CommentViewAdapter class
 

@@ -2,6 +2,7 @@ package cs.ualberta.ca.tuneintest;
 
 import cs.ualberta.ca.tunein.TopicListActivity;
 import android.app.Activity;
+import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.view.KeyEvent;
@@ -20,6 +21,14 @@ public class topicListActivityTest extends ActivityInstrumentationTestCase2<Topi
 		
 		activity = getActivity();
 		Button button = (Button) activity.findViewById(cs.ualberta.ca.tunein.R.id.buttonCreate);
+		TouchUtils.clickView(this, button);
+		this.sendKeys(KeyEvent.KEYCODE_BACK);
+	}
+	
+	public void testMainMenubutton() {
+		activity = getActivity();
+		
+		Button button = (Button) activity.findViewById(cs.ualberta.ca.tunein.R.id.buttonMainMenu);
 		TouchUtils.clickView(this, button);
 		this.sendKeys(KeyEvent.KEYCODE_BACK);
 	}
