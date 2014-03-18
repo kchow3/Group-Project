@@ -89,11 +89,11 @@ public class CommentPageActivity extends Activity {
 	{
 		super.onResume();
 		setContentView(R.layout.comment_view);
-		setupComment();
 		cntrl = new CommentController(aComment);
-		cntrl.loadComment(this);
-		cntrl.updateElasticSearch(aComment);
+		cntrl.loadCommentReplies(this);
 		replies = aComment.getReplies();
+		setupComment();
+		Log.v("replies size:", Integer.toString(replies.size()));
 		//setup the reply listview
 		this.viewAdapter = new ReplyViewAdapter(this, replies);
 		ExpandableListView listview = (ExpandableListView) findViewById(R.id.expandableListViewReply);
@@ -124,7 +124,6 @@ public class CommentPageActivity extends Activity {
 		Intent intent = getIntent();
 		isReplyReply = intent.getBooleanExtra("isReplyReply", false);
 		aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
-			
 	}
 	
 	/**

@@ -1,9 +1,12 @@
 package cs.ualberta.ca.tunein;
 
+import java.util.ArrayList;
+
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 
 /**
@@ -165,15 +168,30 @@ public class CommentController{
 		ElasticSearchOperations.putCommentModel(aComment);
 	}
 	
-	public void loadComment(Activity act)
+	/**
+	 * This method goes through elastic search and gets the passed in
+	 * comment's replies and also their replies.
+	 * @param act
+	 * @param aComment
+	 */
+	public void loadCommentReplies(Activity act)
 	{
+		/*
 		if(comment.getParentID().equals("0"))
 		{
 			ElasticSearchOperations.getCommentPosts(comment.getElasticID(), comment, act);
 		}
 		else
 		{
-			ElasticSearchOperations.getCommentParent(comment.getParentID(), comment.getReplies(), act);
+			ElasticSearchOperations.getCommentByParentId(comment.getParentID(), comment.getReplies(), act);
+		}
+		*/
+		ElasticSearchOperations.getRepliesByParentId(comment.getElasticID(), comment, act);
+		ArrayList<Comment> list = comment.getReplies();
+		Log.v("replies size2:", Integer.toString(list.size()));
+		for(int i = 0; i < list.size(); i++)
+		{
+			ElasticSearchOperations.getRepliesByParentId(list.get(i).getElasticID(), list.get(i), act);
 		}
 	}
 }

@@ -203,7 +203,7 @@ public class ElasticSearchOperations {
 	 * @param activity
 	 *            a TopicListActivity
 	 */
-	public static void getCommentParent(final String parentID, final ArrayList<Comment> modelList, final Activity activity) {
+	public static void getRepliesByParentId(final String parentID, final Comment model, final Activity activity) {
 		if (GSON == null)
 			constructGson();
 
@@ -212,8 +212,8 @@ public class ElasticSearchOperations {
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_URL + "_search/");
-				String query = "{\"query\": {\"query_string\": {\"default_field\": \"parentID\",\"query\": \""
+				HttpPost request = new HttpPost(SERVER_URL + "_search");
+				String query = "{\"query\": {\"query_string\": {\"default_field\": \"parentID\", \"query\": \""
 						+ parentID + "\"}}}";
 				String responseJson = "";
 
@@ -256,8 +256,10 @@ public class ElasticSearchOperations {
 				Runnable updateModel = new Runnable() {
 					@Override
 					public void run() {
-						modelList.clear();
-						modelList.addAll(returnedData.getSources());
+						model.getReplies().clear();
+						Log.v("replies size3:", Integer.toString(returnedData.getSources().size()));
+						model.getReplies().addAll(returnedData.getSources());
+						Log.v("replies size4:", Integer.toString(model.getReplies().size()));
 					}
 				};
 
