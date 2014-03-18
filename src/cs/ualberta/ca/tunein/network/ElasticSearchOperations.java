@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import cs.ualberta.ca.tunein.Comment;
+import cs.ualberta.ca.tunein.ReplyViewAdapter;
 import cs.ualberta.ca.tunein.ThreadList;
 import cs.ualberta.ca.tunein.TopicListActivity;
 
@@ -203,7 +204,7 @@ public class ElasticSearchOperations {
 	 * @param activity
 	 *            a TopicListActivity
 	 */
-	public static void getRepliesByParentId(final String parentID, final Comment model, final Activity activity) {
+	public static void getRepliesByParentId(final String parentID, final Comment model, final Activity activity, final ReplyViewAdapter adap) {
 		if (GSON == null)
 			constructGson();
 
@@ -260,6 +261,7 @@ public class ElasticSearchOperations {
 						Log.v("replies size3:", Integer.toString(returnedData.getSources().size()));
 						model.addReplies((ArrayList<Comment>) returnedData.getSources());
 						Log.v("replies size4:", Integer.toString(model.getReplies().size()));
+						adap.notifyDataSetChanged();
 					}
 				};
 

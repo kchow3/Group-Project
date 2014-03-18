@@ -20,6 +20,7 @@ import android.util.Log;
 public class CommentController{
 
 	private Comment comment;
+	private ReplyViewAdapter viewAdapter;
 	
 	/**
 	 * Constructor to construct a controller that can modify comments.
@@ -28,6 +29,12 @@ public class CommentController{
 	public CommentController(Comment aComment) 
 	{
 		this.comment = aComment;
+	}
+	
+	public CommentController(Comment aComment, ReplyViewAdapter adap) 
+	{
+		this.comment = aComment;
+		this.viewAdapter = adap;
 	}
 
 	/**
@@ -186,12 +193,12 @@ public class CommentController{
 			ElasticSearchOperations.getCommentByParentId(comment.getParentID(), comment.getReplies(), act);
 		}
 		*/
-		ElasticSearchOperations.getRepliesByParentId(comment.getElasticID(), comment, act);
+		ElasticSearchOperations.getRepliesByParentId(comment.getElasticID(), comment, act,viewAdapter);
 		ArrayList<Comment> list = comment.getReplies();
 		Log.v("replies size2:", Integer.toString(list.size()));
 		for(int i = 0; i < list.size(); i++)
 		{
-			ElasticSearchOperations.getRepliesByParentId(list.get(i).getElasticID(), list.get(i), act);
+			ElasticSearchOperations.getRepliesByParentId(list.get(i).getElasticID(), list.get(i), act, viewAdapter);
 		}
 	}
 }

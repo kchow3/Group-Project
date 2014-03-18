@@ -83,7 +83,6 @@ public class CommentPageActivity extends Activity {
 	    this.replies = new ArrayList<Comment>();
 	    getInputComment();
 	    setContentView(R.layout.comment_view);
-	    setupComment();
 		//setup the reply listview
 		this.viewAdapter = new ReplyViewAdapter(this, replies);
 		ExpandableListView listview = (ExpandableListView) findViewById(R.id.expandableListViewReply);
@@ -96,10 +95,11 @@ public class CommentPageActivity extends Activity {
 	protected void onResume() 
 	{
 		super.onResume();
-		cntrl = new CommentController(aComment);
+		cntrl = new CommentController(aComment, viewAdapter);
 		cntrl.loadCommentReplies(this);
 		replies = aComment.getReplies();
 		Log.v("replies size:", Integer.toString(replies.size()));
+		setupComment();
 		viewAdapter.updateReplyView(replies);
 	}
 	@Override
