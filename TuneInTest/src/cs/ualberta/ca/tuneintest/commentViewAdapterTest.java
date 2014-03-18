@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
+import android.view.KeyEvent;
 import android.widget.Button;
 import cs.ualberta.ca.tunein.CommentViewAdapter;
 import cs.ualberta.ca.tunein.TopicListActivity;
@@ -31,6 +32,7 @@ public class commentViewAdapterTest extends ActivityInstrumentationTestCase2<Top
 		cs.ualberta.ca.tunein.CommentPageActivity secondActivity = (cs.ualberta.ca.tunein.CommentPageActivity) monitor
 		          .waitForActivityWithTimeout(5);
 		assertNotNull(secondActivity);
+		this.sendKeys(KeyEvent.KEYCODE_BACK);
 	}
 	
 //Need to add tests for all properties of the CommentViewAdapter class

@@ -19,14 +19,14 @@ public class commentControllerTest extends ActivityInstrumentationTestCase2<Main
 	
 	private MainActivity activity;
 	
-	/**protected void setUp() throws Exception {
+	protected void setUp() throws Exception {
 		 super.setUp();
 		 setActivityInitialTouchMode(false);
 		 activity = getActivity();
 	}
 	
 	Commenter commenter = new Commenter("myName", "ID");
-	GeoLocation loc = new GeoLocation(0, 0);
+	GeoLocation loc = new GeoLocation();
 	Comment comment = new Comment(commenter , "Title", "Comment", loc);
 	CommentController commentcontroller = new CommentController(comment);
 	
@@ -36,15 +36,15 @@ public class commentControllerTest extends ActivityInstrumentationTestCase2<Main
 		assertEquals("Edited text should be 'Different comment'", comment.getComment(), new_comment);
 	}
 	
-	public void testChangeLoc() {
-		GeoLocation new_loc = new GeoLocation(1, 1);
+	/**public void testChangeLoc() {
+		GeoLocation new_loc = new GeoLocation();
 		commentcontroller.changeLoc(new_loc);
 		assertEquals("Edited geo location should be (1, 1)", comment.getGeolocation(), new_loc);
-	}
+	}**/
 	
 	public void testAddReply() {
 		int reply_count = comment.getReplyCount();
-		commentcontroller.addReply(comment);
+		commentcontroller.addReply(comment, activity, null, null, false);
 		assertEquals("Comment reply count should be incremented by one", comment.getReplyCount(), reply_count+1);
 	}
 	
@@ -75,5 +75,5 @@ public class commentControllerTest extends ActivityInstrumentationTestCase2<Main
 	@Override
 	protected void tearDown() throws Exception {
 	    super.tearDown();
-	}**/
+	}
 }
