@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -34,7 +36,7 @@ import cs.ualberta.ca.tunein.TopicListActivity;
  */
 public class ElasticSearchOperations {
 
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/usertest/";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/elastictest/";
 	//public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn/";
 	public static final String LOG_TAG = "ElasticSearch";
 
@@ -149,7 +151,43 @@ public class ElasticSearchOperations {
 	 * @param activity
 	 *            a TopicListActivity
 	 */
-	public static void getCommentPosts(final ThreadList modelList, final Activity activity) {
+	public static void getCommentPosts(final String elasticID, Comment model, final Activity activity) {
+		if (GSON == null)
+			constructGson();
+
+				HttpClient client = new DefaultHttpClient();
+				HttpGet request = new HttpGet(SERVER_URL + elasticID);
+				String responseJson = "";
+
+				try {
+					HttpResponse response = client.execute(request);
+					Log.i(LOG_TAG, "Response: "
+							+ response.getStatusLine().toString());
+
+					responseJson = getEntityContent(response);
+
+					
+				} catch (IOException exception) {
+					Log.w(LOG_TAG, "Error receiving search query response: "
+							+ exception.getMessage());
+					return;
+				}
+
+				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
+				// Now we expect to get a Recipe response
+				final ElasticSearchResponse<Comment> esResponse = GSON.fromJson(responseJson, elasticSearchResponseType);
+				model = esResponse.getSource();
+	}
+	
+	/**
+	 * Searches the server for Comment replies corresponding to parent id.
+	 * @param model
+	 *            the ThreadLis to clear and then fill with the new
+	 *            data
+	 * @param activity
+	 *            a TopicListActivity
+	 */
+	public static void getCommentParent(final String parentID, final ArrayList<Comment> modelList, final Activity activity) {
 		if (GSON == null)
 			constructGson();
 
@@ -159,8 +197,8 @@ public class ElasticSearchOperations {
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
 				HttpPost request = new HttpPost(SERVER_URL + "_search/");
-				String query = "{\"query\": {\"query_string\": {\"default_field\": \"title\",\"query\": \"*"
-						+ "" + "*\"}}}";
+				String query = "{\"query\": {\"query_string\": {\"default_field\": \"parentID\",\"query\": \""
+						+ parentID + "\"}}}";
 				String responseJson = "";
 
 				Log.w(LOG_TAG, "query is: " + query);
@@ -203,7 +241,7 @@ public class ElasticSearchOperations {
 					@Override
 					public void run() {
 						modelList.clear();
-						modelList.addCommentCollection(returnedData.getSources());
+						modelList.addAll(returnedData.getSources());
 					}
 				};
 

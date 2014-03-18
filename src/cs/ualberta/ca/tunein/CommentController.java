@@ -164,4 +164,16 @@ public class CommentController{
 	{
 		ElasticSearchOperations.putCommentModel(aComment);
 	}
+	
+	public void loadComment(Activity act)
+	{
+		if(comment.getParentID().equals("0"))
+		{
+			ElasticSearchOperations.getCommentPosts(comment.getElasticID(), comment, act);
+		}
+		else
+		{
+			ElasticSearchOperations.getCommentParent(comment.getParentID(), comment.getReplies(), act);
+		}
+	}
 }
