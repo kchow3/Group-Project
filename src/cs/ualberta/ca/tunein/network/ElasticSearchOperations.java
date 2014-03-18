@@ -214,8 +214,7 @@ public class ElasticSearchOperations {
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
 				HttpPost request = new HttpPost(SERVER_URL + "_search");
-				String query = "{\"query\": {\"query_string\": {\"default_field\": \"parentID\", \"query\": \""
-						+ parentID + "\"}}}";
+				String query = "{\"query\": {\"match\": {\"parentID\": \"" + parentID + "\"}}}";
 				String responseJson = "";
 
 				Log.w(LOG_TAG, "query is: " + query);
