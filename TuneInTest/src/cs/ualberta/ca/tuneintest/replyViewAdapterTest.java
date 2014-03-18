@@ -20,9 +20,8 @@ public class replyViewAdapterTest extends ActivityInstrumentationTestCase2<Comme
 	}
 	
 	/**public void testReplyOfReplyButton() {
-		
 		activity = getActivity();
-		Button button = (Button) activity.findViewById(cs.ualberta.ca.tunein.R.id.buttonCommentReply);
+		Button button = (Button) activity.findViewById(cs.ualberta.ca.tunein.R.id.buttonReply);
 		TouchUtils.clickView(this, button);
 		this.sendKeys(KeyEvent.KEYCODE_BACK);
 	}**/
