@@ -124,6 +124,7 @@ public class CommentPageActivity extends Activity {
 		Intent intent = getIntent();
 		isReplyReply = intent.getBooleanExtra("isReplyReply", false);
 		aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
+			
 	}
 	
 	/**

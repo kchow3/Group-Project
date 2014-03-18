@@ -286,8 +286,8 @@ public class ElasticSearchOperations {
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
 				HttpPost request = new HttpPost(SERVER_URL + "_search/");
-				String query = "{ \"query\": { \"query_string\": { \"default_field\": \"title\", \"query\"" +
-						": \"**\" } } , \"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
+				String query = "{ \"query\": { \"query_string\": { \"default_field\": \"parentID\", \"query\"" +
+						": \"0\" } } , \"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 				String responseJson = "";
 
 				Log.w(LOG_TAG, "query is: " + query);
