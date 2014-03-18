@@ -43,6 +43,8 @@ public class Comment implements Serializable
 	private int replyCount;
 	//id of Elastic Search
 	private String elasticID;
+	//parent elastic id
+	private String parentID;
 	
 	/**
 	 * This constructor constructs a comment without an image.
@@ -51,7 +53,7 @@ public class Comment implements Serializable
 	 * @param aComment The comment body.
 	 * @param loc The geo location of comment.
 	 */
-	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc) 
+	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc, String parent) 
 	{
 		this.commenter = user;
 		this.title = aTitle;
@@ -65,6 +67,7 @@ public class Comment implements Serializable
 		this.favoriteCount = 0;
 		this.replyCount = 0;
 		this.elasticID = null;
+		this.parentID = parent;
 	}
 
 	/**
@@ -75,7 +78,7 @@ public class Comment implements Serializable
 	 * @param loc The geo location of comment.
 	 * @param aImage The image of comment.
 	 */
-	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc, Image aImage) 
+	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc, Image aImage, String parent) 
 	{
 		this.commenter = user;
 		this.title = aTitle;
@@ -90,6 +93,7 @@ public class Comment implements Serializable
 		this.favoriteCount = 0;
 		this.replyCount = 0;
 		this.elasticID = null;
+		this.parentID = parent;
 	}
 
 	public Commenter getCommenter() {
@@ -198,6 +202,15 @@ public class Comment implements Serializable
 
 	public void setElasticID(String elasticID) {
 		this.elasticID = elasticID;
+	}
+	
+
+	public String getParentID() {
+		return parentID;
+	}
+
+	public void setParentID(String parentID) {
+		this.parentID = parentID;
 	}
 
 	/**

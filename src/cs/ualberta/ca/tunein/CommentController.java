@@ -62,7 +62,7 @@ public class CommentController{
 	 * @param img The image of the comment.
 	 * @param isReply Check if the added comment will be reply of reply.
 	 */
-	public void addReplyImg(Comment currentComment, Activity act, String title, String text, Image img, boolean isReply) {
+	public void addReplyImg(String parentID, Activity act, String title, String text, Image img, boolean isReply) {
 		
 		UserController userCntrl = new UserController();
     	String username = userCntrl.loadUsername(act);
@@ -73,7 +73,7 @@ public class CommentController{
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
 		geoCntrl.getLocation(act);
 		
-		Comment aComment = new Comment(user, title, text, loc, img);
+		Comment aComment = new Comment(user, title, text, loc, img, parentID);
 		comment.addReply(aComment);
 		comment.increaseReplyCount();
 		
@@ -82,7 +82,7 @@ public class CommentController{
 			aComment.increaseReplyCount();
 		}
 		
-		ElasticSearchOperations.putCommentModel(currentComment);
+		ElasticSearchOperations.postCommentModel(aComment);
 	}
 	
 	
@@ -94,7 +94,7 @@ public class CommentController{
 	 * @param text The text of the comment.
 	 * @param isReply Check if the added comment will be reply of reply.
 	 */
-	public void addReply(Comment currentComment, Activity act, String title, String text, boolean isReply) {
+	public void addReply(String parentID, Activity act, String title, String text, boolean isReply) {
 		
 		UserController userCntrl = new UserController();
     	String username = userCntrl.loadUsername(act);
@@ -105,7 +105,7 @@ public class CommentController{
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
 		geoCntrl.getLocation(act);
 		
-		Comment aComment = new Comment(user, title, text, loc);
+		Comment aComment = new Comment(user, title, text, loc, parentID);
 		comment.addReply(aComment);
 		comment.increaseReplyCount();
 		
@@ -114,7 +114,7 @@ public class CommentController{
 			aComment.increaseReplyCount();
 		}
 		
-		ElasticSearchOperations.putCommentModel(currentComment);
+		ElasticSearchOperations.postCommentModel(aComment);
 	}
 
 	/**

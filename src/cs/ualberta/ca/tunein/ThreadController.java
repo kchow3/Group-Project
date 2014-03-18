@@ -123,7 +123,7 @@ public class ThreadController {
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
 		geoCntrl.getLocation(act);
 		
-		Comment aComment = new Comment(user, title, comment, loc, img);
+		Comment aComment = new Comment(user, title, comment, loc, img, "0");
 		list.add(aComment);
 		ElasticSearchOperations.postCommentModel(aComment);
 		sortChooser(act);
@@ -148,7 +148,7 @@ public class ThreadController {
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
 		geoCntrl.getLocation(act);
 		
-		Comment aComment = new Comment(user, title, comment, loc);
+		Comment aComment = new Comment(user, title, comment, loc, "0");
 		list.add(aComment);
 		ElasticSearchOperations.postCommentModel(aComment);
 		sortChooser(act);

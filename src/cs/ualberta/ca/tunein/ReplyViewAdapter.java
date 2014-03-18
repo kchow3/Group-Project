@@ -49,8 +49,6 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	//holder for elements in the row
 	private ViewHolder holder;
 	private ArrayList<Comment> replies;
-	//parent topic comment corresponding to the comment being viewed
-	private Comment topicComment;
 	//comment controller
 	private CommentController cntrl;
 	
@@ -81,11 +79,10 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	 * @param context The context of the activity that constructs this adapter.
 	 * @param replies The array list of replies to be displayed.
 	 */
-	public ReplyViewAdapter(Context context, ArrayList<Comment> replies, Comment topComment)
+	public ReplyViewAdapter(Context context, ArrayList<Comment> replies)
 	{
 		this.context = context;
 		this.replies = replies;
-		this.topicComment = topComment;
 	}
 
 
@@ -234,7 +231,6 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	    	Comment aComment = replies.get(index[0]).getReplies().get(index[1]);
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
 	    	intent.putExtra(EXTRA_COMMENT, aComment);
-	    	intent.putExtra(EXTRA_TOPIC_COMMENT, topicComment);
 	    	intent.putExtra("isReplyReply", true);
 	    	context.startActivity(intent);
 	    }
@@ -267,11 +263,11 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);        
-			        		cntrl.addReplyImg(topicComment, (Activity) context, title, text, img, true);
+			        		cntrl.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, img, true);
 			            } 
 			            else 
 			            {	                
-			        		cntrl.addReply(topicComment, (Activity) context, title, text, true);
+			        		cntrl.addReply(currentComment.getElasticID(), (Activity) context, title, text, true);
 			            }
 		        		updateReplyView(replies);
 			        }
@@ -293,7 +289,6 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	    	Comment aComment = replies.get(index);
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
 	    	intent.putExtra(EXTRA_COMMENT, aComment);
-	    	intent.putExtra(EXTRA_TOPIC_COMMENT, topicComment);
 	    	intent.putExtra("isReplyReply", true);
 	    	context.startActivity(intent);
 	    }
@@ -327,11 +322,11 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
-			        		cntrl.addReplyImg(topicComment, (Activity) context, title, text, img, true);
+			        		cntrl.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, img, true);
 			            } 
 			            else 
 			            {	                
-			        		cntrl.addReply(topicComment, (Activity) context, title, text, true);
+			        		cntrl.addReply(currentComment.getElasticID(), (Activity) context, title, text, true);
 			            }
 			            updateReplyView(replies);
 			        }
