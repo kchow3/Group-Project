@@ -255,5 +255,14 @@ public class Comment implements Serializable
 		this.parentID = source.getParentID();
 		
 	}
+	
+	public void addReplies(ArrayList<Comment> replies)
+	{
+		this.replies.addAll(replies);
+	}
+	
+	public void clear() {
+		this.replies.clear();
+	}
 
 }

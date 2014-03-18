@@ -82,24 +82,24 @@ public class CommentPageActivity extends Activity {
 	    super.onCreate(savedInstanceState);
 	    this.replies = new ArrayList<Comment>();
 	    getInputComment();
-	}
-	
-	@Override
-	protected void onResume() 
-	{
-		super.onResume();
-		setContentView(R.layout.comment_view);
-		cntrl = new CommentController(aComment);
-		cntrl.loadCommentReplies(this);
-		replies = aComment.getReplies();
-		setupComment();
-		Log.v("replies size:", Integer.toString(replies.size()));
+	    setContentView(R.layout.comment_view);
+	    setupComment();
 		//setup the reply listview
 		this.viewAdapter = new ReplyViewAdapter(this, replies);
 		ExpandableListView listview = (ExpandableListView) findViewById(R.id.expandableListViewReply);
 		
 		//setup
 		listview.setAdapter(viewAdapter);
+	}
+	
+	@Override
+	protected void onResume() 
+	{
+		super.onResume();
+		cntrl = new CommentController(aComment);
+		cntrl.loadCommentReplies(this);
+		replies = aComment.getReplies();
+		Log.v("replies size:", Integer.toString(replies.size()));
 		viewAdapter.updateReplyView(replies);
 	}
 	@Override

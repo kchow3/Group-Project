@@ -256,9 +256,9 @@ public class ElasticSearchOperations {
 				Runnable updateModel = new Runnable() {
 					@Override
 					public void run() {
-						model.getReplies().clear();
+						model.clear();
 						Log.v("replies size3:", Integer.toString(returnedData.getSources().size()));
-						model.getReplies().addAll(returnedData.getSources());
+						model.addReplies((ArrayList<Comment>) returnedData.getSources());
 						Log.v("replies size4:", Integer.toString(model.getReplies().size()));
 					}
 				};

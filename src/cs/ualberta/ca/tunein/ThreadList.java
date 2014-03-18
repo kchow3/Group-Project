@@ -13,7 +13,7 @@ import android.widget.ArrayAdapter;
  */
 public class ThreadList 
 {
-	private static ArrayList<Comment> discussionThread;
+	private ArrayList<Comment> discussionThread;
 	private ArrayAdapter<Comment> adapter;
 
 	/**
