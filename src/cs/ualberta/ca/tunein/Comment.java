@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import android.util.Log;
+
 /**
  * Model
  * Comment Class:
@@ -259,6 +261,9 @@ public class Comment implements Serializable
 	public void addReplies(ArrayList<Comment> replies)
 	{
 		this.replies.addAll(replies);
+		this.replyCount = this.replies.size();
+		Log.v("param reply size:", Integer.toString(this.replies.size()));
+		Log.v("this reply size:", Integer.toString(replies.size()));
 	}
 	
 	public void clear() {

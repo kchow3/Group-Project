@@ -97,6 +97,7 @@ public class CommentPageActivity extends Activity {
 		super.onResume();
 		cntrl = new CommentController(aComment, viewAdapter);
 		cntrl.loadCommentReplies(this);
+		cntrl.loadCommentReplyReplies(this);
 		replies = aComment.getReplies();
 		Log.v("replies size:", Integer.toString(replies.size()));
 		setupComment();

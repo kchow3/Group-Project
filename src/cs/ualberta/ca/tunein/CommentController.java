@@ -194,6 +194,10 @@ public class CommentController{
 		}
 		*/
 		ElasticSearchOperations.getRepliesByParentId(comment.getElasticID(), comment, act,viewAdapter);
+	}
+	
+	public void loadCommentReplyReplies(Activity act)
+	{
 		ArrayList<Comment> list = comment.getReplies();
 		Log.v("replies size2:", Integer.toString(list.size()));
 		for(int i = 0; i < list.size(); i++)
