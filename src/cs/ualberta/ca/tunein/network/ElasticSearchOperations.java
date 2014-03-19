@@ -50,7 +50,7 @@ public class ElasticSearchOperations {
 	 * @param model
 	 *            a Comment
 	 */
-	public static void postCommentModel(final Comment model) {
+	public void postCommentModel(final Comment model) {
 		if (GSON == null)
 			constructGson();
 
@@ -107,7 +107,7 @@ public class ElasticSearchOperations {
 	 * the elastic id.
 	 * @param model comment to be posted
 	 */
-	public static void putCommentModel(final Comment model) {
+	public void putCommentModel(final Comment model) {
 		if (GSON == null)
 			constructGson();
 
@@ -153,7 +153,7 @@ public class ElasticSearchOperations {
 	 * @param activity
 	 *            a TopicListActivity
 	 */
-	public static void getCommentPosts(final String parentID, final Comment model, final Activity activity) {
+	public void getCommentPosts(final String parentID, final Comment model, final Activity activity) {
 		if (GSON == null)
 			constructGson();
 
@@ -205,7 +205,7 @@ public class ElasticSearchOperations {
 	 * @param activity
 	 *            a TopicListActivity
 	 */
-	public static void getRepliesByParentId(final String parentID, final Comment model, final Activity activity, final ReplyViewAdapter adap) {
+	public void getRepliesByParentId(final String parentID, final Comment model, final Activity activity, final ReplyViewAdapter adap) {
 		if (GSON == null)
 			constructGson();
 
@@ -269,7 +269,7 @@ public class ElasticSearchOperations {
 		thread.start();
 	}
 	
-	private static void getReplyReplies(final Comment model, final String parentID, final Activity activity) {
+	private void getReplyReplies(final Comment model, final String parentID, final Activity activity) {
 		if (GSON == null)
 			constructGson();
 
@@ -333,7 +333,7 @@ public class ElasticSearchOperations {
 	 * @param modelList ThreadList that will be filled.
 	 * @param activity Activity that calls this method.
 	 */
-	public static void getCommentPostsByReplyCount(final ThreadList modelList, final Activity activity) {
+	public void getCommentPostsByReplyCount(final ThreadList modelList, final Activity activity) {
 		if (GSON == null)
 			constructGson();
 
@@ -396,7 +396,7 @@ public class ElasticSearchOperations {
 	 * Constructs a Gson with a custom serializer / desserializer registered for
 	 * Bitmaps.
 	 */
-	private static void constructGson() {
+	private void constructGson() {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
 		GSON = builder.create();
@@ -405,7 +405,7 @@ public class ElasticSearchOperations {
 	/**
 	 * get the http response and return json string
 	 */
-	private static String getEntityContent(HttpResponse response) throws IOException {
+	private String getEntityContent(HttpResponse response) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(
 				(response.getEntity().getContent())));
 		String output;

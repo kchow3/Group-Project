@@ -92,7 +92,8 @@ public class CommentController{
 			aComment.increaseReplyCount();
 		}
 		
-		ElasticSearchOperations.postCommentModel(aComment);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.postCommentModel(aComment);
 	}
 	
 	
@@ -123,8 +124,8 @@ public class CommentController{
 		{
 			aComment.increaseReplyCount();
 		}
-		
-		ElasticSearchOperations.postCommentModel(aComment);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.postCommentModel(aComment);
 	}
 
 	/**
@@ -172,7 +173,8 @@ public class CommentController{
 	 */
 	public void updateElasticSearch(Comment aComment)
 	{
-		ElasticSearchOperations.putCommentModel(aComment);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.putCommentModel(aComment);
 	}
 	
 	/**
@@ -193,6 +195,7 @@ public class CommentController{
 			ElasticSearchOperations.getCommentByParentId(comment.getParentID(), comment.getReplies(), act);
 		}
 		*/
-		ElasticSearchOperations.getRepliesByParentId(comment.getElasticID(), comment, act,viewAdapter);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.getRepliesByParentId(comment.getElasticID(), comment, act,viewAdapter);
 	}
 }

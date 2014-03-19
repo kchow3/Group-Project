@@ -100,8 +100,8 @@ public class ThreadController {
 			sortByDate();
 		if(sortName.equals("Score"))
 			sortByScore();
-		if(sortName.equals("Freshness"))
-			ElasticSearchOperations.getCommentPostsByReplyCount(discussionThread, act);
+		//if(sortName.equals("Freshness"))
+			//ElasticSearchOperations.getCommentPostsByReplyCount(discussionThread, act);
 	}
 
 	/**
@@ -126,7 +126,8 @@ public class ThreadController {
 		
 		Comment aComment = new Comment(user, title, comment, loc, img, "0");
 		list.add(aComment);
-		ElasticSearchOperations.postCommentModel(aComment);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.postCommentModel(aComment);;
 		//sortChooser(act);
 	}
 	
@@ -138,6 +139,8 @@ public class ThreadController {
 	 */
 	public void createTopic(Activity act, String title, String comment) 
 	{	
+		ArrayList<Comment> list = discussionThread.getDiscussionThread();
+		
 		UserController userCntrl = new UserController();
     	String username = userCntrl.loadUsername(act);
     	String id = userCntrl.loadUserid(act);
@@ -148,7 +151,9 @@ public class ThreadController {
 		geoCntrl.getLocation(act);
 		
 		Comment aComment = new Comment(user, title, comment, loc, "0");
-		ElasticSearchOperations.postCommentModel(aComment);
+		list.add(aComment);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.postCommentModel(aComment);
 		//sortChooser(act);
 	}
 	
@@ -160,7 +165,8 @@ public class ThreadController {
 	 */
 	public void getOnlineTopics(Activity act) {
 		// get comments from elastic search
-		ElasticSearchOperations.getCommentPostsByReplyCount(this.discussionThread, act);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.getCommentPostsByReplyCount(this.discussionThread, act);
 		Log.v("topics this:", Integer.toString(this.discussionThread.getDiscussionThread().size()));
 	}
 }

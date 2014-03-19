@@ -74,6 +74,7 @@ public class TopicListActivity extends Activity {
 	{
 		super.onResume();
 		cntrl.getOnlineTopics(this);
+		viewAdapter.updateThreadView(threadList);
 	}
 	
 	@Override
@@ -122,7 +123,7 @@ public class TopicListActivity extends Activity {
 		            {	                
 		        		cntrl.createTopic(TopicListActivity.this, title, comment);     		
 		            }
-		            cntrl.getOnlineTopics(TopicListActivity.this);
+		            //cntrl.getOnlineTopics(TopicListActivity.this);
 		            viewAdapter.updateThreadView(threadList);
 		        }
 		    })
