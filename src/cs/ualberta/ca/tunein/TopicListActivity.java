@@ -122,8 +122,8 @@ public class TopicListActivity extends Activity {
 		            {	                
 		        		cntrl.createTopic(TopicListActivity.this, title, comment);     		
 		            }
-		            viewAdapter.updateThreadView(threadList);
 		            cntrl.getOnlineTopics(TopicListActivity.this);
+		            viewAdapter.updateThreadView(threadList);
 		        }
 		    })
 		    .setNegativeButton("Cancel", null).create();
