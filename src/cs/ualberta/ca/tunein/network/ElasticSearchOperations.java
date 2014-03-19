@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import cs.ualberta.ca.tunein.Comment;
+import cs.ualberta.ca.tunein.CommentViewAdapter;
 import cs.ualberta.ca.tunein.ReplyViewAdapter;
 import cs.ualberta.ca.tunein.ThreadList;
 import cs.ualberta.ca.tunein.TopicListActivity;
@@ -342,8 +343,8 @@ public class ElasticSearchOperations {
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
 				HttpPost request = new HttpPost(SERVER_URL + "_search/");
-				String query = "{ \"query\": { \"query_string\": { \"default_field\": \"parentID\", \"query\"" +
-						": \"0\" } } , \"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
+				String query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
+						"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 				String responseJson = "";
 
 				Log.w(LOG_TAG, "query is: " + query);
@@ -361,17 +362,10 @@ public class ElasticSearchOperations {
 					Log.i(LOG_TAG, "Response: "
 							+ response.getStatusLine().toString());
 
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(entity.getContent()));
-
-					String output = reader.readLine();
-					while (output != null) {
-						responseJson += output;
-						output = reader.readLine();
+					responseJson = getEntityContent(response);
 					}
 					//Log.v("GSON", responseJson);
-				} catch (IOException exception) {
+				catch (IOException exception) {
 					Log.w(LOG_TAG, "Error receiving search query response: "
 							+ exception.getMessage());
 					return;
@@ -387,6 +381,7 @@ public class ElasticSearchOperations {
 					public void run() {
 						modelList.clear();
 						modelList.addCommentCollection(returnedData.getSources());
+						Log.v("topics curr:", Integer.toString(modelList.getDiscussionThread().size()));
 					}
 				};
 

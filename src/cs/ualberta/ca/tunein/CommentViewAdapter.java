@@ -167,7 +167,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * Method to just refresh the thread view without
 	 * assigning a new comment list.
 	 */
-	private void refreshThreadView()
+	public void refreshThreadView()
 	{
 		notifyDataSetChanged();
 	}
