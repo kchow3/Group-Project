@@ -2,10 +2,10 @@ package cs.ualberta.ca.tuneintest;
 
 import cs.ualberta.ca.tunein.TopicListActivity;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Intent;
+import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
+import android.test.TouchUtils;
+import android.view.KeyEvent;
 import android.widget.Button;
 
 
@@ -17,19 +17,20 @@ public class topicListActivityTest extends ActivityInstrumentationTestCase2<Topi
 		super(TopicListActivity.class);
 	}
 	
-	/**public void testCreateButton() {
+	public void testCreateButton() {
 		
 		activity = getActivity();
-		final Button button = (Button) activity.findViewById(cs.ualberta.ca.tunein.R.id.buttonCreate);
+		Button button = (Button) activity.findViewById(cs.ualberta.ca.tunein.R.id.buttonCreate);
+		TouchUtils.clickView(this, button);
+		this.sendKeys(KeyEvent.KEYCODE_BACK);
+	}
+	
+	public void testMainMenubutton() {
+		activity = getActivity();
 		
-		activity.runOnUiThread(new Runnable()
-	    {
-	        public void run()
-	        {
-	            button.performClick();
-	            
-	        }
-	    });
-	}**/
+		Button button = (Button) activity.findViewById(cs.ualberta.ca.tunein.R.id.buttonMainMenu);
+		TouchUtils.clickView(this, button);
+		this.sendKeys(KeyEvent.KEYCODE_BACK);
+	}
 //Need to add test to see if create comment button opens a dialog box for creating topics
 }
