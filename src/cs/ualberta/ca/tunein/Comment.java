@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import android.util.Log;
+
 /**
  * Model
  * Comment Class:
@@ -43,6 +45,8 @@ public class Comment implements Serializable
 	private int replyCount;
 	//id of Elastic Search
 	private String elasticID;
+	//parent elastic id
+	private String parentID;
 	
 	/**
 	 * This constructor constructs a comment without an image.
@@ -51,7 +55,7 @@ public class Comment implements Serializable
 	 * @param aComment The comment body.
 	 * @param loc The geo location of comment.
 	 */
-	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc) 
+	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc, String parent) 
 	{
 		this.commenter = user;
 		this.title = aTitle;
@@ -65,6 +69,7 @@ public class Comment implements Serializable
 		this.favoriteCount = 0;
 		this.replyCount = 0;
 		this.elasticID = null;
+		this.parentID = parent;
 	}
 
 	/**
@@ -75,7 +80,7 @@ public class Comment implements Serializable
 	 * @param loc The geo location of comment.
 	 * @param aImage The image of comment.
 	 */
-	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc, Image aImage) 
+	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc, Image aImage, String parent) 
 	{
 		this.commenter = user;
 		this.title = aTitle;
@@ -90,6 +95,7 @@ public class Comment implements Serializable
 		this.favoriteCount = 0;
 		this.replyCount = 0;
 		this.elasticID = null;
+		this.parentID = parent;
 	}
 
 	public Commenter getCommenter() {
@@ -199,6 +205,15 @@ public class Comment implements Serializable
 	public void setElasticID(String elasticID) {
 		this.elasticID = elasticID;
 	}
+	
+
+	public String getParentID() {
+		return parentID;
+	}
+
+	public void setParentID(String parentID) {
+		this.parentID = parentID;
+	}
 
 	/**
 	 * Increment the number times the comment was favorited.
@@ -224,6 +239,35 @@ public class Comment implements Serializable
 	{
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy ");
 		return df.format(this.date);
+	}
+
+	public void setupComment(Comment source) {
+		this.commenter = source.getCommenter();
+		this.title = source.getTitle();
+		this.comment = source.getComment();
+		this.geolocation = source.getGeolocation();
+		this.date = source.getDate();
+		this.replies = source.getReplies();
+		this.hasImage = source.isHasImage();
+		this.favorited = source.isFavorited();
+		this.saved = source.isSaved();
+		this.favoriteCount = source.getFavoriteCount();
+		this.replyCount = source.getReplyCount();
+		this.elasticID = source.getElasticID();
+		this.parentID = source.getParentID();
+		
+	}
+	
+	public void addReplies(ArrayList<Comment> replies)
+	{
+		this.replies.addAll(replies);
+		this.replyCount = this.replies.size();
+		Log.v("param reply size:", Integer.toString(this.replies.size()));
+		Log.v("this reply size:", Integer.toString(replies.size()));
+	}
+	
+	public void clear() {
+		this.replies.clear();
 	}
 
 }

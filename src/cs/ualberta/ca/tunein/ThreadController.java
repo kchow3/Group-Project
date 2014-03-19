@@ -9,6 +9,7 @@ import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 /**
  * Controller
@@ -64,8 +65,7 @@ public class ThreadController {
 	 */
 	public void sortByDate() 
 	{
-		ArrayList<Comment> thread = discussionThread.getDiscussionThread();
-		Collections.sort(thread, new Comparator<Comment>() {
+		Collections.sort(discussionThread.getDiscussionThread(), new Comparator<Comment>() {
 			  public int compare(Comment o1, Comment o2) {
 			      return o2.getDate().compareTo(o1.getDate());
 			  }
@@ -100,8 +100,8 @@ public class ThreadController {
 			sortByDate();
 		if(sortName.equals("Score"))
 			sortByScore();
-		if(sortName.equals("Freshness"))
-			ElasticSearchOperations.getCommentPostsByReplyCount(discussionThread, act);
+		//if(sortName.equals("Freshness"))
+			//ElasticSearchOperations.getCommentPostsByReplyCount(discussionThread, act);
 	}
 
 	/**
@@ -124,10 +124,11 @@ public class ThreadController {
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
 		geoCntrl.getLocation(act);
 		
-		Comment aComment = new Comment(user, title, comment, loc, img);
+		Comment aComment = new Comment(user, title, comment, loc, img, "0");
 		list.add(aComment);
-		ElasticSearchOperations.postCommentModel(aComment);
-		sortChooser(act);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.postCommentModel(aComment);;
+		//sortChooser(act);
 	}
 	
 	/**
@@ -137,7 +138,7 @@ public class ThreadController {
 	 * @param comment Text of comment.
 	 */
 	public void createTopic(Activity act, String title, String comment) 
-	{
+	{	
 		ArrayList<Comment> list = discussionThread.getDiscussionThread();
 		
 		UserController userCntrl = new UserController();
@@ -149,10 +150,11 @@ public class ThreadController {
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
 		geoCntrl.getLocation(act);
 		
-		Comment aComment = new Comment(user, title, comment, loc);
+		Comment aComment = new Comment(user, title, comment, loc, "0");
 		list.add(aComment);
-		ElasticSearchOperations.postCommentModel(aComment);
-		sortChooser(act);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.postCommentModel(aComment);
+		//sortChooser(act);
 	}
 	
 	/**
@@ -163,6 +165,8 @@ public class ThreadController {
 	 */
 	public void getOnlineTopics(Activity act) {
 		// get comments from elastic search
-		ElasticSearchOperations.getCommentPostsByReplyCount(discussionThread, act);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.getCommentPostsByReplyCount(this.discussionThread, act);
+		Log.v("topics this:", Integer.toString(this.discussionThread.getDiscussionThread().size()));
 	}
 }

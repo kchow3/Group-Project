@@ -41,15 +41,11 @@ public class CommentPageActivity extends Activity {
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
 	//public string that tags the extra of the comment to be edited that is passed to EditPageActivity
 	public final static String EXTRA_EDIT = "cs.ualberta.ca.tunein.commentEdit";
-	//public string that tags the extra of the topic comment that is passed to CommentPageActivity
-	public final static String EXTRA_TOPIC_COMMENT = "cs.ualberta.ca.tunein.topicComment";
 	
 	//reply view adapter
 	private ReplyViewAdapter viewAdapter;
 	//comment passed through intent when clicking on a view comment button
 	private Comment aComment;
-	//parent topic comment corresponding to the comment being viewed
-	private Comment topicComment;
 	//reply list
 	private ArrayList<Comment> replies;
 	//comment controller
@@ -86,21 +82,24 @@ public class CommentPageActivity extends Activity {
 	    super.onCreate(savedInstanceState);
 	    this.replies = new ArrayList<Comment>();
 	    getInputComment();
+	    setContentView(R.layout.comment_view);
+		//setup the reply listview
+		this.viewAdapter = new ReplyViewAdapter(this, replies);
+		ExpandableListView listview = (ExpandableListView) findViewById(R.id.expandableListViewReply);
+		
+		//setup
+		listview.setAdapter(viewAdapter);
 	}
 	
 	@Override
 	protected void onResume() 
 	{
 		super.onResume();
-		setContentView(R.layout.comment_view);
-		setupComment();
+		cntrl = new CommentController(aComment, viewAdapter);
+		cntrl.loadCommentReplies(this);
 		replies = aComment.getReplies();
-		//setup the reply listview
-		this.viewAdapter = new ReplyViewAdapter(this, replies, topicComment);
-		ExpandableListView listview = (ExpandableListView) findViewById(R.id.expandableListViewReply);
-		
-		//setup
-		listview.setAdapter(viewAdapter);
+		Log.v("replies size:", Integer.toString(replies.size()));
+		setupComment();
 		viewAdapter.updateReplyView(replies);
 	}
 	@Override
@@ -110,19 +109,13 @@ public class CommentPageActivity extends Activity {
 
 		     if(resultCode == RESULT_OK){      
 		         aComment = (Comment) data.getSerializableExtra("editResult"); 
-		         cntrl = new CommentController(aComment);
-		         if(!isReplyReply)
-		         {
-		        	 topicComment = aComment;
-		         }
-		         cntrl.updateElasticSearch(topicComment);
-		         setupComment();
 		     }
+		     
 		     if (resultCode == RESULT_CANCELED) {
 		    	 //edit cancelled
 		     }
-		  }
 		}
+	}
 	/**
 	 * Method to get input from intents.
 	 */
@@ -130,17 +123,7 @@ public class CommentPageActivity extends Activity {
 	{
 		Intent intent = getIntent();
 		isReplyReply = intent.getBooleanExtra("isReplyReply", false);
-		//intent sent from reply to reply for updating the topic comment.
-		if(isReplyReply)
-		{
-			topicComment = (Comment) intent.getSerializableExtra(EXTRA_TOPIC_COMMENT);
-		}
-		else
-		{
-			topicComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
-		}
 		aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
-		replies = aComment.getReplies();
 	}
 	
 	/**
@@ -232,7 +215,6 @@ public class CommentPageActivity extends Activity {
 	    {
 	    	Intent intent = new Intent(getApplicationContext(), EditPageActivity.class);
 	    	intent.putExtra(EXTRA_EDIT, aComment);
-	    	intent.putExtra(EXTRA_TOPIC_COMMENT, topicComment);
 	    	startActivityForResult(intent, 1);
 	    }
 	};
@@ -263,11 +245,11 @@ public class CommentPageActivity extends Activity {
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);            	
-			        		cntrl.addReplyImg(topicComment, CommentPageActivity.this, title, text, img, isReplyReply);
+			        		cntrl.addReplyImg(aComment.getElasticID(), CommentPageActivity.this, title, text, img, isReplyReply);
 			            } 
 			            else 
 			            {	                
-			        		cntrl.addReply(topicComment, CommentPageActivity.this, title, text, isReplyReply);
+			        		cntrl.addReply(aComment.getElasticID(), CommentPageActivity.this, title, text, isReplyReply);
 			            }
 			            replies = aComment.getReplies();
 			            viewAdapter.updateReplyView(replies);

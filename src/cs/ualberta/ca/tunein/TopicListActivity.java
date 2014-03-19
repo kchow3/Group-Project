@@ -59,25 +59,22 @@ public class TopicListActivity extends Activity {
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
 	    sortType = prefs.getString("cs.ualberta.ca.tunein.sort", "Freshness");
 		setContentView(R.layout.topic_list_view);
+		setupTopicView();
+	    threadList = new ThreadList();
+		//setup the comment listview
+		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList);
+	    cntrl = new ThreadController(threadList);
+		ListView listview = (ListView) findViewById(R.id.listViewTopics);
+		listview.setAdapter(viewAdapter);
+		threadList.setAdapter(viewAdapter);
 	}
 	
 	@Override
 	protected void onResume()
 	{
 		super.onResume();
-	    setupTopicView();
-	    
-	    threadList = new ThreadList();
-	    cntrl = new ThreadController(threadList);
 		cntrl.getOnlineTopics(this);
-		cntrl.sortChooser(this);
-		//setup the comment listview
-		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList);
-		ListView listview = (ListView) findViewById(R.id.listViewTopics);
-		
-		//setup adapter
-		threadList.setAdapter(viewAdapter);
-		listview.setAdapter(viewAdapter);
+		viewAdapter.updateThreadView(threadList);
 	}
 	
 	@Override
@@ -126,6 +123,7 @@ public class TopicListActivity extends Activity {
 		            {	                
 		        		cntrl.createTopic(TopicListActivity.this, title, comment);     		
 		            }
+		            //cntrl.getOnlineTopics(TopicListActivity.this);
 		            viewAdapter.updateThreadView(threadList);
 		        }
 		    })

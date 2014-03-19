@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -24,6 +26,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import cs.ualberta.ca.tunein.Comment;
+import cs.ualberta.ca.tunein.CommentViewAdapter;
+import cs.ualberta.ca.tunein.ReplyViewAdapter;
 import cs.ualberta.ca.tunein.ThreadList;
 import cs.ualberta.ca.tunein.TopicListActivity;
 
@@ -34,7 +38,7 @@ import cs.ualberta.ca.tunein.TopicListActivity;
  */
 public class ElasticSearchOperations {
 
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/usertest/";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/elastictest/";
 	//public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn/";
 	public static final String LOG_TAG = "ElasticSearch";
 
@@ -46,7 +50,7 @@ public class ElasticSearchOperations {
 	 * @param model
 	 *            a Comment
 	 */
-	public static void postCommentModel(final Comment model) {
+	public void postCommentModel(final Comment model) {
 		if (GSON == null)
 			constructGson();
 
@@ -103,7 +107,7 @@ public class ElasticSearchOperations {
 	 * the elastic id.
 	 * @param model comment to be posted
 	 */
-	public static void putCommentModel(final Comment model) {
+	public void putCommentModel(final Comment model) {
 		if (GSON == null)
 			constructGson();
 
@@ -149,7 +153,7 @@ public class ElasticSearchOperations {
 	 * @param activity
 	 *            a TopicListActivity
 	 */
-	public static void getCommentPosts(final ThreadList modelList, final Activity activity) {
+	public void getCommentPosts(final String parentID, final Comment model, final Activity activity) {
 		if (GSON == null)
 			constructGson();
 
@@ -158,52 +162,31 @@ public class ElasticSearchOperations {
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_URL + "_search/");
-				String query = "{\"query\": {\"query_string\": {\"default_field\": \"title\",\"query\": \"*"
-						+ "" + "*\"}}}";
+				HttpGet request = new HttpGet(SERVER_URL + parentID);
 				String responseJson = "";
 
-				Log.w(LOG_TAG, "query is: " + query);
-				try {
-					request.setEntity(new StringEntity(query));
-				} catch (UnsupportedEncodingException exception) {
-					Log.w(LOG_TAG,
-							"Error encoding search query: "
-									+ exception.getMessage());
-					return;
-				}
-				
 				try {
 					HttpResponse response = client.execute(request);
 					Log.i(LOG_TAG, "Response: "
 							+ response.getStatusLine().toString());
 
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(entity.getContent()));
+					responseJson = getEntityContent(response);
 
-					String output = reader.readLine();
-					while (output != null) {
-						responseJson += output;
-						output = reader.readLine();
-					}
-					//Log.v("GSON", responseJson);
+					
 				} catch (IOException exception) {
 					Log.w(LOG_TAG, "Error receiving search query response: "
 							+ exception.getMessage());
 					return;
 				}
 
-				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Comment>>() {
-				}.getType();
-				final ElasticSearchSearchResponse<Comment> returnedData = GSON
-						.fromJson(responseJson, elasticSearchSearchResponseType);
-
+				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
+				// Now we expect to get a Recipe response
+				final ElasticSearchResponse<Comment> esResponse = GSON.fromJson(responseJson, elasticSearchResponseType);
+				
 				Runnable updateModel = new Runnable() {
 					@Override
 					public void run() {
-						modelList.clear();
-						modelList.addCommentCollection(returnedData.getSources());
+						model.setupComment(esResponse.getSource());
 					}
 				};
 
@@ -215,6 +198,134 @@ public class ElasticSearchOperations {
 	}
 	
 	/**
+	 * Searches the server for Comment replies corresponding to parent id.
+	 * @param model
+	 *            the ThreadLis to clear and then fill with the new
+	 *            data
+	 * @param activity
+	 *            a TopicListActivity
+	 */
+	public void getRepliesByParentId(final String parentID, final Comment model, final Activity activity, final ReplyViewAdapter adap) {
+		if (GSON == null)
+			constructGson();
+
+		Thread thread = new Thread() {
+
+			@Override
+			public void run() {
+				HttpClient client = new DefaultHttpClient();
+				HttpPost request = new HttpPost(SERVER_URL + "_search");
+				String query = "{\"query\": {\"match\": {\"parentID\": \"" + parentID + "\"}}}";
+				String responseJson = "";
+
+				Log.w(LOG_TAG, "query is: " + query);
+				try {
+					request.setEntity(new StringEntity(query));
+				} catch (UnsupportedEncodingException exception) {
+					Log.w(LOG_TAG,
+							"Error encoding search query: "
+									+ exception.getMessage());
+					return;
+				}
+				
+				try {
+					HttpResponse response = client.execute(request);
+					Log.i(LOG_TAG, "Response: "
+							+ response.getStatusLine().toString());
+					responseJson = getEntityContent(response);
+					}
+					//Log.v("GSON", responseJson);		 
+				catch (IOException exception) {
+					Log.w(LOG_TAG, "Error receiving search query response: "
+							+ exception.getMessage());
+					return;
+				}
+
+				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Comment>>() {
+				}.getType();
+				final ElasticSearchSearchResponse<Comment> returnedData = GSON
+						.fromJson(responseJson, elasticSearchSearchResponseType);
+
+				Runnable updateModel = new Runnable() {
+					@Override
+					public void run() {
+						model.clear();
+						Log.v("replies size3:", Integer.toString(returnedData.getSources().size()));
+						model.addReplies((ArrayList<Comment>) returnedData.getSources());
+						Log.v("replies size4:", Integer.toString(model.getReplies().size()));
+						ArrayList<Comment> list = model.getReplies();
+						for(int i = 0; i < list.size(); i++)
+						{
+							getReplyReplies(list.get(i), list.get(i).getElasticID(), activity);
+						}
+						adap.updateReplyView(model.getReplies());
+					}
+				};
+
+				activity.runOnUiThread(updateModel);
+			}
+		};
+
+		thread.start();
+	}
+	
+	private void getReplyReplies(final Comment model, final String parentID, final Activity activity) {
+		if (GSON == null)
+			constructGson();
+
+		Thread thread = new Thread() {
+
+			@Override
+			public void run() {
+				HttpClient client = new DefaultHttpClient();
+				HttpPost requestReplyReply  = new HttpPost(SERVER_URL + "_search");
+				String queryReplyReply = "{\"query\": {\"match\": {\"parentID\": \"" + parentID + "\"}}}";
+				String responseJson = "";
+
+				Log.w(LOG_TAG, "queryReplyReply is: " + queryReplyReply);
+				try {
+					requestReplyReply.setEntity(new StringEntity(queryReplyReply));
+				} catch (UnsupportedEncodingException exception) {
+					Log.w(LOG_TAG,
+							"Error encoding search query: "
+									+ exception.getMessage());
+					return;
+				}
+				
+				try {
+					HttpResponse response = client.execute(requestReplyReply);
+					Log.i(LOG_TAG, "Response: "
+							+ response.getStatusLine().toString());
+					responseJson = getEntityContent(response);
+					}
+					//Log.v("GSON", responseJson);		 
+				catch (IOException exception) {
+					Log.w(LOG_TAG, "Error receiving search query response: "
+							+ exception.getMessage());
+					return;
+				}
+
+				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Comment>>() {
+				}.getType();
+				final ElasticSearchSearchResponse<Comment> returnedData = GSON
+						.fromJson(responseJson, elasticSearchSearchResponseType);
+				Runnable updateModel = new Runnable() {
+					@Override
+					public void run() {
+						model.clear();
+						model.addReplies((ArrayList<Comment>) returnedData.getSources());
+					}
+				};
+				
+				activity.runOnUiThread(updateModel);
+			}
+		};
+
+		thread.start();
+	}
+
+	
+	/**
 	 * Method to get comments from elasticsearch and sort them based on
 	 * reply count which will give us comments that are currently "hot"
 	 * Code from:
@@ -222,7 +333,7 @@ public class ElasticSearchOperations {
 	 * @param modelList ThreadList that will be filled.
 	 * @param activity Activity that calls this method.
 	 */
-	public static void getCommentPostsByReplyCount(final ThreadList modelList, final Activity activity) {
+	public void getCommentPostsByReplyCount(final ThreadList modelList, final Activity activity) {
 		if (GSON == null)
 			constructGson();
 
@@ -232,8 +343,8 @@ public class ElasticSearchOperations {
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
 				HttpPost request = new HttpPost(SERVER_URL + "_search/");
-				String query = "{ \"query\": { \"query_string\": { \"default_field\": \"title\", \"query\"" +
-						": \"**\" } } , \"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
+				String query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
+						"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 				String responseJson = "";
 
 				Log.w(LOG_TAG, "query is: " + query);
@@ -251,17 +362,10 @@ public class ElasticSearchOperations {
 					Log.i(LOG_TAG, "Response: "
 							+ response.getStatusLine().toString());
 
-					HttpEntity entity = response.getEntity();
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(entity.getContent()));
-
-					String output = reader.readLine();
-					while (output != null) {
-						responseJson += output;
-						output = reader.readLine();
+					responseJson = getEntityContent(response);
 					}
 					//Log.v("GSON", responseJson);
-				} catch (IOException exception) {
+				catch (IOException exception) {
 					Log.w(LOG_TAG, "Error receiving search query response: "
 							+ exception.getMessage());
 					return;
@@ -277,6 +381,7 @@ public class ElasticSearchOperations {
 					public void run() {
 						modelList.clear();
 						modelList.addCommentCollection(returnedData.getSources());
+						Log.v("topics curr:", Integer.toString(modelList.getDiscussionThread().size()));
 					}
 				};
 
@@ -291,7 +396,7 @@ public class ElasticSearchOperations {
 	 * Constructs a Gson with a custom serializer / desserializer registered for
 	 * Bitmaps.
 	 */
-	private static void constructGson() {
+	private void constructGson() {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
 		GSON = builder.create();
@@ -300,7 +405,7 @@ public class ElasticSearchOperations {
 	/**
 	 * get the http response and return json string
 	 */
-	private static String getEntityContent(HttpResponse response) throws IOException {
+	private String getEntityContent(HttpResponse response) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(
 				(response.getEntity().getContent())));
 		String output;

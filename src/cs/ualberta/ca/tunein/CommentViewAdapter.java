@@ -167,7 +167,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * Method to just refresh the thread view without
 	 * assigning a new comment list.
 	 */
-	private void refreshThreadView()
+	public void refreshThreadView()
 	{
 		notifyDataSetChanged();
 	}
@@ -217,13 +217,14 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			            	inputImage.buildDrawingCache();
 			            	Bitmap bmp = inputImage.getDrawingCache();
 			            	Image img = new Image(bmp);
-			        		cntrl.addReplyImg(currentComment, (Activity) context, title, text, img, false);
-			        		
+			            	
+			        		cntrl.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, img, false);
 			            } 
 			            else 
-			            {	                	        		  		
-			        		cntrl.addReply(currentComment, (Activity) context, title, text, false);
-			            }
+			            {	                        		
+			        		cntrl.addReply(currentComment.getElasticID(), (Activity) context, title, text, false);
+			        		
+			            } 
 			            refreshThreadView();
 			        }
 			    })

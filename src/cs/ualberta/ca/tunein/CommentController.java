@@ -1,9 +1,12 @@
 package cs.ualberta.ca.tunein;
 
+import java.util.ArrayList;
+
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 
 /**
@@ -17,6 +20,7 @@ import android.content.SharedPreferences;
 public class CommentController{
 
 	private Comment comment;
+	private ReplyViewAdapter viewAdapter;
 	
 	/**
 	 * Constructor to construct a controller that can modify comments.
@@ -25,6 +29,12 @@ public class CommentController{
 	public CommentController(Comment aComment) 
 	{
 		this.comment = aComment;
+	}
+	
+	public CommentController(Comment aComment, ReplyViewAdapter adap) 
+	{
+		this.comment = aComment;
+		this.viewAdapter = adap;
 	}
 
 	/**
@@ -62,7 +72,7 @@ public class CommentController{
 	 * @param img The image of the comment.
 	 * @param isReply Check if the added comment will be reply of reply.
 	 */
-	public void addReplyImg(Comment currentComment, Activity act, String title, String text, Image img, boolean isReply) {
+	public void addReplyImg(String parentID, Activity act, String title, String text, Image img, boolean isReply) {
 		
 		UserController userCntrl = new UserController();
     	String username = userCntrl.loadUsername(act);
@@ -73,7 +83,7 @@ public class CommentController{
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
 		geoCntrl.getLocation(act);
 		
-		Comment aComment = new Comment(user, title, text, loc, img);
+		Comment aComment = new Comment(user, title, text, loc, img, parentID);
 		comment.addReply(aComment);
 		comment.increaseReplyCount();
 		
@@ -82,7 +92,8 @@ public class CommentController{
 			aComment.increaseReplyCount();
 		}
 		
-		ElasticSearchOperations.putCommentModel(currentComment);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.postCommentModel(aComment);
 	}
 	
 	
@@ -94,7 +105,7 @@ public class CommentController{
 	 * @param text The text of the comment.
 	 * @param isReply Check if the added comment will be reply of reply.
 	 */
-	public void addReply(Comment currentComment, Activity act, String title, String text, boolean isReply) {
+	public void addReply(String parentID, Activity act, String title, String text, boolean isReply) {
 		
 		UserController userCntrl = new UserController();
     	String username = userCntrl.loadUsername(act);
@@ -105,7 +116,7 @@ public class CommentController{
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
 		geoCntrl.getLocation(act);
 		
-		Comment aComment = new Comment(user, title, text, loc);
+		Comment aComment = new Comment(user, title, text, loc, parentID);
 		comment.addReply(aComment);
 		comment.increaseReplyCount();
 		
@@ -113,8 +124,8 @@ public class CommentController{
 		{
 			aComment.increaseReplyCount();
 		}
-		
-		ElasticSearchOperations.putCommentModel(currentComment);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.postCommentModel(aComment);
 	}
 
 	/**
@@ -162,6 +173,29 @@ public class CommentController{
 	 */
 	public void updateElasticSearch(Comment aComment)
 	{
-		ElasticSearchOperations.putCommentModel(aComment);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.putCommentModel(aComment);
+	}
+	
+	/**
+	 * This method goes through elastic search and gets the passed in
+	 * comment's replies and also their replies.
+	 * @param act
+	 * @param aComment
+	 */
+	public void loadCommentReplies(Activity act)
+	{
+		/*
+		if(comment.getParentID().equals("0"))
+		{
+			ElasticSearchOperations.getCommentPosts(comment.getElasticID(), comment, act);
+		}
+		else
+		{
+			ElasticSearchOperations.getCommentByParentId(comment.getParentID(), comment.getReplies(), act);
+		}
+		*/
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.getRepliesByParentId(comment.getElasticID(), comment, act,viewAdapter);
 	}
 }
