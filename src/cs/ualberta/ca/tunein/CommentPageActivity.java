@@ -83,39 +83,46 @@ public class CommentPageActivity extends Activity {
 	    this.replies = new ArrayList<Comment>();
 	    getInputComment();
 	    setContentView(R.layout.comment_view);
-		//setup the reply listview
-		this.viewAdapter = new ReplyViewAdapter(this, replies);
-		ExpandableListView listview = (ExpandableListView) findViewById(R.id.expandableListViewReply);
-		
-		//setup
-		listview.setAdapter(viewAdapter);
 	}
 	
 	@Override
 	protected void onResume() 
 	{
 		super.onResume();
+		setupComment();
+		
+		//setup the reply listview
+		this.viewAdapter = new ReplyViewAdapter(this, replies);
+		ExpandableListView listview = (ExpandableListView) findViewById(R.id.expandableListViewReply);
+		
 		cntrl = new CommentController(aComment, viewAdapter);
 		cntrl.loadCommentReplies(this);
 		replies = aComment.getReplies();
-		Log.v("replies size:", Integer.toString(replies.size()));
-		setupComment();
+		//setup
+		listview.setAdapter(viewAdapter);
 		viewAdapter.updateReplyView(replies);
+		collapseAll(listview);
 	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		  if (requestCode == 1) {
 
-		     if(resultCode == RESULT_OK){      
-		         aComment = (Comment) data.getSerializableExtra("editResult"); 
-		     }
+			if (resultCode == RESULT_OK) {
+				aComment = (Comment) data.getSerializableExtra("editReturn");
+				cntrl = new CommentController(aComment, viewAdapter);
+				cntrl.loadCommentReplies(this);
+				setupComment();
+				viewAdapter.updateReplyView(aComment.getReplies());
+			}
 		     
 		     if (resultCode == RESULT_CANCELED) {
 		    	 //edit cancelled
 		     }
 		}
 	}
+
 	/**
 	 * Method to get input from intents.
 	 */
@@ -272,5 +279,21 @@ public class CommentPageActivity extends Activity {
 		inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
 		inputComment = (EditText) createView.findViewById(R.id.editTextComment);
 		inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
+	}
+	
+	
+	/**
+	 * Method for collapsing all parent items in the listview.
+	 * Code from:
+	 * http://stackoverflow.com/questions/2848091/expandablelistview-collapsing-all-parent-items
+	 * @param listview The listview to be collapsed.
+	 */
+	private void collapseAll(ExpandableListView listview)
+	{
+		int count = viewAdapter.getGroupCount();
+		for(int i = 0; i < count; i++)
+		{
+			listview.collapseGroup(i);
+		}
 	}
 }

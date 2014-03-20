@@ -29,8 +29,6 @@ public class EditPageActivity extends Activity {
 
 	//public string that tags the extra of the comment that is passed to EditPageActivity
 	public final static String EXTRA_EDIT = "cs.ualberta.ca.tunein.commentEdit";
-	//public string that tags the extra of the topic comment that is passed to CommentPageActivity
-	public final static String EXTRA_TOPIC_COMMENT = "cs.ualberta.ca.tunein.topicComment";
 	
 	//comment passed through intent when clicking on a view comment button
 	private Comment aComment;
@@ -170,8 +168,10 @@ public class EditPageActivity extends Activity {
 	    	cntrl.editText(textViewEditComment.getText().toString());
 	    	cntrl.changeLoc(Double.parseDouble(textViewEditX.getText().toString()),
 	    			Double.parseDouble(textViewEditY.getText().toString()));
+	    	cntrl.updateElasticSearch();
+	    	Log.v("return2:", aComment.getComment());
 	    	Intent returnIntent = new Intent();
-	    	returnIntent.putExtra("editResult", aComment);
+	    	returnIntent.putExtra("editReturn", aComment);
 	    	setResult(RESULT_OK,returnIntent);     
 	    	finish();
 	    }
