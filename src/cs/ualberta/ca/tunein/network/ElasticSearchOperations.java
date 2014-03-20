@@ -250,15 +250,13 @@ public class ElasticSearchOperations {
 					@Override
 					public void run() {
 						model.clear();
-						Log.v("replies size3:", Integer.toString(returnedData.getSources().size()));
 						model.addReplies((ArrayList<Comment>) returnedData.getSources());
-						Log.v("replies size4:", Integer.toString(model.getReplies().size()));
 						ArrayList<Comment> list = model.getReplies();
 						for(int i = 0; i < list.size(); i++)
 						{
 							getReplyReplies(list.get(i), list.get(i).getElasticID(), activity);
 						}
-						adap.updateReplyView(model.getReplies());
+						adap.notifyDataSetChanged();
 					}
 				};
 

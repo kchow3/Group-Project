@@ -53,11 +53,17 @@ public class EditPageActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
+	}
+	
+	@Override
+	protected void onResume() 
+	{
+		super.onResume();
 		setContentView(R.layout.edit_comment_view);
 		getInputComment();
 		setupComment();
 	}
-
+	
 	/**
 	 * This method grabs the intent passed to this activity
 	 * from the activity that calls this page.
@@ -141,7 +147,9 @@ public class EditPageActivity extends Activity {
 	private OnClickListener cancelBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
-	    {   
+	    {
+	    	Intent returnIntent = new Intent();
+	    	setResult(RESULT_CANCELED,returnIntent);     
 	    	finish();
 	    }
 	};
@@ -161,6 +169,10 @@ public class EditPageActivity extends Activity {
 	    	cntrl.changeLoc(Double.parseDouble(textViewEditX.getText().toString()),
 	    			Double.parseDouble(textViewEditY.getText().toString()));
 	    	cntrl.updateElasticSearch();
+	    	Log.v("return2:", aComment.getComment());
+	    	Intent returnIntent = new Intent();
+	    	returnIntent.putExtra("editReturn", aComment);
+	    	setResult(RESULT_OK,returnIntent);     
 	    	finish();
 	    }
 	};

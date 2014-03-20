@@ -1,5 +1,6 @@
 package cs.ualberta.ca.tunein;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
@@ -17,7 +18,7 @@ import android.util.Log;
  * To use this controller create a new CommentController object with a comment
  * and using that controller modify the comment sent to the controller.
  */
-public class CommentController{
+public class CommentController implements Serializable{
 
 	private Comment comment;
 	private ReplyViewAdapter viewAdapter;
