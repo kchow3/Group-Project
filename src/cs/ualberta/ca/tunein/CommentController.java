@@ -169,12 +169,11 @@ public class CommentController{
 	/**
 	 * Method to update elastic search by pushing the
 	 * comment to elastic search.
-	 * @param aComment Comment to be posted.
 	 */
-	public void updateElasticSearch(Comment aComment)
+	public void updateElasticSearch()
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.putCommentModel(aComment);
+		eso.putCommentModel(comment);
 	}
 	
 	/**
@@ -185,16 +184,6 @@ public class CommentController{
 	 */
 	public void loadCommentReplies(Activity act)
 	{
-		/*
-		if(comment.getParentID().equals("0"))
-		{
-			ElasticSearchOperations.getCommentPosts(comment.getElasticID(), comment, act);
-		}
-		else
-		{
-			ElasticSearchOperations.getCommentByParentId(comment.getParentID(), comment.getReplies(), act);
-		}
-		*/
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.getRepliesByParentId(comment.getElasticID(), comment, act,viewAdapter);
 	}

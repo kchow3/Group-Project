@@ -102,20 +102,7 @@ public class CommentPageActivity extends Activity {
 		setupComment();
 		viewAdapter.updateReplyView(replies);
 	}
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		  if (requestCode == 1) {
-
-		     if(resultCode == RESULT_OK){      
-		         aComment = (Comment) data.getSerializableExtra("editResult"); 
-		     }
-		     
-		     if (resultCode == RESULT_CANCELED) {
-		    	 //edit cancelled
-		     }
-		}
-	}
 	/**
 	 * Method to get input from intents.
 	 */
@@ -215,7 +202,7 @@ public class CommentPageActivity extends Activity {
 	    {
 	    	Intent intent = new Intent(getApplicationContext(), EditPageActivity.class);
 	    	intent.putExtra(EXTRA_EDIT, aComment);
-	    	startActivityForResult(intent, 1);
+	    	startActivity(intent);
 	    }
 	};
 	

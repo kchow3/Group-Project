@@ -29,8 +29,6 @@ public class EditPageActivity extends Activity {
 
 	//public string that tags the extra of the comment that is passed to EditPageActivity
 	public final static String EXTRA_EDIT = "cs.ualberta.ca.tunein.commentEdit";
-	//public string that tags the extra of the topic comment that is passed to CommentPageActivity
-	public final static String EXTRA_TOPIC_COMMENT = "cs.ualberta.ca.tunein.topicComment";
 	
 	//comment passed through intent when clicking on a view comment button
 	private Comment aComment;
@@ -55,17 +53,11 @@ public class EditPageActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	}
-	
-	@Override
-	protected void onResume() 
-	{
-		super.onResume();
 		setContentView(R.layout.edit_comment_view);
 		getInputComment();
 		setupComment();
 	}
-	
+
 	/**
 	 * This method grabs the intent passed to this activity
 	 * from the activity that calls this page.
@@ -149,9 +141,7 @@ public class EditPageActivity extends Activity {
 	private OnClickListener cancelBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
-	    {
-	    	Intent returnIntent = new Intent();
-	    	setResult(RESULT_CANCELED,returnIntent);     
+	    {   
 	    	finish();
 	    }
 	};
@@ -170,9 +160,7 @@ public class EditPageActivity extends Activity {
 	    	cntrl.editText(textViewEditComment.getText().toString());
 	    	cntrl.changeLoc(Double.parseDouble(textViewEditX.getText().toString()),
 	    			Double.parseDouble(textViewEditY.getText().toString()));
-	    	Intent returnIntent = new Intent();
-	    	returnIntent.putExtra("editResult", aComment);
-	    	setResult(RESULT_OK,returnIntent);     
+	    	cntrl.updateElasticSearch();
 	    	finish();
 	    }
 	};
