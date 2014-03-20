@@ -1,7 +1,5 @@
 package cs.ualberta.ca.tunein;
 
-import android.app.Application;
-
 /**
  * Model
  * User Class:

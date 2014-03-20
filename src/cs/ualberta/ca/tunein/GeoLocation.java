@@ -2,10 +2,6 @@ package cs.ualberta.ca.tunein;
 
 import java.io.Serializable;
 
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationManager;
-
 /**
  * Model
  * GeoLocation Class:
