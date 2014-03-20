@@ -5,10 +5,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -30,6 +32,8 @@ import android.widget.TextView;
  */
 public class TopicListActivity extends Activity {
 
+	public static int SELECT_PICTURE_REQUEST_CODE = 12345;
+	
 	//comment view adapter
 	private CommentViewAdapter viewAdapter;
 	//discussion thread list
@@ -48,9 +52,12 @@ public class TopicListActivity extends Activity {
 	private TextView inputTitle;
 	private TextView inputComment;
 	private ImageView inputImage;
+	private Button buttonImage;
 	
 	private Button buttonMainMenu;
 	private TextView textViewSort;
+	
+	private Uri outputFileUri;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -83,6 +90,44 @@ public class TopicListActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	/*
+	 * Code from:
+	 * http://stackoverflow.com/questions/4455558/allow-user-to-select-camera-or-gallery-for-image
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+	    if(resultCode == RESULT_OK)
+	    {
+	        if(requestCode == SELECT_PICTURE_REQUEST_CODE)
+	        {
+	            final boolean isCamera;
+	            if(data == null)
+	            {
+	                isCamera = true;
+	            }
+	            else
+	            {
+	            	isCamera = MediaStore.ACTION_IMAGE_CAPTURE.equals(data.getAction());
+	            }
+
+	            Uri selectedImageUri;
+	            if(isCamera)
+	            {
+	                selectedImageUri = outputFileUri;
+	            }
+	            else
+	            {
+	                selectedImageUri = data == null ? null : data.getData();
+	            }
+	    		inputImage.setImageURI(selectedImageUri);
+	    		inputImage.setVisibility(View.VISIBLE);
+	        }
+	    }
 	}
 	
 	private void setupTopicView()
@@ -130,6 +175,12 @@ public class TopicListActivity extends Activity {
 		    })
 		    .setNegativeButton("Cancel", null).create();
 		dialog.show();
+	}
+	
+	public void uploadImageBtnClick(View v) {
+		ImageController imgCntrl = new ImageController(outputFileUri,
+				TopicListActivity.this);
+		imgCntrl.openImageIntent();
 	}
 
 	/**

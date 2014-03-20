@@ -45,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/editTextComment"
+        android:onClick="uploadImageBtnClick"
         android:text="Upload Image" />
 
     <ImageView

@@ -14,14 +14,23 @@ import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 
+/**
+ * Controller
+ * ImageController Class:
+ * This is a controller used to upload images when creating
+ * or editing comments.
+ * This code is from:
+ * http://stackoverflow.com/questions/4455558/allow-user-to-select-camera-or-gallery-for-image
+ */
 public class ImageController {
 
 	public static int SELECT_PICTURE_REQUEST_CODE = 12345;
 	private Uri outputFileUri;
 	private Activity act;
 	
-	public ImageController(Activity act)
+	public ImageController(Uri out, Activity act)
 	{
+		this.outputFileUri = out;
 		this.act = act;
 	}
 	
