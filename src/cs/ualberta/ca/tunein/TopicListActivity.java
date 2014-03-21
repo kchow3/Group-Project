@@ -198,9 +198,9 @@ public class TopicListActivity extends Activity {
 	}
 	
 	public void uploadImageBtnClick(View v) {
-		ImageController imgCntrl = new ImageController(this.outputFileUri,
-				TopicListActivity.this);
-		imgCntrl.openImageIntent();
+		ImageController imgCntrl = new ImageController(TopicListActivity.this);
+		outputFileUri = imgCntrl.openImageIntent();
+		Log.v("URI1", outputFileUri.toString());
 	}
 
 	/**

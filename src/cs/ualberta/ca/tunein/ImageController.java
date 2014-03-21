@@ -28,13 +28,12 @@ public class ImageController {
 	private Uri outputFileUri;
 	private Activity act;
 	
-	public ImageController(Uri out, Activity act)
+	public ImageController(Activity act)
 	{
-		this.outputFileUri = out;
 		this.act = act;
 	}
 	
-	public void openImageIntent() {
+	public Uri openImageIntent() {
 
 		
 		// Determine Uri of camera image to save.
@@ -78,5 +77,6 @@ public class ImageController {
 		    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[]{}));
 
 		    act.startActivityForResult(chooserIntent, SELECT_PICTURE_REQUEST_CODE);
+			return outputFileUri;
 		}
 }
