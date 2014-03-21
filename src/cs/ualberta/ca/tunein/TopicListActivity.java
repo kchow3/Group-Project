@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -115,7 +116,15 @@ public class TopicListActivity extends Activity {
 	            }
 	            else
 	            {
-	            	isCamera = MediaStore.ACTION_IMAGE_CAPTURE.equals(data.getAction());
+	                final String action = data.getAction();
+	                if(action == null)
+	                {
+	                    isCamera = false;
+	                }
+	                else
+	                {
+	                    isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+	                }
 	            }
 
 	            Uri selectedImageUri;
@@ -128,6 +137,7 @@ public class TopicListActivity extends Activity {
 	                selectedImageUri = data == null ? null : data.getData();
 	            }
 	            try {
+	            	Log.v("URI", outputFileUri.toString());
 					Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
 					inputImage.setImageBitmap(bitmap);
 		    		inputImage.setVisibility(View.VISIBLE);
@@ -188,7 +198,7 @@ public class TopicListActivity extends Activity {
 	}
 	
 	public void uploadImageBtnClick(View v) {
-		ImageController imgCntrl = new ImageController(outputFileUri,
+		ImageController imgCntrl = new ImageController(this.outputFileUri,
 				TopicListActivity.this);
 		imgCntrl.openImageIntent();
 	}

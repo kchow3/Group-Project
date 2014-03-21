@@ -36,13 +36,22 @@ public class ImageController {
 	
 	public void openImageIntent() {
 
+		
 		// Determine Uri of camera image to save.
 		final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "TuneIn" + File.separator);
 		root.mkdirs();
 		final String fname = "img_"+ String.valueOf(System.currentTimeMillis()) + ".jpg";
 		final File sdImageMainDirectory = new File(root, fname);
 		outputFileUri = Uri.fromFile(sdImageMainDirectory);
+		
 
+		/*
+		String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/TuneIn/" + String.valueOf(System.currentTimeMillis()) + ".jpg";
+		File file = new File(filePath);
+		file.mkdirs();
+		outputFileUri = Uri.fromFile(file);
+		*/
+		
 		    // Camera.
 		    final List<Intent> cameraIntents = new ArrayList<Intent>();
 		    final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
