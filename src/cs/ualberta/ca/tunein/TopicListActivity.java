@@ -1,6 +1,9 @@
 package cs.ualberta.ca.tunein;
 
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -52,7 +55,6 @@ public class TopicListActivity extends Activity {
 	private TextView inputTitle;
 	private TextView inputComment;
 	private ImageView inputImage;
-	private Button buttonImage;
 	
 	private Button buttonMainMenu;
 	private TextView textViewSort;
@@ -101,6 +103,7 @@ public class TopicListActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
+		super.onActivityResult(requestCode, resultCode, data);
 	    if(resultCode == RESULT_OK)
 	    {
 	        if(requestCode == SELECT_PICTURE_REQUEST_CODE)
@@ -124,8 +127,15 @@ public class TopicListActivity extends Activity {
 	            {
 	                selectedImageUri = data == null ? null : data.getData();
 	            }
-	    		inputImage.setImageURI(selectedImageUri);
-	    		inputImage.setVisibility(View.VISIBLE);
+	            try {
+					Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+					inputImage.setImageBitmap(bitmap);
+		    		inputImage.setVisibility(View.VISIBLE);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 	        }
 	    }
 	}

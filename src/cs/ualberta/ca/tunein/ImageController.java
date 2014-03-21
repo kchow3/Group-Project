@@ -37,9 +37,9 @@ public class ImageController {
 	public void openImageIntent() {
 
 		// Determine Uri of camera image to save.
-		final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "MyDir" + File.separator);
+		final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "TuneIn" + File.separator);
 		root.mkdirs();
-		final String fname = "img_"+ System.currentTimeMillis() + ".jpg";
+		final String fname = "img_"+ String.valueOf(System.currentTimeMillis()) + ".jpg";
 		final File sdImageMainDirectory = new File(root, fname);
 		outputFileUri = Uri.fromFile(sdImageMainDirectory);
 
