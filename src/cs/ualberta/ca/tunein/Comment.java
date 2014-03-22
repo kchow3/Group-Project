@@ -136,6 +136,7 @@ public class Comment implements Serializable
 
 	public void setImg(Image img) {
 		this.img = img;
+		this.hasImage = true;
 	}
 
 	public Date getDate() {

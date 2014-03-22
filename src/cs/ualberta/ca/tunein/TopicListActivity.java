@@ -138,7 +138,6 @@ public class TopicListActivity extends Activity {
 	                selectedImageUri = data == null ? null : data.getData();
 	            }
 	            try {
-	            	Log.v("URI", outputFileUri.toString());
 					Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
 					inputImage.setImageBitmap(bitmap);
 		    		inputImage.setVisibility(View.VISIBLE);
@@ -202,7 +201,6 @@ public class TopicListActivity extends Activity {
 	public void uploadImageBtnClick(View v) {
 		ImageController imgCntrl = new ImageController(TopicListActivity.this);
 		outputFileUri = imgCntrl.openImageIntent();
-		Log.v("URI1", outputFileUri.toString());
 	}
 
 	/**

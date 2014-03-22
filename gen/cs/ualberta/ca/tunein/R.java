@@ -27,9 +27,9 @@ public final class R {
         public static final int RelativeLayout1=0x7f080044;
         public static final int action_settings=0x7f08004a;
         public static final int buttonCache=0x7f08000c;
-        public static final int buttonCommentEdit=0x7f08001b;
+        public static final int buttonCommentEdit=0x7f08001c;
         public static final int buttonCommentFav=0x7f080018;
-        public static final int buttonCommentReply=0x7f08001c;
+        public static final int buttonCommentReply=0x7f08001b;
         public static final int buttonCommentSave=0x7f080014;
         public static final int buttonCreate=0x7f080049;
         public static final int buttonEditCancel=0x7f080036;

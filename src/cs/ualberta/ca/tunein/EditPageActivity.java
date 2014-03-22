@@ -1,10 +1,17 @@
 package cs.ualberta.ca.tunein;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,12 +32,17 @@ import android.widget.TextView;
  * http://stackoverflow.com/questions/4279787/how-can-i-pass-values-between-a-dialog-and-an-activity
  */
 public class EditPageActivity extends Activity {
+	
+	public static int SELECT_PICTURE_REQUEST_CODE = 12345;
 
 	//public string that tags the extra of the comment that is passed to EditPageActivity
 	public final static String EXTRA_EDIT = "cs.ualberta.ca.tunein.commentEdit";
 	
 	//comment passed through intent when clicking on a view comment button
 	private Comment aComment;
+	
+	//path of the image file
+	private Uri outputFileUri;
 	
 	//variables for setting up textviews/buttons/imageview
 	private TextView textViewEditTitle;
@@ -52,15 +64,63 @@ public class EditPageActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	}
-	
-	@Override
-	protected void onResume() 
-	{
-		super.onResume();
 		setContentView(R.layout.edit_comment_view);
 		getInputComment();
 		setupComment();
+	}
+	
+	/*
+	 * Code from:
+	 * http://stackoverflow.com/questions/4455558/allow-user-to-select-camera-or-gallery-for-image
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+	    if(resultCode == RESULT_OK)
+	    {
+	        if(requestCode == SELECT_PICTURE_REQUEST_CODE)
+	        {
+	            final boolean isCamera;
+	            if(data == null)
+	            {
+	                isCamera = true;
+	            }
+	            else
+	            {
+	                final String action = data.getAction();
+	                if(action == null)
+	                {
+	                    isCamera = false;
+	                }
+	                else
+	                {
+	                    isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+	                }
+	            }
+
+	            Uri selectedImageUri;
+	            if(isCamera)
+	            {
+	                selectedImageUri = outputFileUri;
+	            }
+	            else
+	            {
+	                selectedImageUri = data == null ? null : data.getData();
+	            }
+	            try {
+					Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+					imageViewEditImage.setImageBitmap(bitmap);
+					imageViewEditImage.setVisibility(View.VISIBLE);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+	        }
+	    }
 	}
 	
 	/**
@@ -113,7 +173,8 @@ public class EditPageActivity extends Activity {
 	{
 	    public void onClick(View v)
 	    {    	
-	    	//set visibility to VISIBLE after adding image
+			ImageController imgCntrl = new ImageController(EditPageActivity.this);
+			outputFileUri = imgCntrl.openImageIntent();
 	    }
 	};
 	
@@ -164,12 +225,18 @@ public class EditPageActivity extends Activity {
 	    public void onClick(View v)
 	    {
 	    	CommentController cntrl = new CommentController(aComment);
+	    	//get bitmap from the imageview
+	    	imageViewEditImage.buildDrawingCache(true);
+        	Bitmap bitmap = imageViewEditImage.getDrawingCache(true).copy(Config.RGB_565, false);
+        	imageViewEditImage.destroyDrawingCache();  
+        	//call cntrl to edit the comment
 	    	cntrl.editTitle(textViewEditTitle.getText().toString());
 	    	cntrl.editText(textViewEditComment.getText().toString());
+	    	cntrl.addImg(bitmap);
 	    	cntrl.changeLoc(Double.parseDouble(textViewEditX.getText().toString()),
 	    			Double.parseDouble(textViewEditY.getText().toString()));
 	    	cntrl.updateElasticSearch();
-	    	Log.v("return2:", aComment.getComment());
+	    	//return the comment through intent to comment view
 	    	Intent returnIntent = new Intent();
 	    	returnIntent.putExtra("editReturn", aComment);
 	    	setResult(RESULT_OK,returnIntent);     

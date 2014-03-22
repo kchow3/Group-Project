@@ -56,7 +56,8 @@ public class CommentController{
 	 * Method to add an image to comment.
 	 * @param img The image. to be added.
 	 */
-	public void addImg(Image img) {
+	public void addImg(Bitmap bmp) {
+		Image img = new Image(bmp);
 		comment.setImg(img);
 	}
 	
