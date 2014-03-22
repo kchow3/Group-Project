@@ -9,6 +9,7 @@ import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 /**
@@ -111,7 +112,7 @@ public class ThreadController {
 	 * @param comment Text of comment.
 	 * @param img The image of the comment.
 	 */
-	public void createTopicImg(Activity act, String title, String comment, Image img) 
+	public void createTopicImg(Activity act, String title, String comment, Bitmap bmp) 
 	{
 		ArrayList<Comment> list = discussionThread.getDiscussionThread();
 		
@@ -124,6 +125,7 @@ public class ThreadController {
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
 		geoCntrl.getLocation(act);
 		
+		Image img = new Image(bmp);
 		Comment aComment = new Comment(user, title, comment, loc, img, "0");
 		list.add(aComment);
 		ElasticSearchOperations eso = new ElasticSearchOperations();

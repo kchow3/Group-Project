@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -180,10 +181,10 @@ public class TopicListActivity extends Activity {
 		            //create comment with image 
 		            if (inputImage.getVisibility() == View.VISIBLE) 
 		            {
-		            	inputImage.buildDrawingCache();
-		            	Bitmap bmp = inputImage.getDrawingCache();
-		            	img = new Image(bmp);
-		        		cntrl.createTopicImg(TopicListActivity.this, title, comment, img);
+		            	inputImage.buildDrawingCache(true);
+		            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
+		            	inputImage.destroyDrawingCache();
+		        		cntrl.createTopicImg(TopicListActivity.this, title, comment, bitmap);
 		            } 
 		            else 
 		            {	                
