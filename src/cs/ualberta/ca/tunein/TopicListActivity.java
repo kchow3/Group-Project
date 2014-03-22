@@ -164,7 +164,8 @@ public class TopicListActivity extends Activity {
 	/**
 	 * This method is to open the create topic comment dialog box
 	 * and create a comment and add to the topic list.
-	 * Bitmap code from http://stackoverflow.com/questions/4715044/android-how-to-convert-whole-imageview-to-bitmap
+	 * Bitmap code from 
+	 * http://stackoverflow.com/questions/8490474/cant-compress-a-recycled-bitmap
 	 * @param v The view passed in.
 	 */
 	public void createCommentClick(View v)

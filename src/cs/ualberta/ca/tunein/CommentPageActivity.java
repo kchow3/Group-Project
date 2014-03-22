@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -220,10 +221,10 @@ public class CommentPageActivity extends Activity {
 	};
 	
 	/**
-	 * This click listner will go to reply page to create a reply comment
+	 * This click listener will go to reply page to create a reply comment
 	 * to the comment that is being viewed.
 	 * Bitmap code from:
-	 * http://stackoverflow.com/questions/4715044/android-how-to-convert-whole-imageview-to-bitmap
+	 * http://stackoverflow.com/questions/8490474/cant-compress-a-recycled-bitmap
 	 */
 	private OnClickListener replyBtnClick = new OnClickListener() 
 	{
@@ -242,10 +243,10 @@ public class CommentPageActivity extends Activity {
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
-			            	inputImage.buildDrawingCache();
-			            	Bitmap bmp = inputImage.getDrawingCache();
-			            	Image img = new Image(bmp);            	
-			        		cntrl.addReplyImg(aComment.getElasticID(), CommentPageActivity.this, title, text, img, isReplyReply);
+			            	inputImage.buildDrawingCache(true);
+			            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
+			            	inputImage.destroyDrawingCache();           	
+			        		cntrl.addReplyImg(aComment.getElasticID(), CommentPageActivity.this, title, text, bitmap, isReplyReply);
 			            } 
 			            else 
 			            {	                

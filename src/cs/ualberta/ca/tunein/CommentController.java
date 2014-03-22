@@ -4,6 +4,7 @@ import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 
 /**
  * Controller
@@ -68,7 +69,7 @@ public class CommentController{
 	 * @param img The image of the comment.
 	 * @param isReply Check if the added comment will be reply of reply.
 	 */
-	public void addReplyImg(String parentID, Activity act, String title, String text, Image img, boolean isReply) {
+	public void addReplyImg(String parentID, Activity act, String title, String text, Bitmap bmp, boolean isReply) {
 		
 		UserController userCntrl = new UserController();
     	String username = userCntrl.loadUsername(act);
@@ -78,6 +79,8 @@ public class CommentController{
 		GeoLocation loc = new GeoLocation();
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
 		geoCntrl.getLocation(act);
+		
+		Image img = new Image(bmp);
 		
 		Comment aComment = new Comment(user, title, text, loc, img, parentID);
 		comment.addReply(aComment);

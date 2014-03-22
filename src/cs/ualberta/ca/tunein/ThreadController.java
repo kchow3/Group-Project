@@ -126,6 +126,7 @@ public class ThreadController {
 		geoCntrl.getLocation(act);
 		
 		Image img = new Image(bmp);
+		
 		Comment aComment = new Comment(user, title, comment, loc, img, "0");
 		list.add(aComment);
 		ElasticSearchOperations eso = new ElasticSearchOperations();
