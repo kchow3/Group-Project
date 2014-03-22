@@ -99,6 +99,7 @@ public class EditPageActivity extends Activity {
 		//if there is image load image else invisible
 		if(aComment.isHasImage())
 		{
+			imageViewEditImage.setImageBitmap(aComment.getImg().getBitMap());
 			imageViewEditImage.setVisibility(View.VISIBLE);
 		}
 		

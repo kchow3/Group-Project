@@ -171,6 +171,7 @@ public class CommentPageActivity extends Activity {
 		//if there is image load image else invisible
 		if(aComment.isHasImage())
 		{
+			imageViewCommentImage.setImageBitmap(aComment.getImg().getBitMap());
 			imageViewCommentImage.setVisibility(View.VISIBLE);
 		}
 		
