@@ -117,7 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/textViewCommentDate"
         android:layout_below="@+id/textViewCommentBlock"
-        android:scaleType="center"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_launcher"
         android:visibility="invisible" />
 
