@@ -224,18 +224,18 @@ public class EditPageActivity extends Activity {
 	{
 	    public void onClick(View v)
 	    {
-	    	CommentController cntrl = new CommentController(aComment);
+	    	CommentController commentController = new CommentController(aComment);
 	    	//get bitmap from the imageview
 	    	imageViewEditImage.buildDrawingCache(true);
         	Bitmap bitmap = imageViewEditImage.getDrawingCache(true).copy(Config.RGB_565, false);
         	imageViewEditImage.destroyDrawingCache();  
         	//call cntrl to edit the comment
-	    	cntrl.editTitle(textViewEditTitle.getText().toString());
-	    	cntrl.editText(textViewEditComment.getText().toString());
-	    	cntrl.addImg(bitmap);
-	    	cntrl.changeLoc(Double.parseDouble(textViewEditX.getText().toString()),
+        	commentController.editTitle(textViewEditTitle.getText().toString());
+        	commentController.editText(textViewEditComment.getText().toString());
+        	commentController.addImg(bitmap);
+        	commentController.changeLoc(Double.parseDouble(textViewEditX.getText().toString()),
 	    			Double.parseDouble(textViewEditY.getText().toString()));
-	    	cntrl.updateElasticSearch();
+        	commentController.updateElasticSearch();
 	    	//return the comment through intent to comment view
 	    	Intent returnIntent = new Intent();
 	    	returnIntent.putExtra("editReturn", aComment);

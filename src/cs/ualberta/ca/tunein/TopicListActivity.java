@@ -44,13 +44,12 @@ public class TopicListActivity extends Activity {
 	//discussion thread list
 	private ThreadList threadList;
 	//thread controller
-	private ThreadController cntrl;
+	private ThreadController threadController;
 	//string of the sort requirement
 	private String sortType;
 	//variables for adding topic
 	private String title;
 	private String comment;
-	private Image img;
 	
 	//dialog elements
 	private View createView;
@@ -75,7 +74,7 @@ public class TopicListActivity extends Activity {
 	    threadList = new ThreadList();
 		//setup the comment listview
 		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList);
-	    cntrl = new ThreadController(threadList);
+		threadController = new ThreadController(threadList);
 		ListView listview = (ListView) findViewById(R.id.listViewTopics);
 		listview.setAdapter(viewAdapter);
 		threadList.setAdapter(viewAdapter);
@@ -85,7 +84,7 @@ public class TopicListActivity extends Activity {
 	protected void onResume()
 	{
 		super.onResume();
-		cntrl.getOnlineTopics(this);
+		threadController.getOnlineTopics(this);
 		viewAdapter.updateThreadView(threadList);
 	}
 	
@@ -184,11 +183,11 @@ public class TopicListActivity extends Activity {
 		            	inputImage.buildDrawingCache(true);
 		            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
 		            	inputImage.destroyDrawingCache();
-		        		cntrl.createTopicImg(TopicListActivity.this, title, comment, bitmap);
+		            	threadController.createTopicImg(TopicListActivity.this, title, comment, bitmap);
 		            } 
 		            else 
 		            {	                
-		        		cntrl.createTopic(TopicListActivity.this, title, comment);     		
+		            	threadController.createTopic(TopicListActivity.this, title, comment);     		
 		            }
 		            //cntrl.getOnlineTopics(TopicListActivity.this);
 		            viewAdapter.updateThreadView(threadList);

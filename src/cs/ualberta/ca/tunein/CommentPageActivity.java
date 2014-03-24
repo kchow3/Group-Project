@@ -43,7 +43,7 @@ public class CommentPageActivity extends Activity {
 	//reply list
 	private ArrayList<Comment> replies;
 	//comment controller
-	private CommentController cntrl;
+	private CommentController commentController;
 	//boolean to check if current comment is repy to reply
 	private boolean isReplyReply;
 	
@@ -89,8 +89,8 @@ public class CommentPageActivity extends Activity {
 		this.viewAdapter = new ReplyViewAdapter(this, replies);
 		ExpandableListView listview = (ExpandableListView) findViewById(R.id.expandableListViewReply);
 		
-		cntrl = new CommentController(aComment, viewAdapter);
-		cntrl.loadCommentReplies(this);
+		commentController = new CommentController(aComment, viewAdapter);
+		commentController.loadCommentReplies(this);
 		replies = aComment.getReplies();
 		//setup
 		listview.setAdapter(viewAdapter);
@@ -105,8 +105,8 @@ public class CommentPageActivity extends Activity {
 
 			if (resultCode == RESULT_OK) {
 				aComment = (Comment) data.getSerializableExtra("editReturn");
-				cntrl = new CommentController(aComment, viewAdapter);
-				cntrl.loadCommentReplies(this);
+				commentController = new CommentController(aComment, viewAdapter);
+				commentController.loadCommentReplies(this);
 				setupComment();
 				viewAdapter.updateReplyView(aComment.getReplies());
 			}
@@ -175,8 +175,8 @@ public class CommentPageActivity extends Activity {
 			imageViewCommentImage.setVisibility(View.VISIBLE);
 		}
 		
-		cntrl = new CommentController(aComment);
-		if(cntrl.checkValid(this))
+		commentController = new CommentController(aComment);
+		if(commentController.checkValid(this))
 		{
 			buttonCommentEdit.setVisibility(View.VISIBLE);
 		}
@@ -240,18 +240,18 @@ public class CommentPageActivity extends Activity {
 			            String title = inputTitle.getText().toString();
 			            String text = inputComment.getText().toString();
 			            
-		        		cntrl = new CommentController(aComment);
+			            commentController = new CommentController(aComment);
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
 			            	inputImage.buildDrawingCache(true);
 			            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
 			            	inputImage.destroyDrawingCache();           	
-			        		cntrl.addReplyImg(aComment.getElasticID(), CommentPageActivity.this, title, text, bitmap, isReplyReply);
+			            	commentController.addReplyImg(aComment.getElasticID(), CommentPageActivity.this, title, text, bitmap, isReplyReply);
 			            } 
 			            else 
 			            {	                
-			        		cntrl.addReply(aComment.getElasticID(), CommentPageActivity.this, title, text, isReplyReply);
+			            	commentController.addReply(aComment.getElasticID(), CommentPageActivity.this, title, text, isReplyReply);
 			            }
 			            replies = aComment.getReplies();
 			            viewAdapter.updateReplyView(replies);
