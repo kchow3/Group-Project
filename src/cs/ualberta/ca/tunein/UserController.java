@@ -1,8 +1,6 @@
 package cs.ualberta.ca.tunein;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 
 /**
  * Controller
@@ -12,31 +10,25 @@ import android.content.SharedPreferences;
  */
 public class UserController {
 	
+	private User user;
+	
 	public UserController() {
 	}
 
-	public String loadUsername(Activity act) {
-    	SharedPreferences prefs = act.getSharedPreferences(
-			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-    	return prefs.getString("cs.ualberta.ca.tunein.username", "Anonymous");
+	public String loadUsername(Context cntxt) {
+		return user.getName(cntxt);
 	}
 	
-	public String loadUserid(Activity act) {
-    	SharedPreferences prefs = act.getSharedPreferences(
-			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-    	return prefs.getString("cs.ualberta.ca.tunein.userid", "");
+	public String loadUserid(Context cntxt) {
+		return user.getUniqueID(cntxt);
 	}
 	
-	public void saveUserid(String id, Activity act) {
-    	SharedPreferences prefs = act.getSharedPreferences(
-			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-    	prefs.edit().putString("cs.ualberta.ca.tunein.userid", id).commit();
+	public void saveUserid(String id, Context cntxt) {
+		user.setUniqueID(id, cntxt);
 	}
 
-	public void changeUsername(String name, Activity act) {
-    	SharedPreferences prefs = act.getSharedPreferences(
-			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-    	prefs.edit().putString("cs.ualberta.ca.tunein.username", name).commit();
+	public void changeUsername(String name, Context cntxt) {
+		user.setName(name, cntxt);
 	}
 
 }
