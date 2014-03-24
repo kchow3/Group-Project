@@ -17,6 +17,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
@@ -150,7 +151,7 @@ public class ElasticSearchOperations {
 	 * @param activity
 	 *            a TopicListActivity
 	 */
-	public void getCommentPosts(final String parentID, final Comment model, final Activity activity) {
+	public void getCommentPosts(final String parentID, final Comment model, final Context cntxt ) {
 		if (GSON == null)
 			constructGson();
 
@@ -187,7 +188,7 @@ public class ElasticSearchOperations {
 					}
 				};
 
-				activity.runOnUiThread(updateModel);
+				((Activity) cntxt).runOnUiThread(updateModel);
 			}
 		};
 
@@ -202,7 +203,7 @@ public class ElasticSearchOperations {
 	 * @param activity
 	 *            a TopicListActivity
 	 */
-	public void getRepliesByParentId(final String parentID, final Comment model, final Activity activity, final ReplyViewAdapter adap) {
+	public void getRepliesByParentId(final String parentID, final Comment model, final Context cntxt, final ReplyViewAdapter adap) {
 		if (GSON == null)
 			constructGson();
 
@@ -251,20 +252,20 @@ public class ElasticSearchOperations {
 						ArrayList<Comment> list = model.getReplies();
 						for(int i = 0; i < list.size(); i++)
 						{
-							getReplyReplies(list.get(i), list.get(i).getElasticID(), activity);
+							getReplyReplies(list.get(i), list.get(i).getElasticID(), cntxt);
 						}
 						adap.notifyDataSetChanged();
 					}
 				};
 
-				activity.runOnUiThread(updateModel);
+				((Activity) cntxt).runOnUiThread(updateModel);
 			}
 		};
 
 		thread.start();
 	}
 	
-	private void getReplyReplies(final Comment model, final String parentID, final Activity activity) {
+	private void getReplyReplies(final Comment model, final String parentID, final Context cntxt) {
 		if (GSON == null)
 			constructGson();
 
@@ -312,7 +313,7 @@ public class ElasticSearchOperations {
 					}
 				};
 				
-				activity.runOnUiThread(updateModel);
+				((Activity) cntxt).runOnUiThread(updateModel);
 			}
 		};
 
@@ -328,7 +329,7 @@ public class ElasticSearchOperations {
 	 * @param modelList ThreadList that will be filled.
 	 * @param activity Activity that calls this method.
 	 */
-	public void getCommentPostsByReplyCount(final ThreadList modelList, final Activity activity) {
+	public void getCommentPostsByReplyCount(final ThreadList modelList, final Context cntxt) {
 		if (GSON == null)
 			constructGson();
 
@@ -380,7 +381,7 @@ public class ElasticSearchOperations {
 					}
 				};
 
-				activity.runOnUiThread(updateModel);
+				((Activity) cntxt).runOnUiThread(updateModel);
 			}
 		};
 

@@ -112,18 +112,18 @@ public class ThreadController {
 	 * @param comment Text of comment.
 	 * @param img The image of the comment.
 	 */
-	public void createTopicImg(Activity act, String title, String comment, Bitmap bmp) 
+	public void createTopicImg(Context cntxt, String title, String comment, Bitmap bmp) 
 	{
 		ArrayList<Comment> list = discussionThread.getDiscussionThread();
 		
 		UserController userCntrl = new UserController();
-    	String username = userCntrl.loadUsername(act);
-    	String id = userCntrl.loadUserid(act);
+    	String username = userCntrl.loadUsername(cntxt);
+    	String id = userCntrl.loadUserid(cntxt);
 		Commenter user = new Commenter(username, id);
 		
 		GeoLocation loc = new GeoLocation();
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
-		geoCntrl.getLocation(act);
+		geoCntrl.getLocation(cntxt);
 		
 		Image img = new Image(bmp);
 		
@@ -140,18 +140,18 @@ public class ThreadController {
 	 * @param title Title of comment.
 	 * @param comment Text of comment.
 	 */
-	public void createTopic(Activity act, String title, String comment) 
+	public void createTopic(Context cntxt, String title, String comment) 
 	{	
 		ArrayList<Comment> list = discussionThread.getDiscussionThread();
 		
 		UserController userCntrl = new UserController();
-    	String username = userCntrl.loadUsername(act);
-    	String id = userCntrl.loadUserid(act);
+    	String username = userCntrl.loadUsername(cntxt);
+    	String id = userCntrl.loadUserid(cntxt);
 		Commenter user = new Commenter(username, id);
 		
 		GeoLocation loc = new GeoLocation();
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
-		geoCntrl.getLocation(act);
+		geoCntrl.getLocation(cntxt);
 		
 		Comment aComment = new Comment(user, title, comment, loc, "0");
 		list.add(aComment);

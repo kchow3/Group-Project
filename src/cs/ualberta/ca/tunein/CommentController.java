@@ -70,16 +70,16 @@ public class CommentController{
 	 * @param img The image of the comment.
 	 * @param isReply Check if the added comment will be reply of reply.
 	 */
-	public void addReplyImg(String parentID, Activity act, String title, String text, Bitmap bmp, boolean isReply) {
+	public void addReplyImg(String parentID, Context cntxt, String title, String text, Bitmap bmp, boolean isReply) {
 		
 		UserController userCntrl = new UserController();
-    	String username = userCntrl.loadUsername(act);
-    	String id = userCntrl.loadUserid(act);
+    	String username = userCntrl.loadUsername(cntxt);
+    	String id = userCntrl.loadUserid(cntxt);
 		Commenter user = new Commenter(username, id);
 		
 		GeoLocation loc = new GeoLocation();
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
-		geoCntrl.getLocation(act);
+		geoCntrl.getLocation(cntxt);
 		
 		Image img = new Image(bmp);
 		
@@ -105,16 +105,16 @@ public class CommentController{
 	 * @param text The text of the comment.
 	 * @param isReply Check if the added comment will be reply of reply.
 	 */
-	public void addReply(String parentID, Activity act, String title, String text, boolean isReply) {
+	public void addReply(String parentID, Context cntxt, String title, String text, boolean isReply) {
 		
 		UserController userCntrl = new UserController();
-    	String username = userCntrl.loadUsername(act);
-    	String id = userCntrl.loadUserid(act);
+    	String username = userCntrl.loadUsername(cntxt);
+    	String id = userCntrl.loadUserid(cntxt);
 		Commenter user = new Commenter(username, id);
 		
 		GeoLocation loc = new GeoLocation();
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
-		geoCntrl.getLocation(act);
+		geoCntrl.getLocation(cntxt);
 		
 		Comment aComment = new Comment(user, title, text, loc, parentID);
 		comment.addReply(aComment);
@@ -158,11 +158,10 @@ public class CommentController{
 	 * @param act Activity that this method is called from.
 	 * @return The resulting boolean of the check.
 	 */
-	public boolean checkValid(Activity act) {
+	public boolean checkValid(Context cntxt) {
 		//id of the current viewer
-		SharedPreferences prefs = act.getSharedPreferences(
-			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-		String currentID = prefs.getString("cs.ualberta.ca.tunein.userid", "");
+		User aUser = new User();
+		String currentID = aUser.getUniqueID(cntxt);
 		return comment.getCommenter().getUniqueID().equals(currentID);
 	}
 	
@@ -182,9 +181,9 @@ public class CommentController{
 	 * @param act
 	 * @param aComment
 	 */
-	public void loadCommentReplies(Activity act)
+	public void loadCommentReplies(Context cntxt)
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.getRepliesByParentId(comment.getElasticID(), comment, act,viewAdapter);
+		eso.getRepliesByParentId(comment.getElasticID(), comment, cntxt,viewAdapter);
 	}
 }
