@@ -2,15 +2,13 @@ package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
 
-import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +25,8 @@ import android.widget.TextView;
  * This class is used to create the list view for the topic list
  * that contains comments. This class is used in the TopicListActivity
  * to create a list view and load in comments.
+ * Intent code from:
+ * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
  */
 public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	
@@ -50,6 +50,8 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * This static class is used for holding the elements of
 	 * a custom comment row. This is used for smoother scrolling
 	 * of the list view.
+	 * Code from :
+	 * http://developer.android.com/training/improving-layouts/smooth-scrolling.html
 	 */
 	private static class ViewHolder 
 	{
@@ -71,11 +73,11 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * @param context The context of the activity that calls this class.
 	 * @param commentList The comment list that is to be in the list view.
 	 */
-	public CommentViewAdapter(Context context, ArrayList<Comment> commentList) 
+	public CommentViewAdapter(Context context, ThreadList commentList) 
 	{
-		super(context, R.layout.comment_view_row, commentList);
+		super(context, R.layout.comment_view_row, commentList.getDiscussionThread());
 		this.context = context;
-		this.commentList = commentList;
+		this.commentList = commentList.getDiscussionThread();
 	}
 	
 	@Override
@@ -163,7 +165,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * Method to just refresh the thread view without
 	 * assigning a new comment list.
 	 */
-	private void refreshThreadView()
+	public void refreshThreadView()
 	{
 		notifyDataSetChanged();
 	}
@@ -188,6 +190,8 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	/**
 	 * This click listener will send user a comment creation dialog box
 	 * so that they can reply to a comment that they clicked reply on.
+	 * Bitmap code:
+	 * http://stackoverflow.com/questions/8490474/cant-compress-a-recycled-bitmap
 	 */
 	private OnClickListener replyBtnClick = new OnClickListener() 
 	{
@@ -208,15 +212,16 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
-			            	inputImage.buildDrawingCache();
-			            	Bitmap bmp = inputImage.getDrawingCache();
-			            	Image img = new Image(bmp);
-			        		cntrl.addReplyImg(currentComment, (Activity) context, title, text, img);
+			            	inputImage.buildDrawingCache(true);
+			            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
+			            	inputImage.destroyDrawingCache();
+			        		cntrl.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, bitmap, false);
 			            } 
 			            else 
-			            {	                	        		  		
-			        		cntrl.addReply(currentComment, (Activity) context, title, text);
-			            }
+			            {	                        		
+			        		cntrl.addReply(currentComment.getElasticID(), (Activity) context, title, text, false);
+			        		
+			            } 
 			            refreshThreadView();
 			        }
 			    })

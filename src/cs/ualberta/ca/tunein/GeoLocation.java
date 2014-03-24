@@ -2,10 +2,6 @@ package cs.ualberta.ca.tunein;
 
 import java.io.Serializable;
 
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationManager;
-
 /**
  * Model
  * GeoLocation Class:
@@ -18,9 +14,7 @@ public class GeoLocation implements Serializable{
 	private double latitude;
 	
 	/**
-	 * Constructor constructs a geolocation with longitude and latitude
-	 * @param lon
-	 * @param lat
+	 * Constructor constructs a geolocation
 	 */
 	public GeoLocation() 
 	{

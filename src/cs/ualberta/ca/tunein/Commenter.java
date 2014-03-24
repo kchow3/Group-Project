@@ -2,8 +2,6 @@ package cs.ualberta.ca.tunein;
 
 import java.io.Serializable;
 
-import android.app.Application;
-
 /**
  * Model
  * Commenter Class:

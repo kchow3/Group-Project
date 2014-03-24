@@ -1,6 +1,7 @@
 package cs.ualberta.ca.tunein;
 
-import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 /**
  * Model
@@ -15,26 +16,32 @@ public class User{
 	private String name;
 	private String uniqueID; 
 	
-	public User(String name, String id)
+	public User()
 	{
-		this.name = name;
-		this.uniqueID = id;
 	}
 	
-	public String getName() {
-		return name;
+	public String getName(Context cntxt) {
+    	SharedPreferences prefs = cntxt.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+    	return prefs.getString("cs.ualberta.ca.tunein.username", "Anonymous");
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String name, Context cntxt) {
+    	SharedPreferences prefs = cntxt.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+    	prefs.edit().putString("cs.ualberta.ca.tunein.username", name).commit();
 	}
 
-	public String getUniqueID() {
-		return uniqueID;
+	public String getUniqueID(Context cntxt) {
+    	SharedPreferences prefs = cntxt.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+    	return prefs.getString("cs.ualberta.ca.tunein.userid", "");
 	}
 
-	public void setUniqueID(String uniqueID) {
-		this.uniqueID = uniqueID;
+	public void setUniqueID(String uniqueID, Context cntxt) {
+    	SharedPreferences prefs = cntxt.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+    	prefs.edit().putString("cs.ualberta.ca.tunein.userid", uniqueID).commit();
 	}
 	
 }

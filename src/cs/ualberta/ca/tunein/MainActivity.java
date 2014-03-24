@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
@@ -19,6 +20,10 @@ import android.widget.Toast;
  * This is part of the view for the main title page of the app.
  * It contains setting a username for the user and setting a sort
  * option for the comments in the app.
+ * User id code from:
+ * http://stackoverflow.com/questions/2785485/is-there-a-unique-android-device-id
+ * Intent code from:
+ * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
  */
 public class MainActivity extends Activity {
 	
@@ -59,6 +64,11 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
+	/**
+	 * Method to setup the main activity page.
+	 * Font code from:
+	 * http://stackoverflow.com/questions/9327053/using-custom-font-in-android-textview-using-xml
+	 */
 	private void setupPage()
 	{
 		name_button = (Button) findViewById(R.id.name_button);
@@ -94,6 +104,8 @@ public class MainActivity extends Activity {
 	
 	/**
 	 * This click listener will rename the user.
+	 * toast code from:
+	 * http://developer.android.com/guide/topics/ui/notifiers/toasts.html
 	 */
 	private OnClickListener renameBtnClick = new OnClickListener() {
 		public void onClick(View v) {
@@ -131,6 +143,10 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener date_buttonBtnClick = new OnClickListener() {
 		public void onClick(View v) {
+			Intent i = new Intent(getApplicationContext(),
+					TopicListActivity.class);
+			setSort("Date");
+			MainActivity.this.startActivity(i);
 		}
 	};
 	
@@ -143,7 +159,7 @@ public class MainActivity extends Activity {
 	};
 	
 	/**
-	 * This click listener will go back to the favorite page.
+	 * This click listener will go to the favorite page.
 	 */
 	private OnClickListener favBtnClick = new OnClickListener() {
 		public void onClick(View v) {
@@ -151,7 +167,7 @@ public class MainActivity extends Activity {
 	};
 	
 	/**
-	 * This click listener will go back to the cache page.
+	 * This click listener will go to the cache page.
 	 */
 	private OnClickListener cacheBtnClick = new OnClickListener() {
 		public void onClick(View v) {
@@ -159,14 +175,22 @@ public class MainActivity extends Activity {
 	};
 	
 	/**
-	 * This click listener will go back to the main menu page.
+	 * This click listener will go to the topic page sorted based on freshness(replies).
 	 */
 	private OnClickListener topicListBtnClick = new OnClickListener() {
 		public void onClick(View v) {
 			Intent i = new Intent(getApplicationContext(),
 					TopicListActivity.class);
+			setSort("Freshness");
 			MainActivity.this.startActivity(i);
 		}
 	};
+	
+	private void setSort(String sort)
+	{
+		SharedPreferences prefs = this.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+		prefs.edit().putString("cs.ualberta.ca.tunein.sort", sort).commit();
+	}
 
 }

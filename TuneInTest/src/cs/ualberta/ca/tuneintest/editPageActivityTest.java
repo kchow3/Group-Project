@@ -21,13 +21,13 @@ public class editPageActivityTest extends ActivityInstrumentationTestCase2<MainA
 	public void testEdit()
 	{
 		Commenter user = new Commenter("Bob", "testid29fniudofh");
-		GeoLocation loc1 = new GeoLocation(1, 2);
-		Comment aComment = new Comment(user, "Test", "This is a test", loc1);
+		GeoLocation loc1 = new GeoLocation();
+		Comment aComment = new Comment(user, "Test", "This is a test", loc1, "parent");
 		CommentController cntrl = new CommentController(aComment);
 		cntrl.editTitle("Edit");
 		cntrl.editText("This has been changed");
-		GeoLocation loc2 = new GeoLocation(6, 5);
-		cntrl.changeLoc(loc2);
+		GeoLocation loc2 = new GeoLocation();
+		//cntrl.changeLoc(loc2);
 		
 		assertEquals("The title should now be 'Edit'", aComment.getTitle(), "Edit");
 		assertNotSame("The title shouldn't now be 'Test'", aComment.getTitle(), "Test");

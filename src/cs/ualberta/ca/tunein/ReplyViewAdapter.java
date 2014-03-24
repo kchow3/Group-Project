@@ -2,16 +2,13 @@ package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
 
-import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.util.Log;
+import android.graphics.Bitmap.Config;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +25,15 @@ import android.widget.TextView;
  * This is part of the view class for comments. This class is used to 
  * display the replies to a comment using an expandable list view.
  * This class is not complete yet.
+ * Dialog code from:
+ * http://stackoverflow.com/questions/4279787/how-can-i-pass-values-between-a-dialog-and-an-activity
+ * Bitmap code from:
+ * http://stackoverflow.com/questions/4715044/android-how-to-convert-whole-imageview-to-bitmap
+ * expandable listview code from:
+ * http://androidtrainningcenter.blogspot.in/2012/07/android-expandable-listview-simple.html
+ * http://www.dreamincode.net/forums/topic/270612-how-to-get-started-with-expandablelistview/
+ * Intent code from:
+ * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
  */
 public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	
@@ -40,8 +46,6 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	//holder for elements in the row
 	private ViewHolder holder;
 	private ArrayList<Comment> replies;
-	//parent topic comment corresponding to the comment being viewed
-	private Comment topicComment;
 	//comment controller
 	private CommentController cntrl;
 	
@@ -54,6 +58,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	/**
 	 * View holder that holds the elements of a
 	 * custom row that improves scrolling.
+	 * Code from http://developer.android.com/training/improving-layouts/smooth-scrolling.html
 	 */
 	public static class ViewHolder
 	{
@@ -71,11 +76,10 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	 * @param context The context of the activity that constructs this adapter.
 	 * @param replies The array list of replies to be displayed.
 	 */
-	public ReplyViewAdapter(Context context, ArrayList<Comment> replies, Comment topComment)
+	public ReplyViewAdapter(Context context, ArrayList<Comment> replies)
 	{
 		this.context = context;
 		this.replies = replies;
-		this.topicComment = topComment;
 	}
 
 
@@ -224,7 +228,6 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	    	Comment aComment = replies.get(index[0]).getReplies().get(index[1]);
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
 	    	intent.putExtra(EXTRA_COMMENT, aComment);
-	    	intent.putExtra(EXTRA_TOPIC_COMMENT, topicComment);
 	    	intent.putExtra("isReplyReply", true);
 	    	context.startActivity(intent);
 	    }
@@ -233,6 +236,8 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	/**
 	 * This click listener will send user a comment creation dialog box
 	 * so that they can reply to a comment that they clicked reply on.
+	 * Bitmap code from:
+	 * http://stackoverflow.com/questions/8490474/cant-compress-a-recycled-bitmap
 	 */
 	private OnClickListener replyChildBtnClick = new OnClickListener() 
 	{
@@ -254,14 +259,14 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
-			            	inputImage.buildDrawingCache();
-			            	Bitmap bmp = inputImage.getDrawingCache();
-			            	Image img = new Image(bmp);        
-			        		cntrl.addReplyImg(topicComment, (Activity) context, title, text, img);
+			            	inputImage.buildDrawingCache(true);
+			            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
+			            	inputImage.destroyDrawingCache();      
+			        		cntrl.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, bitmap, true);
 			            } 
 			            else 
 			            {	                
-			        		cntrl.addReply(topicComment, (Activity) context, title, text);
+			        		cntrl.addReply(currentComment.getElasticID(), (Activity) context, title, text, true);
 			            }
 		        		updateReplyView(replies);
 			        }
@@ -283,7 +288,6 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	    	Comment aComment = replies.get(index);
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
 	    	intent.putExtra(EXTRA_COMMENT, aComment);
-	    	intent.putExtra(EXTRA_TOPIC_COMMENT, topicComment);
 	    	intent.putExtra("isReplyReply", true);
 	    	context.startActivity(intent);
 	    }
@@ -292,6 +296,8 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	/**
 	 * This click listener will send user a comment creation dialog box
 	 * so that they can reply to a comment that they clicked reply on.
+	 * Bitmap code from:
+	 * http://stackoverflow.com/questions/8490474/cant-compress-a-recycled-bitmap
 	 */
 	private OnClickListener replyParentBtnClick = new OnClickListener() 
 	{
@@ -314,14 +320,14 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
-			            	inputImage.buildDrawingCache();
-			            	Bitmap bmp = inputImage.getDrawingCache();
-			            	Image img = new Image(bmp);
-			        		cntrl.addReplyImg(topicComment, (Activity) context, title, text, img);
+			            	inputImage.buildDrawingCache(true);
+			            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
+			            	inputImage.destroyDrawingCache(); 
+			        		cntrl.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, bitmap, true);
 			            } 
 			            else 
 			            {	                
-			        		cntrl.addReply(topicComment, (Activity) context, title, text);
+			        		cntrl.addReply(currentComment.getElasticID(), (Activity) context, title, text, true);
 			            }
 			            updateReplyView(replies);
 			        }

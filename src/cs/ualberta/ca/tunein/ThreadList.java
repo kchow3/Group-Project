@@ -15,7 +15,6 @@ public class ThreadList
 {
 	private ArrayList<Comment> discussionThread;
 	private ArrayAdapter<Comment> adapter;
-
 	/**
 	 * Constructor that constructs a new list of comments.
 	 */

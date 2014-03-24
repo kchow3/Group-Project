@@ -2,26 +2,20 @@ package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
 
-import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -30,6 +24,10 @@ import android.widget.TextView;
  * Part of the view class that contains a comment and its replies.
  * This is part of the view when a user presses a view button on a 
  * comment to bring up this page.
+ * Dialog code from:
+ * http://stackoverflow.com/questions/4279787/how-can-i-pass-values-between-a-dialog-and-an-activity
+ * Intent code from:
+ * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
  */
 public class CommentPageActivity extends Activity {
 
@@ -37,19 +35,15 @@ public class CommentPageActivity extends Activity {
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
 	//public string that tags the extra of the comment to be edited that is passed to EditPageActivity
 	public final static String EXTRA_EDIT = "cs.ualberta.ca.tunein.commentEdit";
-	//public string that tags the extra of the topic comment that is passed to CommentPageActivity
-	public final static String EXTRA_TOPIC_COMMENT = "cs.ualberta.ca.tunein.topicComment";
 	
 	//reply view adapter
 	private ReplyViewAdapter viewAdapter;
 	//comment passed through intent when clicking on a view comment button
 	private Comment aComment;
-	//parent topic comment corresponding to the comment being viewed
-	private Comment topicComment;
 	//reply list
 	private ArrayList<Comment> replies;
 	//comment controller
-	private CommentController cntrl;
+	private CommentController commentController;
 	//boolean to check if current comment is repy to reply
 	private boolean isReplyReply;
 	
@@ -82,59 +76,60 @@ public class CommentPageActivity extends Activity {
 	    super.onCreate(savedInstanceState);
 	    this.replies = new ArrayList<Comment>();
 	    getInputComment();
+	    setContentView(R.layout.comment_view);
 	}
 	
 	@Override
 	protected void onResume() 
 	{
 		super.onResume();
-		setContentView(R.layout.comment_view);
 		setupComment();
-		replies = aComment.getReplies();
+		
 		//setup the reply listview
-		this.viewAdapter = new ReplyViewAdapter(this, replies, topicComment);
+		this.viewAdapter = new ReplyViewAdapter(this, replies);
 		ExpandableListView listview = (ExpandableListView) findViewById(R.id.expandableListViewReply);
 		
+		commentController = new CommentController(aComment, viewAdapter);
+		commentController.loadCommentReplies(this);
+		replies = aComment.getReplies();
 		//setup
 		listview.setAdapter(viewAdapter);
 		viewAdapter.updateReplyView(replies);
+		collapseAll(listview);
 	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		  if (requestCode == 1) {
 
-		     if(resultCode == RESULT_OK){      
-		         aComment = (Comment) data.getSerializableExtra("editResult"); 
-		         cntrl = new CommentController(aComment);
-		         if(!isReplyReply)
-		         {
-		        	 topicComment = aComment;
-		         }
-		         cntrl.updateElasticSearch(topicComment);
-		         setupComment();
-		     }
+			if (resultCode == RESULT_OK) {
+				aComment = (Comment) data.getSerializableExtra("editReturn");
+				commentController = new CommentController(aComment, viewAdapter);
+				commentController.loadCommentReplies(this);
+				setupComment();
+				viewAdapter.updateReplyView(aComment.getReplies());
+			}
+		     
 		     if (resultCode == RESULT_CANCELED) {
 		    	 //edit cancelled
 		     }
-		  }
 		}
+	}
+
+	/**
+	 * Method to get input from intents.
+	 */
 	private void getInputComment()
 	{
 		Intent intent = getIntent();
 		isReplyReply = intent.getBooleanExtra("isReplyReply", false);
-		if(isReplyReply)
-		{
-			this.topicComment = (Comment) intent.getSerializableExtra(EXTRA_TOPIC_COMMENT);
-		}
-		else
-		{
-			this.topicComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
-		}
-		this.aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
-		replies = aComment.getReplies();
+		aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
 	}
 	
+	/**
+	 * Setup elements on the CommentPage
+	 */
 	private void setupComment()
 	{
 		//setup comment info
@@ -176,11 +171,12 @@ public class CommentPageActivity extends Activity {
 		//if there is image load image else invisible
 		if(aComment.isHasImage())
 		{
+			imageViewCommentImage.setImageBitmap(aComment.getImg().getBitMap());
 			imageViewCommentImage.setVisibility(View.VISIBLE);
 		}
 		
-		cntrl = new CommentController(aComment);
-		if(cntrl.checkValid(this))
+		commentController = new CommentController(aComment);
+		if(commentController.checkValid(this))
 		{
 			buttonCommentEdit.setVisibility(View.VISIBLE);
 		}
@@ -226,8 +222,10 @@ public class CommentPageActivity extends Activity {
 	};
 	
 	/**
-	 * This click listner will go to reply page to create a reply comment
+	 * This click listener will go to reply page to create a reply comment
 	 * to the comment that is being viewed.
+	 * Bitmap code from:
+	 * http://stackoverflow.com/questions/8490474/cant-compress-a-recycled-bitmap
 	 */
 	private OnClickListener replyBtnClick = new OnClickListener() 
 	{
@@ -242,18 +240,18 @@ public class CommentPageActivity extends Activity {
 			            String title = inputTitle.getText().toString();
 			            String text = inputComment.getText().toString();
 			            
-		        		cntrl = new CommentController(aComment);
+			            commentController = new CommentController(aComment);
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
-			            	inputImage.buildDrawingCache();
-			            	Bitmap bmp = inputImage.getDrawingCache();
-			            	Image img = new Image(bmp);            	
-			        		cntrl.addReplyImg(topicComment, CommentPageActivity.this, title, text, img);
+			            	inputImage.buildDrawingCache(true);
+			            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
+			            	inputImage.destroyDrawingCache();           	
+			            	commentController.addReplyImg(aComment.getElasticID(), CommentPageActivity.this, title, text, bitmap, isReplyReply);
 			            } 
 			            else 
 			            {	                
-			        		cntrl.addReply(topicComment, CommentPageActivity.this, title, text);
+			            	commentController.addReply(aComment.getElasticID(), CommentPageActivity.this, title, text, isReplyReply);
 			            }
 			            replies = aComment.getReplies();
 			            viewAdapter.updateReplyView(replies);
@@ -276,5 +274,21 @@ public class CommentPageActivity extends Activity {
 		inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
 		inputComment = (EditText) createView.findViewById(R.id.editTextComment);
 		inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
+	}
+	
+	
+	/**
+	 * Method for collapsing all parent items in the listview.
+	 * Code from:
+	 * http://stackoverflow.com/questions/2848091/expandablelistview-collapsing-all-parent-items
+	 * @param listview The listview to be collapsed.
+	 */
+	private void collapseAll(ExpandableListView listview)
+	{
+		int count = viewAdapter.getGroupCount();
+		for(int i = 0; i < count; i++)
+		{
+			listview.collapseGroup(i);
+		}
 	}
 }

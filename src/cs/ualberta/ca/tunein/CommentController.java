@@ -4,7 +4,7 @@ import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-
+import android.graphics.Bitmap;
 
 /**
  * Controller
@@ -17,6 +17,7 @@ import android.content.SharedPreferences;
 public class CommentController{
 
 	private Comment comment;
+	private ReplyViewAdapter viewAdapter;
 	
 	/**
 	 * Constructor to construct a controller that can modify comments.
@@ -26,80 +27,163 @@ public class CommentController{
 	{
 		this.comment = aComment;
 	}
+	
+	public CommentController(Comment aComment, ReplyViewAdapter adap) 
+	{
+		this.comment = aComment;
+		this.viewAdapter = adap;
+	}
 
+	/**
+	 * Method to edit the text of a comment.
+	 * @param text The edited text.
+	 */
 	public void editText(String text) {
 		comment.setComment(text);
 	}
 
+	/**
+	 * Method to change the location of a comment.
+	 * @param lon The longitude.
+	 * @param lat The latitude.
+	 */
 	public void changeLoc(Double lon, Double lat) {
 		comment.getGeolocation().setLongitude(lon);
 		comment.getGeolocation().setLatitude(lat);
 	}
 
-	public void addImg(Image img) {
+	/**
+	 * Method to add an image to comment.
+	 * @param img The image. to be added.
+	 */
+	public void addImg(Bitmap bmp) {
+		Image img = new Image(bmp);
 		comment.setImg(img);
 	}
 	
-	public void addReplyImg(Comment currentComment, Activity act, String title, String text, Image img) {
+	/**
+	 * Method to create a reply to a comment with image.
+	 * @param currentComment The topic comment that the reply will belong to.
+	 * @param act The activity that calls this method.
+	 * @param title The title of the comment.
+	 * @param text The text of the comment.
+	 * @param img The image of the comment.
+	 * @param isReply Check if the added comment will be reply of reply.
+	 */
+	public void addReplyImg(String parentID, Context cntxt, String title, String text, Bitmap bmp, boolean isReply) {
 		
 		UserController userCntrl = new UserController();
-    	String username = userCntrl.loadUsername(act);
-    	String id = userCntrl.loadUserid(act);
+    	String username = userCntrl.loadUsername(cntxt);
+    	String id = userCntrl.loadUserid(cntxt);
 		Commenter user = new Commenter(username, id);
 		
 		GeoLocation loc = new GeoLocation();
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
-		geoCntrl.getLocation(act);
+		geoCntrl.getLocation(cntxt);
 		
-		Comment aComment = new Comment(user, title, text, loc, img);
+		Image img = new Image(bmp);
+		
+		Comment aComment = new Comment(user, title, text, loc, img, parentID);
 		comment.addReply(aComment);
 		comment.increaseReplyCount();
-		currentComment.increaseReplyCount();
 		
-		ElasticSearchOperations.putCommentModel(currentComment);
+		if(isReply)
+		{
+			aComment.increaseReplyCount();
+		}
+		
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.postCommentModel(aComment);
 	}
 	
-	public void addReply(Comment currentComment, Activity act, String title, String text) {
+	
+	/**
+	 * Method to create a reply to a comment with image.
+	 * @param currentComment The topic comment that the reply will belong to.
+	 * @param act The activity that calls this method.
+	 * @param title The title of the comment.
+	 * @param text The text of the comment.
+	 * @param isReply Check if the added comment will be reply of reply.
+	 */
+	public void addReply(String parentID, Context cntxt, String title, String text, boolean isReply) {
 		
 		UserController userCntrl = new UserController();
-    	String username = userCntrl.loadUsername(act);
-    	String id = userCntrl.loadUserid(act);
+    	String username = userCntrl.loadUsername(cntxt);
+    	String id = userCntrl.loadUserid(cntxt);
 		Commenter user = new Commenter(username, id);
 		
 		GeoLocation loc = new GeoLocation();
 		GeoLocationController geoCntrl = new GeoLocationController(loc);
-		geoCntrl.getLocation(act);
+		geoCntrl.getLocation(cntxt);
 		
-		Comment aComment = new Comment(user, title, text, loc);
+		Comment aComment = new Comment(user, title, text, loc, parentID);
 		comment.addReply(aComment);
 		comment.increaseReplyCount();
-		currentComment.increaseReplyCount();
 		
-		ElasticSearchOperations.putCommentModel(currentComment);
+		if(isReply)
+		{
+			aComment.increaseReplyCount();
+		}
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.postCommentModel(aComment);
 	}
 
+	/**
+	 * Method of adding comment to cache.
+	 * @param aComment The comment to be added.
+	 */
 	public void addtoCache(Comment aComment) {
 		// TODO Auto-generated method stub
 	}
 	
+	/**
+	 * Method of adding comment to favorites.
+	 * @param aComment The comment to be added.
+	 */
 	public void favorite(Comment aComment) {
 		comment.increaseFavCount();
 	}
 
+	/**
+	 * Method of editing a comments title.
+	 * @param text The new title.
+	 */
 	public void editTitle(String text) {
 		comment.setTitle(text);
 	}
 	
-	public boolean checkValid(Activity act) {
+	/**
+	 * Method to check if the current user is the comment author
+	 * this is used to check credentials.
+	 * @param act Activity that this method is called from.
+	 * @return The resulting boolean of the check.
+	 */
+	public boolean checkValid(Context cntxt) {
 		//id of the current viewer
-		SharedPreferences prefs = act.getSharedPreferences(
-			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-		String currentID = prefs.getString("cs.ualberta.ca.tunein.userid", "");
+		User aUser = new User();
+		String currentID = aUser.getUniqueID(cntxt);
 		return comment.getCommenter().getUniqueID().equals(currentID);
 	}
 	
-	public void updateElasticSearch(Comment aComment)
+	/**
+	 * Method to update elastic search by pushing the
+	 * comment to elastic search.
+	 */
+	public void updateElasticSearch()
 	{
-		ElasticSearchOperations.putCommentModel(aComment);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.putCommentModel(comment);
+	}
+	
+	/**
+	 * This method goes through elastic search and gets the passed in
+	 * comment's replies and also their replies.
+	 * @param act
+	 * @param aComment
+	 */
+	public void loadCommentReplies(Context cntxt)
+	{
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.getRepliesByParentId(comment.getElasticID(), comment, cntxt,viewAdapter);
 	}
 }

@@ -117,18 +117,8 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/textViewCommentDate"
         android:layout_below="@+id/textViewCommentBlock"
-        android:layout_marginRight="23dp"
-        android:scaleType="center"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_launcher"
-        android:visibility="invisible" />
-
-    <Button
-        android:id="@+id/buttonCommentEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/buttonCommentSave"
-        android:layout_alignTop="@+id/imageViewCommentImage"
-        android:text="Edit"
         android:visibility="invisible" />
 
     <Button
@@ -148,5 +138,14 @@
         android:layout_below="@+id/imageViewCommentImage"
         android:layout_marginTop="14dp" >
     </ExpandableListView>
+
+    <Button
+        android:id="@+id/buttonCommentEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/expandableListViewReply"
+        android:layout_toLeftOf="@+id/buttonCommentReply"
+        android:text="Edit"
+        android:visibility="invisible" />
 
 </RelativeLayout>

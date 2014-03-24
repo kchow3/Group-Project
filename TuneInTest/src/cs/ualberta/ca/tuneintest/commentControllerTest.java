@@ -2,6 +2,7 @@ package cs.ualberta.ca.tuneintest;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.app.Activity;
+import android.graphics.Bitmap;
 import cs.ualberta.ca.tunein.Commenter;
 import cs.ualberta.ca.tunein.GeoLocation;
 import cs.ualberta.ca.tunein.MainActivity;
@@ -17,7 +18,8 @@ public class commentControllerTest extends ActivityInstrumentationTestCase2<Main
 		super(MainActivity.class);
 	}
 	
-	private MainActivity activity;
+	private Activity activity;
+	private Bitmap bmp;
 	
 	protected void setUp() throws Exception {
 		 super.setUp();
@@ -26,8 +28,8 @@ public class commentControllerTest extends ActivityInstrumentationTestCase2<Main
 	}
 	
 	Commenter commenter = new Commenter("myName", "ID");
-	GeoLocation loc = new GeoLocation(0, 0);
-	Comment comment = new Comment(commenter , "Title", "Comment", loc);
+	GeoLocation loc = new GeoLocation();
+	Comment comment = new Comment(commenter , "Title", "Comment", loc, "parent");
 	CommentController commentcontroller = new CommentController(comment);
 	
 	public void testEditText() {
@@ -37,21 +39,21 @@ public class commentControllerTest extends ActivityInstrumentationTestCase2<Main
 	}
 	
 	public void testChangeLoc() {
-		GeoLocation new_loc = new GeoLocation(1, 1);
-		commentcontroller.changeLoc(new_loc);
-		assertEquals("Edited geo location should be (1, 1)", comment.getGeolocation(), new_loc);
+		commentcontroller.changeLoc(1.0, 1.0);
+		assertEquals("Edited geo longitude should be 1.0", comment.getGeolocation().getLongitude(), 1.0);
+		assertEquals("Edited geo latitude should be 1.0", comment.getGeolocation().getLatitude(), 1.0);
 	}
 	
 	public void testAddReply() {
 		int reply_count = comment.getReplyCount();
-		commentcontroller.addReply(comment);
+		commentcontroller.addReply("test reply", activity, null, null, false);
 		assertEquals("Comment reply count should be incremented by one", comment.getReplyCount(), reply_count+1);
 	}
 	
 	public void testAddImg() {
-		Image new_img = new Image(null);
+		Bitmap new_img = this.bmp;
 		commentcontroller.addImg(new_img);
-		assertEquals("Image should be new_img", comment.getImg(), new_img);
+		assertNotSame("Image should not be null", comment.getImg(), null);
 	}
 	
 	public void testFavorite() {
