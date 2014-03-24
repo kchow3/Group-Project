@@ -22,7 +22,7 @@ public class editPageActivityTest extends ActivityInstrumentationTestCase2<MainA
 	{
 		Commenter user = new Commenter("Bob", "testid29fniudofh");
 		GeoLocation loc1 = new GeoLocation();
-		Comment aComment = new Comment(user, "Test", "This is a test", loc1);
+		Comment aComment = new Comment(user, "Test", "This is a test", loc1, "parent");
 		CommentController cntrl = new CommentController(aComment);
 		cntrl.editTitle("Edit");
 		cntrl.editText("This has been changed");
