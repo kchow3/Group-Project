@@ -57,7 +57,6 @@ public class TopicListActivity extends Activity {
 	private TextView inputComment;
 	private ImageView inputImage;
 	
-	private Button buttonMainMenu;
 	private TextView textViewSort;
 	
 	private Uri outputFileUri;
@@ -151,9 +150,6 @@ public class TopicListActivity extends Activity {
 	
 	private void setupTopicView()
 	{
-		//setup buttons
-	    buttonMainMenu = (Button)findViewById(R.id.buttonMainMenu);
-		buttonMainMenu.setOnClickListener(mainmenuBtnClick);
 		//setuptextview
 		textViewSort = (TextView)findViewById(R.id.textViewSort);
 		textViewSort.setText(sortType);
@@ -201,15 +197,6 @@ public class TopicListActivity extends Activity {
 		ImageController imgCntrl = new ImageController(TopicListActivity.this);
 		outputFileUri = imgCntrl.openImageIntent();
 	}
-
-	/**
-	 * This click listener will go to the main menu page.
-	 */
-	private OnClickListener mainmenuBtnClick = new OnClickListener() {
-		public void onClick(View v) {
-			finish();
-		}
-	};
 	
 	/**
 	 * This method is for setting up the dialog boxes.
