@@ -35,10 +35,6 @@ public class Comment implements Serializable
 	private GeoLocation geolocation;
 	//does comment have an image
 	private boolean hasImage;
-	//is comment saved
-	private boolean saved;
-	//is comment favorited
-	private boolean favorited;
 	//number of times this comment has been favorited
 	private int favoriteCount;
 	//number of replies to the comment
@@ -64,8 +60,6 @@ public class Comment implements Serializable
 		this.date = new Date();
 		this.replies = new ArrayList<Comment>();
 		this.hasImage = false;
-		this.favorited = false;
-		this.saved = false;
 		this.favoriteCount = 0;
 		this.replyCount = 0;
 		this.elasticID = null;
@@ -90,8 +84,6 @@ public class Comment implements Serializable
 		this.date = new Date();
 		this.replies = new ArrayList<Comment>();
 		this.hasImage = true;
-		this.favorited = false;
-		this.saved = false;
 		this.favoriteCount = 0;
 		this.replyCount = 0;
 		this.elasticID = null;
@@ -167,22 +159,6 @@ public class Comment implements Serializable
 		this.hasImage = hasImage;
 	}
 
-	public boolean isSaved() {
-		return saved;
-	}
-
-	public void setSaved(boolean saved) {
-		this.saved = saved;
-	}
-
-	public boolean isFavorited() {
-		return favorited;
-	}
-
-	public void setFavorited(boolean favorited) {
-		this.favorited = favorited;
-	}
-
 	public int getFavoriteCount() {
 		return favoriteCount;
 	}
@@ -250,8 +226,6 @@ public class Comment implements Serializable
 		this.date = source.getDate();
 		this.replies = source.getReplies();
 		this.hasImage = source.isHasImage();
-		this.favorited = source.isFavorited();
-		this.saved = source.isSaved();
 		this.favoriteCount = source.getFavoriteCount();
 		this.replyCount = source.getReplyCount();
 		this.elasticID = source.getElasticID();
