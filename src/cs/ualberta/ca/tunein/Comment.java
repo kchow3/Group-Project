@@ -201,6 +201,14 @@ public class Comment implements Serializable
 	}
 	
 	/**
+	 * Decrement the number times the comment was favorited.
+	 */
+	public void decreaseFavCount()
+	{
+		this.favoriteCount--;
+	}
+	
+	/**
 	 * Increase the number of times the comment has been replied to.
 	 */
 	public void increaseReplyCount()

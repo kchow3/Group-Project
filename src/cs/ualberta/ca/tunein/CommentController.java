@@ -137,19 +137,6 @@ public class CommentController{
 	
 	/**
 	 * Method of adding comment to favorites.
-	 */
-	public void addtoFav() {
-		Favorites favs = Favorites.getInstance();
-		if(!(favs.favoriteIDs.contains(comment.getElasticID())))
-		{
-			favs.favoriteIDs.add(comment.getElasticID());
-			favs.favorites.add(comment);
-			comment.increaseFavCount();
-		}
-	}
-	
-	/**
-	 * Method of adding comment to favorites.
 	 * @param aComment The comment to be added.
 	 */
 	public void favorite(Comment aComment) {

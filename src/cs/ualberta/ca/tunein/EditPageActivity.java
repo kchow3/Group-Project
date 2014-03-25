@@ -225,6 +225,10 @@ public class EditPageActivity extends Activity {
 	    public void onClick(View v)
 	    {
 	    	CommentController commentController = new CommentController(aComment);
+	    	//update the old favorite
+	    	FavoriteController favoriteController = new FavoriteController(aComment);
+	    	favoriteController.updateFavorite();
+	    	
 	    	//get bitmap from the imageview
 	    	imageViewEditImage.buildDrawingCache(true);
         	Bitmap bitmap = imageViewEditImage.getDrawingCache(true).copy(Config.RGB_565, false);
