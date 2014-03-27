@@ -21,7 +21,7 @@
         android:id="@+id/listViewTopics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonMainMenu"
+        android:layout_above="@+id/buttonCreate"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textViewTopics"
         android:layout_marginTop="40dp"
@@ -45,20 +45,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:minWidth="100dip"
         android:onClick="createCommentClick"
         android:text="Create"
-        android:width="160dp" />
-
-    <Button
-        android:id="@+id/buttonMainMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:minWidth="100dip"
-        android:text="MainMenu"
         android:width="160dp" />
 
 </RelativeLayout>

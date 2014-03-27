@@ -53,8 +53,6 @@ public class CommentPageActivity extends Activity {
 	private TextView textViewCommentDate;
 	private TextView textViewCommentFavCount;
 	private TextView textViewCommentReplyCount;
-	private TextView textViewCommentFaved;
-	private TextView textViewCommentSaved;
 	private TextView textViewCommentBlock;
 	
 	private Button buttonCommentFav;
@@ -138,8 +136,6 @@ public class CommentPageActivity extends Activity {
 		textViewCommentDate = (TextView)findViewById(R.id.textViewCommentDate);
 		textViewCommentFavCount = (TextView)findViewById(R.id.textViewCommentFavCount);
 		textViewCommentReplyCount = (TextView)findViewById(R.id.textViewCommentReplyCount);
-		textViewCommentFaved = (TextView)findViewById(R.id.textViewCommentFaved);
-		textViewCommentSaved = (TextView)findViewById(R.id.textViewCommentSaved);
 		textViewCommentBlock = (TextView)findViewById(R.id.textViewCommentBlock);
 		
 		buttonCommentFav = (Button)findViewById(R.id.buttonCommentFav);
@@ -155,18 +151,6 @@ public class CommentPageActivity extends Activity {
 		textViewCommentDate.setText(aComment.dateToString());
 		textViewCommentFavCount.setText("Favs: " + Integer.toString(aComment.getFavoriteCount()));
 		textViewCommentReplyCount.setText("Replies: " + Integer.toString(aComment.getReplyCount()));
-		
-		//Saved! text if comment is saved.
-		if(aComment.isFavorited())
-		{
-			textViewCommentFaved.setVisibility(View.VISIBLE);
-		}
-		
-		//Faved! text if comment is favorited.
-		if(aComment.isSaved())
-		{
-			textViewCommentSaved.setVisibility(View.VISIBLE);
-		}
 		
 		//if there is image load image else invisible
 		if(aComment.isHasImage())

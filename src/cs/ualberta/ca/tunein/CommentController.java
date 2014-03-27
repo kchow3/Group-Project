@@ -130,9 +130,8 @@ public class CommentController{
 
 	/**
 	 * Method of adding comment to cache.
-	 * @param aComment The comment to be added.
 	 */
-	public void addtoCache(Comment aComment) {
+	public void addtoCache() {
 		// TODO Auto-generated method stub
 	}
 	

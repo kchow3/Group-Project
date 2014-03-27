@@ -58,9 +58,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		TextView textViewTitle;
 		TextView textViewDate;
 		TextView textViewUser;
-		TextView textViewFavorited;
 		TextView textViewFavCount;
-		TextView textViewSaved;
 		TextView textViewReplyCount;
 		Button buttonView;
 		Button buttonReply;
@@ -73,11 +71,11 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * @param context The context of the activity that calls this class.
 	 * @param commentList The comment list that is to be in the list view.
 	 */
-	public CommentViewAdapter(Context context, ThreadList commentList) 
+	public CommentViewAdapter(Context context, ArrayList<Comment> commentList) 
 	{
-		super(context, R.layout.comment_view_row, commentList.getDiscussionThread());
+		super(context, R.layout.comment_view_row, commentList);
 		this.context = context;
-		this.commentList = commentList.getDiscussionThread();
+		this.commentList = commentList;
 	}
 	
 	@Override
@@ -97,9 +95,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		holder.textViewTitle = (TextView) rowView.findViewById(R.id.textViewTitle);
 		holder.textViewDate = (TextView) rowView.findViewById(R.id.textViewDate);
 		holder.textViewUser = (TextView) rowView.findViewById(R.id.textViewUser);
-		holder.textViewFavorited = (TextView) rowView.findViewById(R.id.textViewFavorited);
 		holder.textViewFavCount = (TextView) rowView.findViewById(R.id.textViewFavCount);
-		holder.textViewSaved = (TextView) rowView.findViewById(R.id.textViewSaved);
 		holder.textViewReplyCount = (TextView) rowView.findViewById(R.id.textViewReplyCount);
 		holder.buttonView = (Button) rowView.findViewById(R.id.buttonView);
 		holder.buttonReply = (Button) rowView.findViewById(R.id.buttonReply);
@@ -112,28 +108,6 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		holder.textViewUser.setText(commentList.get(position).getCommenter().getName());
 		holder.textViewFavCount.setText("Favs: " +Integer.toString(commentList.get(position).getFavoriteCount()));
 		holder.textViewReplyCount.setText("Replies: " + Integer.toString(commentList.get(position).getReplyCount()));
-		
-		//if the comment is favorited then text will show Faved! else it is invisible
-		if(commentList.get(position).isFavorited())
-		{
-			holder.textViewFavorited.setVisibility(View.VISIBLE);
-			holder.textViewFavorited.setText("Faved!");
-		}
-		else
-		{
-			holder.textViewFavorited.setVisibility(View.INVISIBLE);
-		}
-		
-		//if the comment is saved then text will show Saved! else it is invisible
-		if(commentList.get(position).isSaved())
-		{
-			holder.textViewSaved.setVisibility(View.VISIBLE);
-			holder.textViewSaved.setText("Saved!");
-		}
-		else
-		{
-			holder.textViewSaved.setVisibility(View.INVISIBLE);
-		}
 		
 		//set onclick listeners for buttons and the tag for position
 		holder.buttonView.setOnClickListener(viewBtnClick);
@@ -155,9 +129,9 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * This method is used to refresh the list view
 	 * @param threadList The comment list that the list view will show.
 	 */
-	public void updateThreadView(ThreadList threadList)
+	public void updateThreadView(ArrayList<Comment> commentList)
 	{
-		commentList = threadList.getDiscussionThread();
+		this.commentList = commentList;
 		notifyDataSetChanged();
 	}
 	
@@ -182,7 +156,6 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    	Comment aComment = commentList.get(index);
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
 	    	intent.putExtra(EXTRA_COMMENT, aComment);
-	    	intent.putExtra("isReplyReply", false);
 	    	context.startActivity(intent);
 	    }
 	};

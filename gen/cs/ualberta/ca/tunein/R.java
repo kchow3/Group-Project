@@ -25,20 +25,19 @@ public final class R {
     }
     public static final class id {
         public static final int RelativeLayout1=0x7f080046;
-        public static final int action_settings=0x7f08004c;
+        public static final int action_settings=0x7f08004b;
         public static final int buttonCache=0x7f08000c;
         public static final int buttonCommentEdit=0x7f08001c;
         public static final int buttonCommentFav=0x7f080018;
         public static final int buttonCommentReply=0x7f08001b;
         public static final int buttonCommentSave=0x7f080014;
-        public static final int buttonCreate=0x7f08004b;
+        public static final int buttonCreate=0x7f080049;
         public static final int buttonEditCancel=0x7f080036;
         public static final int buttonEditImage=0x7f080038;
         public static final int buttonEditLocation=0x7f080034;
         public static final int buttonEditSubmit=0x7f080037;
         public static final int buttonFav=0x7f080022;
         public static final int buttonImage=0x7f08002c;
-        public static final int buttonMainMenu=0x7f080049;
         public static final int buttonReply=0x7f080020;
         public static final int buttonReplyView=0x7f080044;
         public static final int buttonRowReply=0x7f080045;
@@ -81,19 +80,19 @@ public final class R {
         public static final int textViewEditTitle=0x7f08002e;
         public static final int textViewEditX=0x7f080033;
         public static final int textViewEditY=0x7f080035;
-        public static final int textViewFavCount=0x7f080027;
-        public static final int textViewFavorited=0x7f080026;
+        public static final int textViewFavCount=0x7f080026;
+        public static final int textViewFavorited=0x7f080028;
         public static final int textViewFavoritesTitle=0x7f080039;
         public static final int textViewGoDirect=0x7f08000f;
         public static final int textViewInputChangeLat=0x7f08003e;
         public static final int textViewInputChangeLong=0x7f08003f;
         public static final int textViewInputTitle=0x7f08002b;
         public static final int textViewReply=0x7f080040;
-        public static final int textViewReplyCount=0x7f080029;
+        public static final int textViewReplyCount=0x7f080027;
         public static final int textViewReplyDate=0x7f080042;
         public static final int textViewReplyRowCount=0x7f080041;
         public static final int textViewReplyUser=0x7f080043;
-        public static final int textViewSaved=0x7f080028;
+        public static final int textViewSaved=0x7f080029;
         public static final int textViewSort=0x7f08004a;
         public static final int textViewTitle=0x7f080021;
         public static final int textViewTopics=0x7f080047;

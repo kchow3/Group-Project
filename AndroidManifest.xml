@@ -32,6 +32,7 @@
         <activity android:name="TopicListActivity"></activity>
         <activity android:name="CommentPageActivity"></activity>
         <activity android:name="EditPageActivity"></activity>
+        <activity android:name="FavoriteActivity"></activity>
     </application>
 
 

@@ -225,6 +225,10 @@ public class EditPageActivity extends Activity {
 	    public void onClick(View v)
 	    {
 	    	CommentController commentController = new CommentController(aComment);
+	    	//update the old favorite by removing old and adding new
+	    	FavoriteController favoriteController = new FavoriteController(aComment);
+	    	favoriteController.removeFromFav(getApplicationContext());
+	    	
 	    	//get bitmap from the imageview
 	    	imageViewEditImage.buildDrawingCache(true);
         	Bitmap bitmap = imageViewEditImage.getDrawingCache(true).copy(Config.RGB_565, false);
@@ -235,6 +239,7 @@ public class EditPageActivity extends Activity {
         	commentController.addImg(bitmap);
         	commentController.changeLoc(Double.parseDouble(textViewEditX.getText().toString()),
 	    			Double.parseDouble(textViewEditY.getText().toString()));
+        	favoriteController.addtoFav(getApplicationContext());
         	commentController.updateElasticSearch();
 	    	//return the comment through intent to comment view
 	    	Intent returnIntent = new Intent();

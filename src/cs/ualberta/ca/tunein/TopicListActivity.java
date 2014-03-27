@@ -57,7 +57,6 @@ public class TopicListActivity extends Activity {
 	private TextView inputComment;
 	private ImageView inputImage;
 	
-	private Button buttonMainMenu;
 	private TextView textViewSort;
 	
 	private Uri outputFileUri;
@@ -73,7 +72,7 @@ public class TopicListActivity extends Activity {
 		setupTopicView();
 	    threadList = new ThreadList();
 		//setup the comment listview
-		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList);
+		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList.getDiscussionThread());
 		threadController = new ThreadController(threadList);
 		ListView listview = (ListView) findViewById(R.id.listViewTopics);
 		listview.setAdapter(viewAdapter);
@@ -85,7 +84,7 @@ public class TopicListActivity extends Activity {
 	{
 		super.onResume();
 		threadController.getOnlineTopics(this);
-		viewAdapter.updateThreadView(threadList);
+		viewAdapter.updateThreadView(threadList.getDiscussionThread());
 	}
 	
 	@Override
@@ -151,9 +150,6 @@ public class TopicListActivity extends Activity {
 	
 	private void setupTopicView()
 	{
-		//setup buttons
-	    buttonMainMenu = (Button)findViewById(R.id.buttonMainMenu);
-		buttonMainMenu.setOnClickListener(mainmenuBtnClick);
 		//setuptextview
 		textViewSort = (TextView)findViewById(R.id.textViewSort);
 		textViewSort.setText(sortType);
@@ -190,7 +186,7 @@ public class TopicListActivity extends Activity {
 		            	threadController.createTopic(TopicListActivity.this, title, comment);     		
 		            }
 		            //cntrl.getOnlineTopics(TopicListActivity.this);
-		            viewAdapter.updateThreadView(threadList);
+		            viewAdapter.updateThreadView(threadList.getDiscussionThread());
 		        }
 		    })
 		    .setNegativeButton("Cancel", null).create();
@@ -201,15 +197,6 @@ public class TopicListActivity extends Activity {
 		ImageController imgCntrl = new ImageController(TopicListActivity.this);
 		outputFileUri = imgCntrl.openImageIntent();
 	}
-
-	/**
-	 * This click listener will go to the main menu page.
-	 */
-	private OnClickListener mainmenuBtnClick = new OnClickListener() {
-		public void onClick(View v) {
-			finish();
-		}
-	};
 	
 	/**
 	 * This method is for setting up the dialog boxes.
