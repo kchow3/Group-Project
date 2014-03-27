@@ -72,7 +72,7 @@ public class TopicListActivity extends Activity {
 		setupTopicView();
 	    threadList = new ThreadList();
 		//setup the comment listview
-		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList);
+		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList.getDiscussionThread());
 		threadController = new ThreadController(threadList);
 		ListView listview = (ListView) findViewById(R.id.listViewTopics);
 		listview.setAdapter(viewAdapter);
@@ -84,7 +84,7 @@ public class TopicListActivity extends Activity {
 	{
 		super.onResume();
 		threadController.getOnlineTopics(this);
-		viewAdapter.updateThreadView(threadList);
+		viewAdapter.updateThreadView(threadList.getDiscussionThread());
 	}
 	
 	@Override
@@ -186,7 +186,7 @@ public class TopicListActivity extends Activity {
 		            	threadController.createTopic(TopicListActivity.this, title, comment);     		
 		            }
 		            //cntrl.getOnlineTopics(TopicListActivity.this);
-		            viewAdapter.updateThreadView(threadList);
+		            viewAdapter.updateThreadView(threadList.getDiscussionThread());
 		        }
 		    })
 		    .setNegativeButton("Cancel", null).create();

@@ -71,11 +71,11 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * @param context The context of the activity that calls this class.
 	 * @param commentList The comment list that is to be in the list view.
 	 */
-	public CommentViewAdapter(Context context, ThreadList commentList) 
+	public CommentViewAdapter(Context context, ArrayList<Comment> commentList) 
 	{
-		super(context, R.layout.comment_view_row, commentList.getDiscussionThread());
+		super(context, R.layout.comment_view_row, commentList);
 		this.context = context;
-		this.commentList = commentList.getDiscussionThread();
+		this.commentList = commentList;
 	}
 	
 	@Override
@@ -129,9 +129,9 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 * This method is used to refresh the list view
 	 * @param threadList The comment list that the list view will show.
 	 */
-	public void updateThreadView(ThreadList threadList)
+	public void updateThreadView(ArrayList<Comment> commentList)
 	{
-		commentList = threadList.getDiscussionThread();
+		this.commentList = commentList;
 		notifyDataSetChanged();
 	}
 	
@@ -156,7 +156,6 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    	Comment aComment = commentList.get(index);
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
 	    	intent.putExtra(EXTRA_COMMENT, aComment);
-	    	intent.putExtra("isReplyReply", false);
 	    	context.startActivity(intent);
 	    }
 	};
