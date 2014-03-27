@@ -40,6 +40,17 @@ public class FavoriteController {
 	private Favorites favs;
 	private Gson GSON;
 	
+	
+	/**
+	 * FavoriteController constructor that is mainly
+	 * used to load favorites.
+	 */
+	public FavoriteController()
+	{
+		favs = Favorites.getInstance();
+		constructGson();
+	}
+	
 	/**
 	 * FavoriteController constructor that takes
 	 * the passed in comment and modify the favorite
@@ -143,32 +154,36 @@ public class FavoriteController {
 	 */
 	public void loadFav(Context cntxt)
 	{
-		String jsonString = "";
-
-	    try {
-	        InputStream inputStream = cntxt.openFileInput(FAV_FILE);
-
-	        if ( inputStream != null ) {
-	            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-	            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-	            String receiveString = "";
-	            StringBuilder stringBuilder = new StringBuilder();
-
-	            while ( (receiveString = bufferedReader.readLine()) != null ) {
-	                stringBuilder.append(receiveString);
-	            }
-
-	            inputStream.close();
-	            jsonString = stringBuilder.toString();
-	        }
-	        Type favoriteType = new TypeToken<Favorites>(){}.getType();
-	        favs = GSON.fromJson(jsonString, favoriteType);
-	    }
-	    catch (FileNotFoundException e) {
-	        Log.e("FAV:", "File not found: " + e.toString());
-	    } catch (IOException e) {
-	        Log.e("FAV:", "Can not read file: " + e.toString());
-	    }
+		File file = cntxt.getFileStreamPath(FAV_FILE);
+		if(file.exists())
+		{
+			String jsonString = "";
+	
+		    try {
+		        InputStream inputStream = cntxt.openFileInput(FAV_FILE);
+	
+		        if ( inputStream != null ) {
+		            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+		            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+		            String receiveString = "";
+		            StringBuilder stringBuilder = new StringBuilder();
+	
+		            while ( (receiveString = bufferedReader.readLine()) != null ) {
+		                stringBuilder.append(receiveString);
+		            }
+	
+		            inputStream.close();
+		            jsonString = stringBuilder.toString();
+		        }
+		        Type favoriteType = new TypeToken<Favorites>(){}.getType();
+		        favs = GSON.fromJson(jsonString, favoriteType);
+		    }
+		    catch (FileNotFoundException e) {
+		        Log.e("FAV:", "File not found: " + e.toString());
+		    } catch (IOException e) {
+		        Log.e("FAV:", "Can not read file: " + e.toString());
+		    }
+		}
 	}
 	
 	/**
