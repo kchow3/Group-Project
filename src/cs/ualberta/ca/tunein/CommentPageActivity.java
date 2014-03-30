@@ -44,6 +44,8 @@ public class CommentPageActivity extends Activity {
 	private ArrayList<Comment> replies;
 	//comment controller
 	private CommentController commentController;
+	//favorite controller
+	private FavoriteController favoriteController;
 	//boolean to check if current comment is repy to reply
 	private boolean isReplyReply;
 	
@@ -54,6 +56,8 @@ public class CommentPageActivity extends Activity {
 	private TextView textViewCommentFavCount;
 	private TextView textViewCommentReplyCount;
 	private TextView textViewCommentBlock;
+	private TextView textViewCommentSaved;
+	private TextView textViewCommentFaved;
 	
 	private Button buttonCommentFav;
 	private Button buttonCommentSave;
@@ -75,6 +79,7 @@ public class CommentPageActivity extends Activity {
 	    this.replies = new ArrayList<Comment>();
 	    getInputComment();
 	    setContentView(R.layout.comment_view);
+	    favoriteController = new FavoriteController();
 	}
 	
 	@Override
@@ -137,6 +142,8 @@ public class CommentPageActivity extends Activity {
 		textViewCommentFavCount = (TextView)findViewById(R.id.textViewCommentFavCount);
 		textViewCommentReplyCount = (TextView)findViewById(R.id.textViewCommentReplyCount);
 		textViewCommentBlock = (TextView)findViewById(R.id.textViewCommentBlock);
+		textViewCommentFaved = (TextView)findViewById(R.id.textViewCommentFaved);
+		textViewCommentSaved = (TextView)findViewById(R.id.textViewCommentSaved);
 		
 		buttonCommentFav = (Button)findViewById(R.id.buttonCommentFav);
 		buttonCommentSave = (Button)findViewById(R.id.buttonCommentSave);
@@ -165,6 +172,11 @@ public class CommentPageActivity extends Activity {
 			buttonCommentEdit.setVisibility(View.VISIBLE);
 		}
 		
+		if(favoriteController.inFav(aComment))
+		{
+			textViewCommentFaved.setVisibility(View.VISIBLE);
+		}
+		
 		buttonCommentFav.setOnClickListener(favBtnClick);
 		buttonCommentSave.setOnClickListener(saveBtnClick);
 		buttonCommentEdit.setOnClickListener(editBtnClick);
@@ -177,7 +189,8 @@ public class CommentPageActivity extends Activity {
 	private OnClickListener favBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
-	    {
+	    {	    	
+	    	favoriteController.addtoFav(getApplicationContext(), aComment);
 	    }
 	};
 	
