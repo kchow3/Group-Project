@@ -16,7 +16,6 @@ import com.google.gson.reflect.TypeToken;
 
 import cs.ualberta.ca.tunein.network.BitmapJsonConverter;
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
-import cs.ualberta.ca.tunein.network.ElasticSearchResponse;
 
 import android.content.Context;
 import android.graphics.Bitmap;
