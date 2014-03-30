@@ -15,8 +15,8 @@ public class Favorites {
 
 	private static final Favorites INSTANCE = new Favorites();
 	
-	public static ArrayList<Comment> favorites = new ArrayList<Comment>();
-	public static ArrayList<String> favoriteIDs = new ArrayList<String>();
+	public ArrayList<Comment> favorites;
+	public ArrayList<String> favoriteIDs;
 	
     // Private constructor prevents instantiation from other classes
     private Favorites() {}

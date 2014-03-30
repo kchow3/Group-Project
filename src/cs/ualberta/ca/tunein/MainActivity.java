@@ -52,8 +52,13 @@ public class MainActivity extends Activity {
 		String androidId = "" + android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
 		String id = deviceId + androidId;
 		
+		//load in user unique id
 		UserController cntrl = new UserController();
 		cntrl.saveUserid(id, getApplicationContext());
+		
+		//load in the favorites
+		FavoriteController favoriteController = new FavoriteController();
+		favoriteController.loadFav(getApplicationContext());
 
 	}
 
