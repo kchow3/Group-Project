@@ -265,7 +265,7 @@ public class ElasticSearchOperations {
 		thread.start();
 	}
 	
-	private void getReplyReplies(final Comment model, final String parentID, final Context cntxt) {
+	public void getReplyReplies(final Comment model, final String parentID, final Context cntxt) {
 		if (GSON == null)
 			constructGson();
 

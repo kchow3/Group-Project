@@ -1,14 +1,11 @@
 package cs.ualberta.ca.tunein;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -18,6 +15,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import cs.ualberta.ca.tunein.network.BitmapJsonConverter;
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import cs.ualberta.ca.tunein.network.ElasticSearchResponse;
 
 import android.content.Context;
@@ -58,6 +56,9 @@ public class FavoriteController {
 	public void addtoFav(Context cntxt, Comment comment) {
 		if(!(favs.favoriteIDs.contains(comment.getElasticID())))
 		{
+			ElasticSearchOperations eso = new ElasticSearchOperations();
+			//get the favorite comment's replies
+			eso.getReplyReplies(comment, comment.getElasticID(), cntxt);
 			//add new favorite to beginning of list
 			favs.favoriteIDs.add(0, comment.getElasticID());
 			favs.favorites.add(0, comment);
