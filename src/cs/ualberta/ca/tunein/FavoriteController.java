@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -155,6 +156,8 @@ public class FavoriteController {
 	public void loadFav(Context cntxt)
 	{
 		File file = cntxt.getFileStreamPath(FAV_FILE);
+		favs.favoriteIDs = new ArrayList<String>();
+		favs.favorites = new ArrayList<Comment>();
 		if(file.exists())
 		{
 			String jsonString = "";
