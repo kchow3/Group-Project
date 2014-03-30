@@ -211,6 +211,10 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	{
 	    public void onClick(View v)
 	    {
+	    	final int i = (Integer)v.getTag();
+	    	Comment currentComment = commentList.get(i);
+	    	FavoriteController favoriteController = new FavoriteController(currentComment);
+	    	favoriteController.addtoFav(context);
 	    }
 	};
 	
