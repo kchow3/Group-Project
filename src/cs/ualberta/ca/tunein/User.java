@@ -6,8 +6,8 @@ import android.content.SharedPreferences;
 /**
  * Model
  * User Class:
- * This class is a model of the user, which is anyone
- * viewing the app.
+ * This class is a model of the user, which the person that 
+ * is currently viewing the app.
  * To access this class throughout the whole app you can use 
  * shared preferences.
  */

@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
 		String id = deviceId + androidId;
 		
 		UserController cntrl = new UserController();
-		cntrl.saveUserid(id, this);
+		cntrl.saveUserid(id, getApplicationContext());
 
 	}
 
@@ -83,7 +83,7 @@ public class MainActivity extends Activity {
 		edit_username = (TextView) findViewById(R.id.edit_username);
 		
 		UserController cntrl = new UserController();
-		edit_username.setText(cntrl.loadUsername(this));
+		edit_username.setText(cntrl.loadUsername(getApplicationContext()));
 		
 		name_button.setOnClickListener(renameBtnClick);
 		otherLocation_button.setOnClickListener(otherLocationBtnClick);
@@ -110,7 +110,7 @@ public class MainActivity extends Activity {
 	private OnClickListener renameBtnClick = new OnClickListener() {
 		public void onClick(View v) {
 			UserController cntrl = new UserController();
-			cntrl.changeUsername(edit_username.getText().toString(), MainActivity.this);
+			cntrl.changeUsername(edit_username.getText().toString(), getApplicationContext());
 			
 			//toast massage to confirm username change
 			Context context = getApplicationContext();
