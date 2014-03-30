@@ -37,7 +37,6 @@ public class FavoriteController {
 	
 	public final static String FAV_FILE = "favorites.sav";
 
-	private Comment comment;
 	private Favorites favs;
 	private Gson GSON;
 	
@@ -53,22 +52,10 @@ public class FavoriteController {
 	}
 	
 	/**
-	 * FavoriteController constructor that takes
-	 * the passed in comment and modify the favorite
-	 * list.
-	 * @param aComment Comment to modify favorites.
-	 */
-	public FavoriteController(Comment aComment)
-	{
-		this.comment = aComment;
-		favs = Favorites.getInstance();
-		constructGson();
-	}
-	/**
 	 * Method of adding comment to favorites.
 	 * @param cntxt The context of the app to show toast.
 	 */
-	public void addtoFav(Context cntxt) {
+	public void addtoFav(Context cntxt, Comment comment) {
 		if(!(favs.favoriteIDs.contains(comment.getElasticID())))
 		{
 			//add new favorite to beginning of list
@@ -96,7 +83,7 @@ public class FavoriteController {
 	 * Method to remove a comment from favorites.
 	 * @param cntxt The context of the app to show toast.
 	 */
-	public void removeFromFav(Context cntxt)
+	public void removeFromFav(Context cntxt, Comment comment)
 	{
 		if((favs.favoriteIDs.contains(comment.getElasticID())))
 		{
@@ -116,7 +103,7 @@ public class FavoriteController {
 	 * Method to see if current comment is in favorites.
 	 * @return Whether comment is in favorites.
 	 */
-	public boolean inFav()
+	public boolean inFav(Comment comment)
 	{
 		if(favs.favoriteIDs.contains(comment.getElasticID()))
 		{
