@@ -13,10 +13,10 @@ import java.util.ArrayList;
  */
 public class Favorites {
 
-	private static Favorites INSTANCE = new Favorites();
+	private static final Favorites INSTANCE = new Favorites();
 	
-	public ArrayList<Comment> favorites;
-	public ArrayList<String> favoriteIDs;
+	public static ArrayList<Comment> favorites = new ArrayList<Comment>();
+	public static ArrayList<String> favoriteIDs = new ArrayList<String>();
 	
     // Private constructor prevents instantiation from other classes
     private Favorites() {}
