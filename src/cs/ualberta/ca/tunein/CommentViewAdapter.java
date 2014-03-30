@@ -34,7 +34,8 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
 	
 	//comment controller
-	private CommentController cntrl;
+	private CommentController commentController;
+	private FavoriteController favoriteController;
 	private Context context;
 	//holder for the elements in the row
 	private ViewHolder holder;
@@ -60,6 +61,8 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		TextView textViewUser;
 		TextView textViewFavCount;
 		TextView textViewReplyCount;
+		TextView textViewSaved;
+		TextView textViewFavorited;
 		Button buttonView;
 		Button buttonReply;
 		Button buttonFav;
@@ -76,6 +79,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		super(context, R.layout.comment_view_row, commentList);
 		this.context = context;
 		this.commentList = commentList;
+		favoriteController = new FavoriteController();
 	}
 	
 	@Override
@@ -108,6 +112,12 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		holder.textViewUser.setText(commentList.get(position).getCommenter().getName());
 		holder.textViewFavCount.setText("Favs: " +Integer.toString(commentList.get(position).getFavoriteCount()));
 		holder.textViewReplyCount.setText("Replies: " + Integer.toString(commentList.get(position).getReplyCount()));
+		
+		//set visibility if comment is in favorites
+		if(favoriteController.inFav(commentList.get(position)))
+		{
+			holder.textViewFavorited.setVisibility(View.VISIBLE);
+		}
 		
 		//set onclick listeners for buttons and the tag for position
 		holder.buttonView.setOnClickListener(viewBtnClick);
@@ -181,18 +191,18 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			            String text = inputComment.getText().toString();
 			            
 			            Comment currentComment = commentList.get(i);
-		        		cntrl = new CommentController(currentComment);
+		        		commentController = new CommentController(currentComment);
 			            //create comment with image else one with no image
 			            if (inputImage.getVisibility() == View.VISIBLE) 
 			            {
 			            	inputImage.buildDrawingCache(true);
 			            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
 			            	inputImage.destroyDrawingCache();
-			        		cntrl.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, bitmap, false);
+			            	commentController.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, bitmap, false);
 			            } 
 			            else 
 			            {	                        		
-			        		cntrl.addReply(currentComment.getElasticID(), (Activity) context, title, text, false);
+			            	commentController.addReply(currentComment.getElasticID(), (Activity) context, title, text, false);
 			        		
 			            } 
 			            refreshThreadView();
@@ -213,8 +223,9 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    {
 	    	final int i = (Integer)v.getTag();
 	    	Comment currentComment = commentList.get(i);
-	    	FavoriteController favoriteController = new FavoriteController();
+	    	favoriteController = new FavoriteController();
 	    	favoriteController.addtoFav(context, currentComment);
+	    	refreshThreadView();
 	    }
 	};
 	
