@@ -6,7 +6,6 @@ import android.widget.ListView;
 
 public class FavoriteActivity extends Activity {
 
-	private FavoriteController favoriteController;
 	//comment view adapter
 	private CommentViewAdapter viewAdapter;
 	private Favorites favs;
@@ -17,7 +16,6 @@ public class FavoriteActivity extends Activity {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.favorites_view);
 	    favs = Favorites.getInstance();
-	    favoriteController = new FavoriteController();
 	    viewAdapter = new CommentViewAdapter(FavoriteActivity.this, favs.favorites);
 	    ListView listview = (ListView) findViewById(R.id.listViewFavorites);
 		listview.setAdapter(viewAdapter);
@@ -27,7 +25,6 @@ public class FavoriteActivity extends Activity {
 	public void onResume()
 	{
 		super.onResume();
-		favoriteController.loadFav(getApplicationContext());
 		viewAdapter.updateThreadView(favs.favorites);
 	}
 	

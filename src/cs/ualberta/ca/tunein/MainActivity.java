@@ -168,6 +168,9 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener favBtnClick = new OnClickListener() {
 		public void onClick(View v) {
+			Intent i = new Intent(getApplicationContext(),
+					FavoriteActivity.class);
+			MainActivity.this.startActivity(i);
 		}
 	};
 	

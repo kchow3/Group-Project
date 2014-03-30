@@ -105,6 +105,8 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		holder.buttonReply = (Button) rowView.findViewById(R.id.buttonReply);
 		holder.buttonFav = (Button) rowView.findViewById(R.id.buttonFav);
 		holder.buttonSave = (Button) rowView.findViewById(R.id.buttonSave);
+		holder.textViewFavorited = (TextView) rowView.findViewById(R.id.textViewFavorited);
+		holder.textViewSaved = (TextView) rowView.findViewById(R.id.textViewSaved);
 		
 		//set text of textviews
 		holder.textViewTitle.setText(commentList.get(position).getTitle());
