@@ -21,6 +21,7 @@ import com.google.gson.reflect.TypeToken;
 
 import cs.ualberta.ca.tunein.network.BitmapJsonConverter;
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
+import cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface;
 
 /**
  * Controller
@@ -58,7 +59,7 @@ public class CacheController {
 	{
 		if(!(saves.cacheIDs.contains(comment.getElasticID())))
 		{
-			ElasticSearchOperations eso = new ElasticSearchOperations();
+			ElasticSearchOperationsInterface eso = new ElasticSearchOperations();
 			//get the saved comment's replies
 			eso.getReplyReplies(comment, comment.getElasticID(), cntxt);
 			//add new saved comment to beginning of list

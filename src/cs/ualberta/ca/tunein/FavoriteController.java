@@ -16,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 
 import cs.ualberta.ca.tunein.network.BitmapJsonConverter;
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
+import cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -56,7 +57,7 @@ public class FavoriteController {
 	public void addToFav(Context cntxt, Comment comment) {
 		if(!(favs.favoriteIDs.contains(comment.getElasticID())))
 		{
-			ElasticSearchOperations eso = new ElasticSearchOperations();
+			ElasticSearchOperationsInterface eso = new ElasticSearchOperations();
 			comment.increaseFavCount();
 			//update on elastic search since fav count increases
 			eso.putCommentModel(comment);

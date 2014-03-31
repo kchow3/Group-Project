@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
+import cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface;
 
 import android.app.Activity;
 import android.content.Context;
@@ -129,7 +130,7 @@ public class ThreadController {
 		
 		Comment aComment = new Comment(user, title, comment, loc, img, "0");
 		list.add(aComment);
-		ElasticSearchOperations eso = new ElasticSearchOperations();
+		ElasticSearchOperationsInterface eso = new ElasticSearchOperations();
 		eso.postCommentModel(aComment);;
 		//sortChooser(act);
 	}
@@ -155,7 +156,7 @@ public class ThreadController {
 		
 		Comment aComment = new Comment(user, title, comment, loc, "0");
 		list.add(aComment);
-		ElasticSearchOperations eso = new ElasticSearchOperations();
+		ElasticSearchOperationsInterface eso = new ElasticSearchOperations();
 		eso.postCommentModel(aComment);
 		//sortChooser(act);
 	}
@@ -168,7 +169,7 @@ public class ThreadController {
 	 */
 	public void getOnlineTopics(Activity act) {
 		// get comments from elastic search
-		ElasticSearchOperations eso = new ElasticSearchOperations();
+		ElasticSearchOperationsInterface eso = new ElasticSearchOperations();
 		eso.getCommentPostsByReplyCount(this.discussionThread, act);
 		Log.v("topics this:", Integer.toString(this.discussionThread.getDiscussionThread().size()));
 	}

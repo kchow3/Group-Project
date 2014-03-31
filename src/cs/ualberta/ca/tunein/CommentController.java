@@ -1,6 +1,7 @@
 package cs.ualberta.ca.tunein;
 
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
+import cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -92,7 +93,7 @@ public class CommentController{
 			aComment.increaseReplyCount();
 		}
 		
-		ElasticSearchOperations eso = new ElasticSearchOperations();
+		ElasticSearchOperationsInterface eso = new ElasticSearchOperations();
 		eso.postCommentModel(aComment);
 	}
 	
@@ -124,7 +125,7 @@ public class CommentController{
 		{
 			aComment.increaseReplyCount();
 		}
-		ElasticSearchOperations eso = new ElasticSearchOperations();
+		ElasticSearchOperationsInterface eso = new ElasticSearchOperations();
 		eso.postCommentModel(aComment);
 	}
 
@@ -170,7 +171,7 @@ public class CommentController{
 	 */
 	public void updateElasticSearch()
 	{
-		ElasticSearchOperations eso = new ElasticSearchOperations();
+		ElasticSearchOperationsInterface eso = new ElasticSearchOperations();
 		eso.putCommentModel(comment);
 	}
 	
@@ -182,7 +183,7 @@ public class CommentController{
 	 */
 	public void loadCommentReplies(Context cntxt)
 	{
-		ElasticSearchOperations eso = new ElasticSearchOperations();
+		ElasticSearchOperationsInterface eso = new ElasticSearchOperations();
 		eso.getRepliesByParentId(comment.getElasticID(), comment, cntxt,viewAdapter);
 	}
 }
