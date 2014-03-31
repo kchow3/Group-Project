@@ -377,6 +377,69 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 		thread.start();
 	}
 	
+	/* (non-Javadoc)
+	 * @see cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface#getCommentPostsByPictures(cs.ualberta.ca.tunein.ThreadList, android.content.Context)
+	 */
+	@Override
+	public void getCommentPostsByPictures(final ThreadList modelList, final Context cntxt) {
+		if (GSON == null)
+			constructGson();
+
+		Thread thread = new Thread() {
+
+			@Override
+			public void run() {
+				HttpClient client = new DefaultHttpClient();
+				HttpPost request = new HttpPost(SERVER_URL + "_search/");
+				String query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
+						"\"sort\": [ { \"hasImage\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
+				String responseJson = "";
+
+				Log.w(LOG_TAG, "query is: " + query);
+				try {
+					request.setEntity(new StringEntity(query));
+				} catch (UnsupportedEncodingException exception) {
+					Log.w(LOG_TAG,
+							"Error encoding search query: "
+									+ exception.getMessage());
+					return;
+				}
+				
+				try {
+					HttpResponse response = client.execute(request);
+					Log.i(LOG_TAG, "Response: "
+							+ response.getStatusLine().toString());
+
+					responseJson = getEntityContent(response);
+					}
+					//Log.v("GSON", responseJson);
+				catch (IOException exception) {
+					Log.w(LOG_TAG, "Error receiving search query response: "
+							+ exception.getMessage());
+					return;
+				}
+
+				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Comment>>() {
+				}.getType();
+				final ElasticSearchSearchResponse<Comment> returnedData = GSON
+						.fromJson(responseJson, elasticSearchSearchResponseType);
+
+				Runnable updateModel = new Runnable() {
+					@Override
+					public void run() {
+						modelList.clear();
+						modelList.addCommentCollection(returnedData.getSources());
+						Log.v("topics curr:", Integer.toString(modelList.getDiscussionThread().size()));
+					}
+				};
+
+				((Activity) cntxt).runOnUiThread(updateModel);
+			}
+		};
+
+		thread.start();
+	}
+	
 	/**
 	 * Constructs a Gson with a custom serializer / desserializer registered for
 	 * Bitmaps.

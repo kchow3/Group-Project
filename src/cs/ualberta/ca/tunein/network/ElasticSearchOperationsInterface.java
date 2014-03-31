@@ -58,4 +58,13 @@ public interface ElasticSearchOperationsInterface {
 	public abstract void getCommentPostsByReplyCount(ThreadList modelList,
 			Context cntxt);
 
+	/**
+	 * Method to get comments from elasticsearch and sort them based on having a picture.
+	 * Code from:
+	 * http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-sort.html
+	 * @param modelList ThreadList that will be filled.
+	 * @param cntxt Activity that calls this method.
+	 */
+	public abstract void getCommentPostsByPictures(ThreadList modelList, Context cntxt);
+
 }
