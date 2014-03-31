@@ -83,6 +83,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		this.context = context;
 		this.commentList = commentList;
 		favoriteController = new FavoriteController();
+		cacheController = new CacheController();
 	}
 	
 	@Override

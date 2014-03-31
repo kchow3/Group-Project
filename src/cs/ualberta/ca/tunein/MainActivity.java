@@ -59,6 +59,10 @@ public class MainActivity extends Activity {
 		//load in the favorites
 		FavoriteController favoriteController = new FavoriteController();
 		favoriteController.loadFav(getApplicationContext());
+		
+		//load in the cache
+		CacheController cacheController = new CacheController();
+		cacheController.loadCache(getApplicationContext());
 
 	}
 
