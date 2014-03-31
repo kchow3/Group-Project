@@ -216,6 +216,9 @@ public class MainActivity extends Activity {
 		prefs.edit().putString("cs.ualberta.ca.tunein.sort", sort).commit();
 	}
 	
+	/**
+	 * Grab current location to be set on the main page.
+	 */
 	private void loadLoc()
 	{
 		location_text = (TextView) findViewById(R.id.location_text);
