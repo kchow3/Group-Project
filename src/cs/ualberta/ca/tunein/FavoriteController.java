@@ -57,7 +57,7 @@ public class FavoriteController {
 	public void addToFav(Context cntxt, Comment comment) {
 		if(!(favs.favoriteIDs.contains(comment.getElasticID())))
 		{
-			ElasticSearchOperationsInterface eso = new ElasticSearchOperations();
+			ElasticSearchOperations eso = new ElasticSearchOperations();
 			comment.increaseFavCount();
 			//update on elastic search since fav count increases
 			eso.putCommentModel(comment);

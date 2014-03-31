@@ -162,7 +162,7 @@ public class CacheController {
 		            inputStream.close();
 		            jsonString = stringBuilder.toString();
 		        }
-		        Type cacheType = new TypeToken<Favorites>(){}.getType();
+		        Type cacheType = new TypeToken<Cache>(){}.getType();
 		        saves.setInstance((Cache) GSON.fromJson(jsonString, cacheType));
 		    }
 		    catch (FileNotFoundException e) {

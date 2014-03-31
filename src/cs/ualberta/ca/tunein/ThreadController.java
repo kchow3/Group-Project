@@ -130,7 +130,7 @@ public class ThreadController {
 		
 		Comment aComment = new Comment(user, title, comment, loc, img, "0");
 		list.add(aComment);
-		ElasticSearchOperationsInterface eso = new ElasticSearchOperations();
+		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.postCommentModel(aComment);;
 		//sortChooser(act);
 	}
@@ -156,7 +156,7 @@ public class ThreadController {
 		
 		Comment aComment = new Comment(user, title, comment, loc, "0");
 		list.add(aComment);
-		ElasticSearchOperationsInterface eso = new ElasticSearchOperations();
+		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.postCommentModel(aComment);
 		//sortChooser(act);
 	}
@@ -169,7 +169,7 @@ public class ThreadController {
 	 */
 	public void getOnlineTopics(Activity act) {
 		// get comments from elastic search
-		ElasticSearchOperationsInterface eso = new ElasticSearchOperations();
+		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.getCommentPostsByReplyCount(this.discussionThread, act);
 		Log.v("topics this:", Integer.toString(this.discussionThread.getDiscussionThread().size()));
 	}
