@@ -76,7 +76,6 @@ public class FavoriteController {
 		{
 			CharSequence text = "Already Favorited.";
 			int duration = Toast.LENGTH_SHORT;
-
 			Toast toast = Toast.makeText(cntxt, text, duration);
 			toast.show();
 		}

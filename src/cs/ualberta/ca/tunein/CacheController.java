@@ -20,6 +20,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import cs.ualberta.ca.tunein.network.BitmapJsonConverter;
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 
 /**
  * Controller
@@ -48,6 +49,8 @@ public class CacheController {
 	
 	/**
 	 * This method adds a saved comment to the cache list.
+	 * The max size of the list is 20 comments before the
+	 * removal of the last comment (first in first out style)
 	 * @param cntxt The context of the application.
 	 * @param comment The comment that is saved
 	 */
@@ -55,7 +58,19 @@ public class CacheController {
 	{
 		if(!(saves.cacheIDs.contains(comment.getElasticID())))
 		{
-
+			ElasticSearchOperations eso = new ElasticSearchOperations();
+			//get the saved comment's replies
+			eso.getReplyReplies(comment, comment.getElasticID(), cntxt);
+			//add new saved comment to beginning of list
+			saves.cacheIDs.add(0, comment.getElasticID());
+			saves.cacheList.add(0, comment);
+			//remove last element if cache gets too large
+			if(saves.cacheIDs.size() > 20)
+			{
+				removeFromCache(cntxt);
+			}
+			saveCache(cntxt);
+			
 			CharSequence text = "Saved!";
 			int duration = Toast.LENGTH_SHORT;
 			Toast toast = Toast.makeText(cntxt, text, duration);
@@ -65,7 +80,6 @@ public class CacheController {
 		{
 			CharSequence text = "Already Saved.";
 			int duration = Toast.LENGTH_SHORT;
-
 			Toast toast = Toast.makeText(cntxt, text, duration);
 			toast.show();
 		}
@@ -73,20 +87,15 @@ public class CacheController {
 	
 	/**
 	 * Method to remove a saved comment from the cache, 
-	 * remove comment when cache gets too full
+	 * remove comment when cache gets too full.
+	 * Use first in first out style of removing.
 	 * @param cntxt The context of the application
 	 * @param comment The comment to be removed
 	 */
-	public void removeFromCache(Context cntxt, Comment comment)
+	public void removeFromCache(Context cntxt)
 	{
-		if((saves.cacheIDs.contains(comment.getElasticID())))
-		{
-			
-			CharSequence text = "Removed Saved Comment";
-			int duration = Toast.LENGTH_SHORT;
-			Toast toast = Toast.makeText(cntxt, text, duration);
-			toast.show();
-		}
+		saves.cacheIDs.remove(saves.cacheIDs.size()-1);
+		saves.cacheList.remove(saves.cacheList.size()-1);
 	}
 	
 	/**
