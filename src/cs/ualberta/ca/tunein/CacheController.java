@@ -46,6 +46,11 @@ public class CacheController {
 		constructGson();
 	}
 	
+	/**
+	 * This method adds a saved comment to the cache list.
+	 * @param cntxt The context of the application.
+	 * @param comment The comment that is saved
+	 */
 	public void addToCache(Context cntxt, Comment comment)
 	{
 		if(!(saves.cacheIDs.contains(comment.getElasticID())))
@@ -66,6 +71,12 @@ public class CacheController {
 		}
 	}
 	
+	/**
+	 * Method to remove a saved comment from the cache, 
+	 * remove comment when cache gets too full
+	 * @param cntxt The context of the application
+	 * @param comment The comment to be removed
+	 */
 	public void removeFromCache(Context cntxt, Comment comment)
 	{
 		if((saves.cacheIDs.contains(comment.getElasticID())))
@@ -78,6 +89,11 @@ public class CacheController {
 		}
 	}
 	
+	/**
+	 * Method to check if comment is currently in the cache.
+	 * @param comment The comment to be checked
+	 * @return The result of the check
+	 */
 	public boolean inCache(Comment comment)
 	{
 		if(saves.cacheIDs.contains(comment.getElasticID()))
@@ -90,6 +106,10 @@ public class CacheController {
 		}
 	}
 	
+	/**
+	 * Method to save the saved comments (cache) to a file.
+	 * @param cntxt The application context.
+	 */
 	private void saveCache(Context cntxt)
 	{
 		Type cacheType = new TypeToken<Cache>(){}.getType();
@@ -103,6 +123,10 @@ public class CacheController {
 		}
 	}
 	
+	/**
+	 * Method to load the saved comments (cache) from a file.
+	 * @param cntxt The application context
+	 */
 	public void loadCache(Context cntxt)
 	{
 		File file = cntxt.getFileStreamPath(SAVE_FILE);

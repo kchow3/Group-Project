@@ -51,6 +51,7 @@ public class FavoriteController {
 	/**
 	 * Method of adding comment to favorites.
 	 * @param cntxt The context of the app to show toast.
+	 * @param comment The comment to be added
 	 */
 	public void addToFav(Context cntxt, Comment comment) {
 		if(!(favs.favoriteIDs.contains(comment.getElasticID())))
@@ -84,6 +85,7 @@ public class FavoriteController {
 	/**
 	 * Method to remove a comment from favorites.
 	 * @param cntxt The context of the app to show toast.
+	 * @param comment The comment to be removed
 	 */
 	public void removeFromFav(Context cntxt, Comment comment)
 	{
@@ -103,6 +105,7 @@ public class FavoriteController {
 	
 	/**
 	 * Method to see if current comment is in favorites.
+	 * @param comment Comment to check if is in favorites
 	 * @return Whether comment is in favorites.
 	 */
 	public boolean inFav(Comment comment)
@@ -121,6 +124,7 @@ public class FavoriteController {
 	 * Method to save the favorites to file.
 	 * Code from:
 	 * http://stackoverflow.com/questions/14376807/how-to-read-write-string-from-a-file-in-android
+	 * @param cntxt The context of the application
 	 */
 	private void saveFav(Context cntxt)
 	{
@@ -140,6 +144,7 @@ public class FavoriteController {
 	 * favorite class.
 	 * Code from:
 	 * http://stackoverflow.com/questions/14376807/how-to-read-write-string-from-a-file-in-android
+	 * @param cntxt The context of the application
 	 */
 	public void loadFav(Context cntxt)
 	{
