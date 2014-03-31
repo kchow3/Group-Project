@@ -46,6 +46,8 @@ public class CommentPageActivity extends Activity {
 	private CommentController commentController;
 	//favorite controller
 	private FavoriteController favoriteController;
+	//cache controller
+	private CacheController cacheController;
 	//boolean to check if current comment is repy to reply
 	private boolean isReplyReply;
 	
@@ -80,6 +82,7 @@ public class CommentPageActivity extends Activity {
 	    getInputComment();
 	    setContentView(R.layout.comment_view);
 	    favoriteController = new FavoriteController();
+	    cacheController = new CacheController();
 	}
 	
 	@Override
@@ -172,9 +175,18 @@ public class CommentPageActivity extends Activity {
 			buttonCommentEdit.setVisibility(View.VISIBLE);
 		}
 		
+		//check if comment is favorited
 		if(favoriteController.inFav(aComment))
 		{
 			textViewCommentFaved.setVisibility(View.VISIBLE);
+			setupComment();
+		}
+		
+		//check if comment is saved
+		if(cacheController.inCache(aComment))
+		{
+			textViewCommentSaved.setVisibility(View.VISIBLE);
+			setupComment();
 		}
 		
 		buttonCommentFav.setOnClickListener(favBtnClick);
@@ -201,6 +213,7 @@ public class CommentPageActivity extends Activity {
 	{
 	    public void onClick(View v)
 	    {
+	    	cacheController.addToCache(getApplicationContext(), aComment);
 	    }
 	};
 	

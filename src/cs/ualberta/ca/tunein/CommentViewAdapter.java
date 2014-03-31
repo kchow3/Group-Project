@@ -35,7 +35,10 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	
 	//comment controller
 	private CommentController commentController;
+	//favorite contoller
 	private FavoriteController favoriteController;
+	//cache controller
+	private CacheController cacheController;
 	private Context context;
 	//holder for the elements in the row
 	private ViewHolder holder;
@@ -119,6 +122,12 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		if(favoriteController.inFav(commentList.get(position)))
 		{
 			holder.textViewFavorited.setVisibility(View.VISIBLE);
+		}
+		
+		//set visibility if comment is in cache
+		if(cacheController.inCache(commentList.get(position)))
+		{
+			holder.textViewSaved.setVisibility(View.VISIBLE);
 		}
 		
 		//set onclick listeners for buttons and the tag for position
@@ -225,7 +234,6 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    {
 	    	final int i = (Integer)v.getTag();
 	    	Comment currentComment = commentList.get(i);
-	    	favoriteController = new FavoriteController();
 	    	favoriteController.addToFav(context, currentComment);
 	    	refreshThreadView();
 	    }
@@ -238,6 +246,10 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	{
 	    public void onClick(View v)
 	    {
+	    	final int i = (Integer)v.getTag();
+	    	Comment currentComment = commentList.get(i);
+	    	cacheController.addToCache(context, currentComment);
+	    	refreshThreadView();
 	    }
 	};
 	

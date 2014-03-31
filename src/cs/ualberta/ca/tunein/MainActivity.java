@@ -179,6 +179,9 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener cacheBtnClick = new OnClickListener() {
 		public void onClick(View v) {
+			Intent i = new Intent(getApplicationContext(),
+					CacheActivity.class);
+			MainActivity.this.startActivity(i);
 		}
 	};
 	
