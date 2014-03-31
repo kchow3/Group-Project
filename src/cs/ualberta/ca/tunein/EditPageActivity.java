@@ -191,7 +191,7 @@ public class EditPageActivity extends Activity {
 	    {
 	    	setupDialogs();
 			AlertDialog dialog = new AlertDialog.Builder(EditPageActivity.this)
-			    .setTitle("Create Comment")
+			    .setTitle("Change Location")
 			    .setView(createView)
 			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			        public void onClick(DialogInterface dialog, int whichButton) {

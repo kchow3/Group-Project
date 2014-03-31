@@ -2,15 +2,19 @@ package cs.ualberta.ca.tunein;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.telephony.TelephonyManager;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,19 +31,28 @@ import android.widget.Toast;
  */
 public class MainActivity extends Activity {
 	
+	public final static String SORT = "cs.ualberta.ca.tunein.sort";
+	public final static String SORTLONG = "cs.ualberta.ca.tunein.sortLong";
+	public final static String SORTLAT = "cs.ualberta.ca.tunein.sortLat";
+	
 	private TextView title;
 	
-	Button name_button;
-	Button otherLocation_button;
-	Button myLocation_button;
-	Button date_button;
-	Button pictures_button;
-	Button buttonTopicList;
-	Button fav_button;
-	Button buttonCache;
+	private Button name_button;
+	private Button otherLocation_button;
+	private Button myLocation_button;
+	private Button date_button;
+	private Button pictures_button;
+	private Button buttonTopicList;
+	private Button fav_button;
+	private Button buttonCache;
 	
-	TextView location_text;
-	TextView edit_username;
+	private TextView location_text;
+	private TextView edit_username;
+	
+	//dialog elements
+	private View createView;
+	private TextView inputLong;
+	private TextView inputLat;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +157,24 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener otherLocationBtnClick = new OnClickListener() {
 		public void onClick(View v) {
+	    	setupDialogs();
+			AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+			    .setTitle("Set Location")
+			    .setView(createView)
+			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			        public void onClick(DialogInterface dialog, int whichButton) {
+			    		SharedPreferences prefs = getApplicationContext().getSharedPreferences(
+			  			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+			    		prefs.edit().putString("SORTLONG", inputLong.getText().toString()).commit();
+			    		prefs.edit().putString("SORTLAT", inputLat.getText().toString()).commit();
+			    		setSort("Set Location");
+						Intent i = new Intent(getApplicationContext(),
+								TopicListActivity.class);
+						MainActivity.this.startActivity(i);
+			        }
+			    })
+			    .setNegativeButton("Cancel", null).create();
+			dialog.show();
 		}
 	};
 	
@@ -213,7 +244,7 @@ public class MainActivity extends Activity {
 	{
 		SharedPreferences prefs = this.getSharedPreferences(
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-		prefs.edit().putString("cs.ualberta.ca.tunein.sort", sort).commit();
+		prefs.edit().putString(SORT, sort).commit();
 	}
 	
 	/**
@@ -227,6 +258,18 @@ public class MainActivity extends Activity {
 		geoController.getLocation(getApplicationContext());
 		String coords = "@ " + String.valueOf(loc.getLongitude())  + ", " + String.valueOf(loc.getLatitude());
 		location_text.setText(coords);
+	}
+	
+	/**
+	 * Setup change location dialog box
+	 */
+	private void setupDialogs()
+	{
+		LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+		createView = inflater.inflate(R.layout.location_change, null);
+
+		inputLong = (EditText) createView.findViewById(R.id.textViewInputChangeLong);
+		inputLat = (EditText) createView.findViewById(R.id.textViewInputChangeLat);
 	}
 
 }
