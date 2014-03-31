@@ -2,7 +2,6 @@ package cs.ualberta.ca.tunein;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 
 public class FavoriteActivity extends Activity {

@@ -15,7 +15,7 @@ public class Cache {
 
 	private static Cache INSTANCE;
 	
-	public ArrayList<Comment> cache;
+	public ArrayList<Comment> cacheList;
 	public ArrayList<String> cacheIDs;
 	
     // Private constructor prevents instantiation from other classes
