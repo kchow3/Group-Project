@@ -229,9 +229,6 @@ public class EditPageActivity extends Activity {
 	    public void onClick(View v)
 	    {
 	    	CommentController commentController = new CommentController(aComment);
-	    	//update the old favorite by removing old and adding new
-	    	FavoriteController favoriteController = new FavoriteController();
-	    	favoriteController.removeFromFav(getApplicationContext(), aComment);
 	    	
 	    	if(imgAdded)
 	    	{
@@ -246,7 +243,6 @@ public class EditPageActivity extends Activity {
         	commentController.editText(textViewEditComment.getText().toString());
         	commentController.changeLoc(Double.parseDouble(textViewEditX.getText().toString()),
 	    			Double.parseDouble(textViewEditY.getText().toString()));
-        	favoriteController.addtoFav(getApplicationContext(), aComment);
         	commentController.updateElasticSearch();
 	    	//return the comment through intent to comment view
 	    	Intent returnIntent = new Intent();

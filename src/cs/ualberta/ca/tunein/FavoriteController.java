@@ -56,12 +56,14 @@ public class FavoriteController {
 		if(!(favs.favoriteIDs.contains(comment.getElasticID())))
 		{
 			ElasticSearchOperations eso = new ElasticSearchOperations();
+			comment.increaseFavCount();
+			//update on elastic search since fav count increases
+			eso.putCommentModel(comment);
 			//get the favorite comment's replies
 			eso.getReplyReplies(comment, comment.getElasticID(), cntxt);
 			//add new favorite to beginning of list
 			favs.favoriteIDs.add(0, comment.getElasticID());
 			favs.favorites.add(0, comment);
-			comment.increaseFavCount();
 			saveFav(cntxt);
 			
 			CharSequence text = "Favorited!";
