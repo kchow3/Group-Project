@@ -4,6 +4,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
 
+/**
+ * View
+ * CacheActivity Class:
+ * This part of the view of displaying saved comments
+ * that are saved to the cache. This is done through
+ * the use of the comment view row.
+ *
+ */
 public class CacheActivity extends Activity {
 
 	//comment view adapter

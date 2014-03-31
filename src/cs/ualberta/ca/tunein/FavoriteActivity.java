@@ -4,6 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
 
+/**
+ * View
+ * FavoriteActivity Class:
+ * This class is part of the view of displaying
+ * favorites by using the comment view row.
+ */
 public class FavoriteActivity extends Activity {
 
 	//comment view adapter
