@@ -190,7 +190,7 @@ public class CommentPageActivity extends Activity {
 	{
 	    public void onClick(View v)
 	    {	    	
-	    	favoriteController.addtoFav(getApplicationContext(), aComment);
+	    	favoriteController.addToFav(getApplicationContext(), aComment);
 	    }
 	};
 	

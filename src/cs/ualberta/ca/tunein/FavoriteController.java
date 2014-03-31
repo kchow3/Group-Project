@@ -39,8 +39,8 @@ public class FavoriteController {
 	
 	
 	/**
-	 * FavoriteController constructor that is mainly
-	 * used to load favorites.
+	 * FavoriteController constructor that 
+	 * assigns the favorite class to be modified
 	 */
 	public FavoriteController()
 	{
@@ -52,7 +52,7 @@ public class FavoriteController {
 	 * Method of adding comment to favorites.
 	 * @param cntxt The context of the app to show toast.
 	 */
-	public void addtoFav(Context cntxt, Comment comment) {
+	public void addToFav(Context cntxt, Comment comment) {
 		if(!(favs.favoriteIDs.contains(comment.getElasticID())))
 		{
 			ElasticSearchOperations eso = new ElasticSearchOperations();

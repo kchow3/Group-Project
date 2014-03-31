@@ -226,7 +226,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    	final int i = (Integer)v.getTag();
 	    	Comment currentComment = commentList.get(i);
 	    	favoriteController = new FavoriteController();
-	    	favoriteController.addtoFav(context, currentComment);
+	    	favoriteController.addToFav(context, currentComment);
 	    	refreshThreadView();
 	    }
 	};
