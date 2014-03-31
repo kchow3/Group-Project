@@ -23,7 +23,6 @@ public class FavoriteActivity extends Activity {
 	{
 		super.onResume();
 	    favs = Favorites.getInstance();
-	    Log.v("FAVOR", Integer.toString(favs.favorites.size()));
 	    
 	    viewAdapter = new CommentViewAdapter(FavoriteActivity.this, favs.favorites);
 	    ListView listview = (ListView) findViewById(R.id.listViewFavorites);

@@ -126,7 +126,6 @@ public class FavoriteController {
 	{
 		Type favoriteType = new TypeToken<Favorites>(){}.getType();
 		String jsonString = GSON.toJson(favs, favoriteType);
-		//Log.v("FAVOR", jsonString);
         try {
         	OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cntxt.openFileOutput(FAV_FILE, Context.MODE_PRIVATE));
 			outputStreamWriter.write(jsonString);
