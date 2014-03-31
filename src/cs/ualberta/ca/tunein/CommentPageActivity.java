@@ -179,14 +179,12 @@ public class CommentPageActivity extends Activity {
 		if(favoriteController.inFav(aComment))
 		{
 			textViewCommentFaved.setVisibility(View.VISIBLE);
-			setupComment();
 		}
 		
 		//check if comment is saved
 		if(cacheController.inCache(aComment))
 		{
 			textViewCommentSaved.setVisibility(View.VISIBLE);
-			setupComment();
 		}
 		
 		buttonCommentFav.setOnClickListener(favBtnClick);
