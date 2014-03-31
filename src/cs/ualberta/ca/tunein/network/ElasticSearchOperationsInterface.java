@@ -55,7 +55,7 @@ public interface ElasticSearchOperationsInterface {
 	 * @param modelList ThreadList that will be filled.
 	 * @param activity Activity that calls this method.
 	 */
-	public abstract void getCommentPostsByReplyCount(ThreadList modelList,
+	public abstract void getCommentPostsByHotness(ThreadList modelList,
 			Context cntxt);
 
 	/**

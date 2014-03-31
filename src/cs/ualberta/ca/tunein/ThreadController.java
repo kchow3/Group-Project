@@ -168,7 +168,7 @@ public class ThreadController {
 	public void getOnlineTopics(Activity act) {
 		// get comments from elastic search
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.getCommentPostsByReplyCount(this.discussionThread, act);
+		eso.getCommentPostsByHotness(this.discussionThread, act);
 		Log.v("topics this:", Integer.toString(this.discussionThread.getDiscussionThread().size()));
 	}
 }

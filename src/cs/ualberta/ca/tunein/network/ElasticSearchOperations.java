@@ -318,7 +318,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 	 * @see cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface#getCommentPostsByReplyCount(cs.ualberta.ca.tunein.ThreadList, android.content.Context)
 	 */
 	@Override
-	public void getCommentPostsByReplyCount(final ThreadList modelList, final Context cntxt) {
+	public void getCommentPostsByHotness(final ThreadList modelList, final Context cntxt) {
 		if (GSON == null)
 			constructGson();
 
@@ -329,7 +329,8 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 				HttpClient client = new DefaultHttpClient();
 				HttpPost request = new HttpPost(SERVER_URL + "_search/");
 				String query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
-						"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
+						"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true }," +
+						"  \"favoriteCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 				String responseJson = "";
 
 				Log.w(LOG_TAG, "query is: " + query);
