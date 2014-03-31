@@ -100,8 +100,6 @@ public class ThreadController {
 			sortByPicture();
 		if(sortName.equals("Date"))
 			sortByDate();
-		if(sortName.equals("Score"))
-			sortByScore();
 		//if(sortName.equals("Freshness"))
 			//ElasticSearchOperations.getCommentPostsByReplyCount(discussionThread, act);
 	}

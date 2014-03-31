@@ -214,6 +214,10 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener pictures_buttonBtnClick = new OnClickListener() {
 		public void onClick(View v) {
+			setSort("Picture");
+			Intent i = new Intent(getApplicationContext(),
+					TopicListActivity.class);
+			MainActivity.this.startActivity(i);
 		}
 	};
 	
@@ -244,9 +248,9 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener topicListBtnClick = new OnClickListener() {
 		public void onClick(View v) {
+			setSort("Freshness");
 			Intent i = new Intent(getApplicationContext(),
 					TopicListActivity.class);
-			setSort("Freshness");
 			MainActivity.this.startActivity(i);
 		}
 	};
