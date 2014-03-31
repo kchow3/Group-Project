@@ -33,6 +33,7 @@
         <activity android:name="CommentPageActivity"></activity>
         <activity android:name="EditPageActivity"></activity>
         <activity android:name="FavoriteActivity"></activity>
+        <activity android:name="CacheActivity"></activity>
     </application>
 
 
