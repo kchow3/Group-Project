@@ -2,6 +2,7 @@ package cs.ualberta.ca.tunein;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 public class FavoriteActivity extends Activity {
@@ -15,16 +16,19 @@ public class FavoriteActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.favorites_view);
-	    favs = Favorites.getInstance();
-	    viewAdapter = new CommentViewAdapter(FavoriteActivity.this, favs.favorites);
-	    ListView listview = (ListView) findViewById(R.id.listViewFavorites);
-		listview.setAdapter(viewAdapter);
 	}
 	
 	@Override
 	public void onResume()
 	{
 		super.onResume();
+	    favs = Favorites.getInstance();
+	    Log.v("FAVOR", Integer.toString(favs.favorites.size()));
+	    
+	    viewAdapter = new CommentViewAdapter(FavoriteActivity.this, favs.favorites);
+	    ListView listview = (ListView) findViewById(R.id.listViewFavorites);
+		listview.setAdapter(viewAdapter);
+		
 		viewAdapter.updateThreadView(favs.favorites);
 	}
 	

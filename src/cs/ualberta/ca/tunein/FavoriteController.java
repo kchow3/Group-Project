@@ -124,7 +124,7 @@ public class FavoriteController {
 	{
 		Type favoriteType = new TypeToken<Favorites>(){}.getType();
 		String jsonString = GSON.toJson(favs, favoriteType);
-	
+		//Log.v("FAVOR", jsonString);
         try {
         	OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cntxt.openFileOutput(FAV_FILE, Context.MODE_PRIVATE));
 			outputStreamWriter.write(jsonString);
@@ -166,7 +166,7 @@ public class FavoriteController {
 		            jsonString = stringBuilder.toString();
 		        }
 		        Type favoriteType = new TypeToken<Favorites>(){}.getType();
-		        favs = GSON.fromJson(jsonString, favoriteType);
+		        favs.setInstance((Favorites) GSON.fromJson(jsonString, favoriteType));
 		    }
 		    catch (FileNotFoundException e) {
 		        Log.e("FAV:", "File not found: " + e.toString());
