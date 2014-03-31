@@ -26,6 +26,7 @@ public class GeoLocationController {
 	private Timer timer1;
 	private LocationManager lm;
 	private boolean gps_enabled = false;
+	boolean network_enabled = false;
 	private Context context;
 	
 	public GeoLocationController(GeoLocation location){
@@ -48,11 +49,11 @@ public class GeoLocationController {
             lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		
 		//exceptions will be thrown if provider is not permitted.
-		try{gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);}
-		catch(Exception ex){}
+		try{gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);}catch(Exception ex){}
+		try{network_enabled=lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);}catch(Exception ex){}
 		
 		//don't start listeners if no provider is enabled
-        if(!gps_enabled)
+        if(!gps_enabled && !network_enabled)
         {
         	buildAlertMessageNoGps();
         }
@@ -61,9 +62,9 @@ public class GeoLocationController {
         {
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListenerGps);
         }
-        else
+        if(network_enabled)
         {
-        	return;
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListenerNetwork);
         }
         
         timer1=new Timer();
@@ -81,6 +82,23 @@ public class GeoLocationController {
             loc.setLongitude(location.getLongitude());
             loc.setLatitude(location.getLatitude());
             lm.removeUpdates(this);
+            lm.removeUpdates(locationListenerNetwork);
+        }
+        public void onProviderDisabled(String provider) {}
+        public void onProviderEnabled(String provider) {}
+        public void onStatusChanged(String provider, int status, Bundle extras) {}
+    };
+    
+    /**
+     * This location listener is for retrieving location updates from network
+     */
+    LocationListener locationListenerNetwork = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            timer1.cancel();
+            loc.setLongitude(location.getLongitude());
+            loc.setLatitude(location.getLatitude());
+            lm.removeUpdates(this);
+            lm.removeUpdates(locationListenerGps);
         }
         public void onProviderDisabled(String provider) {}
         public void onProviderEnabled(String provider) {}
@@ -96,16 +114,43 @@ public class GeoLocationController {
         @Override
         public void run() {
              lm.removeUpdates(locationListenerGps);
+             lm.removeUpdates(locationListenerNetwork);
 
-             Location gps_loc=null;
+             Location net_loc=null, gps_loc=null;
              if(gps_enabled)
                  gps_loc=lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
+             if(network_enabled)
+                 net_loc=lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+             
+             //if there are both values use the latest one
+             if(gps_loc!=null && net_loc!=null){
+                 if(gps_loc.getTime()>net_loc.getTime())
+                 {
+                     loc.setLongitude(gps_loc.getLongitude());
+                     loc.setLatitude(gps_loc.getLatitude());
+                 }
+                 else
+                 {
+                     loc.setLongitude(net_loc.getLongitude());
+                     loc.setLatitude(net_loc.getLatitude());
+                 }
+                 return;
+             }
+             
              if(gps_loc!=null){
                  loc.setLongitude(gps_loc.getLongitude());
                  loc.setLatitude(gps_loc.getLatitude());
                  return;
              }
+             
+             if(net_loc!=null){
+                 loc.setLongitude(net_loc.getLongitude());
+                 loc.setLatitude(net_loc.getLatitude());
+                 return;
+             }
+             
+             loc.setLongitude((Double) null);
+             loc.setLatitude((Double) null);
         }
     }
 	

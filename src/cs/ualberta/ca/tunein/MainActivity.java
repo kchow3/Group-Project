@@ -38,6 +38,7 @@ public class MainActivity extends Activity {
 	Button fav_button;
 	Button buttonCache;
 	
+	TextView location_text;
 	TextView edit_username;
 
 	@Override
@@ -64,6 +65,13 @@ public class MainActivity extends Activity {
 		CacheController cacheController = new CacheController();
 		cacheController.loadCache(getApplicationContext());
 
+	}
+	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		loadLoc();
 	}
 
 	@Override
@@ -206,6 +214,16 @@ public class MainActivity extends Activity {
 		SharedPreferences prefs = this.getSharedPreferences(
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
 		prefs.edit().putString("cs.ualberta.ca.tunein.sort", sort).commit();
+	}
+	
+	private void loadLoc()
+	{
+		location_text = (TextView) findViewById(R.id.location_text);
+		GeoLocation loc = new GeoLocation();
+		GeoLocationController geoController = new GeoLocationController(loc);
+		geoController.getLocation(getApplicationContext());
+		String coords = "@ " + String.valueOf(loc.getLongitude())  + ", " + String.valueOf(loc.getLatitude());
+		location_text.setText(coords);
 	}
 
 }
