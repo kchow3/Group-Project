@@ -333,7 +333,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 						"  \"favoriteCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 				String responseJson = "";
 
-				Log.w(LOG_TAG, "query is: " + query);
+				//Log.w(LOG_TAG, "query is: " + query);
 				try {
 					request.setEntity(new StringEntity(query));
 				} catch (UnsupportedEncodingException exception) {

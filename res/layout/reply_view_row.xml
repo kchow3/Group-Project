@@ -10,7 +10,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:focusable="false"
-        android:height="70dp"
+        android:height="55dp"
         android:hint="Reply"
         android:width="275dp" />
 

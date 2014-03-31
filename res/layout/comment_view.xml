@@ -107,8 +107,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textViewCommentFavCount"
-        android:layout_marginTop="15dp"
-        android:height="80dp"
+        android:height="55dp"
         android:text="Comment" />
 
     <ImageView
@@ -117,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/textViewCommentDate"
         android:layout_below="@+id/textViewCommentBlock"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
         android:src="@drawable/ic_launcher"
         android:visibility="invisible" />
 
@@ -135,8 +134,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/imageViewCommentImage"
-        android:layout_marginTop="14dp" >
+        android:layout_below="@+id/imageViewCommentImage" >
+
     </ExpandableListView>
 
     <Button
