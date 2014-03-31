@@ -12,7 +12,7 @@
         android:focusable="false"
         android:height="55dp"
         android:hint="Reply"
-        android:width="275dp" />
+        android:width="325dp" />
 
     <TextView
         android:id="@+id/textViewReplyRowCount"
