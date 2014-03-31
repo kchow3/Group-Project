@@ -183,6 +183,17 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener myLocationBtnClick = new OnClickListener() {
 		public void onClick(View v) {
+			GeoLocation loc = new GeoLocation();
+			GeoLocationController geoController = new GeoLocationController(loc);
+			geoController.getLocation(getApplicationContext());
+			SharedPreferences prefs = getApplicationContext().getSharedPreferences(
+	  			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+	    		prefs.edit().putString("SORTLONG", String.valueOf(loc.getLongitude())).commit();
+	    		prefs.edit().putString("SORTLAT", String.valueOf(loc.getLongitude())).commit();
+			setSort("My Location");
+			Intent i = new Intent(getApplicationContext(),
+					TopicListActivity.class);
+			MainActivity.this.startActivity(i);
 		}
 	};
 	
