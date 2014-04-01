@@ -45,8 +45,6 @@ public class TopicListActivity extends Activity {
 	private ThreadList threadList;
 	//thread controller
 	private ThreadController threadController;
-	//string of the sort requirement
-	private String sortType;
 	//variables for adding topic
 	private String title;
 	private String comment;
@@ -65,9 +63,6 @@ public class TopicListActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    SharedPreferences prefs = this.getSharedPreferences(
-			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-	    sortType = prefs.getString("cs.ualberta.ca.tunein.sort", "Freshness");
 		setContentView(R.layout.topic_list_view);
 		setupTopicView();
 	    threadList = new ThreadList();
@@ -83,8 +78,7 @@ public class TopicListActivity extends Activity {
 	protected void onResume()
 	{
 		super.onResume();
-		threadController.getOnlineTopics(this);
-		viewAdapter.updateThreadView(threadList.getDiscussionThread());
+		threadController.getOnlineTopics(TopicListActivity.this);
 	}
 	
 	@Override
@@ -150,6 +144,9 @@ public class TopicListActivity extends Activity {
 	
 	private void setupTopicView()
 	{
+	    SharedPreferences prefs = this.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+	    String sortType = prefs.getString("cs.ualberta.ca.tunein.sort", "Freshness");
 		//setuptextview
 		textViewSort = (TextView)findViewById(R.id.textViewSort);
 		textViewSort.setText(sortType);
@@ -185,7 +182,6 @@ public class TopicListActivity extends Activity {
 		            {	                
 		            	threadController.createTopic(TopicListActivity.this, title, comment);     		
 		            }
-		            //cntrl.getOnlineTopics(TopicListActivity.this);
 		            viewAdapter.updateThreadView(threadList.getDiscussionThread());
 		        }
 		    })

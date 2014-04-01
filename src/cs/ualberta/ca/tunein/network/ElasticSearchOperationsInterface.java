@@ -2,6 +2,7 @@ package cs.ualberta.ca.tunein.network;
 
 import android.content.Context;
 import cs.ualberta.ca.tunein.Comment;
+import cs.ualberta.ca.tunein.CommentViewAdapter;
 import cs.ualberta.ca.tunein.ReplyViewAdapter;
 import cs.ualberta.ca.tunein.ThreadList;
 
@@ -55,7 +56,6 @@ public interface ElasticSearchOperationsInterface {
 	 * http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-sort.html
 	 * @param modelList ThreadList that will be filled.
 	 * @param activity Activity that calls this method.
-	 * @param sort The specified sort.
 	 */
 	public abstract void getTopicsBySort(ThreadList modelList,
 			Context cntxt, String sort);

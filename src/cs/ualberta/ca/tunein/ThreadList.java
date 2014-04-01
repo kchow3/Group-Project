@@ -14,7 +14,7 @@ import android.widget.ArrayAdapter;
 public class ThreadList 
 {
 	private ArrayList<Comment> discussionThread;
-	private ArrayAdapter<Comment> adapter;
+	private CommentViewAdapter adapter;
 	/**
 	 * Constructor that constructs a new list of comments.
 	 */
@@ -32,11 +32,15 @@ public class ThreadList
 	{
 		this.discussionThread = discussionThread;
 	}
-	
-	public void setAdapter(ArrayAdapter<Comment> adapter) {
+
+	public CommentViewAdapter getAdapter() {
+		return adapter;
+	}
+
+	public void setAdapter(CommentViewAdapter adapter) {
 		this.adapter = adapter;
 	}
-	
+
 	public void addCommentCollection(Collection<Comment> posts) {
 		this.discussionThread.addAll(posts);
 		this.adapter.notifyDataSetChanged();

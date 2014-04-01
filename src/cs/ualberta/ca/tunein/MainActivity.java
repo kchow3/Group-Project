@@ -241,7 +241,7 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener topicListBtnClick = new OnClickListener() {
 		public void onClick(View v) {
-			setSort("Freshness");
+			setSort("default");
 			Intent i = new Intent(getApplicationContext(),
 					TopicListActivity.class);
 			MainActivity.this.startActivity(i);

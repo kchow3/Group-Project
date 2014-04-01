@@ -158,15 +158,6 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	}
 	
 	/**
-	 * Method to just refresh the thread view without
-	 * assigning a new comment list.
-	 */
-	public void refreshThreadView()
-	{
-		notifyDataSetChanged();
-	}
-	
-	/**
 	 * This click listener will send user to CommentViewPage of the comment
 	 * that they clicked view on.
 	 */
@@ -217,7 +208,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			            	commentController.addReply(currentComment.getElasticID(), (Activity) context, title, text, false);
 			        		
 			            } 
-			            refreshThreadView();
+			            notifyDataSetChanged();
 			        }
 			    })
 			    .setNegativeButton("Cancel", null).create();
@@ -236,7 +227,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    	final int i = (Integer)v.getTag();
 	    	Comment currentComment = commentList.get(i);
 	    	favoriteController.addToFav(context, currentComment);
-	    	refreshThreadView();
+	    	notifyDataSetChanged();
 	    }
 	};
 	
@@ -250,7 +241,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    	final int i = (Integer)v.getTag();
 	    	Comment currentComment = commentList.get(i);
 	    	cacheController.addToCache(context, currentComment);
-	    	refreshThreadView();
+	    	notifyDataSetChanged();
 	    }
 	};
 	

@@ -24,7 +24,6 @@ public class ThreadController {
 
 	private ThreadList discussionThread;
 	private GeoLocation loc;
-	private String sortName;
 	
 	/**
 	 * Constructor constructs a contoller for the list of comments.
@@ -60,8 +59,7 @@ public class ThreadController {
 		Comment aComment = new Comment(user, title, comment, loc, img, "0");
 		list.add(aComment);
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.postCommentModel(aComment);;
-		//sortChooser(act);
+		eso.postCommentModel(aComment);
 	}
 	
 	/**
@@ -87,7 +85,6 @@ public class ThreadController {
 		list.add(aComment);
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.postCommentModel(aComment);
-		//sortChooser(act);
 	}
 	
 	/**
@@ -96,12 +93,12 @@ public class ThreadController {
 	 * @param act The activity that calls this method
 	 * @return The sorted discussion thread.
 	 */
-	public void getOnlineTopics(Activity act) {
-		SharedPreferences prefs = act.getSharedPreferences(
+	public void getOnlineTopics(Context cntxt) {
+		SharedPreferences prefs = cntxt.getSharedPreferences(
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-		sortName = prefs.getString("cs.ualberta.ca.tunein.sort", "default");
+		String sortName = prefs.getString("cs.ualberta.ca.tunein.sort", "default");
 		// get comments from elastic search
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.getTopicsBySort(this.discussionThread, act, sortName);
+		eso.getTopicsBySort(discussionThread, cntxt, sortName);
 	}
 }

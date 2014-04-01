@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import cs.ualberta.ca.tunein.Comment;
+import cs.ualberta.ca.tunein.CommentViewAdapter;
 import cs.ualberta.ca.tunein.ReplyViewAdapter;
 import cs.ualberta.ca.tunein.ThreadList;
 
@@ -365,7 +366,6 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 					public void run() {
 						modelList.clear();
 						modelList.addCommentCollection(returnedData.getSources());
-						Log.v("topics curr:", Integer.toString(modelList.getDiscussionThread().size()));
 					}
 				};
 
@@ -409,6 +409,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 	private String querySortReturn(String sort)
 	{
 		String query = "";
+		Log.v("sort", sort);
 		if(sort.equals("Date"))
 		{
 			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
@@ -427,13 +428,14 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 		{
 			
 		}
-		else
+		if(sort.equals("default"))
 		{
 			//sort by hotness: replycount and favoritecount
 			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
 					"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true }," +
 					"  \"favoriteCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 		}
+		Log.v("sort", query);
 		return query;
 	}
 }
