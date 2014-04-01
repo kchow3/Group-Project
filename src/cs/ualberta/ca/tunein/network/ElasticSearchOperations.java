@@ -318,7 +318,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 	 * @see cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface#getCommentPostsByReplyCount(cs.ualberta.ca.tunein.ThreadList, android.content.Context)
 	 */
 	@Override
-	public void getCommentPostsByHotness(final ThreadList modelList, final Context cntxt) {
+	public void getTopicsBySort(final ThreadList modelList, final Context cntxt, final String sort) {
 		if (GSON == null)
 			constructGson();
 
@@ -328,9 +328,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
 				HttpPost request = new HttpPost(SERVER_URL + "_search/");
-				String query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
-						"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true }," +
-						"  \"favoriteCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
+				String query = querySortReturn(sort);
 				String responseJson = "";
 
 				//Log.w(LOG_TAG, "query is: " + query);
@@ -377,69 +375,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 
 		thread.start();
 	}
-	
-	/* (non-Javadoc)
-	 * @see cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface#getCommentPostsByPictures(cs.ualberta.ca.tunein.ThreadList, android.content.Context)
-	 */
-	@Override
-	public void getCommentPostsByPictures(final ThreadList modelList, final Context cntxt) {
-		if (GSON == null)
-			constructGson();
 
-		Thread thread = new Thread() {
-
-			@Override
-			public void run() {
-				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_URL + "_search/");
-				String query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
-						"\"sort\": [ { \"hasImage\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
-				String responseJson = "";
-
-				Log.w(LOG_TAG, "query is: " + query);
-				try {
-					request.setEntity(new StringEntity(query));
-				} catch (UnsupportedEncodingException exception) {
-					Log.w(LOG_TAG,
-							"Error encoding search query: "
-									+ exception.getMessage());
-					return;
-				}
-				
-				try {
-					HttpResponse response = client.execute(request);
-					Log.i(LOG_TAG, "Response: "
-							+ response.getStatusLine().toString());
-
-					responseJson = getEntityContent(response);
-					}
-					//Log.v("GSON", responseJson);
-				catch (IOException exception) {
-					Log.w(LOG_TAG, "Error receiving search query response: "
-							+ exception.getMessage());
-					return;
-				}
-
-				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Comment>>() {
-				}.getType();
-				final ElasticSearchSearchResponse<Comment> returnedData = GSON
-						.fromJson(responseJson, elasticSearchSearchResponseType);
-
-				Runnable updateModel = new Runnable() {
-					@Override
-					public void run() {
-						modelList.clear();
-						modelList.addCommentCollection(returnedData.getSources());
-						Log.v("topics curr:", Integer.toString(modelList.getDiscussionThread().size()));
-					}
-				};
-
-				((Activity) cntxt).runOnUiThread(updateModel);
-			}
-		};
-
-		thread.start();
-	}
 	
 	/**
 	 * Constructs a Gson with a custom serializer / desserializer registered for
@@ -463,5 +399,41 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 			json += output;
 		}
 		return json;
+	}
+	
+	/**
+	 * Method to choose which query corresponding to the sort option specified.
+	 * @param sort The sort option
+	 * @return The query for elastic search
+	 */
+	private String querySortReturn(String sort)
+	{
+		String query = "";
+		if(sort.equals("Date"))
+		{
+			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
+					"\"sort\": [ { \"date\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
+		}
+		if(sort.equals("Picture"))
+		{
+			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
+					"\"sort\": [ { \"hasImage\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
+		}
+		if(sort.equals("My Location"))
+		{
+			
+		}
+		if(sort.equals("Set Location"))
+		{
+			
+		}
+		else
+		{
+			//sort by hotness: replycount and favoritecount
+			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
+					"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true }," +
+					"  \"favoriteCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
+		}
+		return query;
 	}
 }

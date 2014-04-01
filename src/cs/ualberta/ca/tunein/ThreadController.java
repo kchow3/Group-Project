@@ -34,75 +34,6 @@ public class ThreadController {
 	
 		discussionThread = threadList;
 	}
-	
-	/**
-	 * Method to sort topics by location.
-	 */
-	public void sortByLocation() 
-	{
-		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * Method to sort topics by set location.
-	 */
-	public void sortBySetLocation() 
-	{
-		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * Method to sort topics by pictures
-	 */
-	public void sortByPicture() 
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
-	 * Method to sort thread list by date.
-	 * Code taken from:
-	 * http://stackoverflow.com/questions/5927109/sort-objects-in-arraylist-by-date
-	 */
-	public void sortByDate() 
-	{
-		Collections.sort(discussionThread.getDiscussionThread(), new Comparator<Comment>() {
-			  public int compare(Comment o1, Comment o2) {
-			      return o2.getDate().compareTo(o1.getDate());
-			  }
-			});	
-	}
-	
-	/**
-	 * Method to sort topics by a scoring system.
-	 */
-	public void sortByScore()
-	{
-		
-	}
-	
-	/**
-	 * Method that sorts the topic list based on the current 
-	 * sort criteria.
-	 * @param act The activity that calls this method
-	 */
-	public void sortChooser(Activity act)
-	{
-		SharedPreferences prefs = act.getSharedPreferences(
-			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-		sortName = prefs.getString("cs.ualberta.ca.tunein.sort", "Freshness");
-		if(sortName.equals("My Location"))
-			sortByLocation();
-		if(sortName.equals("Set Location"))
-			sortBySetLocation();
-		if(sortName.equals("Picture"))
-			sortByPicture();
-		if(sortName.equals("Date"))
-			sortByDate();
-		//if(sortName.equals("Freshness"))
-			//ElasticSearchOperations.getCommentPostsByReplyCount(discussionThread, act);
-	}
 
 	/**
 	 * Method to create a topic comment with image.
@@ -166,9 +97,11 @@ public class ThreadController {
 	 * @return The sorted discussion thread.
 	 */
 	public void getOnlineTopics(Activity act) {
+		SharedPreferences prefs = act.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+		sortName = prefs.getString("cs.ualberta.ca.tunein.sort", "default");
 		// get comments from elastic search
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.getCommentPostsByHotness(this.discussionThread, act);
-		Log.v("topics this:", Integer.toString(this.discussionThread.getDiscussionThread().size()));
+		eso.getTopicsBySort(this.discussionThread, act, sortName);
 	}
 }
