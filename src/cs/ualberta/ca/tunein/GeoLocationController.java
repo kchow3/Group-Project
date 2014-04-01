@@ -26,7 +26,7 @@ public class GeoLocationController {
 	private Timer timer1;
 	private LocationManager lm;
 	private boolean gps_enabled = false;
-	boolean network_enabled = false;
+	private boolean network_enabled = false;
 	private Context context;
 	
 	public GeoLocationController(GeoLocation location){
@@ -60,11 +60,11 @@ public class GeoLocationController {
 		
         if(gps_enabled)
         {
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListenerGps);
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListenerGps);
         }
         if(network_enabled)
         {
-            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListenerNetwork);
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListenerNetwork);
         }
         
         timer1=new Timer();

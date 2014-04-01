@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -158,7 +159,8 @@ public class CommentPageActivity extends Activity {
 		textViewCommentTitle.setText(aComment.getTitle());
 		textViewCommentBlock.setText(aComment.getComment());
 		textViewCommentUser.setText(aComment.getCommenter().getName());
-		textViewCommentDate.setText(aComment.getDate());
+		textViewCommentDate.setText(aComment.dateDisplay());
+		Log.v("date", aComment.dateDisplay());
 		textViewCommentFavCount.setText("Favs: " + Integer.toString(aComment.getFavoriteCount()));
 		textViewCommentReplyCount.setText("Replies: " + Integer.toString(aComment.getReplyCount()));
 		

@@ -1,18 +1,13 @@
 package cs.ualberta.ca.tunein;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
-import cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.util.Log;
 
 /**
  * Controller

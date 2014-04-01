@@ -2,6 +2,7 @@ package cs.ualberta.ca.tunein;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -246,6 +247,25 @@ public class Comment implements Serializable
 	
 	public void clear() {
 		this.replies.clear();
+	}
+	
+	/**
+	 * Method to convert the date to a format for better viewing
+	 * @return The date.
+	 */
+	public String dateDisplay()
+	{
+		SimpleDateFormat old_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		SimpleDateFormat new_df = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();;
+		try {
+			date = (Date)old_df.parse(this.date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new_df.format(date);
 	}
 
 }
