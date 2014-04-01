@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import android.util.Log;
 
@@ -30,7 +32,7 @@ public class Comment implements Serializable
 	//iamge of comment
 	private Image img;
 	//date of comment
-	private Date date;
+	private String date;
 	//geo location of comment
 	private GeoLocation geolocation;
 	//does comment have an image
@@ -53,11 +55,13 @@ public class Comment implements Serializable
 	 */
 	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc, String parent) 
 	{
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		
 		this.commenter = user;
 		this.title = aTitle;
 		this.comment = aComment;
 		this.geolocation = loc;
-		this.date = new Date();
+		this.date = df.format(new Date());
 		this.replies = new ArrayList<Comment>();
 		this.hasImage = false;
 		this.favoriteCount = 0;
@@ -76,12 +80,14 @@ public class Comment implements Serializable
 	 */
 	public Comment(Commenter user, String aTitle, String aComment, GeoLocation loc, Image aImage, String parent) 
 	{
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		
 		this.commenter = user;
 		this.title = aTitle;
 		this.comment = aComment;
 		this.geolocation = loc;
 		this.img = aImage;
-		this.date = new Date();
+		this.date = df.format(new Date());
 		this.replies = new ArrayList<Comment>();
 		this.hasImage = true;
 		this.favoriteCount = 0;
@@ -131,12 +137,13 @@ public class Comment implements Serializable
 		this.hasImage = true;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
 	public void setDate(Date date) {
-		this.date = date;
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		this.date = df.format(date);
 	}
 
 	public GeoLocation getGeolocation() {
@@ -222,8 +229,7 @@ public class Comment implements Serializable
 	 */
 	public String dateToString()
 	{
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy ");
-		return df.format(this.date);
+		return date;
 	}
 
 	public void setupComment(Comment source) {

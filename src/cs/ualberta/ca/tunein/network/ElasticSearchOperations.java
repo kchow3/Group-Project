@@ -36,7 +36,7 @@ import cs.ualberta.ca.tunein.ThreadList;
  */
 public class ElasticSearchOperations implements ElasticSearchOperationsInterface {
 
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/elastictest/";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/mytest/";
 	//public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn/";
 	public static final String LOG_TAG = "ElasticSearch";
 
