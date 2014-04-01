@@ -9,6 +9,7 @@ import cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -22,6 +23,9 @@ import android.util.Log;
  */
 public class ThreadController {
 
+	//public string that tags the extra of the comment that is passed to CommentPageActivity
+	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
+	
 	private ThreadList discussionThread;
 	private GeoLocation loc;
 	
@@ -60,6 +64,7 @@ public class ThreadController {
 		list.add(aComment);
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.postCommentModel(aComment);
+		openCommentResult(cntxt, aComment);
 	}
 	
 	/**
@@ -85,6 +90,7 @@ public class ThreadController {
 		list.add(aComment);
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.postCommentModel(aComment);
+		openCommentResult(cntxt, aComment);
 	}
 	
 	/**
@@ -100,5 +106,12 @@ public class ThreadController {
 		// get comments from elastic search
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.getTopicsBySort(discussionThread, cntxt, sortName);
+	}
+	
+	private void openCommentResult(Context cntxt, Comment aComment)
+	{
+    	Intent intent = new Intent(cntxt, CommentPageActivity.class);
+    	intent.putExtra(EXTRA_COMMENT, aComment);
+    	cntxt.startActivity(intent);
 	}
 }
