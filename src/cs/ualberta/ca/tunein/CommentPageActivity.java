@@ -158,7 +158,7 @@ public class CommentPageActivity extends Activity {
 		textViewCommentTitle.setText(aComment.getTitle());
 		textViewCommentBlock.setText(aComment.getComment());
 		textViewCommentUser.setText(aComment.getCommenter().getName());
-		textViewCommentDate.setText(aComment.dateToString());
+		textViewCommentDate.setText(aComment.getDate());
 		textViewCommentFavCount.setText("Favs: " + Integer.toString(aComment.getFavoriteCount()));
 		textViewCommentReplyCount.setText("Replies: " + Integer.toString(aComment.getReplyCount()));
 		

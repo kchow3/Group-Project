@@ -114,7 +114,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		
 		//set text of textviews
 		holder.textViewTitle.setText(commentList.get(position).getTitle());
-		holder.textViewDate.setText(commentList.get(position).dateToString());
+		holder.textViewDate.setText(commentList.get(position).getDate());
 		holder.textViewUser.setText(commentList.get(position).getCommenter().getName());
 		holder.textViewFavCount.setText("Favs: " +Integer.toString(commentList.get(position).getFavoriteCount()));
 		holder.textViewReplyCount.setText("Replies: " + Integer.toString(commentList.get(position).getReplyCount()));

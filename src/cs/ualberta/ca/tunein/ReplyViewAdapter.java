@@ -121,7 +121,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 		holder.textViewReply.setText(replies.get(groupPosition).getReplies().get(childPosition).getComment());
 		holder.textViewReplyRowCount.setText("Replies: " + Integer.toString(replies.get(groupPosition).getReplies().get(childPosition).getReplyCount()));
 		holder.textViewReplyUser.setText(replies.get(groupPosition).getReplies().get(childPosition).getCommenter().getName());
-		holder.textViewReplyDate.setText(replies.get(groupPosition).getReplies().get(childPosition).dateToString());
+		holder.textViewReplyDate.setText(replies.get(groupPosition).getReplies().get(childPosition).getDate());
 		
 		//set onclick listeners for buttons and the tag for position
 		//int array to send indexes
@@ -189,7 +189,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 		holder.textViewReply.setText(replies.get(groupPosition).getComment());
 		holder.textViewReplyRowCount.setText("Replies: " + Integer.toString(replies.get(groupPosition).getReplyCount()));
 		holder.textViewReplyUser.setText(replies.get(groupPosition).getCommenter().getName());
-		holder.textViewReplyDate.setText(replies.get(groupPosition).dateToString());
+		holder.textViewReplyDate.setText(replies.get(groupPosition).getDate());
 		
 		//set onclick listeners for buttons and the tag for position
 		holder.buttonRowReply.setOnClickListener(replyParentBtnClick);
