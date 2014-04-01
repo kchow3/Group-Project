@@ -148,9 +148,6 @@ public class GeoLocationController {
                  loc.setLatitude(net_loc.getLatitude());
                  return;
              }
-             
-             loc.setLongitude((Double) null);
-             loc.setLatitude((Double) null);
         }
     }
 	
