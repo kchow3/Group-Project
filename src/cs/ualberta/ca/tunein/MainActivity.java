@@ -79,13 +79,6 @@ public class MainActivity extends Activity {
 		cacheController.loadCache(getApplicationContext());
 
 	}
-	
-	@Override
-	protected void onResume()
-	{
-		super.onResume();
-		loadLoc();
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -260,19 +253,6 @@ public class MainActivity extends Activity {
 		SharedPreferences prefs = this.getSharedPreferences(
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
 		prefs.edit().putString(SORT, sort).commit();
-	}
-	
-	/**
-	 * Grab current location to be set on the main page.
-	 */
-	private void loadLoc()
-	{
-		location_text = (TextView) findViewById(R.id.location_text);
-		GeoLocation loc = new GeoLocation();
-		GeoLocationController geoController = new GeoLocationController(loc);
-		geoController.getLocation(getApplicationContext());
-		String coords = "@ " + String.valueOf(loc.getLongitude())  + ", " + String.valueOf(loc.getLatitude());
-		location_text.setText(coords);
 	}
 	
 	/**
