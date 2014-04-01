@@ -2,15 +2,19 @@ package cs.ualberta.ca.tunein;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.telephony.TelephonyManager;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,18 +31,28 @@ import android.widget.Toast;
  */
 public class MainActivity extends Activity {
 	
+	public final static String SORT = "cs.ualberta.ca.tunein.sort";
+	public final static String SORTLONG = "cs.ualberta.ca.tunein.sortLong";
+	public final static String SORTLAT = "cs.ualberta.ca.tunein.sortLat";
+	
 	private TextView title;
 	
-	Button name_button;
-	Button otherLocation_button;
-	Button myLocation_button;
-	Button date_button;
-	Button pictures_button;
-	Button buttonTopicList;
-	Button fav_button;
-	Button buttonCache;
+	private Button name_button;
+	private Button otherLocation_button;
+	private Button myLocation_button;
+	private Button date_button;
+	private Button pictures_button;
+	private Button buttonTopicList;
+	private Button fav_button;
+	private Button buttonCache;
 	
-	TextView edit_username;
+	private TextView location_text;
+	private TextView edit_username;
+	
+	//dialog elements
+	private View createView;
+	private TextView inputLong;
+	private TextView inputLat;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +66,25 @@ public class MainActivity extends Activity {
 		String androidId = "" + android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
 		String id = deviceId + androidId;
 		
+		//load in user unique id
 		UserController cntrl = new UserController();
-		cntrl.saveUserid(id, this);
+		cntrl.saveUserid(id, getApplicationContext());
+		
+		//load in the favorites
+		FavoriteController favoriteController = new FavoriteController();
+		favoriteController.loadFav(getApplicationContext());
+		
+		//load in the cache
+		CacheController cacheController = new CacheController();
+		cacheController.loadCache(getApplicationContext());
 
+	}
+	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		loadLoc();
 	}
 
 	@Override
@@ -83,7 +113,7 @@ public class MainActivity extends Activity {
 		edit_username = (TextView) findViewById(R.id.edit_username);
 		
 		UserController cntrl = new UserController();
-		edit_username.setText(cntrl.loadUsername(this));
+		edit_username.setText(cntrl.loadUsername(getApplicationContext()));
 		
 		name_button.setOnClickListener(renameBtnClick);
 		otherLocation_button.setOnClickListener(otherLocationBtnClick);
@@ -110,7 +140,7 @@ public class MainActivity extends Activity {
 	private OnClickListener renameBtnClick = new OnClickListener() {
 		public void onClick(View v) {
 			UserController cntrl = new UserController();
-			cntrl.changeUsername(edit_username.getText().toString(), MainActivity.this);
+			cntrl.changeUsername(edit_username.getText().toString(), getApplicationContext());
 			
 			//toast massage to confirm username change
 			Context context = getApplicationContext();
@@ -127,6 +157,24 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener otherLocationBtnClick = new OnClickListener() {
 		public void onClick(View v) {
+	    	setupDialogs();
+			AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+			    .setTitle("Set Location")
+			    .setView(createView)
+			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			        public void onClick(DialogInterface dialog, int whichButton) {
+			    		SharedPreferences prefs = getApplicationContext().getSharedPreferences(
+			  			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+			    		prefs.edit().putString("SORTLONG", inputLong.getText().toString()).commit();
+			    		prefs.edit().putString("SORTLAT", inputLat.getText().toString()).commit();
+			    		setSort("Set Location");
+						Intent i = new Intent(getApplicationContext(),
+								TopicListActivity.class);
+						MainActivity.this.startActivity(i);
+			        }
+			    })
+			    .setNegativeButton("Cancel", null).create();
+			dialog.show();
 		}
 	};
 	
@@ -135,6 +183,17 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener myLocationBtnClick = new OnClickListener() {
 		public void onClick(View v) {
+			GeoLocation loc = new GeoLocation();
+			GeoLocationController geoController = new GeoLocationController(loc);
+			geoController.getLocation(getApplicationContext());
+			SharedPreferences prefs = getApplicationContext().getSharedPreferences(
+	  			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+	    		prefs.edit().putString("SORTLONG", String.valueOf(loc.getLongitude())).commit();
+	    		prefs.edit().putString("SORTLAT", String.valueOf(loc.getLongitude())).commit();
+			setSort("My Location");
+			Intent i = new Intent(getApplicationContext(),
+					TopicListActivity.class);
+			MainActivity.this.startActivity(i);
 		}
 	};
 	
@@ -155,6 +214,10 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener pictures_buttonBtnClick = new OnClickListener() {
 		public void onClick(View v) {
+			setSort("Picture");
+			Intent i = new Intent(getApplicationContext(),
+					TopicListActivity.class);
+			MainActivity.this.startActivity(i);
 		}
 	};
 	
@@ -163,6 +226,9 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener favBtnClick = new OnClickListener() {
 		public void onClick(View v) {
+			Intent i = new Intent(getApplicationContext(),
+					FavoriteActivity.class);
+			MainActivity.this.startActivity(i);
 		}
 	};
 	
@@ -171,6 +237,9 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener cacheBtnClick = new OnClickListener() {
 		public void onClick(View v) {
+			Intent i = new Intent(getApplicationContext(),
+					CacheActivity.class);
+			MainActivity.this.startActivity(i);
 		}
 	};
 	
@@ -179,9 +248,9 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener topicListBtnClick = new OnClickListener() {
 		public void onClick(View v) {
+			setSort("Freshness");
 			Intent i = new Intent(getApplicationContext(),
 					TopicListActivity.class);
-			setSort("Freshness");
 			MainActivity.this.startActivity(i);
 		}
 	};
@@ -190,7 +259,32 @@ public class MainActivity extends Activity {
 	{
 		SharedPreferences prefs = this.getSharedPreferences(
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-		prefs.edit().putString("cs.ualberta.ca.tunein.sort", sort).commit();
+		prefs.edit().putString(SORT, sort).commit();
+	}
+	
+	/**
+	 * Grab current location to be set on the main page.
+	 */
+	private void loadLoc()
+	{
+		location_text = (TextView) findViewById(R.id.location_text);
+		GeoLocation loc = new GeoLocation();
+		GeoLocationController geoController = new GeoLocationController(loc);
+		geoController.getLocation(getApplicationContext());
+		String coords = "@ " + String.valueOf(loc.getLongitude())  + ", " + String.valueOf(loc.getLatitude());
+		location_text.setText(coords);
+	}
+	
+	/**
+	 * Setup change location dialog box
+	 */
+	private void setupDialogs()
+	{
+		LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+		createView = inflater.inflate(R.layout.location_change, null);
+
+		inputLong = (EditText) createView.findViewById(R.id.textViewInputChangeLong);
+		inputLat = (EditText) createView.findViewById(R.id.textViewInputChangeLat);
 	}
 
 }

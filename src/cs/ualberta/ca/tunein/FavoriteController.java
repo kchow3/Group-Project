@@ -1,23 +1,22 @@
 package cs.ualberta.ca.tunein;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import cs.ualberta.ca.tunein.network.BitmapJsonConverter;
-import cs.ualberta.ca.tunein.network.ElasticSearchResponse;
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
+import cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -36,14 +35,13 @@ public class FavoriteController {
 	
 	public final static String FAV_FILE = "favorites.sav";
 
-	private Comment comment;
 	private Favorites favs;
 	private Gson GSON;
 	
 	
 	/**
-	 * FavoriteController constructor that is mainly
-	 * used to load favorites.
+	 * FavoriteController constructor that 
+	 * assigns the favorite class to be modified
 	 */
 	public FavoriteController()
 	{
@@ -52,28 +50,22 @@ public class FavoriteController {
 	}
 	
 	/**
-	 * FavoriteController constructor that takes
-	 * the passed in comment and modify the favorite
-	 * list.
-	 * @param aComment Comment to modify favorites.
-	 */
-	public FavoriteController(Comment aComment)
-	{
-		this.comment = aComment;
-		favs = Favorites.getInstance();
-		constructGson();
-	}
-	/**
 	 * Method of adding comment to favorites.
 	 * @param cntxt The context of the app to show toast.
+	 * @param comment The comment to be added
 	 */
-	public void addtoFav(Context cntxt) {
+	public void addToFav(Context cntxt, Comment comment) {
 		if(!(favs.favoriteIDs.contains(comment.getElasticID())))
 		{
+			ElasticSearchOperations eso = new ElasticSearchOperations();
+			comment.increaseFavCount();
+			//update on elastic search since fav count increases
+			eso.putCommentModel(comment);
+			//get the favorite comment's replies
+			eso.getReplyReplies(comment, comment.getElasticID(), cntxt);
 			//add new favorite to beginning of list
 			favs.favoriteIDs.add(0, comment.getElasticID());
 			favs.favorites.add(0, comment);
-			comment.increaseFavCount();
 			saveFav(cntxt);
 			
 			CharSequence text = "Favorited!";
@@ -85,7 +77,6 @@ public class FavoriteController {
 		{
 			CharSequence text = "Already Favorited.";
 			int duration = Toast.LENGTH_SHORT;
-
 			Toast toast = Toast.makeText(cntxt, text, duration);
 			toast.show();
 		}
@@ -94,8 +85,9 @@ public class FavoriteController {
 	/**
 	 * Method to remove a comment from favorites.
 	 * @param cntxt The context of the app to show toast.
+	 * @param comment The comment to be removed
 	 */
-	public void removeFromFav(Context cntxt)
+	public void removeFromFav(Context cntxt, Comment comment)
 	{
 		if((favs.favoriteIDs.contains(comment.getElasticID())))
 		{
@@ -113,9 +105,10 @@ public class FavoriteController {
 	
 	/**
 	 * Method to see if current comment is in favorites.
+	 * @param comment Comment to check if is in favorites
 	 * @return Whether comment is in favorites.
 	 */
-	public boolean inFav()
+	public boolean inFav(Comment comment)
 	{
 		if(favs.favoriteIDs.contains(comment.getElasticID()))
 		{
@@ -131,12 +124,12 @@ public class FavoriteController {
 	 * Method to save the favorites to file.
 	 * Code from:
 	 * http://stackoverflow.com/questions/14376807/how-to-read-write-string-from-a-file-in-android
+	 * @param cntxt The context of the application
 	 */
 	private void saveFav(Context cntxt)
 	{
 		Type favoriteType = new TypeToken<Favorites>(){}.getType();
 		String jsonString = GSON.toJson(favs, favoriteType);
-	
         try {
         	OutputStreamWriter outputStreamWriter = new OutputStreamWriter(cntxt.openFileOutput(FAV_FILE, Context.MODE_PRIVATE));
 			outputStreamWriter.write(jsonString);
@@ -151,10 +144,13 @@ public class FavoriteController {
 	 * favorite class.
 	 * Code from:
 	 * http://stackoverflow.com/questions/14376807/how-to-read-write-string-from-a-file-in-android
+	 * @param cntxt The context of the application
 	 */
 	public void loadFav(Context cntxt)
 	{
 		File file = cntxt.getFileStreamPath(FAV_FILE);
+		favs.favoriteIDs = new ArrayList<String>();
+		favs.favorites = new ArrayList<Comment>();
 		if(file.exists())
 		{
 			String jsonString = "";
@@ -176,7 +172,7 @@ public class FavoriteController {
 		            jsonString = stringBuilder.toString();
 		        }
 		        Type favoriteType = new TypeToken<Favorites>(){}.getType();
-		        favs = GSON.fromJson(jsonString, favoriteType);
+		        favs.setInstance((Favorites) GSON.fromJson(jsonString, favoriteType));
 		    }
 		    catch (FileNotFoundException e) {
 		        Log.e("FAV:", "File not found: " + e.toString());

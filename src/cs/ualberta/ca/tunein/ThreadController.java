@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
+import cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface;
 
 import android.app.Activity;
 import android.content.Context;
@@ -99,8 +100,6 @@ public class ThreadController {
 			sortByPicture();
 		if(sortName.equals("Date"))
 			sortByDate();
-		if(sortName.equals("Score"))
-			sortByScore();
 		//if(sortName.equals("Freshness"))
 			//ElasticSearchOperations.getCommentPostsByReplyCount(discussionThread, act);
 	}
@@ -169,7 +168,7 @@ public class ThreadController {
 	public void getOnlineTopics(Activity act) {
 		// get comments from elastic search
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.getCommentPostsByReplyCount(this.discussionThread, act);
+		eso.getCommentPostsByHotness(this.discussionThread, act);
 		Log.v("topics this:", Integer.toString(this.discussionThread.getDiscussionThread().size()));
 	}
 }

@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Favorites {
 
-	private static Favorites INSTANCE = new Favorites();
+	private static Favorites INSTANCE;
 	
 	public ArrayList<Comment> favorites;
 	public ArrayList<String> favoriteIDs;
@@ -22,7 +22,16 @@ public class Favorites {
     private Favorites() {}
 
     public static Favorites getInstance() {
+    	if(INSTANCE == null)
+    	{
+    		INSTANCE = new Favorites();
+    	}
         return INSTANCE;
+    }
+    
+    public static void setInstance(Favorites fav)
+    {
+    	INSTANCE = fav;
     }
 
 }

@@ -13,6 +13,7 @@ public class UserController {
 	private User user;
 	
 	public UserController() {
+		user = new User();
 	}
 
 	public String loadUsername(Context cntxt) {

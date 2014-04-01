@@ -34,7 +34,7 @@ import cs.ualberta.ca.tunein.ThreadList;
  * server. Most of the code in this class is based on:
  * https://github.com/rayzhangcl/ESDemo
  */
-public class ElasticSearchOperations {
+public class ElasticSearchOperations implements ElasticSearchOperationsInterface {
 
 	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/elastictest/";
 	//public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn/";
@@ -42,12 +42,10 @@ public class ElasticSearchOperations {
 
 	private static Gson GSON = null;
 
-	/**
-	 * Sends a Comment to the server. Does nothing if the request fails.
-	 * 
-	 * @param model
-	 *            a Comment
+	/* (non-Javadoc)
+	 * @see cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface#postCommentModel(cs.ualberta.ca.tunein.Comment)
 	 */
+	@Override
 	public void postCommentModel(final Comment model) {
 		if (GSON == null)
 			constructGson();
@@ -100,11 +98,10 @@ public class ElasticSearchOperations {
 		thread.start();
 	}
 	
-	/**
-	 * Method used for updating a comment on elasticsearch by posting using
-	 * the elastic id.
-	 * @param model comment to be posted
+	/* (non-Javadoc)
+	 * @see cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface#putCommentModel(cs.ualberta.ca.tunein.Comment)
 	 */
+	@Override
 	public void putCommentModel(final Comment model) {
 		if (GSON == null)
 			constructGson();
@@ -143,14 +140,10 @@ public class ElasticSearchOperations {
 		thread.start();
 	}
 
-	/**
-	 * Searches the server for Comments 
-	 * @param model
-	 *            the ThreadLis to clear and then fill with the new
-	 *            data
-	 * @param activity
-	 *            a TopicListActivity
+	/* (non-Javadoc)
+	 * @see cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface#getCommentPosts(java.lang.String, cs.ualberta.ca.tunein.Comment, android.content.Context)
 	 */
+	@Override
 	public void getCommentPosts(final String parentID, final Comment model, final Context cntxt ) {
 		if (GSON == null)
 			constructGson();
@@ -195,14 +188,10 @@ public class ElasticSearchOperations {
 		thread.start();
 	}
 	
-	/**
-	 * Searches the server for Comment replies corresponding to parent id.
-	 * @param model
-	 *            the ThreadLis to clear and then fill with the new
-	 *            data
-	 * @param activity
-	 *            a TopicListActivity
+	/* (non-Javadoc)
+	 * @see cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface#getRepliesByParentId(java.lang.String, cs.ualberta.ca.tunein.Comment, android.content.Context, cs.ualberta.ca.tunein.ReplyViewAdapter)
 	 */
+	@Override
 	public void getRepliesByParentId(final String parentID, final Comment model, final Context cntxt, final ReplyViewAdapter adap) {
 		if (GSON == null)
 			constructGson();
@@ -265,7 +254,11 @@ public class ElasticSearchOperations {
 		thread.start();
 	}
 	
-	private void getReplyReplies(final Comment model, final String parentID, final Context cntxt) {
+	/* (non-Javadoc)
+	 * @see cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface#getReplyReplies(cs.ualberta.ca.tunein.Comment, java.lang.String, android.content.Context)
+	 */
+	@Override
+	public void getReplyReplies(final Comment model, final String parentID, final Context cntxt) {
 		if (GSON == null)
 			constructGson();
 
@@ -321,15 +314,11 @@ public class ElasticSearchOperations {
 	}
 
 	
-	/**
-	 * Method to get comments from elasticsearch and sort them based on
-	 * reply count which will give us comments that are currently "hot"
-	 * Code from:
-	 * http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-sort.html
-	 * @param modelList ThreadList that will be filled.
-	 * @param activity Activity that calls this method.
+	/* (non-Javadoc)
+	 * @see cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface#getCommentPostsByReplyCount(cs.ualberta.ca.tunein.ThreadList, android.content.Context)
 	 */
-	public void getCommentPostsByReplyCount(final ThreadList modelList, final Context cntxt) {
+	@Override
+	public void getCommentPostsByHotness(final ThreadList modelList, final Context cntxt) {
 		if (GSON == null)
 			constructGson();
 
@@ -340,7 +329,71 @@ public class ElasticSearchOperations {
 				HttpClient client = new DefaultHttpClient();
 				HttpPost request = new HttpPost(SERVER_URL + "_search/");
 				String query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
-						"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
+						"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true }," +
+						"  \"favoriteCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
+				String responseJson = "";
+
+				//Log.w(LOG_TAG, "query is: " + query);
+				try {
+					request.setEntity(new StringEntity(query));
+				} catch (UnsupportedEncodingException exception) {
+					Log.w(LOG_TAG,
+							"Error encoding search query: "
+									+ exception.getMessage());
+					return;
+				}
+				
+				try {
+					HttpResponse response = client.execute(request);
+					Log.i(LOG_TAG, "Response: "
+							+ response.getStatusLine().toString());
+
+					responseJson = getEntityContent(response);
+					}
+					//Log.v("GSON", responseJson);
+				catch (IOException exception) {
+					Log.w(LOG_TAG, "Error receiving search query response: "
+							+ exception.getMessage());
+					return;
+				}
+
+				Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Comment>>() {
+				}.getType();
+				final ElasticSearchSearchResponse<Comment> returnedData = GSON
+						.fromJson(responseJson, elasticSearchSearchResponseType);
+
+				Runnable updateModel = new Runnable() {
+					@Override
+					public void run() {
+						modelList.clear();
+						modelList.addCommentCollection(returnedData.getSources());
+						Log.v("topics curr:", Integer.toString(modelList.getDiscussionThread().size()));
+					}
+				};
+
+				((Activity) cntxt).runOnUiThread(updateModel);
+			}
+		};
+
+		thread.start();
+	}
+	
+	/* (non-Javadoc)
+	 * @see cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface#getCommentPostsByPictures(cs.ualberta.ca.tunein.ThreadList, android.content.Context)
+	 */
+	@Override
+	public void getCommentPostsByPictures(final ThreadList modelList, final Context cntxt) {
+		if (GSON == null)
+			constructGson();
+
+		Thread thread = new Thread() {
+
+			@Override
+			public void run() {
+				HttpClient client = new DefaultHttpClient();
+				HttpPost request = new HttpPost(SERVER_URL + "_search/");
+				String query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
+						"\"sort\": [ { \"hasImage\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 				String responseJson = "";
 
 				Log.w(LOG_TAG, "query is: " + query);

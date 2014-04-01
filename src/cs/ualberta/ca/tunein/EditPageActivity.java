@@ -41,6 +41,9 @@ public class EditPageActivity extends Activity {
 	//comment passed through intent when clicking on a view comment button
 	private Comment aComment;
 	
+	//picture added, false by default
+	private boolean imgAdded = false;;
+	
 	//path of the image file
 	private Uri outputFileUri;
 	
@@ -114,6 +117,7 @@ public class EditPageActivity extends Activity {
 					Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
 					imageViewEditImage.setImageBitmap(bitmap);
 					imageViewEditImage.setVisibility(View.VISIBLE);
+					imgAdded = true;
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -187,7 +191,7 @@ public class EditPageActivity extends Activity {
 	    {
 	    	setupDialogs();
 			AlertDialog dialog = new AlertDialog.Builder(EditPageActivity.this)
-			    .setTitle("Create Comment")
+			    .setTitle("Change Location")
 			    .setView(createView)
 			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			        public void onClick(DialogInterface dialog, int whichButton) {
@@ -225,21 +229,20 @@ public class EditPageActivity extends Activity {
 	    public void onClick(View v)
 	    {
 	    	CommentController commentController = new CommentController(aComment);
-	    	//update the old favorite by removing old and adding new
-	    	FavoriteController favoriteController = new FavoriteController(aComment);
-	    	favoriteController.removeFromFav(getApplicationContext());
 	    	
-	    	//get bitmap from the imageview
-	    	imageViewEditImage.buildDrawingCache(true);
-        	Bitmap bitmap = imageViewEditImage.getDrawingCache(true).copy(Config.RGB_565, false);
-        	imageViewEditImage.destroyDrawingCache();  
+	    	if(imgAdded)
+	    	{
+		    	//get bitmap from the imageview
+		    	imageViewEditImage.buildDrawingCache(true);
+	        	Bitmap bitmap = imageViewEditImage.getDrawingCache(true).copy(Config.RGB_565, false);
+	        	imageViewEditImage.destroyDrawingCache();  
+	        	commentController.addImg(bitmap);
+	    	}
         	//call cntrl to edit the comment
         	commentController.editTitle(textViewEditTitle.getText().toString());
         	commentController.editText(textViewEditComment.getText().toString());
-        	commentController.addImg(bitmap);
         	commentController.changeLoc(Double.parseDouble(textViewEditX.getText().toString()),
 	    			Double.parseDouble(textViewEditY.getText().toString()));
-        	favoriteController.addtoFav(getApplicationContext());
         	commentController.updateElasticSearch();
 	    	//return the comment through intent to comment view
 	    	Intent returnIntent = new Intent();

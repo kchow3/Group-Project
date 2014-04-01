@@ -1,6 +1,7 @@
 package cs.ualberta.ca.tunein;
 
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
+import cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
