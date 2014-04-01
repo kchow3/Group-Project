@@ -412,12 +412,13 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 		Log.v("sort", sort);
 		if(sort.equals("Date"))
 		{
-			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
+			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}} , " +
 					"\"sort\": [ { \"date\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 		}
+
 		if(sort.equals("Picture"))
 		{
-			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
+			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}} , " +
 					"\"sort\": [ { \"hasImage\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 		}
 		if(sort.equals("My Location"))
@@ -431,7 +432,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 		if(sort.equals("default"))
 		{
 			//sort by hotness: replycount and favoritecount
-			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}} , " +
+			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}} , " +
 					"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true }," +
 					"  \"favoriteCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 		}
