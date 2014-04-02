@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 
 /**
  * Model
@@ -21,7 +20,7 @@ public class Commenter implements Serializable{
 	private String facebook; 
 	private String twitter; 
 	private String bio; 
-	private Bitmap img;
+	private Image avatar;
 	
 	//attributes for profile
 	
@@ -45,17 +44,21 @@ public class Commenter implements Serializable{
 	
 	/**
 	 * Constructor that constructs a commenter's profile.
-	 * @param username
-	 * @param id
+	 * @param cntxt
 	 * @param email
 	 * @param facebook
 	 * @param twitter
 	 * @param bio
 	 * @param img
 	 */
-	public Commenter(String username, String id, String email, String facebook, String twitter, String bio, Bitmap img)
+	public Commenter(Context cntxt, String facebook, String twitter, String bio, Image img)
 	{
-		
+		this.name = getCurrentName(cntxt);
+		this.uniqueID = getCurrentUniqueID(cntxt);
+		this.facebook = facebook;
+		this.twitter = twitter;
+		this.bio = bio;
+		this.avatar = img;
 	}
 
 	public String getName() {
@@ -102,12 +105,12 @@ public class Commenter implements Serializable{
 		this.bio = bio;
 	}
 
-	public Bitmap getImg() {
-		return img;
+	public Image getImg() {
+		return avatar;
 	}
 
-	public void setImg(Bitmap img) {
-		this.img = img;
+	public void setImg(Image img) {
+		this.avatar = img;
 	}
 
 	public void setUniqueID(String uniqueID) {
