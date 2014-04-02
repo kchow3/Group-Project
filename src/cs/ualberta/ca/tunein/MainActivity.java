@@ -59,16 +59,10 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setupPage();
-		
-		//setup an unique id for the user that is attached to the phone
-		final TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
-		String deviceId = "" + tm.getDeviceId();
-		String androidId = "" + android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
-		String id = deviceId + androidId;
-		
+				
 		//load in user unique id
 		UserController cntrl = new UserController();
-		cntrl.saveUserid(id, getApplicationContext());
+		cntrl.saveUserid(getApplicationContext());
 		
 		//load in the favorites
 		FavoriteController favoriteController = new FavoriteController();

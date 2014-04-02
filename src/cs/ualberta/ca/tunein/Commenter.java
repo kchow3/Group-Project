@@ -2,6 +2,9 @@ package cs.ualberta.ca.tunein;
 
 import java.io.Serializable;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 /**
  * Model
  * Commenter Class:
@@ -13,6 +16,14 @@ public class Commenter implements Serializable{
 
 	private String name;
 	private String uniqueID; 
+	
+	/**
+	 * Constructor that constructs a commenter for the purpose of getting
+	 * the current user.
+	 */
+	public Commenter() 
+	{
+	}
 	
 	/**
 	 * Constructor that constructs a commenter.
@@ -36,5 +47,28 @@ public class Commenter implements Serializable{
 		return uniqueID;
 	}
 	
+	public String getCurrentName(Context cntxt) {
+    	SharedPreferences prefs = cntxt.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+    	return prefs.getString("cs.ualberta.ca.tunein.username", "Anonymous");
+	}
+
+	public void setCurrentName(String name, Context cntxt) {
+    	SharedPreferences prefs = cntxt.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+    	prefs.edit().putString("cs.ualberta.ca.tunein.username", name).commit();
+	}
+
+	public String getCurrentUniqueID(Context cntxt) {
+    	SharedPreferences prefs = cntxt.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+    	return prefs.getString("cs.ualberta.ca.tunein.userid", "");
+	}
+
+	public void setCurrentUniqueID(String uniqueID, Context cntxt) {
+    	SharedPreferences prefs = cntxt.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+    	prefs.edit().putString("cs.ualberta.ca.tunein.userid", uniqueID).commit();
+	}
 
 }
