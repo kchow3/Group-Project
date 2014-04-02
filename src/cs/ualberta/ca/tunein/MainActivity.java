@@ -178,7 +178,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			GeoLocation loc = new GeoLocation();
 			GeoLocationController geoController = new GeoLocationController(loc);
-			geoController.getLocation(getApplicationContext());
+			geoController.getLocation(MainActivity.this);
 			SharedPreferences prefs = getApplicationContext().getSharedPreferences(
 	  			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
 	    		prefs.edit().putString("SORTLONG", String.valueOf(loc.getLongitude())).commit();

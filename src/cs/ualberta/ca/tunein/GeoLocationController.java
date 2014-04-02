@@ -3,6 +3,7 @@ package cs.ualberta.ca.tunein;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -113,41 +114,47 @@ public class GeoLocationController {
     class GetLastLocation extends TimerTask {
         @Override
         public void run() {
-             lm.removeUpdates(locationListenerGps);
-             lm.removeUpdates(locationListenerNetwork);
+        	((Activity) context).runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					lm.removeUpdates(locationListenerGps);
+		             lm.removeUpdates(locationListenerNetwork);
 
-             Location net_loc=null, gps_loc=null;
-             if(gps_enabled)
-                 gps_loc=lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-             if(network_enabled)
-                 net_loc=lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-             
-             //if there are both values use the latest one
-             if(gps_loc!=null && net_loc!=null){
-                 if(gps_loc.getTime()>net_loc.getTime())
-                 {
-                     loc.setLongitude(gps_loc.getLongitude());
-                     loc.setLatitude(gps_loc.getLatitude());
-                 }
-                 else
-                 {
-                     loc.setLongitude(net_loc.getLongitude());
-                     loc.setLatitude(net_loc.getLatitude());
-                 }
-                 return;
-             }
-             
-             if(gps_loc!=null){
-                 loc.setLongitude(gps_loc.getLongitude());
-                 loc.setLatitude(gps_loc.getLatitude());
-                 return;
-             }
-             
-             if(net_loc!=null){
-                 loc.setLongitude(net_loc.getLongitude());
-                 loc.setLatitude(net_loc.getLatitude());
-                 return;
-             }
+		             Location net_loc=null, gps_loc=null;
+		             if(gps_enabled)
+		                 gps_loc=lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		             if(network_enabled)
+		                 net_loc=lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		             
+		             //if there are both values use the latest one
+		             if(gps_loc!=null && net_loc!=null){
+		                 if(gps_loc.getTime()>net_loc.getTime())
+		                 {
+		                     loc.setLongitude(gps_loc.getLongitude());
+		                     loc.setLatitude(gps_loc.getLatitude());
+		                 }
+		                 else
+		                 {
+		                     loc.setLongitude(net_loc.getLongitude());
+		                     loc.setLatitude(net_loc.getLatitude());
+		                 }
+		                 return;
+		             }
+		             
+		             if(gps_loc!=null){
+		                 loc.setLongitude(gps_loc.getLongitude());
+		                 loc.setLatitude(gps_loc.getLatitude());
+		                 return;
+		             }
+		             
+		             if(net_loc!=null){
+		                 loc.setLongitude(net_loc.getLongitude());
+		                 loc.setLatitude(net_loc.getLatitude());
+		                 return;
+		             }
+				}
+        	});
         }
     }
 	

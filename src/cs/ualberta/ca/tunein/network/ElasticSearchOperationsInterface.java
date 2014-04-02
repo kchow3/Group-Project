@@ -13,6 +13,7 @@ public interface ElasticSearchOperationsInterface {
 	 * 
 	 * @param model
 	 *            a Comment
+	 * @return String of the elasticid of commnet posted.
 	 */
 	public abstract void postCommentModel(Comment model);
 

@@ -145,7 +145,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 	 * @see cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface#getCommentPosts(java.lang.String, cs.ualberta.ca.tunein.Comment, android.content.Context)
 	 */
 	@Override
-	public void getCommentPosts(final String parentID, final Comment model, final Context cntxt ) {
+	public void getCommentPosts(final String elasticID, final Comment model, final Context cntxt ) {
 		if (GSON == null)
 			constructGson();
 
@@ -154,7 +154,8 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				HttpGet request = new HttpGet(SERVER_URL + parentID);
+				Log.v("id", elasticID);
+				HttpGet request = new HttpGet(SERVER_URL + elasticID);
 				String responseJson = "";
 
 				try {

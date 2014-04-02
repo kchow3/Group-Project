@@ -241,8 +241,6 @@ public class Comment implements Serializable
 	{
 		this.replies.addAll(replies);
 		this.replyCount = this.replies.size();
-		Log.v("param reply size:", Integer.toString(this.replies.size()));
-		Log.v("this reply size:", Integer.toString(replies.size()));
 	}
 	
 	public void clear() {

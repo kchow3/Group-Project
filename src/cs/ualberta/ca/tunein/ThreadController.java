@@ -85,7 +85,7 @@ public class ThreadController {
 		list.add(aComment);
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.postCommentModel(aComment);
-		openCommentResult(cntxt, aComment);
+		openCommentResult(cntxt, list.get(list.size()-1));
 	}
 	
 	/**
