@@ -114,7 +114,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		
 		//set text of textviews
 		holder.textViewTitle.setText(commentList.get(position).getTitle());
-		holder.textViewDate.setText(commentList.get(position).dateToString());
+		holder.textViewDate.setText(commentList.get(position).dateDisplay());
 		holder.textViewUser.setText(commentList.get(position).getCommenter().getName());
 		holder.textViewFavCount.setText("Favs: " +Integer.toString(commentList.get(position).getFavoriteCount()));
 		holder.textViewReplyCount.setText("Replies: " + Integer.toString(commentList.get(position).getReplyCount()));
@@ -154,15 +154,6 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	public void updateThreadView(ArrayList<Comment> commentList)
 	{
 		this.commentList = commentList;
-		notifyDataSetChanged();
-	}
-	
-	/**
-	 * Method to just refresh the thread view without
-	 * assigning a new comment list.
-	 */
-	public void refreshThreadView()
-	{
 		notifyDataSetChanged();
 	}
 	
@@ -217,7 +208,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			            	commentController.addReply(currentComment.getElasticID(), (Activity) context, title, text, false);
 			        		
 			            } 
-			            refreshThreadView();
+			            notifyDataSetChanged();
 			        }
 			    })
 			    .setNegativeButton("Cancel", null).create();
@@ -236,7 +227,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    	final int i = (Integer)v.getTag();
 	    	Comment currentComment = commentList.get(i);
 	    	favoriteController.addToFav(context, currentComment);
-	    	refreshThreadView();
+	    	notifyDataSetChanged();
 	    }
 	};
 	
@@ -250,7 +241,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    	final int i = (Integer)v.getTag();
 	    	Comment currentComment = commentList.get(i);
 	    	cacheController.addToCache(context, currentComment);
-	    	refreshThreadView();
+	    	notifyDataSetChanged();
 	    }
 	};
 	

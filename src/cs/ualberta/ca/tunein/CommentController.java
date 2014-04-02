@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 /**
  * Controller
@@ -128,13 +129,6 @@ public class CommentController{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.postCommentModel(aComment);
 	}
-
-	/**
-	 * Method of adding comment to cache.
-	 */
-	public void addtoCache() {
-		// TODO Auto-generated method stub
-	}
 	
 	/**
 	 * Method of adding comment to favorites.
@@ -184,6 +178,12 @@ public class CommentController{
 	public void loadCommentReplies(Context cntxt)
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.getRepliesByParentId(comment.getElasticID(), comment, cntxt,viewAdapter);
+		eso.getRepliesByParentId(comment.getElasticID(), comment, cntxt, viewAdapter);
+	}
+	
+	public void loadComment(Context cntxt)
+	{
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.getCommentPosts(comment.getElasticID(), comment, cntxt); 
 	}
 }

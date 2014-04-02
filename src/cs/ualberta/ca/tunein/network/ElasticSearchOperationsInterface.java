@@ -2,6 +2,7 @@ package cs.ualberta.ca.tunein.network;
 
 import android.content.Context;
 import cs.ualberta.ca.tunein.Comment;
+import cs.ualberta.ca.tunein.CommentViewAdapter;
 import cs.ualberta.ca.tunein.ReplyViewAdapter;
 import cs.ualberta.ca.tunein.ThreadList;
 
@@ -12,6 +13,7 @@ public interface ElasticSearchOperationsInterface {
 	 * 
 	 * @param model
 	 *            a Comment
+	 * @return String of the elasticid of commnet posted.
 	 */
 	public abstract void postCommentModel(Comment model);
 
@@ -49,22 +51,15 @@ public interface ElasticSearchOperationsInterface {
 
 	/**
 	 * Method to get comments from elasticsearch and sort them based on
-	 * reply count which will give us comments that are currently "hot"
+	 * the specified sort option in the parameters, either: hotness(default),
+	 * date, picture, my location, set location
 	 * Code from:
 	 * http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-sort.html
 	 * @param modelList ThreadList that will be filled.
 	 * @param activity Activity that calls this method.
 	 */
-	public abstract void getCommentPostsByHotness(ThreadList modelList,
-			Context cntxt);
+	public abstract void getTopicsBySort(ThreadList modelList,
+			Context cntxt, String sort);
 
-	/**
-	 * Method to get comments from elasticsearch and sort them based on having a picture.
-	 * Code from:
-	 * http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-sort.html
-	 * @param modelList ThreadList that will be filled.
-	 * @param cntxt Activity that calls this method.
-	 */
-	public abstract void getCommentPostsByPictures(ThreadList modelList, Context cntxt);
 
 }
