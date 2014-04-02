@@ -154,8 +154,8 @@ public class CommentController{
 	 */
 	public boolean checkValid(Context cntxt) {
 		//id of the current viewer
-		User aUser = new User();
-		String currentID = aUser.getUniqueID(cntxt);
+		Commenter aUser = new Commenter();
+		String currentID = aUser.getCurrentUniqueID(cntxt);
 		return comment.getCommenter().getUniqueID().equals(currentID);
 	}
 	

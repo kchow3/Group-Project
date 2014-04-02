@@ -37,7 +37,8 @@ import cs.ualberta.ca.tunein.ThreadList;
  */
 public class ElasticSearchOperations implements ElasticSearchOperationsInterface {
 
-	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn/";
+	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/datetest/";
+	//public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn/";
 	public static final String LOG_TAG = "ElasticSearch";
 	
 	public final static String SORTLONG = "cs.ualberta.ca.tunein.sortLong";
@@ -431,7 +432,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 			String result = lon + ", " + lat;
 			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}} , " +
 					"\"sort\": [ { \"_geo_distance\": { \"order\": \"desc\",  \"ignore_unmapped\": true, " +
-					"\"TuneIn.geolocation\": ["+result+"], \"unit\": \"km\" } } ] }";
+					"\"datetest.geolocation\": ["+result+"], \"unit\": \"km\" } } ] }";
 		}
 		if(sort.equals("default"))
 		{
