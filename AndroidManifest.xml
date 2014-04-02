@@ -35,6 +35,7 @@
         <activity android:name="EditPageActivity"></activity>
         <activity android:name="FavoriteActivity"></activity>
         <activity android:name="CacheActivity"></activity>
+        <activity android:name="ProfileViewActivity"></activity>
     </application>
 
 
