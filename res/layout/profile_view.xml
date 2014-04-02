@@ -13,59 +13,7 @@
         android:text="Save"
         android:visibility="invisible" />
 
-    <TextView
-        android:id="@+id/textViewProfileName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="50dp"
-        android:text="Name"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:width="175dp" />
-
-    <ImageView
-        android:id="@+id/imageViewProfileImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewProfileName"
-        android:layout_marginLeft="38dp"
-        android:layout_toRightOf="@+id/textViewProfileName"
-        android:scaleType="fitCenter"
-        android:src="@drawable/iprofile_image" />
-
-    <TextView
-        android:id="@+id/textViewProfileBio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonProfileSave"
-        android:layout_alignLeft="@+id/textViewProfileBioLabel"
-        android:layout_alignRight="@+id/textViewProfileTwitter"
-        android:layout_marginBottom="20dp"
-        android:hint="Biography"
-        android:lines="6" />
-
-    <TextView
-        android:id="@+id/textViewProfileBioLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewProfileBio"
-        android:layout_alignLeft="@+id/textViewProfileTwitterLabel"
-        android:layout_marginBottom="16dp"
-        android:text="Biography: "
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewProfileTwitterLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewProfileFacebookLabel"
-        android:layout_centerVertical="true"
-        android:text="Twitter: "
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
+    <EditText
         android:id="@+id/textViewProfileTwitter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,7 +21,8 @@
         android:layout_alignRight="@+id/textViewProfileFacebook"
         android:layout_centerVertical="true"
         android:hint="Twitter Name"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="13sp" />
 
     <TextView
         android:id="@+id/textViewProfileFacebookLabel"
@@ -95,27 +44,90 @@
         android:text="Email: "
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/textViewProfileEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewProfileFacebook"
-        android:layout_alignRight="@+id/imageViewProfileImage"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="15dp"
-        android:layout_toRightOf="@+id/textViewProfileBioLabel"
-        android:hint="Email"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
+    <EditText
         android:id="@+id/textViewProfileFacebook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textViewProfileTwitter"
         android:layout_alignLeft="@+id/textViewProfileEmail"
-        android:layout_alignRight="@+id/imageViewProfileImage"
+        android:layout_alignRight="@+id/textViewProfileEmail"
         android:layout_marginBottom="15dp"
         android:hint="Facebook Profile"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="13sp" />
+
+    <EditText
+        android:id="@+id/textViewProfileBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonProfileSave"
+        android:layout_alignLeft="@+id/textViewProfileBioLabel"
+        android:layout_alignRight="@+id/textViewProfileTwitter"
+        android:ems="10"
+        android:gravity="top|left"
+        android:hint="Biography"
+        android:lines="6"
+        android:textSize="13sp" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/textViewProfileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:text="Name"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:width="175dp" />
+
+    <ImageView
+        android:id="@+id/imageViewProfileImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewProfileEmail"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/textViewProfileName"
+        android:layout_marginRight="22dp"
+        android:layout_toRightOf="@+id/textViewProfileName"
+        android:scaleType="fitCenter"
+        android:src="@drawable/iprofile_image" />
+
+    <TextView
+        android:id="@+id/textViewProfileTwitterLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewProfileTwitter"
+        android:layout_alignBottom="@+id/textViewProfileTwitter"
+        android:layout_alignLeft="@+id/textViewProfileFacebookLabel"
+        android:text="Twitter: "
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewProfileBioLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewProfileBio"
+        android:layout_alignLeft="@+id/textViewProfileTwitterLabel"
+        android:layout_marginBottom="15dp"
+        android:text="Biography: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/textViewProfileEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewProfileFacebook"
+        android:layout_alignRight="@+id/imageViewProfileImage"
+        android:layout_marginBottom="14dp"
+        android:layout_toRightOf="@+id/textViewProfileBioLabel"
+        android:ems="10"
+        android:hint="Email"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="13sp" />
 
 </RelativeLayout>
