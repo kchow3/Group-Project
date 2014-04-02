@@ -7,7 +7,7 @@ import android.telephony.TelephonyManager;
  * Controller
  * UserController Class:
  * This is a controller class that modifies the user model
- * and will also be used to load a  saved username.
+ * and will also be used to load a saved username.
  */
 public class UserController {
 	
