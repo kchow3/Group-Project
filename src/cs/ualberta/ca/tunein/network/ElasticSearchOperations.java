@@ -27,7 +27,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import cs.ualberta.ca.tunein.Comment;
-import cs.ualberta.ca.tunein.CommentViewAdapter;
 import cs.ualberta.ca.tunein.ReplyViewAdapter;
 import cs.ualberta.ca.tunein.ThreadList;
 
@@ -51,7 +50,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 	 * @see cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface#postCommentModel(cs.ualberta.ca.tunein.Comment)
 	 */
 	@Override
-	public void postCommentModel(final Comment model, final Context cntxt) {
+	public void postCommentModel(final Comment model) {
 		if (GSON == null)
 			constructGson();
 
@@ -90,19 +89,11 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 					e.printStackTrace();
 				}
 				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
-				final ElasticSearchResponse<Comment> esResponse = GSON.fromJson(jsonResponse, elasticSearchResponseType);
-				final String elasticID = esResponse.getID();
-				
-				Runnable updateModel = new Runnable() {
-					@Override
-					public void run() {
-						Log.v("ID:", elasticID);
+				ElasticSearchResponse<Comment> esResponse = GSON.fromJson(jsonResponse, elasticSearchResponseType);
+				String elasticID = esResponse.getID();
 
-						model.setElasticID(elasticID);
-					}
-				};
+				model.setElasticID(elasticID);
 
-				((Activity) cntxt).runOnUiThread(updateModel);
 				putCommentModel(model);
 			}
 		};

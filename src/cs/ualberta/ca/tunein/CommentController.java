@@ -95,7 +95,7 @@ public class CommentController{
 		}
 		
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.postCommentModel(aComment, cntxt);
+		eso.postCommentModel(aComment);
 	}
 	
 	
@@ -127,7 +127,7 @@ public class CommentController{
 			aComment.increaseReplyCount();
 		}
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.postCommentModel(aComment, cntxt);
+		eso.postCommentModel(aComment);
 	}
 	
 	/**
@@ -178,7 +178,7 @@ public class CommentController{
 	public void loadCommentReplies(Context cntxt)
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.getRepliesByParentId(comment.getElasticID(), comment, cntxt,viewAdapter);
+		eso.getRepliesByParentId(comment.getElasticID(), comment, cntxt, viewAdapter);
 	}
 	
 	public void loadComment(Context cntxt)

@@ -22,7 +22,6 @@ public class ThreadController {
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
 	
 	private ThreadList discussionThread;
-	private GeoLocation loc;
 	
 	/**
 	 * Constructor constructs a contoller for the list of comments.
@@ -58,7 +57,7 @@ public class ThreadController {
 		Comment aComment = new Comment(user, title, comment, loc, img, "0");
 		list.add(aComment);
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.postCommentModel(aComment, cntxt);
+		eso.postCommentModel(aComment);
 	}
 	
 	/**
@@ -83,7 +82,7 @@ public class ThreadController {
 		Comment aComment = new Comment(user, title, comment, loc, "0");
 		list.add(aComment);
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.postCommentModel(aComment, cntxt);
+		eso.postCommentModel(aComment);
 	}
 	
 	/**

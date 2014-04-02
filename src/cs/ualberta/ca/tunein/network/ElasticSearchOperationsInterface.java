@@ -15,7 +15,7 @@ public interface ElasticSearchOperationsInterface {
 	 *            a Comment
 	 * @return String of the elasticid of commnet posted.
 	 */
-	public abstract void postCommentModel(Comment model, Context cntxt);
+	public abstract void postCommentModel(Comment model);
 
 	/**
 	 * Method used for updating a comment on elasticsearch by posting using
