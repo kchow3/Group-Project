@@ -95,7 +95,7 @@ public class CommentController{
 		}
 		
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.postCommentModel(aComment);
+		eso.postCommentModel(aComment, cntxt);
 	}
 	
 	
@@ -127,7 +127,7 @@ public class CommentController{
 			aComment.increaseReplyCount();
 		}
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.postCommentModel(aComment);
+		eso.postCommentModel(aComment, cntxt);
 	}
 	
 	/**
@@ -184,7 +184,6 @@ public class CommentController{
 	public void loadComment(Context cntxt)
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		Log.v("id", comment.getElasticID());
 		eso.getCommentPosts(comment.getElasticID(), comment, cntxt); 
 	}
 }

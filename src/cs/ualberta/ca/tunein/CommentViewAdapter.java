@@ -168,7 +168,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    	int index = (Integer) v.getTag();
 	    	Comment aComment = commentList.get(index);
 	    	Intent intent = new Intent(context, CommentPageActivity.class);
-	    	intent.putExtra(EXTRA_COMMENT, aComment.getElasticID());
+	    	intent.putExtra(EXTRA_COMMENT, aComment);
 	    	context.startActivity(intent);
 	    }
 	};

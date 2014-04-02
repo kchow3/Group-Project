@@ -58,8 +58,7 @@ public class ThreadController {
 		Comment aComment = new Comment(user, title, comment, loc, img, "0");
 		list.add(aComment);
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.postCommentModel(aComment);
-		openCommentResult(cntxt, aComment);
+		eso.postCommentModel(aComment, cntxt);
 	}
 	
 	/**
@@ -84,8 +83,7 @@ public class ThreadController {
 		Comment aComment = new Comment(user, title, comment, loc, "0");
 		list.add(aComment);
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.postCommentModel(aComment);
-		openCommentResult(cntxt, list.get(list.size()-1));
+		eso.postCommentModel(aComment, cntxt);
 	}
 	
 	/**

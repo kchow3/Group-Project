@@ -130,7 +130,6 @@ public class CommentPageActivity extends Activity {
 	private void getInputComment()
 	{
 		Intent intent = getIntent();
-		isReplyReply = intent.getBooleanExtra("isReplyReply", false);
 		aComment = (Comment) intent.getSerializableExtra(EXTRA_COMMENT);
 	}
 	
@@ -160,7 +159,6 @@ public class CommentPageActivity extends Activity {
 		textViewCommentBlock.setText(aComment.getComment());
 		textViewCommentUser.setText(aComment.getCommenter().getName());
 		textViewCommentDate.setText(aComment.dateDisplay());
-		Log.v("date", aComment.dateDisplay());
 		textViewCommentFavCount.setText("Favs: " + Integer.toString(aComment.getFavoriteCount()));
 		textViewCommentReplyCount.setText("Replies: " + Integer.toString(aComment.getReplyCount()));
 		

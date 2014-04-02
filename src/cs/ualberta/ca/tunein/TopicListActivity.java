@@ -182,7 +182,7 @@ public class TopicListActivity extends Activity {
 		            {	                
 		            	threadController.createTopic(TopicListActivity.this, title, comment);     		
 		            }
-		            //viewAdapter.updateThreadView(threadList.getDiscussionThread());
+		            viewAdapter.updateThreadView(threadList.getDiscussionThread());
 		        }
 		    })
 		    .setNegativeButton("Cancel", null).create();

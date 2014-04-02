@@ -47,7 +47,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 	 * @see cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface#postCommentModel(cs.ualberta.ca.tunein.Comment)
 	 */
 	@Override
-	public void postCommentModel(final Comment model) {
+	public void postCommentModel(final Comment model, final Context cntxt) {
 		if (GSON == null)
 			constructGson();
 
@@ -86,12 +86,19 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 					e.printStackTrace();
 				}
 				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Comment>>(){}.getType();
-				ElasticSearchResponse<Comment> esResponse = GSON.fromJson(jsonResponse, elasticSearchResponseType);
+				final ElasticSearchResponse<Comment> esResponse = GSON.fromJson(jsonResponse, elasticSearchResponseType);
+				final String elasticID = esResponse.getID();
 				
-				String elasticID = esResponse.getID();
-				Log.v("ID:", elasticID);
+				Runnable updateModel = new Runnable() {
+					@Override
+					public void run() {
+						Log.v("ID:", elasticID);
 
-				model.setElasticID(elasticID);
+						model.setElasticID(elasticID);
+					}
+				};
+
+				((Activity) cntxt).runOnUiThread(updateModel);
 				putCommentModel(model);
 			}
 		};
@@ -154,7 +161,6 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				Log.v("id", elasticID);
 				HttpGet request = new HttpGet(SERVER_URL + elasticID);
 				String responseJson = "";
 
