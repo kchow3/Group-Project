@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>150</x>
+      <y>170</y>
+      <w>60</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>350</x>
+      <y>170</y>
+      <w>60</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>580</x>
+      <y>170</y>
+      <w>60</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>180</x>
+      <y>160</y>
+      <w>190</w>
+      <h>122</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;
+ 
+User Hits the Date
+Button from the
+Main Screen</panel_attributes>
+    <additional_attributes>170;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>380</x>
+      <y>160</y>
+      <w>220</w>
+      <h>122</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;
+ 
+User hits view button
+from the topic list
+on a selected topic</panel_attributes>
+    <additional_attributes>200;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>900</x>
+      <y>170</y>
+      <w>60</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>610</x>
+      <y>160</y>
+      <w>310</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;
+ 
+User hits the reply button
+from the previous screen</panel_attributes>
+    <additional_attributes>290;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>610</x>
+      <y>230</y>
+      <w>310</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;
+ 
+User submits reply and updates 
+topic with new reply</panel_attributes>
+    <additional_attributes>30;50;290;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>610</x>
+      <y>290</y>
+      <w>310</w>
+      <h>94</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;
+ 
+User hits the reply button on a reply</panel_attributes>
+    <additional_attributes>290;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>560</x>
+      <y>120</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>Topic</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>850</x>
+      <y>120</y>
+      <w>160</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>Topic with Reply Window</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>330</x>
+      <y>120</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>Topics By Date</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>130</x>
+      <y>120</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>Main Screen</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Actor</type>
+    <coordinates>
+      <x>0</x>
+      <y>30</y>
+      <w>100</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>User</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
