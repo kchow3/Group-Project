@@ -18,6 +18,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.util.Log;
 
@@ -40,6 +41,9 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/datetest/";
 	//public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn/";
 	public static final String LOG_TAG = "ElasticSearch";
+	
+	public final static String SORTLONG = "cs.ualberta.ca.tunein.sortLong";
+	public final static String SORTLAT = "cs.ualberta.ca.tunein.sortLat";
 
 	private static Gson GSON = null;
 
@@ -336,7 +340,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
 				HttpPost request = new HttpPost(SERVER_URL + "_search/");
-				String query = querySortReturn(sort);
+				String query = querySortReturn(sort, cntxt);
 				String responseJson = "";
 
 				//Log.w(LOG_TAG, "query is: " + query);
@@ -413,7 +417,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 	 * @param sort The sort option
 	 * @return The query for elastic search
 	 */
-	private String querySortReturn(String sort)
+	private String querySortReturn(String sort, Context cntxt)
 	{
 		String query = "";
 		Log.v("sort", sort);
@@ -428,13 +432,16 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}} , " +
 					"\"sort\": [ { \"hasImage\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 		}
-		if(sort.equals("My Location"))
-		{
-			
-		}
-		if(sort.equals("Set Location"))
-		{
-			
+		if(sort.equals("My Location") || sort.equals("Set Location"))
+		{	    
+			SharedPreferences prefs = cntxt.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+			String lon = prefs.getString(SORTLONG, "0");
+			String lat = prefs.getString(SORTLAT, "0");
+			String result = lon + ", " + lat;
+			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}} , " +
+					"\"sort\": [ { \"_geo_distance\": { \"order\": \"desc\",  \"ignore_unmapped\": true, " +
+					"\"datetest.geolocation\": ["+result+"], \"unit\": \"km\" } } ] }";
 		}
 		if(sort.equals("default"))
 		{

@@ -37,6 +37,7 @@ import android.widget.TextView;
  */
 public class TopicListActivity extends Activity {
 
+	public final static String SORT = "cs.ualberta.ca.tunein.sort";
 	public static int SELECT_PICTURE_REQUEST_CODE = 12345;
 	
 	//comment view adapter
@@ -146,7 +147,7 @@ public class TopicListActivity extends Activity {
 	{
 	    SharedPreferences prefs = this.getSharedPreferences(
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-	    String sortType = prefs.getString("cs.ualberta.ca.tunein.sort", "Freshness");
+	    String sortType = prefs.getString(SORT, "default");
 		//setuptextview
 		textViewSort = (TextView)findViewById(R.id.textViewSort);
 		textViewSort.setText(sortType);
