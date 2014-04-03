@@ -55,7 +55,7 @@ public class ProfileViewActivity extends Activity {
 	public void onResume()
 	{
 		//on resume to load profile if profile is updated when app resumed
-		userController.loadProfile(userid);
+		userController.loadProfile(userid, ProfileViewActivity.this);
 	    setupPage();
 	}
 	
