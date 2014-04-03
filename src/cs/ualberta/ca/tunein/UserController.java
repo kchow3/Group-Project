@@ -65,13 +65,17 @@ public class UserController {
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		Commenter commenter = new Commenter(cntxt);
-		//eso.postProfileModel(commenter);
+		eso.postProfileModel(commenter);
 	}
 	
-	public void loadProfile(String userID)
+	public void loadProfile(String userID, Context cntxt)
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		//eso.getProfile(userID, user);
+		eso.getProfileModel(userID, user);
+		if(user.getElasticID() == null)
+		{
+			createProfile(cntxt);
+		}
 	}
 	
 	public void saveProfile(String name, String email, String facebook, String twitter, String bio, Bitmap bmp)
@@ -84,7 +88,7 @@ public class UserController {
 		Image img = new Image(bmp);
 		user.setAvatar(img);
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		//eso.putProfileModel();
+		eso.putProfileModel(user);
 	}
 
 }

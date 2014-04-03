@@ -52,6 +52,10 @@ public class Commenter implements Serializable{
 	{
 		this.name = getCurrentName(cntxt);
 		this.uniqueID = getCurrentUniqueID(cntxt);
+		this.email = "";
+		this.facebook = "";
+		this.twitter = "";
+		this.bio = "";
 	}
 
 	public String getName() {
