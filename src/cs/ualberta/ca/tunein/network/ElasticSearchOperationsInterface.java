@@ -3,6 +3,7 @@ package cs.ualberta.ca.tunein.network;
 import android.content.Context;
 import cs.ualberta.ca.tunein.Comment;
 import cs.ualberta.ca.tunein.CommentViewAdapter;
+import cs.ualberta.ca.tunein.Commenter;
 import cs.ualberta.ca.tunein.ReplyViewAdapter;
 import cs.ualberta.ca.tunein.ThreadList;
 
@@ -61,5 +62,23 @@ public interface ElasticSearchOperationsInterface {
 	public abstract void getTopicsBySort(ThreadList modelList,
 			Context cntxt, String sort);
 
+	/**
+	 * Sends a commenter profile to the server.
+	 * @param model The profile to be sent.
+	 */
+	public abstract void postProfileModel(Commenter model);
+	
+	/**
+	 * Updates a profile to the server.
+	 * @param model The profile to be sent.
+	 */
+	public abstract void putProfileModel(Commenter model);
+	
+	/**
+	 * Gets the profile from the server.
+	 * @param id The user id to search for profile.
+	 * @param model The profile that user will be loaded into.
+	 */
+	public abstract void getProfileModel(String id, Commenter model);
 
 }

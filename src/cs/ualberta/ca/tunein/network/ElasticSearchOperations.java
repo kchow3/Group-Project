@@ -27,6 +27,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import cs.ualberta.ca.tunein.Comment;
+import cs.ualberta.ca.tunein.Commenter;
 import cs.ualberta.ca.tunein.ReplyViewAdapter;
 import cs.ualberta.ca.tunein.ThreadList;
 
@@ -412,7 +413,6 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 	private String querySortReturn(String sort, Context cntxt)
 	{
 		String query = "";
-		Log.v("sort", sort);
 		if(sort.equals("Date"))
 		{
 			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}} , " +
@@ -441,7 +441,24 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 					"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true }," +
 					"  \"favoriteCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 		}
-		Log.v("query sort", query);
 		return query;
+	}
+
+	@Override
+	public void postProfileModel(Commenter model) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void putProfileModel(Commenter model) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getProfileModel(String id, Commenter model) {
+		// TODO Auto-generated method stub
+		
 	}
 }
