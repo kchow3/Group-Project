@@ -56,6 +56,7 @@ public class Commenter implements Serializable{
 		this.facebook = "";
 		this.twitter = "";
 		this.bio = "";
+		this.elasticID = null;
 	}
 
 	public String getName() {
@@ -144,6 +145,15 @@ public class Commenter implements Serializable{
     	SharedPreferences prefs = cntxt.getSharedPreferences(
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
     	prefs.edit().putString("cs.ualberta.ca.tunein.userid", uniqueID).commit();
+	}
+	
+	public void setupProfile(Commenter source) {
+		this.name = source.getName();
+		this.uniqueID = source.getUniqueID();
+		this.email = source.getEmail();
+		this.facebook = source.getFacebook();
+		this.twitter = source.getTwitter();
+		this.bio = source.getBio();
 	}
 
 }

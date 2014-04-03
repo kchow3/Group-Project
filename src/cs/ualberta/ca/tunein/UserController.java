@@ -71,10 +71,14 @@ public class UserController {
 	public void loadProfile(String userID, Context cntxt)
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.getProfileModel(userID, user);
 		if(user.getElasticID() == null)
 		{
 			createProfile(cntxt);
+			eso.getProfileModel(user.getElasticID(), user, cntxt);
+		}
+		else
+		{
+			eso.getProfileModel(user.getElasticID(), user, cntxt);
 		}
 	}
 	

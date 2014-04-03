@@ -160,6 +160,8 @@ public class TopicListActivity extends Activity {
 	 * and create a comment and add to the topic list.
 	 * Bitmap code from 
 	 * http://stackoverflow.com/questions/8490474/cant-compress-a-recycled-bitmap
+	 * Listview code from
+	 * http://stackoverflow.com/questions/8134541/how-to-set-the-focus-on-the-last-element-in-a-list-view-in-android
 	 * @param v The view passed in.
 	 */
 	public void createCommentClick(View v)
