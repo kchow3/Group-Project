@@ -335,7 +335,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 				String query = querySortReturn(sort, cntxt);
 				String responseJson = "";
 
-				//Log.w(LOG_TAG, "query is: " + query);
+				Log.w(LOG_TAG, "sort query is: " + query);
 				try {
 					request.setEntity(new StringEntity(query));
 				} catch (UnsupportedEncodingException exception) {
@@ -430,10 +430,9 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
 			String lon = prefs.getString(SORTLONG, "0");
 			String lat = prefs.getString(SORTLAT, "0");
-			String result = lon + ", " + lat;
 			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}} , " +
-					"\"sort\": [ { \"_geo_distance\": { \"order\": \"desc\",  \"ignore_unmapped\": true, " +
-					"\"datetest.geolocation\": ["+result+"], \"unit\": \"km\" } } ] }";
+					"\"sort\": [ { \"_geo_distance\": { \"order\": \"asc\",  \"ignore_unmapped\": true, " +
+					"\"geolocation\": { \"lat\":" +lat+", \"lon\":" + lon + "}, \"unit\": \"km\" } } ] }";
 		}
 		if(sort.equals("default"))
 		{
@@ -442,7 +441,6 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 					"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true }," +
 					"  \"favoriteCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 		}
-		Log.v("sort", query);
 		return query;
 	}
 }

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -46,7 +47,6 @@ public class MainActivity extends Activity {
 	private Button fav_button;
 	private Button buttonCache;
 	
-	private TextView location_text;
 	private TextView edit_username;
 	
 	//dialog elements
@@ -150,11 +150,8 @@ public class MainActivity extends Activity {
 			    .setView(createView)
 			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			        public void onClick(DialogInterface dialog, int whichButton) {
-			    		SharedPreferences prefs = getApplicationContext().getSharedPreferences(
-			  			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-			    		prefs.edit().putString("SORTLONG", inputLong.getText().toString()).commit();
-			    		prefs.edit().putString("SORTLAT", inputLat.getText().toString()).commit();
 			    		setSort("Set Location");
+			    		setLoc(false);
 						Intent i = new Intent(getApplicationContext(),
 								TopicListActivity.class);
 						MainActivity.this.startActivity(i);
@@ -170,14 +167,8 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener myLocationBtnClick = new OnClickListener() {
 		public void onClick(View v) {
-			GeoLocation loc = new GeoLocation();
-			GeoLocationController geoController = new GeoLocationController(loc);
-			geoController.getLocation(MainActivity.this);
-			SharedPreferences prefs = getApplicationContext().getSharedPreferences(
-	  			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-	    		prefs.edit().putString("SORTLONG", String.valueOf(loc.getLongitude())).commit();
-	    		prefs.edit().putString("SORTLAT", String.valueOf(loc.getLongitude())).commit();
 			setSort("My Location");
+			setLoc(true);
 			Intent i = new Intent(getApplicationContext(),
 					TopicListActivity.class);
 			MainActivity.this.startActivity(i);
@@ -247,6 +238,29 @@ public class MainActivity extends Activity {
 		SharedPreferences prefs = this.getSharedPreferences(
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
 		prefs.edit().putString(SORT, sort).commit();
+	}
+	
+	/**
+	 * Set the location of the sort.
+	 * @param myLoc Is the sort by my location
+	 */
+	private void setLoc(boolean myLoc)
+	{
+		SharedPreferences prefs = this.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+		if(myLoc)
+		{
+			GeoLocation loc = new GeoLocation();
+			GeoLocationController geoController = new GeoLocationController(loc);
+			geoController.getLocation(MainActivity.this);
+	    	prefs.edit().putString(SORTLONG, String.valueOf(loc.getLongitude())).commit();
+	    	prefs.edit().putString(SORTLAT, String.valueOf(loc.getLongitude())).commit();
+		}
+		else
+		{
+	  		prefs.edit().putString(SORTLONG, inputLong.getText().toString()).commit();
+	  		prefs.edit().putString(SORTLAT, inputLat.getText().toString()).commit();
+		}
 	}
 	
 	/**
