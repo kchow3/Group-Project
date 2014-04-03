@@ -32,9 +32,13 @@ import android.widget.Toast;
  */
 public class MainActivity extends Activity {
 	
+	//public string that are used to get the sort info
 	public final static String SORT = "cs.ualberta.ca.tunein.sort";
 	public final static String SORTLONG = "cs.ualberta.ca.tunein.sortLong";
 	public final static String SORTLAT = "cs.ualberta.ca.tunein.sortLat";
+	
+	//public string that tags the extra of the comment to be edited that is passed to EditPageActivity
+	public final static String EXTRA_USERID = "cs.ualberta.ca.tunein.userid";
 	
 	private TextView title;
 	
@@ -46,6 +50,7 @@ public class MainActivity extends Activity {
 	private Button buttonTopicList;
 	private Button fav_button;
 	private Button buttonCache;
+	private Button buttonViewProfile;;
 	
 	private TextView location_text;
 	private TextView edit_username;
@@ -103,6 +108,7 @@ public class MainActivity extends Activity {
 		buttonTopicList = (Button) findViewById(R.id.buttonTopicList);
 		fav_button = (Button) findViewById(R.id.fav_button);
 		buttonCache = (Button) findViewById(R.id.buttonCache);
+		buttonViewProfile = (Button) findViewById(R.id.buttonViewProfile);
 		
 		edit_username = (TextView) findViewById(R.id.edit_username);
 		location_text = (TextView) findViewById(R.id.location_text);
@@ -118,6 +124,8 @@ public class MainActivity extends Activity {
 		buttonTopicList.setOnClickListener(topicListBtnClick);
 		fav_button.setOnClickListener(favBtnClick);
 		buttonCache.setOnClickListener(cacheBtnClick);
+		
+		buttonViewProfile.setOnClickListener(profileBtnClick);
 
 		// Set Custom fonts
 		Typeface tf = Typeface.createFromAsset(getAssets(),
@@ -237,6 +245,20 @@ public class MainActivity extends Activity {
 			setSort("default");
 			Intent i = new Intent(getApplicationContext(),
 					TopicListActivity.class);
+			MainActivity.this.startActivity(i);
+		}
+	};
+	
+	/**
+	 * This click listener will go to the profile page.
+	 */
+	private OnClickListener profileBtnClick = new OnClickListener() {
+		public void onClick(View v) {
+			UserController cntrl = new UserController();
+			String userid = cntrl.loadUserid(getApplicationContext());
+			Intent i = new Intent(getApplicationContext(),
+					ProfileViewActivity.class);
+			i.putExtra(EXTRA_USERID, userid);
 			MainActivity.this.startActivity(i);
 		}
 	};

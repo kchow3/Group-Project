@@ -4,6 +4,7 @@ import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 /**
  * Controller
@@ -32,10 +33,20 @@ public class UserController {
 		this.user = aUser;
 	}
 
+	/**
+	 * Method to get current user's username
+	 * @param cntxt Context of app
+	 * @return the username
+	 */
 	public String loadUsername(Context cntxt) {
 		return user.getCurrentName(cntxt);
 	}
 	
+	/**
+	 * Method to get the current user's user id
+	 * @param cntxt
+	 * @return
+	 */
 	public String loadUserid(Context cntxt) {
 		return user.getCurrentUniqueID(cntxt);
 	}
@@ -64,6 +75,7 @@ public class UserController {
 	public void createProfile(Context cntxt)
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
+		//create a whole new profile
 		Commenter commenter = new Commenter(cntxt);
 		eso.postProfileModel(commenter);
 	}
@@ -71,11 +83,16 @@ public class UserController {
 	public void loadProfile(String userID, Context cntxt)
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		eso.getProfileModel(userID, user);
-		if(user.getElasticID() == null)
+		if(user.isNewProfile())
 		{
 			createProfile(cntxt);
+			eso.getProfileModel(userID, user, cntxt);
 		}
+		else
+		{
+			eso.getProfileModel(userID, user, cntxt);
+		}
+		Log.v("username", user.getName());
 	}
 	
 	public void saveProfile(String name, String email, String facebook, String twitter, String bio, Bitmap bmp)

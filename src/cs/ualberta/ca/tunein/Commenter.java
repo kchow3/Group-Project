@@ -13,7 +13,8 @@ import android.content.SharedPreferences;
  * info and uses that to create a comment author.
  */
 public class Commenter implements Serializable{
-
+	
+	//attributes for profile
 	private String name;
 	private String uniqueID; 
 	private String email; 
@@ -21,10 +22,8 @@ public class Commenter implements Serializable{
 	private String twitter; 
 	private String bio; 
 	private Image avatar;
+	private boolean newProfile = true;;
 	
-	private String elasticID;
-	
-	//attributes for profile
 	
 	/**
 	 * Constructor that constructs a commenter for the purpose of getting
@@ -114,12 +113,12 @@ public class Commenter implements Serializable{
 		this.avatar = avatar;
 	}
 
-	public String getElasticID() {
-		return elasticID;
+	public boolean isNewProfile() {
+		return newProfile;
 	}
 
-	public void setElasticID(String elasticID) {
-		this.elasticID = elasticID;
+	public void setNewProfile(boolean newProfile) {
+		this.newProfile = newProfile;
 	}
 
 	public String getCurrentName(Context cntxt) {
@@ -144,6 +143,15 @@ public class Commenter implements Serializable{
     	SharedPreferences prefs = cntxt.getSharedPreferences(
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
     	prefs.edit().putString("cs.ualberta.ca.tunein.userid", uniqueID).commit();
+	}
+	
+	public void setupProfile(Commenter source) {
+		this.name = source.getName();
+		this.uniqueID = source.getUniqueID();
+		this.email = source.getEmail();
+		this.facebook = source.getFacebook();
+		this.twitter = source.getTwitter();
+		this.bio = source.getBio();
 	}
 
 }

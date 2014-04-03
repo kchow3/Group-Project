@@ -445,20 +445,124 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 	}
 
 	@Override
-	public void postProfileModel(Commenter model) {
-		// TODO Auto-generated method stub
-		
+	public void postProfileModel(final Commenter model) {
+		if (GSON == null)
+			constructGson();
+
+		Thread thread = new Thread() {
+
+			@Override
+			public void run() {
+				HttpClient client = new DefaultHttpClient();
+				HttpPost request = new HttpPost(SERVER_PROFILE_URL + model.getUniqueID() + "/");
+
+				try {
+					request.setEntity(new StringEntity(GSON.toJson(model)));
+					Log.v("GSON", GSON.toJson(model));
+				} catch (UnsupportedEncodingException exception) {
+					Log.w(LOG_TAG,
+							"Error encoding PicPostModel: "
+									+ exception.getMessage());
+					return;
+				}
+
+				HttpResponse response = null;
+				try {
+					response = client.execute(request);
+					Log.i(LOG_TAG, "Response: "
+							+ response.getStatusLine().toString());
+				} catch (IOException exception) {
+					Log.w(LOG_TAG,
+							"Error sending PicPostModel: "
+									+ exception.getMessage());
+				}
+
+				model.setNewProfile(false);
+				putProfileModel(model);
+			}
+		};
+		thread.start();
 	}
 
 	@Override
-	public void putProfileModel(Commenter model) {
-		// TODO Auto-generated method stub
-		
+	public void putProfileModel(final Commenter model) {
+		if (GSON == null)
+			constructGson();
+
+		Thread thread = new Thread() {
+
+			@Override
+			public void run() {
+				HttpClient client = new DefaultHttpClient();
+				HttpPost request = new HttpPost(SERVER_PROFILE_URL + model.getUniqueID() + "/");
+				String query = GSON.toJson(model);
+				Log.w("Query", query);
+				try {
+					request.setEntity(new StringEntity(query));
+					Log.v("GSON", GSON.toJson(model));
+				} catch (UnsupportedEncodingException exception) {
+					Log.w(LOG_TAG,
+							"Error encoding PicPostModel: "
+									+ exception.getMessage());
+					return;
+				}
+
+				HttpResponse response;
+				try {
+					response = client.execute(request);
+					Log.i(LOG_TAG, "Response: "
+							+ response.getStatusLine().toString());
+				} catch (IOException exception) {
+					Log.w(LOG_TAG,
+							"Error sending PicPostModel: "
+									+ exception.getMessage());
+				}
+			}
+		};
+		thread.start();
 	}
 
 	@Override
-	public void getProfileModel(String id, Commenter model) {
-		// TODO Auto-generated method stub
-		
+	public void getProfileModel(final String elasticID, final Commenter model, final Context cntxt) {
+		if (GSON == null)
+			constructGson();
+
+		Thread thread = new Thread() {
+
+			@Override
+			public void run() {
+				HttpClient client = new DefaultHttpClient();
+				HttpGet request = new HttpGet(SERVER_PROFILE_URL + elasticID);
+				String responseJson = "";
+
+				try {
+					HttpResponse response = client.execute(request);
+					Log.i(LOG_TAG, "Response: "
+							+ response.getStatusLine().toString());
+
+					responseJson = getEntityContent(response);
+
+					
+				} catch (IOException exception) {
+					Log.w(LOG_TAG, "Error receiving search query response: "
+							+ exception.getMessage());
+					return;
+				}
+
+				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Commenter>>(){}.getType();
+				// Now we expect to get a Recipe response
+				final ElasticSearchResponse<Commenter> esResponse = GSON.fromJson(responseJson, elasticSearchResponseType);
+				
+				Runnable updateModel = new Runnable() {
+					@Override
+					public void run() {
+						model.setupProfile(esResponse.getSource());
+					}
+				};
+
+				((Activity) cntxt).runOnUiThread(updateModel);
+			}
+		};
+		thread.start();
 	}
 }

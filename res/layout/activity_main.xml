@@ -19,15 +19,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="40sp" />
 
-    <TextView
-        android:id="@+id/viewtopics_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_username"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
-        android:text="How would you like to sort topics?" />
-
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
@@ -73,14 +64,6 @@
             android:text="With Pictures" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/username_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/viewtopics_text"
-        android:layout_toLeftOf="@+id/edit_username"
-        android:text="Username:" />
-
     <Button
         android:id="@+id/name_button"
         android:layout_width="wrap_content"
@@ -88,16 +71,6 @@
         android:layout_alignBottom="@+id/edit_username"
         android:layout_alignParentRight="true"
         android:text="Set" />
-
-    <EditText
-        android:id="@+id/edit_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/title"
-        android:layout_below="@+id/location_text"
-        android:layout_marginTop="36dp"
-        android:layout_toLeftOf="@+id/name_button"
-        android:ems="10" />
 
     <TextView
         android:id="@+id/location_text"
@@ -148,5 +121,42 @@
         android:layout_marginBottom="14dp"
         android:text="Go directly to:"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/username_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/name_button"
+        android:layout_alignBottom="@+id/name_button"
+        android:layout_alignLeft="@+id/linearLayout1"
+        android:text="Username:" />
+
+    <EditText
+        android:id="@+id/edit_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/location_text"
+        android:layout_marginTop="18dp"
+        android:layout_toLeftOf="@+id/name_button"
+        android:layout_toRightOf="@+id/username_text"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/viewtopics_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp"
+        android:text="How would you like to sort topics?" />
+
+    <Button
+        android:id="@+id/buttonViewProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/title"
+        android:layout_below="@+id/edit_username"
+        android:layout_toLeftOf="@+id/name_button"
+        android:text="View Profile" />
 
 </RelativeLayout>

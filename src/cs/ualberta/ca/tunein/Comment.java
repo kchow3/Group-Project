@@ -234,7 +234,6 @@ public class Comment implements Serializable
 		this.replyCount = source.getReplyCount();
 		this.elasticID = source.getElasticID();
 		this.parentID = source.getParentID();
-		
 	}
 	
 	public void addReplies(ArrayList<Comment> replies)

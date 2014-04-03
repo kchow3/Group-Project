@@ -76,9 +76,10 @@ public interface ElasticSearchOperationsInterface {
 	
 	/**
 	 * Gets the profile from the server.
-	 * @param id The user id to search for profile.
+	 * @param id The elastic id to search for profile.
 	 * @param model The profile that user will be loaded into.
+	 * @param cntxt Context of application.
 	 */
-	public abstract void getProfileModel(String id, Commenter model);
+	public abstract void getProfileModel(String id, Commenter model, Context cntxt);
 
 }

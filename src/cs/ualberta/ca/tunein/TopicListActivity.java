@@ -42,6 +42,8 @@ public class TopicListActivity extends Activity {
 	
 	//comment view adapter
 	private CommentViewAdapter viewAdapter;
+	//listview
+	private ListView listview;
 	//discussion thread list
 	private ThreadList threadList;
 	//thread controller
@@ -70,7 +72,7 @@ public class TopicListActivity extends Activity {
 		//setup the comment listview
 		viewAdapter = new CommentViewAdapter(TopicListActivity.this, threadList.getDiscussionThread());
 		threadController = new ThreadController(threadList);
-		ListView listview = (ListView) findViewById(R.id.listViewTopics);
+		listview = (ListView) findViewById(R.id.listViewTopics);
 		listview.setAdapter(viewAdapter);
 		threadList.setAdapter(viewAdapter);
 	}
@@ -158,6 +160,8 @@ public class TopicListActivity extends Activity {
 	 * and create a comment and add to the topic list.
 	 * Bitmap code from 
 	 * http://stackoverflow.com/questions/8490474/cant-compress-a-recycled-bitmap
+	 * Listview code from
+	 * http://stackoverflow.com/questions/8134541/how-to-set-the-focus-on-the-last-element-in-a-list-view-in-android
 	 * @param v The view passed in.
 	 */
 	public void createCommentClick(View v)
@@ -184,6 +188,8 @@ public class TopicListActivity extends Activity {
 		            	threadController.createTopic(TopicListActivity.this, title, comment);     		
 		            }
 		            viewAdapter.updateThreadView(threadList.getDiscussionThread());
+		            //move the listview to the bottom to see new item
+		            listview.setSelection(listview.getAdapter().getCount()-1);
 		        }
 		    })
 		    .setNegativeButton("Cancel", null).create();
