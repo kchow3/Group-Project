@@ -92,6 +92,7 @@ public class UserController {
 		{
 			eso.getProfileModel(userID, user, cntxt);
 		}
+		Log.v("username", user.getName());
 	}
 	
 	public void saveProfile(String name, String email, String facebook, String twitter, String bio, Bitmap bmp)

@@ -454,7 +454,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_PROFILE_URL);
+				HttpPost request = new HttpPost(SERVER_PROFILE_URL + model.getUniqueID() + "/");
 
 				try {
 					request.setEntity(new StringEntity(GSON.toJson(model)));
