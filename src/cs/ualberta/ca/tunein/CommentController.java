@@ -72,7 +72,7 @@ public class CommentController{
 	 * @param img The image of the comment.
 	 * @param isReply Check if the added comment will be reply of reply.
 	 */
-	public void addReplyImg(String parentID, Context cntxt, String title, String text, Bitmap bmp, boolean isReply) {
+	public void addReplyImg(String parentID, Context cntxt, String title, String text, Bitmap bmp) {
 		
 		UserController userCntrl = new UserController();
     	String username = userCntrl.loadUsername(cntxt);
@@ -89,11 +89,6 @@ public class CommentController{
 		comment.addReply(aComment);
 		comment.increaseReplyCount();
 		
-		if(isReply)
-		{
-			aComment.increaseReplyCount();
-		}
-		
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.postCommentModel(aComment);
 	}
@@ -107,7 +102,7 @@ public class CommentController{
 	 * @param text The text of the comment.
 	 * @param isReply Check if the added comment will be reply of reply.
 	 */
-	public void addReply(String parentID, Context cntxt, String title, String text, boolean isReply) {
+	public void addReply(String parentID, Context cntxt, String title, String text) {
 		
 		UserController userCntrl = new UserController();
     	String username = userCntrl.loadUsername(cntxt);
@@ -121,11 +116,7 @@ public class CommentController{
 		Comment aComment = new Comment(user, title, text, loc, parentID);
 		comment.addReply(aComment);
 		comment.increaseReplyCount();
-		
-		if(isReply)
-		{
-			aComment.increaseReplyCount();
-		}
+			
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.postCommentModel(aComment);
 	}

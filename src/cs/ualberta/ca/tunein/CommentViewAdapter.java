@@ -201,11 +201,11 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 			            	inputImage.buildDrawingCache(true);
 			            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
 			            	inputImage.destroyDrawingCache();
-			            	commentController.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, bitmap, false);
+			            	commentController.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, bitmap);
 			            } 
 			            else 
 			            {	                        		
-			            	commentController.addReply(currentComment.getElasticID(), (Activity) context, title, text, false);
+			            	commentController.addReply(currentComment.getElasticID(), (Activity) context, title, text);
 			        		
 			            } 
 			            notifyDataSetChanged();

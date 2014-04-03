@@ -255,11 +255,11 @@ public class CommentPageActivity extends Activity {
 			            	inputImage.buildDrawingCache(true);
 			            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
 			            	inputImage.destroyDrawingCache();           	
-			            	commentController.addReplyImg(aComment.getElasticID(), CommentPageActivity.this, title, text, bitmap, isReplyReply);
+			            	commentController.addReplyImg(aComment.getElasticID(), CommentPageActivity.this, title, text, bitmap);
 			            } 
 			            else 
 			            {	                
-			            	commentController.addReply(aComment.getElasticID(), CommentPageActivity.this, title, text, isReplyReply);
+			            	commentController.addReply(aComment.getElasticID(), CommentPageActivity.this, title, text);
 			            }
 			            replies = aComment.getReplies();
 			            viewAdapter.updateReplyView(replies);
