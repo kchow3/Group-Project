@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -15,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ProfileViewActivity extends Activity {
 	
@@ -131,7 +133,7 @@ public class ProfileViewActivity extends Activity {
 		textViewProfileFacebook.setText(user.getFacebook());
 		textViewProfileTwitter.setText(user.getTwitter());
 		textViewProfileBio.setText(user.getBio());
-		imageViewProfileImage.setImageBitmap(user.getImg().getBitMap());
+		imageViewProfileImage.setImageBitmap(user.getAvatar().getBitMap());
 		
 		//check if current user for permission to update profile
 		if(userController.checkCurrentUser(ProfileViewActivity.this, user.getUniqueID()))
@@ -204,6 +206,14 @@ public class ProfileViewActivity extends Activity {
 			imageViewProfileImage.buildDrawingCache(true);
 	        Bitmap bitmap = imageViewProfileImage.getDrawingCache(true).copy(Config.RGB_565, false);
 	        userController.saveProfile(name, email, facebook, twitter, bio, bitmap);
+	        
+			//toast massage to confirm profile save
+			Context context = getApplicationContext();
+			CharSequence text = "Profile Saved";
+			int duration = Toast.LENGTH_SHORT;
+
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
 	    }
 	};
 	

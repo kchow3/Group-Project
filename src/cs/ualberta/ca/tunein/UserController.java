@@ -61,9 +61,11 @@ public class UserController {
 		return user.getUniqueID().equals(currentID);
 	}
 	
-	public void createProfile()
+	public void createProfile(Context cntxt)
 	{
-		
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		Commenter commenter = new Commenter(cntxt);
+		eso.postProfileModel(commenter);
 	}
 	
 	public void loadProfile(String userID)
@@ -80,7 +82,7 @@ public class UserController {
 		user.setTwitter(twitter);
 		user.setBio(bio);
 		Image img = new Image(bmp);
-		user.setImg(img);
+		user.setAvatar(img);
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.putProfileModel();
 	}

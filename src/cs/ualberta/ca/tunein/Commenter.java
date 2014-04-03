@@ -46,21 +46,12 @@ public class Commenter implements Serializable{
 	
 	/**
 	 * Constructor that constructs a commenter's profile.
-	 * @param cntxt
-	 * @param email
-	 * @param facebook
-	 * @param twitter
-	 * @param bio
-	 * @param img
+	 * Use this constructor for posting new profile to elasticsearch.
 	 */
-	public Commenter(Context cntxt, String facebook, String twitter, String bio, Image img)
+	public Commenter(Context cntxt)
 	{
 		this.name = getCurrentName(cntxt);
 		this.uniqueID = getCurrentUniqueID(cntxt);
-		this.facebook = facebook;
-		this.twitter = twitter;
-		this.bio = bio;
-		this.avatar = img;
 	}
 
 	public String getName() {
