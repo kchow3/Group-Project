@@ -99,11 +99,4 @@ public class ThreadController {
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.getTopicsBySort(discussionThread, cntxt, sortName);
 	}
-	
-	private void openCommentResult(Context cntxt, Comment aComment)
-	{
-    	Intent intent = new Intent(cntxt, CommentPageActivity.class);
-    	intent.putExtra(EXTRA_COMMENT, aComment);
-    	cntxt.startActivity(intent);
-	}
 }
