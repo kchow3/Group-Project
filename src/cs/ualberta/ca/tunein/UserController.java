@@ -71,7 +71,7 @@ public class UserController {
 	public void loadProfile(String userID)
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		
+		eso.getProfile(userID, user);
 	}
 	
 	public void saveProfile(String name, String email, String facebook, String twitter, String bio, Bitmap bmp)
