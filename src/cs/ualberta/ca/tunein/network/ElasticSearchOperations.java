@@ -476,18 +476,8 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 							"Error sending PicPostModel: "
 									+ exception.getMessage());
 				}
-				
-				String jsonResponse = null;
-				try {
-					jsonResponse = getEntityContent(response);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Commenter>>(){}.getType();
-				ElasticSearchResponse<Commenter> esResponse = GSON.fromJson(jsonResponse, elasticSearchResponseType);
-				String elasticID = esResponse.getID();
 
-				model.setElasticID(elasticID);
+				model.setNewProfile(false);
 				putProfileModel(model);
 			}
 		};
@@ -504,7 +494,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				HttpPost request = new HttpPost(SERVER_PROFILE_URL + model.getElasticID() + "/");
+				HttpPost request = new HttpPost(SERVER_PROFILE_URL + model.getUniqueID() + "/");
 				String query = GSON.toJson(model);
 				Log.w("Query", query);
 				try {
@@ -542,7 +532,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				HttpGet request = new HttpGet(SERVER_URL + elasticID);
+				HttpGet request = new HttpGet(SERVER_PROFILE_URL + elasticID);
 				String responseJson = "";
 
 				try {
