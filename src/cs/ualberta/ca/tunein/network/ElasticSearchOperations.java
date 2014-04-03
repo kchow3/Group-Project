@@ -441,6 +441,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 					"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true }," +
 					"  \"favoriteCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 		}
+		Log.v("query sort", query);
 		return query;
 	}
 }

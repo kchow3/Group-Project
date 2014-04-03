@@ -47,6 +47,7 @@ public class MainActivity extends Activity {
 	private Button fav_button;
 	private Button buttonCache;
 	
+	private TextView location_text;
 	private TextView edit_username;
 	
 	//dialog elements
@@ -73,12 +74,11 @@ public class MainActivity extends Activity {
 		cacheController.loadCache(getApplicationContext());
 
 	}
-
+	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	protected void onResume() {
+		super.onResume();
+		loadLoc();
 	}
 	
 	/**
@@ -98,6 +98,7 @@ public class MainActivity extends Activity {
 		buttonCache = (Button) findViewById(R.id.buttonCache);
 		
 		edit_username = (TextView) findViewById(R.id.edit_username);
+		location_text = (TextView) findViewById(R.id.location_text);
 		
 		UserController cntrl = new UserController();
 		edit_username.setText(cntrl.loadUsername(getApplicationContext()));
@@ -261,6 +262,15 @@ public class MainActivity extends Activity {
 	  		prefs.edit().putString(SORTLONG, inputLong.getText().toString()).commit();
 	  		prefs.edit().putString(SORTLAT, inputLat.getText().toString()).commit();
 		}
+	}
+	
+	private void loadLoc()
+	{
+		GeoLocation loc = new GeoLocation();
+		GeoLocationController geoController = new GeoLocationController(loc);
+		geoController.getLocation(MainActivity.this);
+		String result = "@ " + String.valueOf(loc.getLongitude()) + ", " + String.valueOf(loc.getLatitude());
+		location_text.setText(result);
 	}
 	
 	/**
