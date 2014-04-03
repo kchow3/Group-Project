@@ -2,6 +2,7 @@ package cs.ualberta.ca.tunein;
 
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.telephony.TelephonyManager;
 
 /**
@@ -63,6 +64,11 @@ public class UserController {
 	public void loadProfile(String userID)
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
+		
+	}
+	
+	public void saveProfile(String name, String email, String facebook, String twitter, String bio, Bitmap img)
+	{
 		
 	}
 

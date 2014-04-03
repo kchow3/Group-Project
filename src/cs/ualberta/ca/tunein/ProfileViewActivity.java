@@ -6,6 +6,7 @@ import java.io.IOException;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,6 +25,7 @@ public class ProfileViewActivity extends Activity {
 	
 	private Commenter user;
 	private UserController userController;
+	private String userid;
 	
 	//uri for image
 	private Uri outputFileUri;
@@ -45,6 +47,13 @@ public class ProfileViewActivity extends Activity {
 	    user = new Commenter();
 	    userController = new UserController(user);
 	    getInputUser();
+	}
+	
+	@Override
+	public void onResume()
+	{
+		//on resume to load profile if profile is updated when app resumed
+		userController.loadProfile(userid);
 	    setupPage();
 	}
 	
@@ -101,6 +110,11 @@ public class ProfileViewActivity extends Activity {
 	    }
 	}
 	
+	/**
+	 * Method to setup the page's user interface
+	 * Code from:
+	 * http://stackoverflow.com/questions/660151/how-to-replicate-androideditable-false-in-code
+	 */
 	private void setupPage()
 	{
 		textViewProfileName = (TextView) findViewById(R.id.textViewProfileName);
@@ -119,6 +133,7 @@ public class ProfileViewActivity extends Activity {
 		textViewProfileBio.setText(user.getBio());
 		imageViewProfileImage.setImageBitmap(user.getImg().getBitMap());
 		
+		//check if current user for permission to update profile
 		if(userController.checkCurrentUser(ProfileViewActivity.this, user.getUniqueID()))
 		{
 			buttonProfileSave.setVisibility(View.VISIBLE);
@@ -150,26 +165,45 @@ public class ProfileViewActivity extends Activity {
 		}
 	}
 	
+	/**
+	 * Method to get the user id from intent to load in profile
+	 */
 	private void getInputUser()
 	{
 		Intent intent = getIntent();
-		String userid = (String) intent.getSerializableExtra(EXTRA_USERID);
-		userController.loadProfile(userid);
+		userid = (String) intent.getSerializableExtra(EXTRA_USERID);
 	}
 	
+	/**
+	 * Click listener to upload an image as profile avatar
+	 */
 	private OnClickListener profileImageBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
 	    {
+	    	//get image upload
 			ImageController imgCntrl = new ImageController(ProfileViewActivity.this);
 			outputFileUri = imgCntrl.openImageIntent();
 	    }
 	};
 	
+	/**
+	 * Click listener to save the profile.
+	 */
 	private OnClickListener profileSaveBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
 	    {
+	    	//get text fields
+			String name = textViewProfileName.getText().toString();
+			String email = textViewProfileEmail.getText().toString();
+			String facebook = textViewProfileFacebook.getText().toString();
+			String twitter = textViewProfileTwitter.getText().toString();
+			String bio = textViewProfileBio.getText().toString();
+			//build bitmap
+			imageViewProfileImage.buildDrawingCache(true);
+	        Bitmap bitmap = imageViewProfileImage.getDrawingCache(true).copy(Config.RGB_565, false);
+	        userController.saveProfile(name, email, facebook, twitter, bio, bitmap);
 	    }
 	};
 	
