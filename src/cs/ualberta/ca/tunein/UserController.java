@@ -1,5 +1,6 @@
 package cs.ualberta.ca.tunein;
 
+import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
@@ -13,8 +14,21 @@ public class UserController {
 	
 	private Commenter user;
 	
+	/**
+	 * Constructor for controller to save and load in the current user's name and id
+	 */
 	public UserController() {
-		user = new Commenter();
+		this.user = new Commenter();
+	}
+	
+	/**
+	 * Construcotr for controller to check userid with profile id and
+	 * loading in the profile.
+	 * @param aUser The user to be modified
+	 */
+	public UserController(Commenter aUser)
+	{
+		this.user = aUser;
 	}
 
 	public String loadUsername(Context cntxt) {
@@ -36,6 +50,20 @@ public class UserController {
 
 	public void changeUsername(String name, Context cntxt) {
 		user.setCurrentName(name, cntxt);
+	}
+	
+	public boolean checkCurrentUser(Context cntxt, String userID)
+	{
+		//id of the current viewer
+		Commenter aUser = new Commenter();
+		String currentID = aUser.getCurrentUniqueID(cntxt);
+		return user.getUniqueID().equals(currentID);
+	}
+	
+	public void loadProfile(String userID)
+	{
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		
 	}
 
 }
