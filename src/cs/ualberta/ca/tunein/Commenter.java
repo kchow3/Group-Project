@@ -22,7 +22,7 @@ public class Commenter implements Serializable{
 	private String twitter; 
 	private String bio; 
 	private Image avatar;
-	private boolean newProfile;
+	private boolean newProfile = true;;
 	
 	
 	/**
@@ -55,7 +55,6 @@ public class Commenter implements Serializable{
 		this.facebook = "";
 		this.twitter = "";
 		this.bio = "";
-		this.newProfile = true;
 	}
 
 	public String getName() {
