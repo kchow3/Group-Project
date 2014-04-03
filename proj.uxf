@@ -187,7 +187,7 @@ m2=0..*</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1470</x>
-      <y>850</y>
+      <y>820</y>
       <w>260</w>
       <h>140</h>
     </coordinates>
@@ -210,11 +210,11 @@ m2=0..*</panel_attributes>
       <x>1440</x>
       <y>660</y>
       <w>100</w>
-      <h>210</h>
+      <h>180</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 m2=2..*</panel_attributes>
-    <additional_attributes>80;190;80;30;30;30</additional_attributes>
+    <additional_attributes>80;160;80;30;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
@@ -282,9 +282,9 @@ m2=1</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1810</x>
-      <y>840</y>
+      <y>860</y>
       <w>360</w>
-      <h>190</h>
+      <h>170</h>
     </coordinates>
     <panel_attributes>ReplyViewAdapter
 --
@@ -314,7 +314,6 @@ m2=1</panel_attributes>
 - Thread threadList
 - String title
 - String comment
-- Image img
 --
 + void MainPageBtnClick(View)
 + void createCommentClick(View)</panel_attributes>
@@ -372,19 +371,15 @@ m2=1</panel_attributes>
       <x>2260</x>
       <y>970</y>
       <w>340</w>
-      <h>170</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>ThreadListController
 --
 - ArrayList&lt;Comment&gt; discussionThread
 --
-+ void createTopic(Activity,String, String)
-+ void createTopicImg(Activity, String, String, Img)
-+ void getOnlineTopics(Activity)
-+ void sortByDate()
-+ void sortByLocation(GeoLocation)
-+ void sortByPicture()
-+ void sortBySetLocation(GeoLocation)</panel_attributes>
++ void createTopic(Context,String, String)
++ void createTopicImg(Context, String, String, Img)
++ void getOnlineTopics(Context)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -426,14 +421,14 @@ m2=1</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>1680</x>
+      <x>1700</x>
       <y>580</y>
-      <w>530</w>
-      <h>290</h>
+      <w>510</w>
+      <h>280</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 m2=1</panel_attributes>
-    <additional_attributes>30;270;30;240;510;240;510;30</additional_attributes>
+    <additional_attributes>30;260;490;260;490;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -690,7 +685,7 @@ m2=1</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>1700</x>
-      <y>910</y>
+      <y>880</y>
       <w>130</w>
       <h>50</h>
     </coordinates>
