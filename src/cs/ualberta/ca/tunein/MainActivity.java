@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -53,22 +54,19 @@ public class MainActivity extends Activity {
 	private View createView;
 	private TextView inputLong;
 	private TextView inputLat;
+	
+	private GeoLocation loc;
+	private GeoLocationController geoController;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setupPage();
-		
-		//setup an unique id for the user that is attached to the phone
-		final TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
-		String deviceId = "" + tm.getDeviceId();
-		String androidId = "" + android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
-		String id = deviceId + androidId;
-		
+				
 		//load in user unique id
 		UserController cntrl = new UserController();
-		cntrl.saveUserid(id, getApplicationContext());
+		cntrl.saveUserid(getApplicationContext());
 		
 		//load in the favorites
 		FavoriteController favoriteController = new FavoriteController();
@@ -77,14 +75,17 @@ public class MainActivity extends Activity {
 		//load in the cache
 		CacheController cacheController = new CacheController();
 		cacheController.loadCache(getApplicationContext());
+		
+		loc = new GeoLocation();
+		geoController = new GeoLocationController(loc);
 
 	}
-
+	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	protected void onResume() {
+		super.onResume();
+		geoController.getLocation(MainActivity.this);
+		loadLoc();
 	}
 	
 	/**
@@ -104,6 +105,7 @@ public class MainActivity extends Activity {
 		buttonCache = (Button) findViewById(R.id.buttonCache);
 		
 		edit_username = (TextView) findViewById(R.id.edit_username);
+		location_text = (TextView) findViewById(R.id.location_text);
 		
 		UserController cntrl = new UserController();
 		edit_username.setText(cntrl.loadUsername(getApplicationContext()));
@@ -156,11 +158,8 @@ public class MainActivity extends Activity {
 			    .setView(createView)
 			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			        public void onClick(DialogInterface dialog, int whichButton) {
-			    		SharedPreferences prefs = getApplicationContext().getSharedPreferences(
-			  			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-			    		prefs.edit().putString("SORTLONG", inputLong.getText().toString()).commit();
-			    		prefs.edit().putString("SORTLAT", inputLat.getText().toString()).commit();
 			    		setSort("Set Location");
+			    		setLoc(false);
 						Intent i = new Intent(getApplicationContext(),
 								TopicListActivity.class);
 						MainActivity.this.startActivity(i);
@@ -176,14 +175,8 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener myLocationBtnClick = new OnClickListener() {
 		public void onClick(View v) {
-			GeoLocation loc = new GeoLocation();
-			GeoLocationController geoController = new GeoLocationController(loc);
-			geoController.getLocation(MainActivity.this);
-			SharedPreferences prefs = getApplicationContext().getSharedPreferences(
-	  			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-	    		prefs.edit().putString("SORTLONG", String.valueOf(loc.getLongitude())).commit();
-	    		prefs.edit().putString("SORTLAT", String.valueOf(loc.getLongitude())).commit();
 			setSort("My Location");
+			setLoc(true);
 			Intent i = new Intent(getApplicationContext(),
 					TopicListActivity.class);
 			MainActivity.this.startActivity(i);
@@ -253,6 +246,32 @@ public class MainActivity extends Activity {
 		SharedPreferences prefs = this.getSharedPreferences(
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
 		prefs.edit().putString(SORT, sort).commit();
+	}
+	
+	/**
+	 * Set the location of the sort.
+	 * @param myLoc Is the sort by my location
+	 */
+	private void setLoc(boolean myLoc)
+	{
+		SharedPreferences prefs = this.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+		if(myLoc)
+		{
+	    	prefs.edit().putString(SORTLONG, String.valueOf(loc.getLongitude())).commit();
+	    	prefs.edit().putString(SORTLAT, String.valueOf(loc.getLongitude())).commit();
+		}
+		else
+		{
+	  		prefs.edit().putString(SORTLONG, inputLong.getText().toString()).commit();
+	  		prefs.edit().putString(SORTLAT, inputLat.getText().toString()).commit();
+		}
+	}
+	
+	private void loadLoc()
+	{
+		String result = "@ " + String.valueOf(loc.getLongitude()) + ", " + String.valueOf(loc.getLatitude());
+		location_text.setText(result);
 	}
 	
 	/**

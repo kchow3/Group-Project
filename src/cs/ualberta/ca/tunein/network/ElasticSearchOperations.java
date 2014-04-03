@@ -27,6 +27,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import cs.ualberta.ca.tunein.Comment;
+import cs.ualberta.ca.tunein.Commenter;
 import cs.ualberta.ca.tunein.ReplyViewAdapter;
 import cs.ualberta.ca.tunein.ThreadList;
 
@@ -38,6 +39,8 @@ import cs.ualberta.ca.tunein.ThreadList;
 public class ElasticSearchOperations implements ElasticSearchOperationsInterface {
 
 	public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn/";
+	public static final String SERVER_PROFILE_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/Profiles/";
+	//public static final String SERVER_URL = "http://cmput301.softwareprocess.es:8080/cmput301w14t03/TuneIn/";
 	public static final String LOG_TAG = "ElasticSearch";
 	
 	public final static String SORTLONG = "cs.ualberta.ca.tunein.sortLong";
@@ -333,7 +336,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 				String query = querySortReturn(sort, cntxt);
 				String responseJson = "";
 
-				//Log.w(LOG_TAG, "query is: " + query);
+				Log.w(LOG_TAG, "sort query is: " + query);
 				try {
 					request.setEntity(new StringEntity(query));
 				} catch (UnsupportedEncodingException exception) {
@@ -410,7 +413,6 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 	private String querySortReturn(String sort, Context cntxt)
 	{
 		String query = "";
-		Log.v("sort", sort);
 		if(sort.equals("Date"))
 		{
 			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}} , " +
@@ -428,10 +430,9 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
 			String lon = prefs.getString(SORTLONG, "0");
 			String lat = prefs.getString(SORTLAT, "0");
-			String result = lon + ", " + lat;
 			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}} , " +
-					"\"sort\": [ { \"_geo_distance\": { \"order\": \"desc\",  \"ignore_unmapped\": true, " +
-					"\"TuneIn.geolocation\": ["+result+"], \"unit\": \"km\" } } ] }";
+					"\"sort\": [ { \"_geo_distance\": { \"order\": \"asc\",  \"ignore_unmapped\": true, " +
+					"\"geolocation\": { \"lat\":" +lat+", \"lon\":" + lon + "}, \"unit\": \"km\" } } ] }";
 		}
 		if(sort.equals("default"))
 		{
@@ -440,7 +441,24 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 					"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true }," +
 					"  \"favoriteCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 		}
-		Log.v("sort", query);
 		return query;
+	}
+
+	@Override
+	public void postProfileModel(Commenter model) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void putProfileModel(Commenter model) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getProfileModel(String id, Commenter model) {
+		// TODO Auto-generated method stub
+		
 	}
 }

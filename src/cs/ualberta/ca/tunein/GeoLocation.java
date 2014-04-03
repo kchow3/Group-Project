@@ -10,8 +10,8 @@ import java.io.Serializable;
  */
 public class GeoLocation implements Serializable{
 
-	private double longitude;
-	private double latitude;
+	private double lon;
+	private double lat;
 	
 	/**
 	 * Constructor constructs a geolocation
@@ -21,19 +21,19 @@ public class GeoLocation implements Serializable{
 	}
 
 	public double getLongitude() {
-		return longitude;
+		return lon;
 	}
 
 	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+		this.lon = longitude;
 	}
 
 	public double getLatitude() {
-		return latitude;
+		return lat;
 	}
 
 	public void setLatitude(double latitude) {
-		this.latitude = latitude;
+		this.lat = latitude;
 	}
 
 	

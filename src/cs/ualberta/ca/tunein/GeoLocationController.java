@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 
 /**
  * Controller
@@ -70,7 +71,6 @@ public class GeoLocationController {
         
         timer1=new Timer();
         timer1.schedule(new GetLastLocation(), 30000);
-        
 	}
 	
 	/**

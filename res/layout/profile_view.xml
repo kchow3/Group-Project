@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <Button
+        android:id="@+id/buttonProfileSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:text="Save"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/imageViewProfileImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonProfileUploadImage"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textViewProfileName"
+        android:scaleType="fitCenter"
+        android:src="@drawable/iprofile_image" />
+
+    <EditText
+        android:id="@+id/textViewProfileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="21dp"
+        android:ems="10"
+        android:text="Name"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:width="175dp" />
+
+    <Button
+        android:id="@+id/buttonProfileUploadImage"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewProfileEmail"
+        android:layout_alignLeft="@+id/imageViewProfileImage"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="18dp"
+        android:minHeight="15dp"
+        android:text="Upload"
+        android:textSize="12sp"
+        android:visibility="invisible" />
+
+    <EditText
+        android:id="@+id/textViewProfileEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewProfileEmailLabel"
+        android:layout_alignBottom="@+id/textViewProfileEmailLabel"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/textViewProfileTwitterLabel"
+        android:ems="10"
+        android:hint="Email"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="13sp" />
+
+    <EditText
+        android:id="@+id/textViewProfileBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonProfileSave"
+        android:layout_alignLeft="@+id/textViewProfileBioLabel"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:gravity="top|left"
+        android:hint="Biography"
+        android:lines="4"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/textViewProfileTwitterLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewProfileBioLabel"
+        android:layout_alignLeft="@+id/textViewProfileFacebookLabel"
+        android:layout_marginBottom="14dp"
+        android:text="Twitter: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/textViewProfileTwitter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewProfileTwitterLabel"
+        android:layout_alignBottom="@+id/textViewProfileTwitterLabel"
+        android:layout_alignLeft="@+id/textViewProfileEmail"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:hint="Twitter Name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/textViewProfileFacebookLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewProfileTwitter"
+        android:layout_alignLeft="@+id/textViewProfileEmailLabel"
+        android:layout_marginBottom="15dp"
+        android:text="Facebook: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/textViewProfileFacebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewProfileFacebookLabel"
+        android:layout_alignBottom="@+id/textViewProfileFacebookLabel"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/textViewProfileBioLabel"
+        android:ems="10"
+        android:hint="Facebook Profile"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/textViewProfileEmailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewProfileFacebook"
+        android:layout_alignLeft="@+id/textViewProfileName"
+        android:layout_marginBottom="16dp"
+        android:text="Email: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewProfileBioLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewProfileBio"
+        android:layout_alignLeft="@+id/textViewProfileTwitterLabel"
+        android:text="Biography: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

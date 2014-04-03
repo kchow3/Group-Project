@@ -22,25 +22,28 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
+        public static final int iprofile_image=0x7f020001;
     }
     public static final class id {
-        public static final int RelativeLayout1=0x7f080048;
-        public static final int action_settings=0x7f08004d;
+        public static final int RelativeLayout1=0x7f080054;
+        public static final int action_settings=0x7f080059;
         public static final int buttonCache=0x7f08000c;
         public static final int buttonCommentEdit=0x7f08001e;
         public static final int buttonCommentFav=0x7f08001a;
         public static final int buttonCommentReply=0x7f08001d;
         public static final int buttonCommentSave=0x7f080016;
-        public static final int buttonCreate=0x7f08004b;
+        public static final int buttonCreate=0x7f080057;
         public static final int buttonEditCancel=0x7f080038;
         public static final int buttonEditImage=0x7f08003a;
         public static final int buttonEditLocation=0x7f080036;
         public static final int buttonEditSubmit=0x7f080039;
         public static final int buttonFav=0x7f080024;
         public static final int buttonImage=0x7f08002e;
+        public static final int buttonProfileSave=0x7f080042;
+        public static final int buttonProfileUploadImage=0x7f080044;
         public static final int buttonReply=0x7f080022;
-        public static final int buttonReplyView=0x7f080046;
-        public static final int buttonRowReply=0x7f080047;
+        public static final int buttonReplyView=0x7f080052;
+        public static final int buttonRowReply=0x7f080053;
         public static final int buttonSave=0x7f080027;
         public static final int buttonTopicList=0x7f08000e;
         public static final int buttonView=0x7f080021;
@@ -51,13 +54,14 @@ public final class R {
         public static final int fav_button=0x7f08000d;
         public static final int imageViewCommentImage=0x7f08001c;
         public static final int imageViewEditImage=0x7f080033;
+        public static final int imageViewProfileImage=0x7f080043;
         public static final int imageViewUpload=0x7f08002f;
         public static final int layoutCommentRow=0x7f080020;
         public static final int linearLayout1=0x7f080003;
         public static final int linearLayout2=0x7f080006;
         public static final int listViewCache=0x7f080011;
         public static final int listViewFavorites=0x7f08003c;
-        public static final int listViewTopics=0x7f08004a;
+        public static final int listViewTopics=0x7f080056;
         public static final int location_text=0x7f08000b;
         public static final int myLocation_button=0x7f080005;
         public static final int name_button=0x7f08000a;
@@ -89,15 +93,24 @@ public final class R {
         public static final int textViewInputChangeLat=0x7f080040;
         public static final int textViewInputChangeLong=0x7f080041;
         public static final int textViewInputTitle=0x7f08002d;
-        public static final int textViewReply=0x7f080042;
+        public static final int textViewProfileBio=0x7f080049;
+        public static final int textViewProfileBioLabel=0x7f08004a;
+        public static final int textViewProfileEmail=0x7f080046;
+        public static final int textViewProfileEmailLabel=0x7f080047;
+        public static final int textViewProfileFacebook=0x7f08004d;
+        public static final int textViewProfileFacebookLabel=0x7f08004b;
+        public static final int textViewProfileName=0x7f080045;
+        public static final int textViewProfileTwitter=0x7f08004c;
+        public static final int textViewProfileTwitterLabel=0x7f080048;
+        public static final int textViewReply=0x7f08004e;
         public static final int textViewReplyCount=0x7f080029;
-        public static final int textViewReplyDate=0x7f080044;
-        public static final int textViewReplyRowCount=0x7f080043;
-        public static final int textViewReplyUser=0x7f080045;
+        public static final int textViewReplyDate=0x7f080050;
+        public static final int textViewReplyRowCount=0x7f08004f;
+        public static final int textViewReplyUser=0x7f080051;
         public static final int textViewSaved=0x7f08002b;
-        public static final int textViewSort=0x7f08004c;
+        public static final int textViewSort=0x7f080058;
         public static final int textViewTitle=0x7f080023;
-        public static final int textViewTopics=0x7f080049;
+        public static final int textViewTopics=0x7f080055;
         public static final int textViewUser=0x7f080025;
         public static final int title=0x7f080000;
         public static final int username_text=0x7f080009;
@@ -112,8 +125,9 @@ public final class R {
         public static final int edit_comment_view=0x7f030005;
         public static final int favorites_view=0x7f030006;
         public static final int location_change=0x7f030007;
-        public static final int reply_view_row=0x7f030008;
-        public static final int topic_list_view=0x7f030009;
+        public static final int profile_view=0x7f030008;
+        public static final int reply_view_row=0x7f030009;
+        public static final int topic_list_view=0x7f03000a;
     }
     public static final class menu {
         public static final int main=0x7f070000;
