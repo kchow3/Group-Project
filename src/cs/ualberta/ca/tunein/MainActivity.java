@@ -54,6 +54,9 @@ public class MainActivity extends Activity {
 	private View createView;
 	private TextView inputLong;
 	private TextView inputLat;
+	
+	private GeoLocation loc;
+	private GeoLocationController geoController;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +75,16 @@ public class MainActivity extends Activity {
 		//load in the cache
 		CacheController cacheController = new CacheController();
 		cacheController.loadCache(getApplicationContext());
+		
+		loc = new GeoLocation();
+		geoController = new GeoLocationController(loc);
 
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
+		geoController.getLocation(MainActivity.this);
 		loadLoc();
 	}
 	
@@ -251,9 +258,6 @@ public class MainActivity extends Activity {
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
 		if(myLoc)
 		{
-			GeoLocation loc = new GeoLocation();
-			GeoLocationController geoController = new GeoLocationController(loc);
-			geoController.getLocation(MainActivity.this);
 	    	prefs.edit().putString(SORTLONG, String.valueOf(loc.getLongitude())).commit();
 	    	prefs.edit().putString(SORTLAT, String.valueOf(loc.getLongitude())).commit();
 		}
@@ -266,9 +270,6 @@ public class MainActivity extends Activity {
 	
 	private void loadLoc()
 	{
-		GeoLocation loc = new GeoLocation();
-		GeoLocationController geoController = new GeoLocationController(loc);
-		geoController.getLocation(MainActivity.this);
 		String result = "@ " + String.valueOf(loc.getLongitude()) + ", " + String.valueOf(loc.getLatitude());
 		location_text.setText(result);
 	}

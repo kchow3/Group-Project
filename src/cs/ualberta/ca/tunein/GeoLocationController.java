@@ -84,8 +84,6 @@ public class GeoLocationController {
             loc.setLatitude(location.getLatitude());
             lm.removeUpdates(this);
             lm.removeUpdates(locationListenerNetwork);
-    		Log.v("lon", String.valueOf(loc.getLongitude()));
-    		Log.v("lat", String.valueOf(loc.getLatitude()));
         }
         public void onProviderDisabled(String provider) {}
         public void onProviderEnabled(String provider) {}
