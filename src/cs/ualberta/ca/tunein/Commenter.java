@@ -22,6 +22,8 @@ public class Commenter implements Serializable{
 	private String bio; 
 	private Image avatar;
 	
+	private String elasticID;
+	
 	//attributes for profile
 	
 	/**
@@ -105,16 +107,24 @@ public class Commenter implements Serializable{
 		this.bio = bio;
 	}
 
-	public Image getImg() {
+	public void setUniqueID(String uniqueID) {
+		this.uniqueID = uniqueID;
+	}
+
+	public Image getAvatar() {
 		return avatar;
 	}
 
-	public void setImg(Image img) {
-		this.avatar = img;
+	public void setAvatar(Image avatar) {
+		this.avatar = avatar;
 	}
 
-	public void setUniqueID(String uniqueID) {
-		this.uniqueID = uniqueID;
+	public String getElasticID() {
+		return elasticID;
+	}
+
+	public void setElasticID(String elasticID) {
+		this.elasticID = elasticID;
 	}
 
 	public String getCurrentName(Context cntxt) {

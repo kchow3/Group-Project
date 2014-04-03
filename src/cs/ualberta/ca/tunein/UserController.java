@@ -61,15 +61,28 @@ public class UserController {
 		return user.getUniqueID().equals(currentID);
 	}
 	
+	public void createProfile()
+	{
+		
+	}
+	
 	public void loadProfile(String userID)
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		
 	}
 	
-	public void saveProfile(String name, String email, String facebook, String twitter, String bio, Bitmap img)
+	public void saveProfile(String name, String email, String facebook, String twitter, String bio, Bitmap bmp)
 	{
-		
+		user.setName(name);
+		user.setEmail(email);
+		user.setFacebook(facebook);
+		user.setTwitter(twitter);
+		user.setBio(bio);
+		Image img = new Image(bmp);
+		user.setImg(img);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.putProfileModel();
 	}
 
 }
