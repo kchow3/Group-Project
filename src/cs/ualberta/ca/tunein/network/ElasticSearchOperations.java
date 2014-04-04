@@ -47,6 +47,7 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 	public final static String SORTLAT = "cs.ualberta.ca.tunein.sortLat";
 
 	private static Gson GSON = null;
+	private static Gson ProfileGSON = null;
 
 	/* (non-Javadoc)
 	 * @see cs.ualberta.ca.tunein.network.ElasticSearchOperationsInterface#postCommentModel(cs.ualberta.ca.tunein.Comment)
@@ -392,6 +393,16 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 	}
 	
 	/**
+	 * Constructs a Gson with a custom serializer / desserializer registered for
+	 * Bitmaps.
+	 */
+	private void constructProfileGson() {
+		GsonBuilder builder = new GsonBuilder();
+		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
+		ProfileGSON = builder.excludeFieldsWithoutExposeAnnotation().create();
+	}
+	
+	/**
 	 * get the http response and return json string
 	 */
 	private String getEntityContent(HttpResponse response) throws IOException {
@@ -446,8 +457,8 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 
 	@Override
 	public void postProfileModel(final Commenter model) {
-		if (GSON == null)
-			constructGson();
+		if (ProfileGSON == null)
+			constructProfileGson();
 
 		Thread thread = new Thread() {
 
@@ -486,8 +497,8 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 
 	@Override
 	public void putProfileModel(final Commenter model) {
-		if (GSON == null)
-			constructGson();
+		if (ProfileGSON == null)
+			constructProfileGson();
 
 		Thread thread = new Thread() {
 
@@ -524,8 +535,8 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 
 	@Override
 	public void getProfileModel(final String elasticID, final Commenter model, final Context cntxt) {
-		if (GSON == null)
-			constructGson();
+		if (ProfileGSON == null)
+			constructProfileGson();
 
 		Thread thread = new Thread() {
 

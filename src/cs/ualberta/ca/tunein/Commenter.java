@@ -3,6 +3,8 @@ package cs.ualberta.ca.tunein;
 import java.io.Serializable;
 import java.util.Observable;
 
+import com.google.gson.annotations.Expose;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -17,15 +19,15 @@ import android.util.Log;
 public class Commenter extends Observable implements Serializable{
 	
 	//attributes for profile
-	private String name;
-	private String uniqueID; 
-	private String email; 
-	private String facebook; 
-	private String twitter; 
-	private String bio; 
-	private Image avatar;
-	private boolean hasImage = false;
-	private boolean newProfile = true;;
+	@Expose private String name;
+	@Expose private String uniqueID; 
+	@Expose private String email; 
+	@Expose private String facebook; 
+	@Expose private String twitter; 
+	@Expose private String bio; 
+	@Expose private Image avatar;
+	@Expose private boolean hasImage = false;
+	@Expose private boolean newProfile = true;;
 	
 	
 	/**
