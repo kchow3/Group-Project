@@ -10,7 +10,6 @@ import cs.ualberta.ca.tunein.CommentController;
 import cs.ualberta.ca.tunein.Comment;
 import cs.ualberta.ca.tunein.Commenter;
 import cs.ualberta.ca.tunein.Image;
-import cs.ualberta.ca.tunein.User;
 
 public class commentControllerTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	
