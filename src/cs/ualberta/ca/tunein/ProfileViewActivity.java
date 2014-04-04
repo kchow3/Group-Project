@@ -2,6 +2,8 @@ package cs.ualberta.ca.tunein;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ProfileViewActivity extends Activity {
+public class ProfileViewActivity extends Activity implements Observer{
 	
 	public static int SELECT_PICTURE_REQUEST_CODE = 12345;
 
@@ -47,7 +49,9 @@ public class ProfileViewActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
+	    setContentView(R.layout.profile_view);
 	    user = new Commenter();
+	    user.addObserver(this);
 	    userController = new UserController(user);
 	    getInputUser();
 	}
@@ -55,9 +59,10 @@ public class ProfileViewActivity extends Activity {
 	@Override
 	public void onResume()
 	{
+		super.onResume();
 		//on resume to load profile if profile is updated when app resumed
 		userController.loadProfile(userid, ProfileViewActivity.this);
-	    setupPage();
+	    //setupPage();
 	}
 	
 	/*
@@ -128,13 +133,16 @@ public class ProfileViewActivity extends Activity {
 		buttonProfileSave = (Button) findViewById(R.id.buttonProfileSave);
 		buttonProfileUploadImage = (Button) findViewById(R.id.buttonProfileUploadImage);
 		imageViewProfileImage = (ImageView) findViewById(R.id.imageViewProfileImage);
-		
+		Log.v("name", user.getName());
 		textViewProfileName.setText(user.getName());
 		textViewProfileEmail.setText(user.getEmail());
 		textViewProfileFacebook.setText(user.getFacebook());
 		textViewProfileTwitter.setText(user.getTwitter());
 		textViewProfileBio.setText(user.getBio());
-		imageViewProfileImage.setImageBitmap(user.getAvatar().getBitMap());
+		if(user.isHasImage())
+		{
+			imageViewProfileImage.setImageBitmap(user.getAvatar().getBitMap());
+		}
 		
 		//check if current user for permission to update profile
 		if(userController.checkCurrentUser(ProfileViewActivity.this, user.getUniqueID()))
@@ -217,6 +225,12 @@ public class ProfileViewActivity extends Activity {
 			toast.show();
 	    }
 	};
+
+	@Override
+	public void update(Observable observable, Object data) {
+		user = (Commenter) data;
+		setupPage();
+	}
 	
 
 }

@@ -1,9 +1,11 @@
 package cs.ualberta.ca.tunein;
 
 import java.io.Serializable;
+import java.util.Observable;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 /**
  * Model
@@ -12,7 +14,7 @@ import android.content.SharedPreferences;
  * This class is mainly used by getting passed in User model
  * info and uses that to create a comment author.
  */
-public class Commenter implements Serializable{
+public class Commenter extends Observable implements Serializable{
 	
 	//attributes for profile
 	private String name;
@@ -22,6 +24,7 @@ public class Commenter implements Serializable{
 	private String twitter; 
 	private String bio; 
 	private Image avatar;
+	private boolean hasImage = false;
 	private boolean newProfile = true;;
 	
 	
@@ -55,6 +58,7 @@ public class Commenter implements Serializable{
 		this.facebook = "";
 		this.twitter = "";
 		this.bio = "";
+		this.hasImage = false;
 	}
 
 	public String getName() {
@@ -113,6 +117,14 @@ public class Commenter implements Serializable{
 		this.avatar = avatar;
 	}
 
+	public boolean isHasImage() {
+		return hasImage;
+	}
+
+	public void setHasImage(boolean hasImage) {
+		this.hasImage = hasImage;
+	}
+
 	public boolean isNewProfile() {
 		return newProfile;
 	}
@@ -152,6 +164,13 @@ public class Commenter implements Serializable{
 		this.facebook = source.getFacebook();
 		this.twitter = source.getTwitter();
 		this.bio = source.getBio();
+		this.hasImage = source.isHasImage();
+		if(source.isHasImage())
+		{
+			this.avatar = source.getAvatar();
+		}
+		setChanged();
+        notifyObservers(this);
 	}
 
 }
