@@ -31,6 +31,7 @@ public class ProfileViewActivity extends Activity implements Observer{
 	private Commenter user;
 	private UserController userController;
 	private String userid;
+	private boolean uploadedImg = false;;
 	
 	//uri for image
 	private Uri outputFileUri;
@@ -62,7 +63,6 @@ public class ProfileViewActivity extends Activity implements Observer{
 		super.onResume();
 		//on resume to load profile if profile is updated when app resumed
 		userController.loadProfile(userid, ProfileViewActivity.this);
-	    //setupPage();
 	}
 	
 	/*
@@ -109,6 +109,7 @@ public class ProfileViewActivity extends Activity implements Observer{
 	            try {
 					Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
 					imageViewProfileImage.setImageBitmap(bitmap);
+					uploadedImg = true;
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -133,7 +134,7 @@ public class ProfileViewActivity extends Activity implements Observer{
 		buttonProfileSave = (Button) findViewById(R.id.buttonProfileSave);
 		buttonProfileUploadImage = (Button) findViewById(R.id.buttonProfileUploadImage);
 		imageViewProfileImage = (ImageView) findViewById(R.id.imageViewProfileImage);
-		Log.v("name", user.getName());
+		
 		textViewProfileName.setText(user.getName());
 		textViewProfileEmail.setText(user.getEmail());
 		textViewProfileFacebook.setText(user.getFacebook());
@@ -211,10 +212,17 @@ public class ProfileViewActivity extends Activity implements Observer{
 			String facebook = textViewProfileFacebook.getText().toString();
 			String twitter = textViewProfileTwitter.getText().toString();
 			String bio = textViewProfileBio.getText().toString();
-			//build bitmap
-			imageViewProfileImage.buildDrawingCache(true);
-	        Bitmap bitmap = imageViewProfileImage.getDrawingCache(true).copy(Config.RGB_565, false);
-	        userController.saveProfile(name, email, facebook, twitter, bio, bitmap);
+			if(uploadedImg)
+			{
+				//build bitmap
+				imageViewProfileImage.buildDrawingCache(true);
+		        Bitmap bitmap = imageViewProfileImage.getDrawingCache(true).copy(Config.RGB_565, false);
+		        userController.saveProfileImg(name, email, facebook, twitter, bio, bitmap);
+			}
+			else
+			{
+				userController.saveProfile(name, email, facebook, twitter, bio);
+			}
 	        
 			//toast massage to confirm profile save
 			Context context = getApplicationContext();
@@ -223,6 +231,7 @@ public class ProfileViewActivity extends Activity implements Observer{
 
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
+			
 	    }
 	};
 

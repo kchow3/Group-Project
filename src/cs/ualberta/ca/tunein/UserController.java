@@ -97,7 +97,7 @@ public class UserController {
 		eso.getProfileModel(userID, user, cntxt);
 	}
 	
-	public void saveProfile(String name, String email, String facebook, String twitter, String bio, Bitmap bmp)
+	public void saveProfileImg(String name, String email, String facebook, String twitter, String bio, Bitmap bmp)
 	{
 		user.setName(name);
 		user.setEmail(email);
@@ -107,6 +107,17 @@ public class UserController {
 		Image img = new Image(bmp);
 		user.setHasImage(true);
 		user.setAvatar(img);
+		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.putProfileModel(user);
+	}
+	
+	public void saveProfile(String name, String email, String facebook, String twitter, String bio)
+	{
+		user.setName(name);
+		user.setEmail(email);
+		user.setFacebook(facebook);
+		user.setTwitter(twitter);
+		user.setBio(bio);
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.putProfileModel(user);
 	}

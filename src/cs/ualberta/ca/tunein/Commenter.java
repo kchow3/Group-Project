@@ -26,7 +26,7 @@ public class Commenter extends Observable implements Serializable{
 	@Expose private String twitter; 
 	@Expose private String bio; 
 	@Expose private Image avatar;
-	@Expose private boolean hasImage = false;
+	@Expose private boolean hasImage;
 	
 	
 	/**
