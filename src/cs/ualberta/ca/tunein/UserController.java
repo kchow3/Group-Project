@@ -104,9 +104,8 @@ public class UserController {
 		user.setFacebook(facebook);
 		user.setTwitter(twitter);
 		user.setBio(bio);
-		Image img = new Image(bmp);
 		user.setHasImage(true);
-		user.setAvatar(img);
+		user.setAvatar(bmp);
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.putProfileModel(user);
 	}
@@ -121,12 +120,4 @@ public class UserController {
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.putProfileModel(user);
 	}
-	
-	public void clearprefs(Context cntxt)
-	{
-		SharedPreferences prefs = cntxt.getSharedPreferences(
-			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-		prefs.edit().remove(NEWPROFILE).commit();
-	}
-
 }

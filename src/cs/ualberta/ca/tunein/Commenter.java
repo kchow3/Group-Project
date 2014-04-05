@@ -1,5 +1,7 @@
 package cs.ualberta.ca.tunein;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Observable;
 
@@ -7,6 +9,8 @@ import com.google.gson.annotations.Expose;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 /**
@@ -25,7 +29,7 @@ public class Commenter extends Observable implements Serializable{
 	@Expose private String facebook; 
 	@Expose private String twitter; 
 	@Expose private String bio; 
-	@Expose private Image avatar;
+	@Expose private Bitmap avatar;
 	@Expose private boolean hasImage;
 	
 	
@@ -110,11 +114,11 @@ public class Commenter extends Observable implements Serializable{
 		this.uniqueID = uniqueID;
 	}
 
-	public Image getAvatar() {
+	public Bitmap getAvatar() {
 		return avatar;
 	}
 
-	public void setAvatar(Image avatar) {
+	public void setAvatar(Bitmap avatar) {
 		this.avatar = avatar;
 	}
 
@@ -166,5 +170,5 @@ public class Commenter extends Observable implements Serializable{
 		setChanged();
         notifyObservers(this);
 	}
-
+	
 }

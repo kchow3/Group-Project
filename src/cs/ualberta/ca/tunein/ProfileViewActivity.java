@@ -55,15 +55,9 @@ public class ProfileViewActivity extends Activity implements Observer{
 	    user.addObserver(this);
 	    userController = new UserController(user);
 	    getInputUser();
+	    userController.loadProfile(userid, ProfileViewActivity.this);
 	}
 	
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-		//on resume to load profile if profile is updated when app resumed
-		userController.loadProfile(userid, ProfileViewActivity.this);
-	}
 	
 	/*
 	 * Code from:
@@ -142,7 +136,7 @@ public class ProfileViewActivity extends Activity implements Observer{
 		textViewProfileBio.setText(user.getBio());
 		if(user.isHasImage())
 		{
-			imageViewProfileImage.setImageBitmap(user.getAvatar().getBitMap());
+			imageViewProfileImage.setImageBitmap(user.getAvatar());
 		}
 		
 		//check if current user for permission to update profile
@@ -214,6 +208,7 @@ public class ProfileViewActivity extends Activity implements Observer{
 			String bio = textViewProfileBio.getText().toString();
 			if(uploadedImg)
 			{
+				Log.v("img", "yes");
 				//build bitmap
 				imageViewProfileImage.buildDrawingCache(true);
 		        Bitmap bitmap = imageViewProfileImage.getDrawingCache(true).copy(Config.RGB_565, false);
