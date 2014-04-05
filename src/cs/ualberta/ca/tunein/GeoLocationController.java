@@ -70,7 +70,7 @@ public class GeoLocationController {
         }
         
         timer1=new Timer();
-        timer1.schedule(new GetLastLocation(), 10000);
+        timer1.schedule(new GetLastLocation(), 30000);
 	}
 	
 	/**
@@ -119,7 +119,7 @@ public class GeoLocationController {
 				@Override
 				public void run() {
 					lm.removeUpdates(locationListenerGps);
-		             lm.removeUpdates(locationListenerNetwork);
+		            lm.removeUpdates(locationListenerNetwork);
 
 		             Location net_loc=null, gps_loc=null;
 		             if(gps_enabled)

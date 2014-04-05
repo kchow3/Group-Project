@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class MainActivity extends Activity {
 	private Button fav_button;
 	private Button buttonCache;
 	private Button buttonViewProfile;;
+	private ImageButton imageButtonRefreshLoc;
 	
 	private TextView location_text;
 	private TextView edit_username;
@@ -84,7 +86,6 @@ public class MainActivity extends Activity {
 		
 		loc = new GeoLocation();
 		geoController = new GeoLocationController(loc);
-
 	}
 	
 	@Override
@@ -110,6 +111,7 @@ public class MainActivity extends Activity {
 		fav_button = (Button) findViewById(R.id.fav_button);
 		buttonCache = (Button) findViewById(R.id.buttonCache);
 		buttonViewProfile = (Button) findViewById(R.id.buttonViewProfile);
+		imageButtonRefreshLoc = (ImageButton) findViewById(R.id.imageButtonRefreshLoc);
 		
 		edit_username = (TextView) findViewById(R.id.edit_username);
 		location_text = (TextView) findViewById(R.id.location_text);
@@ -125,6 +127,7 @@ public class MainActivity extends Activity {
 		buttonTopicList.setOnClickListener(topicListBtnClick);
 		fav_button.setOnClickListener(favBtnClick);
 		buttonCache.setOnClickListener(cacheBtnClick);
+		imageButtonRefreshLoc.setOnClickListener(refreshLocBtnClick);
 		
 		buttonViewProfile.setOnClickListener(profileBtnClick);
 
@@ -261,6 +264,16 @@ public class MainActivity extends Activity {
 					ProfileViewActivity.class);
 			i.putExtra(EXTRA_USERID, userid);
 			MainActivity.this.startActivity(i);
+		}
+	};
+	
+	/**
+	 * This click listener will refresh the location text view
+	 */
+	private OnClickListener refreshLocBtnClick = new OnClickListener() {
+		public void onClick(View v) {
+			geoController.getLocation(MainActivity.this);
+			loadLoc();
 		}
 	};
 	

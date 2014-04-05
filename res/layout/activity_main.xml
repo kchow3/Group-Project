@@ -12,41 +12,11 @@
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/viewtopics_text"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:gravity="top|center_vertical" >
-
-        <TextView
-            android:id="@+id/location_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/title"
-            android:gravity="center"
-            android:text="\@" />
-
-        <EditText
-            android:id="@+id/edit_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/location_text"
-            android:layout_toLeftOf="@+id/name_button"
-            android:layout_toRightOf="@+id/username_text"
-            android:ems="10" >
-
-            <requestFocus />
-        </EditText>
-
-        <TextView
-            android:id="@+id/username_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/edit_username"
-            android:layout_alignBottom="@+id/edit_username"
-            android:layout_alignParentLeft="true"
-            android:text="Username:" />
 
         <Button
             android:id="@+id/name_button"
@@ -69,15 +39,54 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="40sp" />
 
+        <ImageButton
+            android:id="@+id/imageButtonRefreshLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/title"
+            android:src="@android:drawable/stat_notify_sync" />
+
+        <TextView
+            android:id="@+id/username_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="Username:" />
+
+        <EditText
+            android:id="@+id/edit_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/name_button"
+            android:layout_toRightOf="@+id/username_text"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
         <Button
             android:id="@+id/buttonViewProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/edit_username"
-            android:layout_alignRight="@+id/edit_username"
-            android:layout_below="@+id/name_button"
-            android:layout_marginTop="17dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="19dp"
+            android:layout_toLeftOf="@+id/name_button"
             android:text="View Profile" />
+
+        <TextView
+            android:id="@+id/location_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageButtonRefreshLoc"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/imageButtonRefreshLoc"
+            android:layout_toLeftOf="@+id/imageButtonRefreshLoc"
+            android:gravity="center"
+            android:text="\@" />
 
     </RelativeLayout>
 
@@ -122,6 +131,14 @@
         android:text="Go directly to:"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
+    <TextView
+        android:id="@+id/viewtopics_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearlayout"
+        android:layout_centerHorizontal="true"
+        android:text="How would you like to sort topics?" />
+
     <LinearLayout
         android:id="@+id/linearlayout2"
         android:layout_width="wrap_content"
@@ -129,7 +146,7 @@
         android:layout_above="@+id/textViewGoDirect"
         android:layout_alignLeft="@+id/textViewGoDirect"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="35dp" >
+        android:layout_marginBottom="36dp" >
 
         <Button
             android:id="@+id/date_button"
@@ -152,8 +169,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/linearlayout2"
         android:layout_alignLeft="@+id/linearlayout2"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="16dp" >
+        android:layout_alignParentRight="true" >
 
         <Button
             android:id="@+id/otherLocation_button"
@@ -169,14 +185,5 @@
             android:layout_weight="1"
             android:text="My Location" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/viewtopics_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearlayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:text="How would you like to sort topics?" />
 
 </RelativeLayout>

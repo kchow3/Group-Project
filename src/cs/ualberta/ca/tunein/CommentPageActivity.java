@@ -49,8 +49,6 @@ public class CommentPageActivity extends Activity {
 	private FavoriteController favoriteController;
 	//cache controller
 	private CacheController cacheController;
-	//boolean to check if current comment is repy to reply
-	private boolean isReplyReply;
 	
 	//variables for setting up textviews/buttons/imageview
 	private TextView textViewCommentTitle;
@@ -200,7 +198,7 @@ public class CommentPageActivity extends Activity {
 	{
 	    public void onClick(View v)
 	    {	    	
-	    	favoriteController.addToFav(getApplicationContext(), aComment);
+	    	favoriteController.addToFav(CommentPageActivity.this, aComment);
 	    }
 	};
 	
@@ -211,7 +209,7 @@ public class CommentPageActivity extends Activity {
 	{
 	    public void onClick(View v)
 	    {
-	    	cacheController.addToCache(getApplicationContext(), aComment);
+	    	cacheController.addToCache(CommentPageActivity.this, aComment);
 	    }
 	};
 	
