@@ -380,41 +380,6 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 
 		thread.start();
 	}
-
-	
-	/**
-	 * Constructs a Gson with a custom serializer / desserializer registered for
-	 * Bitmaps.
-	 */
-	private void constructGson() {
-		GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
-		GSON = builder.create();
-	}
-	
-	/**
-	 * Constructs a Gson with a custom serializer / desserializer registered for
-	 * Bitmaps.
-	 */
-	private void constructProfileGson() {
-		GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
-		ProfileGSON = builder.excludeFieldsWithoutExposeAnnotation().create();
-	}
-	
-	/**
-	 * get the http response and return json string
-	 */
-	private String getEntityContent(HttpResponse response) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(
-				(response.getEntity().getContent())));
-		String output;
-		String json = "";
-		while ((output = br.readLine()) != null) {
-			json += output;
-		}
-		return json;
-	}
 	
 	/**
 	 * Method to choose which query corresponding to the sort option specified.
@@ -468,8 +433,8 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 				HttpPost request = new HttpPost(SERVER_PROFILE_URL + model.getUniqueID() + "/");
 
 				try {
-					request.setEntity(new StringEntity(GSON.toJson(model)));
-					Log.v("GSON", GSON.toJson(model));
+					request.setEntity(new StringEntity(ProfileGSON.toJson(model)));
+					Log.v("ProfileGSON", ProfileGSON.toJson(model));
 				} catch (UnsupportedEncodingException exception) {
 					Log.w(LOG_TAG,
 							"Error encoding PicPostModel: "
@@ -487,9 +452,6 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 							"Error sending PicPostModel: "
 									+ exception.getMessage());
 				}
-
-				model.setNewProfile(false);
-				putProfileModel(model);
 			}
 		};
 		thread.start();
@@ -506,11 +468,11 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
 				HttpPost request = new HttpPost(SERVER_PROFILE_URL + model.getUniqueID() + "/");
-				String query = GSON.toJson(model);
+				String query = ProfileGSON.toJson(model);
 				Log.w("Query", query);
 				try {
 					request.setEntity(new StringEntity(query));
-					Log.v("GSON", GSON.toJson(model));
+					Log.v("ProfileGSON", ProfileGSON.toJson(model));
 				} catch (UnsupportedEncodingException exception) {
 					Log.w(LOG_TAG,
 							"Error encoding PicPostModel: "
@@ -535,15 +497,15 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 
 	@Override
 	public void getProfileModel(final String elasticID, final Commenter model, final Context cntxt) {
-		if (ProfileGSON == null)
-			constructProfileGson();
+		if (GSON == null)
+			constructGson();
 
 		Thread thread = new Thread() {
 
 			@Override
 			public void run() {
 				HttpClient client = new DefaultHttpClient();
-				HttpGet request = new HttpGet(SERVER_PROFILE_URL + elasticID);
+				HttpGet request = new HttpGet(SERVER_PROFILE_URL + elasticID + "/");
 				String responseJson = "";
 
 				try {
@@ -570,10 +532,43 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 						model.setupProfile(esResponse.getSource());
 					}
 				};
-
 				((Activity) cntxt).runOnUiThread(updateModel);
 			}
 		};
 		thread.start();
+	}
+	
+	/**
+	 * Constructs a Gson with a custom serializer / desserializer registered for
+	 * Bitmaps.
+	 */
+	private void constructGson() {
+		GsonBuilder builder = new GsonBuilder();
+		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
+		GSON = builder.create();
+	}
+	
+	/**
+	 * Constructs a Gson with a custom serializer / desserializer registered for
+	 * Bitmaps.
+	 */
+	private void constructProfileGson() {
+		GsonBuilder builder = new GsonBuilder();
+		builder.registerTypeAdapter(Bitmap.class, new BitmapJsonConverter());
+		ProfileGSON = builder.excludeFieldsWithoutExposeAnnotation().create();
+	}
+	
+	/**
+	 * get the http response and return json string
+	 */
+	private String getEntityContent(HttpResponse response) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				(response.getEntity().getContent())));
+		String output;
+		String json = "";
+		while ((output = br.readLine()) != null) {
+			json += output;
+		}
+		return json;
 	}
 }

@@ -27,7 +27,6 @@ public class Commenter extends Observable implements Serializable{
 	@Expose private String bio; 
 	@Expose private Image avatar;
 	@Expose private boolean hasImage = false;
-	@Expose private boolean newProfile = true;;
 	
 	
 	/**
@@ -127,14 +126,6 @@ public class Commenter extends Observable implements Serializable{
 		this.hasImage = hasImage;
 	}
 
-	public boolean isNewProfile() {
-		return newProfile;
-	}
-
-	public void setNewProfile(boolean newProfile) {
-		this.newProfile = newProfile;
-	}
-
 	public String getCurrentName(Context cntxt) {
     	SharedPreferences prefs = cntxt.getSharedPreferences(
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
@@ -160,6 +151,7 @@ public class Commenter extends Observable implements Serializable{
 	}
 	
 	public void setupProfile(Commenter source) {
+
 		this.name = source.getName();
 		this.uniqueID = source.getUniqueID();
 		this.email = source.getEmail();

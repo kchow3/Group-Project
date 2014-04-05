@@ -2,6 +2,7 @@ package cs.ualberta.ca.tunein;
 
 import cs.ualberta.ca.tunein.network.ElasticSearchOperations;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -13,6 +14,9 @@ import android.util.Log;
  * and will also be used to load a saved username.
  */
 public class UserController {
+	
+	//tag for checking if there exists a profile for this user
+	public final static String NEWPROFILE = "cs.ualberta.ca.tunein.profile";
 	
 	private Commenter user;
 	
@@ -74,24 +78,23 @@ public class UserController {
 	
 	public void createProfile(Context cntxt)
 	{
-		ElasticSearchOperations eso = new ElasticSearchOperations();
-		//create a whole new profile
-		Commenter commenter = new Commenter(cntxt);
-		eso.postProfileModel(commenter);
+		SharedPreferences prefs = cntxt.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+		boolean newProfile = prefs.getBoolean(NEWPROFILE, true);
+		if(newProfile)
+		{
+			ElasticSearchOperations eso = new ElasticSearchOperations();
+			//create a whole new profile
+			Commenter commenter = new Commenter(cntxt);
+			eso.postProfileModel(commenter);
+			prefs.edit().putBoolean(NEWPROFILE, false).commit();
+		}
 	}
 	
 	public void loadProfile(String userID, Context cntxt)
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
-		if(user.isNewProfile())
-		{
-			createProfile(cntxt);
-			eso.getProfileModel(userID, user, cntxt);
-		}
-		else
-		{
-			eso.getProfileModel(userID, user, cntxt);
-		}
+		eso.getProfileModel(userID, user, cntxt);
 	}
 	
 	public void saveProfile(String name, String email, String facebook, String twitter, String bio, Bitmap bmp)
@@ -106,6 +109,13 @@ public class UserController {
 		user.setAvatar(img);
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.putProfileModel(user);
+	}
+	
+	public void clearprefs(Context cntxt)
+	{
+		SharedPreferences prefs = cntxt.getSharedPreferences(
+			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+		prefs.edit().remove(NEWPROFILE).commit();
 	}
 
 }

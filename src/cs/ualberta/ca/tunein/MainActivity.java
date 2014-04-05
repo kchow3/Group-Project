@@ -72,6 +72,8 @@ public class MainActivity extends Activity {
 		//load in user unique id
 		UserController cntrl = new UserController();
 		cntrl.saveUserid(getApplicationContext());
+		//cntrl.clearprefs(MainActivity.this);
+		cntrl.createProfile(MainActivity.this);
 		
 		//load in the favorites
 		FavoriteController favoriteController = new FavoriteController();
