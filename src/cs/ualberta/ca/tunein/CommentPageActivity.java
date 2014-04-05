@@ -1,5 +1,7 @@
 package cs.ualberta.ca.tunein;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -8,7 +10,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +35,9 @@ import android.widget.TextView;
  * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
  */
 public class CommentPageActivity extends Activity {
+	
+	//request code for image upload
+	public static int SELECT_PICTURE_REQUEST_CODE = 12345;
 
 	//public string that tags the extra of the comment that is passed to CommentPageActivity
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
@@ -49,6 +56,8 @@ public class CommentPageActivity extends Activity {
 	private FavoriteController favoriteController;
 	//cache controller
 	private CacheController cacheController;
+	//uri for image upload
+	private Uri outputFileUri;
 	
 	//variables for setting up textviews/buttons/imageview
 	private TextView textViewCommentTitle;
@@ -104,9 +113,10 @@ public class CommentPageActivity extends Activity {
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-		  if (requestCode == 1) {
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) 
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 1) {
 
 			if (resultCode == RESULT_OK) {
 				aComment = (Comment) data.getSerializableExtra("editReturn");
@@ -115,10 +125,43 @@ public class CommentPageActivity extends Activity {
 				setupComment();
 				viewAdapter.updateReplyView(aComment.getReplies());
 			}
-		     
-		     if (resultCode == RESULT_CANCELED) {
-		    	 //edit cancelled
-		     }
+
+			if (resultCode == RESULT_CANCELED) {
+				// edit cancelled
+			}
+		}
+		if (resultCode == RESULT_OK) {
+			if (requestCode == SELECT_PICTURE_REQUEST_CODE) {
+				final boolean isCamera;
+				if (data == null) {
+					isCamera = true;
+				} else {
+					final String action = data.getAction();
+					if (action == null) {
+						isCamera = false;
+					} else {
+						isCamera = action
+								.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+					}
+				}
+
+				Uri selectedImageUri;
+				if (isCamera) {
+					selectedImageUri = outputFileUri;
+				} else {
+					selectedImageUri = data == null ? null : data.getData();
+				}
+				try {
+					Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+							this.getContentResolver(), selectedImageUri);
+					inputImage.setImageBitmap(bitmap);
+					inputImage.setVisibility(View.VISIBLE);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -226,6 +269,16 @@ public class CommentPageActivity extends Activity {
 	    	startActivityForResult(intent, 1);
 	    }
 	};
+	
+	/**
+	 * Image to upload a image from the gallery or take a picture from the camera.
+	 * @param v
+	 */
+	public void uploadImageBtnClick(View v) {
+		ImageController imgCntrl = new ImageController(CommentPageActivity.this);
+		outputFileUri = imgCntrl.openImageIntent();
+	}
+
 	
 	/**
 	 * This click listener will go to reply page to create a reply comment

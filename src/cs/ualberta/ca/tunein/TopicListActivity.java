@@ -60,6 +60,7 @@ public class TopicListActivity extends Activity {
 	
 	private TextView textViewSort;
 	
+	//uri for image upload
 	private Uri outputFileUri;
 	
 	/** Called when the activity is first created. */
@@ -196,6 +197,10 @@ public class TopicListActivity extends Activity {
 		dialog.show();
 	}
 	
+	/**
+	 * Image to upload a image from the gallery or take a picture from the camera.
+	 * @param v
+	 */
 	public void uploadImageBtnClick(View v) {
 		ImageController imgCntrl = new ImageController(TopicListActivity.this);
 		outputFileUri = imgCntrl.openImageIntent();
