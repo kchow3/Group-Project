@@ -2,11 +2,11 @@ package cs.ualberta.ca.tuneintest;
 
 import android.test.ActivityInstrumentationTestCase2;
 import cs.ualberta.ca.tunein.MainActivity;
-import cs.ualberta.ca.tunein.Favorites;
+import cs.ualberta.ca.tunein.FavoriteActivity;
 
-public class favoritesTest extends ActivityInstrumentationTestCase2<MainActivity> {
+public class favoriteActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	
-	public favoritesTest() {
+	public favoriteActivityTest() {
 		super(MainActivity.class);
 	}
 	
@@ -14,8 +14,8 @@ public class favoritesTest extends ActivityInstrumentationTestCase2<MainActivity
 		 super.setUp();
 	}
 	
-	public void favoritesInstanceTest() {
-		//test if the desired comment data has been saved in this array list
+	public void favoritesViewTest() {
+		//test if favorites are displayed
 	}
 	
 	@Override
