@@ -391,13 +391,13 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 		String query = "";
 		if(sort.equals("Date"))
 		{
-			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}} , " +
+			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}, " +
 					"\"sort\": [ { \"date\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 		}
 
 		if(sort.equals("Picture"))
 		{
-			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}} , " +
+			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}, " +
 					"\"sort\": [ { \"hasImage\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 		}
 		if(sort.equals("My Location") || sort.equals("Set Location"))
@@ -406,14 +406,14 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
 			String lon = prefs.getString(SORTLONG, "0");
 			String lat = prefs.getString(SORTLAT, "0");
-			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}} , " +
+			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}, " +
 					"\"sort\": [ { \"_geo_distance\": { \"order\": \"asc\",  \"ignore_unmapped\": true, " +
 					"\"geolocation\": { \"lat\":" +lat+", \"lon\":" + lon + "}, \"unit\": \"km\" } } ] }";
 		}
 		if(sort.equals("default"))
 		{
 			//sort by hotness: replycount and favoritecount
-			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}} , " +
+			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}, " +
 					"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true }," +
 					"  \"favoriteCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 		}
