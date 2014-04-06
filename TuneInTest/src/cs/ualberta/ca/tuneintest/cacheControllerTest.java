@@ -10,6 +10,6 @@ public class cacheControllerTest extends ActivityInstrumentationTestCase2<MainAc
 		super(MainActivity.class);
 	}
 	
-//Need to add tests for all properties of the CacheActivity class
+//Need to add tests for all properties of the CacheController class
 
 }

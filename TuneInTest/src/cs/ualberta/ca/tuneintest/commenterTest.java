@@ -10,6 +10,8 @@ public class commenterTest extends ActivityInstrumentationTestCase2<MainActivity
 		super(MainActivity.class);
 	}
 	
-//Commenter class currently just has getters and setters; nothing to test
+	public void setupProfileTest() {
+		//check that name and ID matches from commenter data
+	}
 
 }
