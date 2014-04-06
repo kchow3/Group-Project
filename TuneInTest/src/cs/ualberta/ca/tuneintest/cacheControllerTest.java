@@ -10,6 +10,16 @@ public class cacheControllerTest extends ActivityInstrumentationTestCase2<MainAc
 		super(MainActivity.class);
 	}
 	
-//Need to add tests for all properties of the CacheController class
+	public void addToCacheTest() {
+		//test if comments are successfully added to the cache
+	}
+	
+	public void removeFromCacheTest() {
+		//test if comments can be successfully removed from the cache
+	}
+	
+	public void cacheSizeTest() {
+		//test if comments are removed properly upon reaching max amount of caches comments
+	}
 
 }

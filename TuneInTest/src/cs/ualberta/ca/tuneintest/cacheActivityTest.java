@@ -10,6 +10,8 @@ public class cacheActivityTest extends ActivityInstrumentationTestCase2<MainActi
 		super(MainActivity.class);
 	}
 	
-//Need to add tests for all properties of the CacheActivity class
+	public void cacheViewTest() {
+		//test if the cached comments are displayed correctly 
+	}
 
 }
