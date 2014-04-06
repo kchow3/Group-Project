@@ -41,6 +41,8 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
 	//public string that tags the extra of the topic comment that is passed to CommentPageActivity
 	public final static String EXTRA_TOPIC_COMMENT = "cs.ualberta.ca.tunein.topicComment";
+	//public string that tags the extra of the comment to be edited that is passed to EditPageActivity
+	public final static String EXTRA_USERID = "cs.ualberta.ca.tunein.userid";
 	
 	private Context context;
 	//holder for elements in the row
@@ -130,6 +132,8 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 		holder.buttonRowReply.setTag(arr);
 		holder.buttonReplyView.setOnClickListener(viewChildBtnClick);
 		holder.buttonReplyView.setTag(arr);
+		holder.textViewReplyUser.setOnClickListener(profileChildBtnClick);
+		holder.textViewReplyUser.setTag(arr);
 		
 		//set the holder
         rowView.setTag(holder);
@@ -196,6 +200,8 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 		holder.buttonRowReply.setTag(groupPosition);
 		holder.buttonReplyView.setOnClickListener(viewParentBtnClick);
 		holder.buttonReplyView.setTag(groupPosition);
+		holder.textViewReplyUser.setOnClickListener(profileParentBtnClick);
+		holder.textViewReplyUser.setTag(groupPosition);
 		
 		//set the holder
         rowView.setTag(holder);
@@ -277,6 +283,20 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	};
 	
 	/**
+	 * This click listener will go to the profile page.
+	 */
+	private OnClickListener profileChildBtnClick = new OnClickListener() {
+		public void onClick(View v) {
+			int index[] = (int[])v.getTag();
+			String userid = replies.get(index[0]).getReplies().get(index[1]).getCommenter().getUniqueID();
+			Intent intent = new Intent(context,
+					ProfileViewActivity.class);
+			intent.putExtra(EXTRA_USERID, userid);
+			context.startActivity(intent);
+		}
+	};
+	
+	/**
 	 * This click listener will send user to CommentViewPage of the comment
 	 * that they clicked view on.
 	 */
@@ -335,6 +355,20 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 			    .setNegativeButton("Cancel", null).create();
 			dialog.show();
 	    }
+	};
+	
+	/**
+	 * This click listener will go to the profile page.
+	 */
+	private OnClickListener profileParentBtnClick = new OnClickListener() {
+		public void onClick(View v) {
+			int i = (Integer) v.getTag();
+			String userid = replies.get(i).getCommenter().getUniqueID();
+			Intent intent = new Intent(context,
+					ProfileViewActivity.class);
+			intent.putExtra(EXTRA_USERID, userid);
+			context.startActivity(intent);
+		}
 	};
 
 	/**

@@ -22,7 +22,8 @@
         android:layout_below="@+id/textViewCommentTitle"
         android:text="Username"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:width="125dp" />
+        android:width="125dp" 
+        android:clickable="true"/>
 
     <TextView
         android:id="@+id/textViewCommentDate"

@@ -43,6 +43,8 @@ public class CommentPageActivity extends Activity {
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
 	//public string that tags the extra of the comment to be edited that is passed to EditPageActivity
 	public final static String EXTRA_EDIT = "cs.ualberta.ca.tunein.commentEdit";
+	//public string that tags the extra of the comment to be edited that is passed to EditPageActivity
+	public final static String EXTRA_USERID = "cs.ualberta.ca.tunein.userid";
 	
 	//reply view adapter
 	private ReplyViewAdapter viewAdapter;
@@ -232,6 +234,7 @@ public class CommentPageActivity extends Activity {
 		buttonCommentSave.setOnClickListener(saveBtnClick);
 		buttonCommentEdit.setOnClickListener(editBtnClick);
 		buttonCommentReply.setOnClickListener(replyBtnClick);
+		textViewCommentUser.setOnClickListener(profileBtnClick);
 	}
 	
 	/**
@@ -320,6 +323,19 @@ public class CommentPageActivity extends Activity {
 			    .setNegativeButton("Cancel", null).create();
 			dialog.show();
 	    }
+	};
+	
+	/**
+	 * This click listener will go to the profile page.
+	 */
+	private OnClickListener profileBtnClick = new OnClickListener() {
+		public void onClick(View v) {
+			String userid = aComment.getCommenter().getUniqueID();
+			Intent i = new Intent(getApplicationContext(),
+					ProfileViewActivity.class);
+			i.putExtra(EXTRA_USERID, userid);
+			CommentPageActivity.this.startActivity(i);
+		}
 	};
 	
 	/**

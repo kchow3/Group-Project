@@ -36,7 +36,8 @@
         android:text="Username"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:width="100dp" 
-        android:focusable="false"/>
+        android:focusable="false"
+        android:clickable="true"/>
 
     <TextView
         android:id="@+id/textViewReplyDate"
