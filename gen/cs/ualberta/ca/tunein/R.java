@@ -48,7 +48,7 @@ public final class R {
         public static final int buttonSave=0x7f08002b;
         public static final int buttonTopicList=0x7f08000a;
         public static final int buttonView=0x7f080025;
-        public static final int buttonViewProfile=0x7f080007;
+        public static final int buttonViewProfile=0x7f080008;
         public static final int date_button=0x7f080010;
         public static final int editTextComment=0x7f080030;
         public static final int edit_username=0x7f080003;
@@ -65,7 +65,7 @@ public final class R {
         public static final int listViewCache=0x7f080015;
         public static final int listViewFavorites=0x7f080040;
         public static final int listViewTopics=0x7f08005a;
-        public static final int location_text=0x7f080008;
+        public static final int location_text=0x7f080007;
         public static final int myLocation_button=0x7f080013;
         public static final int name_button=0x7f080002;
         public static final int otherLocation_button=0x7f080012;
