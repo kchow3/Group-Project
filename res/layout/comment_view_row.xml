@@ -69,7 +69,8 @@
             android:layout_alignLeft="@+id/textViewDate"
             android:text="Username"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:width="120dp" />
+            android:width="120dp" 
+            android:clickable="true"/>
 
         <Button
             android:id="@+id/buttonSave"

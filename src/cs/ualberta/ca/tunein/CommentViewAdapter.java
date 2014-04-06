@@ -32,6 +32,8 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	
 	//public string that tags the extra of the comment that is passed to CommentPageActivity
 	public final static String EXTRA_COMMENT = "cs.ualberta.ca.tunein.comment";
+	//public string that tags the extra of the comment to be edited that is passed to EditPageActivity
+	public final static String EXTRA_USERID = "cs.ualberta.ca.tunein.userid";
 	
 	//comment controller
 	private CommentController commentController;
@@ -140,6 +142,8 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		holder.buttonFav.setTag(position);
 		holder.buttonSave.setOnClickListener(saveBtnClick);
 		holder.buttonSave.setTag(position);
+		holder.textViewUser.setTag(position);
+		holder.textViewUser.setOnClickListener(profileBtnClick);
 		
 		//set the holder
         rowView.setTag(holder);
@@ -243,6 +247,20 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	    	cacheController.addToCache(context, currentComment);
 	    	notifyDataSetChanged();
 	    }
+	};
+	
+	/**
+	 * This click listener will go to the profile page.
+	 */
+	private OnClickListener profileBtnClick = new OnClickListener() {
+		public void onClick(View v) {
+			int i = (Integer)v.getTag();
+			String userid = commentList.get(i).getCommenter().getUniqueID();
+			Intent intent = new Intent(context,
+					ProfileViewActivity.class);
+			intent.putExtra(EXTRA_USERID, userid);
+			context.startActivity(intent);
+		}
 	};
 	
 	/**
