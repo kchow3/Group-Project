@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,6 +118,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		//set text of textviews
 		holder.textViewTitle.setText(commentList.get(position).getTitle());
 		holder.textViewDate.setText(commentList.get(position).dateDisplay());
+		holder.textViewUser.setPaintFlags(holder.textViewUser.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 		holder.textViewUser.setText(commentList.get(position).getCommenter().getName());
 		holder.textViewFavCount.setText("Favs: " +Integer.toString(commentList.get(position).getFavoriteCount()));
 		holder.textViewReplyCount.setText("Replies: " + Integer.toString(commentList.get(position).getReplyCount()));

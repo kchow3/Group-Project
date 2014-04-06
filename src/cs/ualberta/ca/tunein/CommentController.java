@@ -90,6 +90,7 @@ public class CommentController{
 		comment.increaseReplyCount();
 		
 		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.putCommentModel(comment);
 		eso.postCommentModel(aComment);
 	}
 	
@@ -118,6 +119,7 @@ public class CommentController{
 		comment.increaseReplyCount();
 			
 		ElasticSearchOperations eso = new ElasticSearchOperations();
+		eso.putCommentModel(comment);
 		eso.postCommentModel(aComment);
 	}
 	

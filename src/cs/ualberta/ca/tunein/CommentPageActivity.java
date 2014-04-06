@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.graphics.Bitmap.Config;
 import android.net.Uri;
 import android.os.Bundle;
@@ -200,6 +201,7 @@ public class CommentPageActivity extends Activity {
 		
 		textViewCommentTitle.setText(aComment.getTitle());
 		textViewCommentBlock.setText(aComment.getComment());
+		textViewCommentUser.setPaintFlags(textViewCommentUser.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 		textViewCommentUser.setText(aComment.getCommenter().getName());
 		textViewCommentDate.setText(aComment.dateDisplay());
 		textViewCommentFavCount.setText("Favs: " + Integer.toString(aComment.getFavoriteCount()));

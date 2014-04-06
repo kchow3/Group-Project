@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.graphics.Bitmap.Config;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -122,6 +123,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 		//set text of textviews
 		holder.textViewReply.setText(replies.get(groupPosition).getReplies().get(childPosition).getComment());
 		holder.textViewReplyRowCount.setText("Replies: " + Integer.toString(replies.get(groupPosition).getReplies().get(childPosition).getReplyCount()));
+		holder.textViewReplyUser.setPaintFlags(holder.textViewReplyUser.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 		holder.textViewReplyUser.setText(replies.get(groupPosition).getReplies().get(childPosition).getCommenter().getName());
 		holder.textViewReplyDate.setText(replies.get(groupPosition).getReplies().get(childPosition).dateDisplay());
 		
@@ -192,6 +194,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 		//set text of textviews
 		holder.textViewReply.setText(replies.get(groupPosition).getComment());
 		holder.textViewReplyRowCount.setText("Replies: " + Integer.toString(replies.get(groupPosition).getReplyCount()));
+		holder.textViewReplyUser.setPaintFlags(holder.textViewReplyUser.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 		holder.textViewReplyUser.setText(replies.get(groupPosition).getCommenter().getName());
 		holder.textViewReplyDate.setText(replies.get(groupPosition).dateDisplay());
 		
