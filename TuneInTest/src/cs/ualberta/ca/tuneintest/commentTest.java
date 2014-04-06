@@ -1,7 +1,5 @@
 package cs.ualberta.ca.tuneintest;
 
-import java.util.Date;
-
 import android.test.ActivityInstrumentationTestCase2;
 import cs.ualberta.ca.tunein.MainActivity;
 import cs.ualberta.ca.tunein.Comment;
@@ -14,6 +12,18 @@ public class commentTest extends ActivityInstrumentationTestCase2<MainActivity> 
 		super(MainActivity.class);
 	}
 	
-//Comment class currently has no nontrivial methods to test
+	protected void setUp() throws Exception {
+		 super.setUp();
+	}
 	
+	public void commentAttributesTest() {
+		//test if a comment has a title, text, replies, a geo location, and an image
+		//test what happens if a comment has invalid attributes
+	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+	    super.tearDown();
+	}
+
 }
