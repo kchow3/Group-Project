@@ -34,7 +34,7 @@ public class ThreadController {
 
 	/**
 	 * Method to create a topic comment with image.
-	 * @param act The activity calling to create comment.
+	 * @param cntxt The appication context
 	 * @param title Title of comment.
 	 * @param comment Text of comment.
 	 * @param img The image of the comment.
@@ -62,7 +62,7 @@ public class ThreadController {
 	
 	/**
 	 * Method to create a topic comment with no image.
-	 * @param act The activity calling to create comment.
+	 * @param cntxt The appication context
 	 * @param title Title of comment.
 	 * @param comment Text of comment.
 	 */
@@ -88,7 +88,7 @@ public class ThreadController {
 	/**
 	 * Retrieve the list of topic comments that are currently
 	 * on elasticsearch.
-	 * @param act The activity that calls this method
+	 * @param cntxt The appication context
 	 * @return The sorted discussion thread.
 	 */
 	public void getOnlineTopics(Context cntxt) {

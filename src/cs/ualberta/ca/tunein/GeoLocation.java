@@ -5,8 +5,8 @@ import java.io.Serializable;
 /**
  * Model
  * GeoLocation Class:
- * This class is a model of the geolocation of a comment.
- * This class is not comeplete yet.
+ * This class is a model of the geolocation of a comment,
+ * that holds the longitude and latitude of the comment.
  */
 public class GeoLocation implements Serializable{
 

@@ -173,6 +173,9 @@ public class EditPageActivity extends Activity {
 		buttonEditSubmit.setOnClickListener(submitBtnClick);
 	}
 	
+	/**
+	 * Upload image button click listener.
+	 */
 	private OnClickListener imageBtnClick = new OnClickListener() 
 	{
 	    public void onClick(View v)
@@ -252,6 +255,9 @@ public class EditPageActivity extends Activity {
 	    }
 	};
 
+	/**
+	 * Method to setup dialog box.
+	 */
 	private void setupDialogs()
 	{
 		LayoutInflater inflater = LayoutInflater.from(EditPageActivity.this);

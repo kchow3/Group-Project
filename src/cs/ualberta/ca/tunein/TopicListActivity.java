@@ -146,6 +146,9 @@ public class TopicListActivity extends Activity {
 	    }
 	}
 	
+	/**
+	 * Method to setup the topic list view.
+	 */
 	private void setupTopicView()
 	{
 	    SharedPreferences prefs = this.getSharedPreferences(

@@ -18,7 +18,8 @@ import android.util.Log;
  * Commenter Class:
  * This is a model class for the user that creates a comment.
  * This class is mainly used by getting passed in User model
- * info and uses that to create a comment author.
+ * info and uses that to create a comment author. 
+ * This class also holds the responsibility of getting current user info.
  */
 public class Commenter extends Observable implements Serializable{
 	
@@ -130,30 +131,55 @@ public class Commenter extends Observable implements Serializable{
 		this.hasImage = hasImage;
 	}
 
+	/**
+	 * Method to get the current user's name
+	 * @param cntxt The appication context
+	 * @return The username
+	 */
 	public String getCurrentName(Context cntxt) {
     	SharedPreferences prefs = cntxt.getSharedPreferences(
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
     	return prefs.getString("cs.ualberta.ca.tunein.username", "Anonymous");
 	}
 
+	/**
+	 * Method to change the current user's name
+	 * @param name Name to be changed
+	 * @param cntxt The appication context
+	 */
 	public void setCurrentName(String name, Context cntxt) {
     	SharedPreferences prefs = cntxt.getSharedPreferences(
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
     	prefs.edit().putString("cs.ualberta.ca.tunein.username", name).commit();
 	}
 
+	/**
+	 * Method to get current user's id
+	 * @param cntxt The appication context
+	 * @return the user id
+	 */
 	public String getCurrentUniqueID(Context cntxt) {
     	SharedPreferences prefs = cntxt.getSharedPreferences(
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
     	return prefs.getString("cs.ualberta.ca.tunein.userid", "");
 	}
 
+	/**
+	 * Method to set the current user's id
+	 * @param uniqueID The user id
+	 * @param cntxt The appication context
+	 */
 	public void setCurrentUniqueID(String uniqueID, Context cntxt) {
     	SharedPreferences prefs = cntxt.getSharedPreferences(
 			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
     	prefs.edit().putString("cs.ualberta.ca.tunein.userid", uniqueID).commit();
 	}
 	
+	/**
+	 * Method to setup the profile page and notify it to 
+	 * refresh the page.
+	 * @param source
+	 */
 	public void setupProfile(Commenter source) {
 
 		this.name = source.getName();
