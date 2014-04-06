@@ -34,6 +34,8 @@ import android.widget.TextView;
  * http://stackoverflow.com/questions/4279787/how-can-i-pass-values-between-a-dialog-and-an-activity
  * Intent code from:
  * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
+ * Underline text code from:
+ * http://stackoverflow.com/questions/8033316/to-draw-an-underline-below-the-textview-in-android
  */
 public class CommentPageActivity extends Activity {
 	

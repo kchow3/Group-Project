@@ -28,6 +28,8 @@ import android.widget.TextView;
  * to create a list view and load in comments.
  * Intent code from:
  * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
+ * Underline text code from:
+ * http://stackoverflow.com/questions/8033316/to-draw-an-underline-below-the-textview-in-android
  */
 public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	

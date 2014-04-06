@@ -35,6 +35,8 @@ import android.widget.TextView;
  * http://www.dreamincode.net/forums/topic/270612-how-to-get-started-with-expandablelistview/
  * Intent code from:
  * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
+ * Underline text code from:
+ * http://stackoverflow.com/questions/8033316/to-draw-an-underline-below-the-textview-in-android
  */
 public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	
