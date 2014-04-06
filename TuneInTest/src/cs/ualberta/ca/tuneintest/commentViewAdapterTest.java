@@ -53,9 +53,5 @@ public class commentViewAdapterTest extends ActivityInstrumentationTestCase2<Top
 		this.sendKeys(KeyEvent.KEYCODE_BACK);
 		
 	}
-	
-	
-	
-//Need to add tests for all properties of the CommentViewAdapter class
 
 }

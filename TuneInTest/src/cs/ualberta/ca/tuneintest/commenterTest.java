@@ -10,8 +10,21 @@ public class commenterTest extends ActivityInstrumentationTestCase2<MainActivity
 		super(MainActivity.class);
 	}
 	
-	public void setupProfileTest() {
-		//check that name and ID matches from commenter data
+	protected void setUp() throws Exception {
+		 super.setUp();
+	}
+	
+	public void createCommentTest() {
+		//test if comment data matches the format of a comment
+		//test for empty comment entries
 	}
 
+	public void setupProfileTest() {
+		//test if name and ID matches from commenter data
+	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+	    super.tearDown();
+	}
 }

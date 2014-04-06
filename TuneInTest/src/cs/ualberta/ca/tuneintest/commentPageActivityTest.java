@@ -17,18 +17,36 @@ public class commentPageActivityTest extends ActivityInstrumentationTestCase2<Ma
 		super(MainActivity.class);
 	}
 	
-	private MainActivity activity;
-	
 	protected void setUp() throws Exception {
 		 super.setUp();
-		 setActivityInitialTouchMode(false);
-		 activity = getActivity();
 	}
 	
-	public void testOnCreate() throws Exception { //this test currently fails
-		ArrayList<Comment> replies;
-		replies = new ArrayList<Comment>();
-		assertTrue("List of replies should be visible", replies.equals(null));
+	public void viewCommentTest() {
+		//test if a comment is viewable upon clicking the view button
+	}
+	
+	public void createReplyTest() {
+		//test if reply page opens upon clicking the reply button
+	}
+	
+	public void uploadImageTest() {
+		//test if upload image dialog opens upon click the upload image button
+	}
+	
+	public void editCommentTest() {
+		//test if the edit comment page opens upon clicking the edit button
+	}
+	
+	public void favCommentTest() {
+		//test if clicking the fav button displays a notification that a comment has been stored
+	}
+	
+	public void saveCommentTest () {
+		//test if clicking the save button displays a notification that a comment has been stored
+	}
+	
+	public void viewProfileTest() {
+		//test if a profile is viewable upon clicking a user ID
 	}
 	
 	@Override
@@ -36,8 +54,4 @@ public class commentPageActivityTest extends ActivityInstrumentationTestCase2<Ma
 	    super.tearDown();
 	}
 	
-//Need to add tests for all properties of the CommentPageActivity class
-	
-//Most methods and attributes of CommentPageActivity class are private
-//Must change to protected if testing is required for these methods and attributes
 }
