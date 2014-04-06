@@ -8,6 +8,13 @@ import android.widget.EditText;
 import android.content.SharedPreferences;
 import android.content.Context;
 
+/**
+ * Controller
+ * MainActivityProduct class:
+ * This class is a utility class for the MainActivity class
+ * that gets/sets view elements and also helps the MainActivity 
+ * class setup the app sorting.
+ */
 public class MainActivityProduct {
 	
 	
@@ -62,6 +69,9 @@ public class MainActivityProduct {
 		this.inputLat = inputLat;
 	}
 
+	/**
+	 * Setup location text.
+	 */
 	public void loadLoc() {
 		String result = "@ " + String.valueOf(loc.getLongitude()) + ", "
 				+ String.valueOf(loc.getLatitude());
@@ -103,6 +113,11 @@ public class MainActivityProduct {
 		}
 	}
 	
+	/**
+	 * Set the sort type.
+	 * @param sort The sort type
+	 * @param cntxt The application context.
+	 */
 	public void setSort(String sort, Context cntxt)
 	{
 		SharedPreferences prefs = cntxt.getSharedPreferences(
