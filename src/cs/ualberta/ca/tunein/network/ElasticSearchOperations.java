@@ -412,10 +412,17 @@ public class ElasticSearchOperations implements ElasticSearchOperationsInterface
 		}
 		if(sort.equals("default"))
 		{
-			//sort by hotness: replycount and favoritecount
+			SharedPreferences prefs = cntxt.getSharedPreferences(
+				      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
+			String lon = prefs.getString(SORTLONG, "0");
+			String lat = prefs.getString(SORTLAT, "0");
+			//sort by relevance: location, date and by hotness: replycount and favoritecount
 			query = "{\"query\": {\"match\": {\"parentID\": \"0\"}}, " +
-					"\"sort\": [ { \"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true }," +
-					"  \"favoriteCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
+					"\"sort\": [ { \"_geo_distance\": { \"order\": \"asc\",  \"ignore_unmapped\": true, " +
+					"\"geolocation\": { \"lat\":" +lat+", \"lon\":" + lon + "}, \"unit\": \"km\" }, "+
+					"\"date\": { \"order\": \"desc\",  \"ignore_unmapped\": true }, " +
+					"\"replyCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true }, " +
+					"\"favoriteCount\": { \"order\": \"desc\",  \"ignore_unmapped\": true } } ] }";
 		}
 		return query;
 	}
