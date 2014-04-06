@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -397,6 +398,18 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 		inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
 		inputComment = (EditText) createView.findViewById(R.id.editTextComment);
 		inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
+	}
+
+
+	/**
+	 * Method for collapsing all parent items in the listview. Code from: http://stackoverflow.com/questions/2848091/expandablelistview-collapsing-all-parent-items
+	 * @param listview  The listview to be collapsed.
+	 */
+	public void collapseAll(ExpandableListView listview) {
+		int count = getGroupCount();
+		for (int i = 0; i < count; i++) {
+			listview.collapseGroup(i);
+		}
 	}
 	
 }
