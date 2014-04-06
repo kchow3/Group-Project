@@ -10,8 +10,17 @@ public class cacheTest extends ActivityInstrumentationTestCase2<MainActivity> {
 		super(MainActivity.class);
 	}
 	
+	protected void setUp() throws Exception {
+		 super.setUp();
+	}
+	
 	public void cacheInstanceTest() {
 		//test if the cached comments are saved in the physical storage of the device
+	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+	    super.tearDown();
 	}
 
 }

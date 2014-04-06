@@ -10,8 +10,16 @@ public class cacheActivityTest extends ActivityInstrumentationTestCase2<MainActi
 		super(MainActivity.class);
 	}
 	
+	protected void setUp() throws Exception {
+		 super.setUp();
+	}
+	
 	public void cacheViewTest() {
 		//test if the cached comments are displayed correctly 
 	}
-
+	
+	@Override
+	protected void tearDown() throws Exception {
+	    super.tearDown();
+	}
 }

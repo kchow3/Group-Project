@@ -10,6 +10,10 @@ public class cacheControllerTest extends ActivityInstrumentationTestCase2<MainAc
 		super(MainActivity.class);
 	}
 	
+	protected void setUp() throws Exception {
+		 super.setUp();
+	}
+
 	public void addToCacheTest() {
 		//test if comments are successfully added to the cache
 	}
@@ -21,5 +25,9 @@ public class cacheControllerTest extends ActivityInstrumentationTestCase2<MainAc
 	public void cacheSizeTest() {
 		//test if comments are removed properly upon reaching max amount of caches comments
 	}
-
+	
+	@Override
+	protected void tearDown() throws Exception {
+	    super.tearDown();
+	}
 }
