@@ -12,6 +12,17 @@ public class threadControllerTest extends ActivityInstrumentationTestCase2<MainA
 		super(MainActivity.class);
 	}
 	
-//Need to add tests for all properties of the ThreadController class
+	protected void setUp() throws Exception {
+		 super.setUp();
+	}
+	
+	public void topicRetreivalTest() {
+		//test if topic comments can be retrieved from ElasticSearch
+	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+	    super.tearDown();
+	}
 
 }

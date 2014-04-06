@@ -1,7 +1,5 @@
 package cs.ualberta.ca.tuneintest;
 
-import java.util.Date;
-
 import android.test.ActivityInstrumentationTestCase2;
 import cs.ualberta.ca.tunein.MainActivity;
 import cs.ualberta.ca.tunein.ThreadList;
@@ -12,6 +10,17 @@ public class threadListTest extends ActivityInstrumentationTestCase2<MainActivit
 		super(MainActivity.class);
 	}
 	
-//Need to add tests for all properties of the ThreadList class
+	protected void setUp() throws Exception {
+		 super.setUp();
+	}
+	
+	public void commentSaveTest() {
+		//test if a list comments is saved to the right thread
+	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+	    super.tearDown();
+	}
 
 }
