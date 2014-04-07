@@ -9,7 +9,19 @@ public class geoLocationTest extends ActivityInstrumentationTestCase2<MainActivi
 	public geoLocationTest() {
 		super(MainActivity.class);
 	}
-	
-//GeoLocation class currently just has getters and setters; nothing to test
+		
+		protected void setUp() throws Exception {
+			 super.setUp();
+		}
+		
+		public void geoInfoTest() {
+			//test if a geo location consists of relevant coordinates
+			//test with invalid coordinate entries
+		}
+		
+		@Override
+		protected void tearDown() throws Exception {
+		    super.tearDown();
+		}
 
 }

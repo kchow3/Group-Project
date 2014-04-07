@@ -2,11 +2,11 @@ package cs.ualberta.ca.tuneintest;
 
 import android.test.ActivityInstrumentationTestCase2;
 import cs.ualberta.ca.tunein.MainActivity;
-import cs.ualberta.ca.tunein.UserController;
+import cs.ualberta.ca.tunein.CacheActivity;
 
-public class userControllerTest extends ActivityInstrumentationTestCase2<MainActivity> {
+public class cacheActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	
-	public userControllerTest() {
+	public cacheActivityTest() {
 		super(MainActivity.class);
 	}
 	
@@ -14,13 +14,12 @@ public class userControllerTest extends ActivityInstrumentationTestCase2<MainAct
 		 super.setUp();
 	}
 	
-	public void usernameChangeTest() {
-		//test if username is changed on all views after changing the username from the title screen
+	public void cacheViewTest() {
+		//test if the cached comments are displayed correctly 
 	}
 	
 	@Override
 	protected void tearDown() throws Exception {
 	    super.tearDown();
 	}
-
 }

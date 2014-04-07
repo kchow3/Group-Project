@@ -45,7 +45,7 @@ public class commentControllerTest extends ActivityInstrumentationTestCase2<Main
 	
 	public void testAddReply() {
 		int reply_count = comment.getReplyCount();
-		commentcontroller.addReply("test reply", activity, null, null, false);
+		commentcontroller.addReply("test reply", activity, null, null);
 		assertEquals("Comment reply count should be incremented by one", comment.getReplyCount(), reply_count+1);
 	}
 	

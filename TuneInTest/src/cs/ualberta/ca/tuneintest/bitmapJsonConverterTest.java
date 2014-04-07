@@ -10,6 +10,12 @@ public class bitmapJsonConverterTest extends ActivityInstrumentationTestCase2<Ma
 		super(MainActivity.class);
 	}
 	
-//Need to add tests for all properties of the BitmapJsonConverter class
+	public void serializeTest() {
+		//check if data is properly serialized
+	}
+	
+	public void deserializeTest() {
+		//check if data is properly deserialized
+	}
 
 }

@@ -1,7 +1,5 @@
 package cs.ualberta.ca.tuneintest;
 
-import java.util.Date;
-
 import android.test.ActivityInstrumentationTestCase2;
 import cs.ualberta.ca.tunein.MainActivity;
 import cs.ualberta.ca.tunein.Favorites;
@@ -12,6 +10,17 @@ public class favoritesTest extends ActivityInstrumentationTestCase2<MainActivity
 		super(MainActivity.class);
 	}
 	
-//Need to add tests for all properties of the Favorites class
+	protected void setUp() throws Exception {
+		 super.setUp();
+	}
+	
+	public void favoritesInstanceTest() {
+		//test if the desired comment data has been saved in this array list
+	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+	    super.tearDown();
+	}
 
 }

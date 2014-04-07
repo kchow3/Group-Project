@@ -10,6 +10,17 @@ public class imageTest extends ActivityInstrumentationTestCase2<MainActivity> {
 		super(MainActivity.class);
 	}
 	
-//Image class currently just has getters and setters; nothing to test
+	protected void setUp() throws Exception {
+		 super.setUp();
+	}
+	
+	public void imageMatchTest() {
+		//test if displayed image matches uploaded image after serialization and deserialization
+	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+	    super.tearDown();
+	}
 
 }
