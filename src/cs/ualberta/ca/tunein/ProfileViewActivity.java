@@ -151,6 +151,7 @@ public class ProfileViewActivity extends Activity implements Observer{
 		//check if current user for permission to update profile
 		if(userController.checkCurrentUser(ProfileViewActivity.this, user.getUniqueID()))
 		{
+			textViewProfileName.setText(user.getCurrentName(getApplicationContext()));
 			buttonProfileSave.setVisibility(View.VISIBLE);
 			buttonProfileUploadImage.setVisibility(View.VISIBLE);
 			

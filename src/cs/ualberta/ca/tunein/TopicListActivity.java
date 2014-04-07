@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * View
@@ -170,34 +171,37 @@ public class TopicListActivity extends Activity {
 	 */
 	public void createCommentClick(View v)
 	{
-		setupDialogs();
-		AlertDialog dialog = new AlertDialog.Builder(TopicListActivity.this)
-		    .setTitle("Create Comment")
-		    .setView(createView)
-		    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-		        public void onClick(DialogInterface dialog, int whichButton) { 
-		            title = inputTitle.getText().toString();
-		            comment = inputComment.getText().toString();
-		            
-		            //create comment with image 
-		            if (inputImage.getVisibility() == View.VISIBLE) 
-		            {
-		            	inputImage.buildDrawingCache(true);
-		            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
-		            	inputImage.destroyDrawingCache();
-		            	threadController.createTopicImg(TopicListActivity.this, title, comment, bitmap);
-		            } 
-		            else 
-		            {	                
-		            	threadController.createTopic(TopicListActivity.this, title, comment);     		
-		            }
-		            viewAdapter.updateThreadView(threadList.getDiscussionThread());
-		            //move the listview to the bottom to see new item
-		            listview.setSelection(listview.getAdapter().getCount()-1);
-		        }
-		    })
-		    .setNegativeButton("Cancel", null).create();
-		dialog.show();
+		if(threadController.isNetworkAvailable(TopicListActivity.this))
+		{
+			setupDialogs();
+			AlertDialog dialog = new AlertDialog.Builder(TopicListActivity.this)
+			    .setTitle("Create Comment")
+			    .setView(createView)
+			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			        public void onClick(DialogInterface dialog, int whichButton) { 
+			            title = inputTitle.getText().toString();
+			            comment = inputComment.getText().toString();
+			            
+			            //create comment with image 
+			            if (inputImage.getVisibility() == View.VISIBLE) 
+			            {
+			            	inputImage.buildDrawingCache(true);
+			            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
+			            	inputImage.destroyDrawingCache();
+			            	threadController.createTopicImg(TopicListActivity.this, title, comment, bitmap);
+			            } 
+			            else 
+			            {	                
+			            	threadController.createTopic(TopicListActivity.this, title, comment);     		
+			            }
+			            viewAdapter.updateThreadView(threadList.getDiscussionThread());
+			            //move the listview to the bottom to see new item
+			            listview.setSelection(listview.getAdapter().getCount()-1);
+			        }
+			    })
+			    .setNegativeButton("Cancel", null).create();
+			dialog.show();
+		}
 	}
 	
 	/**

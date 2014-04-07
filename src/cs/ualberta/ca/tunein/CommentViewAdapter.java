@@ -87,6 +87,7 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 		super(context, R.layout.comment_view_row, commentList);
 		this.context = context;
 		this.commentList = commentList;
+		commentController = new CommentController();
 		favoriteController = new FavoriteController();
 		cacheController = new CacheController();
 	}
@@ -191,36 +192,39 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	{
 	    public void onClick(View v)
 	    {
-	    	final int i = (Integer)v.getTag();
-	    	setupDialogs();
-			AlertDialog dialog = new AlertDialog.Builder(context)
-			    .setTitle("Create Comment")
-			    .setView(createView)
-			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			        public void onClick(DialogInterface dialog, int whichButton) {
-			            String title = inputTitle.getText().toString();
-			            String text = inputComment.getText().toString();
-			            
-			            Comment currentComment = commentList.get(i);
-		        		commentController = new CommentController(currentComment);
-			            //create comment with image else one with no image
-			            if (inputImage.getVisibility() == View.VISIBLE) 
-			            {
-			            	inputImage.buildDrawingCache(true);
-			            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
-			            	inputImage.destroyDrawingCache();
-			            	commentController.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, bitmap);
-			            } 
-			            else 
-			            {	                        		
-			            	commentController.addReply(currentComment.getElasticID(), (Activity) context, title, text);
-			        		
-			            } 
-			            notifyDataSetChanged();
-			        }
-			    })
-			    .setNegativeButton("Cancel", null).create();
-			dialog.show();
+	    	if(commentController.isNetworkAvailable(context))
+	    	{
+		    	final int i = (Integer)v.getTag();
+		    	setupDialogs();
+				AlertDialog dialog = new AlertDialog.Builder(context)
+				    .setTitle("Create Comment")
+				    .setView(createView)
+				    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				        public void onClick(DialogInterface dialog, int whichButton) {
+				            String title = inputTitle.getText().toString();
+				            String text = inputComment.getText().toString();
+				            
+				            Comment currentComment = commentList.get(i);
+			        		commentController = new CommentController(currentComment);
+				            //create comment with image else one with no image
+				            if (inputImage.getVisibility() == View.VISIBLE) 
+				            {
+				            	inputImage.buildDrawingCache(true);
+				            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
+				            	inputImage.destroyDrawingCache();
+				            	commentController.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, bitmap);
+				            } 
+				            else 
+				            {	                        		
+				            	commentController.addReply(currentComment.getElasticID(), (Activity) context, title, text);
+				        		
+				            } 
+				            notifyDataSetChanged();
+				        }
+				    })
+				    .setNegativeButton("Cancel", null).create();
+				dialog.show();
+	    	}
 	    }
 	};
 	

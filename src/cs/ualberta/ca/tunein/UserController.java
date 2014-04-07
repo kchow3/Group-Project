@@ -52,6 +52,7 @@ public class UserController {
 	 * @return the current user id
 	 */
 	public String loadUserid(Context cntxt) {
+		//
 		return user.getCurrentUniqueID(cntxt);
 	}
 	

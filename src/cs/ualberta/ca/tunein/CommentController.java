@@ -6,7 +6,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Controller
@@ -28,6 +31,13 @@ public class CommentController{
 	public CommentController(Comment aComment) 
 	{
 		this.comment = aComment;
+	}
+	
+	/**
+	 * Constructor for checking internet status
+	 */
+	public CommentController()
+	{
 	}
 	
 	/**
@@ -185,5 +195,31 @@ public class CommentController{
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.getCommentPosts(comment.getElasticID(), comment, cntxt); 
+	}
+	
+	/** Method to check if the user has internet connection.
+	 * Code from:
+	 * http://stackoverflow.com/questions/1560788/how-to-check-internet-access-on-android-inetaddress-never-timeouts
+	 * @param cntxt Context of the application
+	 * @return the result of the check
+	 */
+	public boolean isNetworkAvailable(Context cntxt) {
+		ConnectivityManager cm = (ConnectivityManager) cntxt
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if (netInfo != null && netInfo.isConnected()) 
+		{
+			return true;
+		} 
+		else 
+		{
+			// toast message to tell user that they need internet
+			CharSequence text = "No Internet Connection";
+			int duration = Toast.LENGTH_SHORT;
+
+			Toast toast = Toast.makeText(cntxt, text, duration);
+			toast.show();
+		}
+		return false;
 	}
 }
