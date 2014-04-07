@@ -271,9 +271,12 @@ public class CommentPageActivity extends Activity {
 	{
 	    public void onClick(View v)
 	    {
-	    	Intent intent = new Intent(getApplicationContext(), EditPageActivity.class);
-	    	intent.putExtra(EXTRA_EDIT, aComment);
-	    	startActivityForResult(intent, 1);
+	    	if(commentController.isNetworkAvailable(CommentPageActivity.this))
+	    	{
+		    	Intent intent = new Intent(getApplicationContext(), EditPageActivity.class);
+		    	intent.putExtra(EXTRA_EDIT, aComment);
+		    	startActivityForResult(intent, 1);
+	    	}
 	    }
 	};
 	
@@ -297,35 +300,38 @@ public class CommentPageActivity extends Activity {
 	{
 	    public void onClick(View v)
 	    {
-	    	setupDialogs();
-			AlertDialog dialog = new AlertDialog.Builder(CommentPageActivity.this)
-			    .setTitle("Create Comment")
-			    .setView(createView)
-			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			        public void onClick(DialogInterface dialog, int whichButton) {
-			            String title = inputTitle.getText().toString();
-			            String text = inputComment.getText().toString();
-			            
-			            commentController = new CommentController(aComment);
-			            //create comment with image else one with no image
-			            if (inputImage.getVisibility() == View.VISIBLE) 
-			            {
-			            	inputImage.buildDrawingCache(true);
-			            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
-			            	inputImage.destroyDrawingCache();           	
-			            	commentController.addReplyImg(aComment.getElasticID(), CommentPageActivity.this, title, text, bitmap);
-			            } 
-			            else 
-			            {	                
-			            	commentController.addReply(aComment.getElasticID(), CommentPageActivity.this, title, text);
-			            }
-			            replies = aComment.getReplies();
-			            viewAdapter.updateReplyView(replies);
-		        		setupComment();
-			        }
-			    })
-			    .setNegativeButton("Cancel", null).create();
-			dialog.show();
+	    	if(commentController.isNetworkAvailable(CommentPageActivity.this))
+	    	{
+		    	setupDialogs();
+				AlertDialog dialog = new AlertDialog.Builder(CommentPageActivity.this)
+				    .setTitle("Create Comment")
+				    .setView(createView)
+				    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				        public void onClick(DialogInterface dialog, int whichButton) {
+				            String title = inputTitle.getText().toString();
+				            String text = inputComment.getText().toString();
+				            
+				            commentController = new CommentController(aComment);
+				            //create comment with image else one with no image
+				            if (inputImage.getVisibility() == View.VISIBLE) 
+				            {
+				            	inputImage.buildDrawingCache(true);
+				            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
+				            	inputImage.destroyDrawingCache();           	
+				            	commentController.addReplyImg(aComment.getElasticID(), CommentPageActivity.this, title, text, bitmap);
+				            } 
+				            else 
+				            {	                
+				            	commentController.addReply(aComment.getElasticID(), CommentPageActivity.this, title, text);
+				            }
+				            replies = aComment.getReplies();
+				            viewAdapter.updateReplyView(replies);
+			        		setupComment();
+				        }
+				    })
+				    .setNegativeButton("Cancel", null).create();
+				dialog.show();
+	    	}
 	    }
 	};
 	
@@ -334,11 +340,14 @@ public class CommentPageActivity extends Activity {
 	 */
 	private OnClickListener profileBtnClick = new OnClickListener() {
 		public void onClick(View v) {
-			String userid = aComment.getCommenter().getUniqueID();
-			Intent i = new Intent(getApplicationContext(),
-					ProfileViewActivity.class);
-			i.putExtra(EXTRA_USERID, userid);
-			CommentPageActivity.this.startActivity(i);
+			if(commentController.isNetworkAvailable(CommentPageActivity.this))
+			{
+				String userid = aComment.getCommenter().getUniqueID();
+				Intent i = new Intent(getApplicationContext(),
+						ProfileViewActivity.class);
+				i.putExtra(EXTRA_USERID, userid);
+				CommentPageActivity.this.startActivity(i);
+			}
 		}
 	};
 	

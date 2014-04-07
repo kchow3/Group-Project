@@ -86,6 +86,7 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	{
 		this.context = context;
 		this.replies = replies;
+		cntrl = new CommentController();
 	}
 
 
@@ -255,36 +256,39 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	{
 	    public void onClick(View v)
 	    {
-	    	final int index[] = (int[])v.getTag();
-	    	setupDialogs();
-			
-			AlertDialog dialog = new AlertDialog.Builder(context)
-			    .setTitle("Create Comment")
-			    .setView(createView)
-			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			        public void onClick(DialogInterface dialog, int whichButton) {
-			            String title = inputTitle.getText().toString();
-			            String text = inputComment.getText().toString();
-			            
-		        		Comment currentComment = replies.get(index[0]).getReplies().get(index[1]);
-		        		cntrl = new CommentController(currentComment);
-			            //create comment with image else one with no image
-			            if (inputImage.getVisibility() == View.VISIBLE) 
-			            {
-			            	inputImage.buildDrawingCache(true);
-			            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
-			            	inputImage.destroyDrawingCache();      
-			        		cntrl.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, bitmap);
-			            } 
-			            else 
-			            {	                
-			        		cntrl.addReply(currentComment.getElasticID(), (Activity) context, title, text);
-			            }
-		        		updateReplyView(replies);
-			        }
-			    })
-			    .setNegativeButton("Cancel", null).create();
-			dialog.show();
+	    	if(cntrl.isNetworkAvailable(context))
+	    	{
+		    	final int index[] = (int[])v.getTag();
+		    	setupDialogs();
+				
+				AlertDialog dialog = new AlertDialog.Builder(context)
+				    .setTitle("Create Comment")
+				    .setView(createView)
+				    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				        public void onClick(DialogInterface dialog, int whichButton) {
+				            String title = inputTitle.getText().toString();
+				            String text = inputComment.getText().toString();
+				            
+			        		Comment currentComment = replies.get(index[0]).getReplies().get(index[1]);
+			        		cntrl = new CommentController(currentComment);
+				            //create comment with image else one with no image
+				            if (inputImage.getVisibility() == View.VISIBLE) 
+				            {
+				            	inputImage.buildDrawingCache(true);
+				            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
+				            	inputImage.destroyDrawingCache();      
+				        		cntrl.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, bitmap);
+				            } 
+				            else 
+				            {	                
+				        		cntrl.addReply(currentComment.getElasticID(), (Activity) context, title, text);
+				            }
+			        		updateReplyView(replies);
+				        }
+				    })
+				    .setNegativeButton("Cancel", null).create();
+				dialog.show();
+	    	}
 	    }
 	};
 	
@@ -293,12 +297,15 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	 */
 	private OnClickListener profileChildBtnClick = new OnClickListener() {
 		public void onClick(View v) {
-			int index[] = (int[])v.getTag();
-			String userid = replies.get(index[0]).getReplies().get(index[1]).getCommenter().getUniqueID();
-			Intent intent = new Intent(context,
-					ProfileViewActivity.class);
-			intent.putExtra(EXTRA_USERID, userid);
-			context.startActivity(intent);
+			if(cntrl.isNetworkAvailable(context))
+			{
+				int index[] = (int[])v.getTag();
+				String userid = replies.get(index[0]).getReplies().get(index[1]).getCommenter().getUniqueID();
+				Intent intent = new Intent(context,
+						ProfileViewActivity.class);
+				intent.putExtra(EXTRA_USERID, userid);
+				context.startActivity(intent);
+			}
 		}
 	};
 	
@@ -329,37 +336,40 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	{
 	    public void onClick(View v)
 	    {
-	    	final int i = (Integer) v.getTag();
-	    	setupDialogs();
-	    	
-			AlertDialog dialog = new AlertDialog.Builder(context)
-			    .setTitle("Create Comment")
-			    .setView(createView)
-			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			        public void onClick(DialogInterface dialog, int whichButton) {
-			            String title = inputTitle.getText().toString();
-			            String text = inputComment.getText().toString();
-			            
-			          //current comment that is replied to using tag and get parent position
-		        		Comment currentComment = replies.get(i);
-		        		cntrl = new CommentController(currentComment);
-			            //create comment with image else one with no image
-			            if (inputImage.getVisibility() == View.VISIBLE) 
-			            {
-			            	inputImage.buildDrawingCache(true);
-			            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
-			            	inputImage.destroyDrawingCache(); 
-			        		cntrl.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, bitmap);
-			            } 
-			            else 
-			            {	                
-			        		cntrl.addReply(currentComment.getElasticID(), (Activity) context, title, text);
-			            }
-			            updateReplyView(replies);
-			        }
-			    })
-			    .setNegativeButton("Cancel", null).create();
-			dialog.show();
+	    	if(cntrl.isNetworkAvailable(context))
+	    	{
+		    	final int i = (Integer) v.getTag();
+		    	setupDialogs();
+		    	
+				AlertDialog dialog = new AlertDialog.Builder(context)
+				    .setTitle("Create Comment")
+				    .setView(createView)
+				    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				        public void onClick(DialogInterface dialog, int whichButton) {
+				            String title = inputTitle.getText().toString();
+				            String text = inputComment.getText().toString();
+				            
+				          //current comment that is replied to using tag and get parent position
+			        		Comment currentComment = replies.get(i);
+			        		cntrl = new CommentController(currentComment);
+				            //create comment with image else one with no image
+				            if (inputImage.getVisibility() == View.VISIBLE) 
+				            {
+				            	inputImage.buildDrawingCache(true);
+				            	Bitmap bitmap = inputImage.getDrawingCache(true).copy(Config.RGB_565, false);
+				            	inputImage.destroyDrawingCache(); 
+				        		cntrl.addReplyImg(currentComment.getElasticID(), (Activity) context, title, text, bitmap);
+				            } 
+				            else 
+				            {	                
+				        		cntrl.addReply(currentComment.getElasticID(), (Activity) context, title, text);
+				            }
+				            updateReplyView(replies);
+				        }
+				    })
+				    .setNegativeButton("Cancel", null).create();
+				dialog.show();
+	    	}
 	    }
 	};
 	
@@ -368,12 +378,15 @@ public class ReplyViewAdapter extends BaseExpandableListAdapter{
 	 */
 	private OnClickListener profileParentBtnClick = new OnClickListener() {
 		public void onClick(View v) {
-			int i = (Integer) v.getTag();
-			String userid = replies.get(i).getCommenter().getUniqueID();
-			Intent intent = new Intent(context,
-					ProfileViewActivity.class);
-			intent.putExtra(EXTRA_USERID, userid);
-			context.startActivity(intent);
+			if(cntrl.isNetworkAvailable(context))
+			{
+				int i = (Integer) v.getTag();
+				String userid = replies.get(i).getCommenter().getUniqueID();
+				Intent intent = new Intent(context,
+						ProfileViewActivity.class);
+				intent.putExtra(EXTRA_USERID, userid);
+				context.startActivity(intent);
+			}
 		}
 	};
 

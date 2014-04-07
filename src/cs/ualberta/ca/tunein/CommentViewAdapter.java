@@ -262,12 +262,15 @@ public class CommentViewAdapter extends ArrayAdapter<Comment>{
 	 */
 	private OnClickListener profileBtnClick = new OnClickListener() {
 		public void onClick(View v) {
-			int i = (Integer)v.getTag();
-			String userid = commentList.get(i).getCommenter().getUniqueID();
-			Intent intent = new Intent(context,
-					ProfileViewActivity.class);
-			intent.putExtra(EXTRA_USERID, userid);
-			context.startActivity(intent);
+			if(commentController.isNetworkAvailable(context))
+			{
+				int i = (Integer)v.getTag();
+				String userid = commentList.get(i).getCommenter().getUniqueID();
+				Intent intent = new Intent(context,
+						ProfileViewActivity.class);
+				intent.putExtra(EXTRA_USERID, userid);
+				context.startActivity(intent);
+			}
 		}
 	};
 	
