@@ -102,7 +102,7 @@ public class MainActivityProduct {
 			prefs.edit()
 					.putString(SORTLONG, String.valueOf(loc.getLongitude())).commit();
 			prefs.edit()
-					.putString(SORTLAT, String.valueOf(loc.getLongitude())).commit();
+					.putString(SORTLAT, String.valueOf(loc.getLatitude())).commit();
 		} 
 		else 
 		{
