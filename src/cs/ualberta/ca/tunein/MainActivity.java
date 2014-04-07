@@ -33,8 +33,8 @@ import android.widget.Toast;
  */
 public class MainActivity extends Activity {
 	
+	private MainActivityProduct mainActivityProduct = new MainActivityProduct();
 	//public string that are used to get the sort info
-	public final static String SORT = "cs.ualberta.ca.tunein.sort";
 	public final static String SORTLONG = "cs.ualberta.ca.tunein.sortLong";
 	public final static String SORTLAT = "cs.ualberta.ca.tunein.sortLat";
 	
@@ -54,15 +54,8 @@ public class MainActivity extends Activity {
 	private Button buttonViewProfile;;
 	private ImageButton imageButtonRefreshLoc;
 	
-	private TextView location_text;
 	private TextView edit_username;
 	
-	//dialog elements
-	private View createView;
-	private TextView inputLong;
-	private TextView inputLat;
-	
-	private GeoLocation loc;
 	private GeoLocationController geoController;
 
 	@Override
@@ -84,15 +77,15 @@ public class MainActivity extends Activity {
 		CacheController cacheController = new CacheController();
 		cacheController.loadCache(getApplicationContext());
 		
-		loc = new GeoLocation();
-		geoController = new GeoLocationController(loc);
+		mainActivityProduct.setLoc(new GeoLocation());
+		geoController = new GeoLocationController(mainActivityProduct.getLoc());
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
 		geoController.getLocation(MainActivity.this);
-		loadLoc();
+		mainActivityProduct.loadLoc();
 	}
 	
 	/**
@@ -114,7 +107,8 @@ public class MainActivity extends Activity {
 		imageButtonRefreshLoc = (ImageButton) findViewById(R.id.imageButtonRefreshLoc);
 		
 		edit_username = (TextView) findViewById(R.id.edit_username);
-		location_text = (TextView) findViewById(R.id.location_text);
+		mainActivityProduct
+				.setLocation_text((TextView) findViewById(R.id.location_text));
 		
 		UserController cntrl = new UserController();
 		edit_username.setText(cntrl.loadUsername(getApplicationContext()));
@@ -164,14 +158,14 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener otherLocationBtnClick = new OnClickListener() {
 		public void onClick(View v) {
-	    	setupDialogs();
+	    	mainActivityProduct.setupDialogs(MainActivity.this);
 			AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
 			    .setTitle("Set Location")
-			    .setView(createView)
+			    .setView(mainActivityProduct.getCreateView())
 			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			        public void onClick(DialogInterface dialog, int whichButton) {
-			    		setSort("Set Location");
-			    		setLoc(false);
+			    		mainActivityProduct.setSort("Set Location", MainActivity.this);
+			    		mainActivityProduct.setLoc(false, MainActivity.this);
 						Intent i = new Intent(getApplicationContext(),
 								TopicListActivity.class);
 						MainActivity.this.startActivity(i);
@@ -187,8 +181,8 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener myLocationBtnClick = new OnClickListener() {
 		public void onClick(View v) {
-			setSort("My Location");
-			setLoc(true);
+			mainActivityProduct.setSort("My Location", MainActivity.this);
+			mainActivityProduct.setLoc(true, MainActivity.this);
 			Intent i = new Intent(getApplicationContext(),
 					TopicListActivity.class);
 			MainActivity.this.startActivity(i);
@@ -202,7 +196,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			Intent i = new Intent(getApplicationContext(),
 					TopicListActivity.class);
-			setSort("Date");
+			mainActivityProduct.setSort("Date", MainActivity.this);
 			MainActivity.this.startActivity(i);
 		}
 	};
@@ -212,7 +206,7 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener pictures_buttonBtnClick = new OnClickListener() {
 		public void onClick(View v) {
-			setSort("Picture");
+			mainActivityProduct.setSort("Picture", MainActivity.this);
 			Intent i = new Intent(getApplicationContext(),
 					TopicListActivity.class);
 			MainActivity.this.startActivity(i);
@@ -246,7 +240,7 @@ public class MainActivity extends Activity {
 	 */
 	private OnClickListener topicListBtnClick = new OnClickListener() {
 		public void onClick(View v) {
-			setSort("default");
+			mainActivityProduct.setSort("default", MainActivity.this);
 			Intent i = new Intent(getApplicationContext(),
 					TopicListActivity.class);
 			MainActivity.this.startActivity(i);
@@ -273,53 +267,8 @@ public class MainActivity extends Activity {
 	private OnClickListener refreshLocBtnClick = new OnClickListener() {
 		public void onClick(View v) {
 			geoController.getLocation(MainActivity.this);
-			loadLoc();
+			mainActivityProduct.loadLoc();
 		}
 	};
-	
-	private void setSort(String sort)
-	{
-		SharedPreferences prefs = this.getSharedPreferences(
-			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-		prefs.edit().putString(SORT, sort).commit();
-	}
-	
-	/**
-	 * Set the location of the sort.
-	 * @param myLoc Is the sort by my location
-	 */
-	private void setLoc(boolean myLoc)
-	{
-		SharedPreferences prefs = this.getSharedPreferences(
-			      "cs.ualberta.ca.tunein", Context.MODE_PRIVATE);
-		if(myLoc)
-		{
-	    	prefs.edit().putString(SORTLONG, String.valueOf(loc.getLongitude())).commit();
-	    	prefs.edit().putString(SORTLAT, String.valueOf(loc.getLongitude())).commit();
-		}
-		else
-		{
-	  		prefs.edit().putString(SORTLONG, inputLong.getText().toString()).commit();
-	  		prefs.edit().putString(SORTLAT, inputLat.getText().toString()).commit();
-		}
-	}
-	
-	private void loadLoc()
-	{
-		String result = "@ " + String.valueOf(loc.getLongitude()) + ", " + String.valueOf(loc.getLatitude());
-		location_text.setText(result);
-	}
-	
-	/**
-	 * Setup change location dialog box
-	 */
-	private void setupDialogs()
-	{
-		LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-		createView = inflater.inflate(R.layout.location_change, null);
-
-		inputLong = (EditText) createView.findViewById(R.id.textViewInputChangeLong);
-		inputLat = (EditText) createView.findViewById(R.id.textViewInputChangeLat);
-	}
 
 }

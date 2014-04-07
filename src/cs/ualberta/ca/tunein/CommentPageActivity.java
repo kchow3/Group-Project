@@ -34,6 +34,8 @@ import android.widget.TextView;
  * http://stackoverflow.com/questions/4279787/how-can-i-pass-values-between-a-dialog-and-an-activity
  * Intent code from:
  * http://stackoverflow.com/questions/2736389/how-to-pass-object-from-one-activity-to-another-in-android
+ * Underline text code from:
+ * http://stackoverflow.com/questions/8033316/to-draw-an-underline-below-the-textview-in-android
  */
 public class CommentPageActivity extends Activity {
 	
@@ -112,7 +114,7 @@ public class CommentPageActivity extends Activity {
 		//setup
 		listview.setAdapter(viewAdapter);
 		viewAdapter.updateReplyView(replies);
-		collapseAll(listview);
+		viewAdapter.collapseAll(listview);
 	}
 
 	@Override
@@ -351,21 +353,5 @@ public class CommentPageActivity extends Activity {
 		inputTitle = (EditText) createView.findViewById(R.id.textViewInputTitle);
 		inputComment = (EditText) createView.findViewById(R.id.editTextComment);
 		inputImage = (ImageView) createView.findViewById(R.id.imageViewUpload);
-	}
-	
-	
-	/**
-	 * Method for collapsing all parent items in the listview.
-	 * Code from:
-	 * http://stackoverflow.com/questions/2848091/expandablelistview-collapsing-all-parent-items
-	 * @param listview The listview to be collapsed.
-	 */
-	private void collapseAll(ExpandableListView listview)
-	{
-		int count = viewAdapter.getGroupCount();
-		for(int i = 0; i < count; i++)
-		{
-			listview.collapseGroup(i);
-		}
 	}
 }

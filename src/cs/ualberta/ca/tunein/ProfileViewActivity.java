@@ -21,8 +21,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * View
+ * ProfileView Activity Class:
+ * This is part of the view class that will show
+ * the user the profile page that allows the user to
+ * view another user's profile and also allow the owner
+ * of the profile to edit their profile.
+ */
 public class ProfileViewActivity extends Activity implements Observer{
 	
+	//image request code.
 	public static int SELECT_PICTURE_REQUEST_CODE = 12345;
 
 	//public string that tags the extra of the comment to be edited that is passed to EditPageActivity
@@ -230,6 +239,9 @@ public class ProfileViewActivity extends Activity implements Observer{
 	    }
 	};
 
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable observable, Object data) {
 		user = (Commenter) data;

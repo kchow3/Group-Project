@@ -48,13 +48,17 @@ public class UserController {
 	
 	/**
 	 * Method to get the current user's user id
-	 * @param cntxt
-	 * @return
+	 * @param cntxt The appication context
+	 * @return the current user id
 	 */
 	public String loadUserid(Context cntxt) {
 		return user.getCurrentUniqueID(cntxt);
 	}
 	
+	/**
+	 * Method to save the user id.
+	 * @param cntxt The appication context
+	 */
 	public void saveUserid(Context cntxt) {
 		//setup an unique id for the user that is attached to the phone
 		final TelephonyManager tm = (TelephonyManager) cntxt.getSystemService(Context.TELEPHONY_SERVICE);
@@ -64,10 +68,21 @@ public class UserController {
 		user.setCurrentUniqueID(id, cntxt);
 	}
 
+	/**
+	 * Method to change the current users name
+	 * @param name The new name.
+	 * @param cntxt The appication context
+	 */
 	public void changeUsername(String name, Context cntxt) {
 		user.setCurrentName(name, cntxt);
 	}
 	
+	/**
+	 * Check if the current user id is the one passed in.
+	 * @param cntxt The appication context
+	 * @param userID The comparing user id
+	 * @return The result of the check
+	 */
 	public boolean checkCurrentUser(Context cntxt, String userID)
 	{
 		//id of the current viewer
@@ -76,6 +91,10 @@ public class UserController {
 		return user.getUniqueID().equals(currentID);
 	}
 	
+	/**
+	 * Create a profile for the current user.
+	 * @param cntxt The appication context
+	 */
 	public void createProfile(Context cntxt)
 	{
 		SharedPreferences prefs = cntxt.getSharedPreferences(
@@ -91,12 +110,26 @@ public class UserController {
 		}
 	}
 	
+	/**
+	 * Load the profile of a user that is clicked on
+	 * @param userID The user id of the profile to load
+	 * @param cntxt The appication context
+	 */
 	public void loadProfile(String userID, Context cntxt)
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
 		eso.getProfileModel(userID, user, cntxt);
 	}
 	
+	/**
+	 * Method to save a profile with avatar image.
+	 * @param name The name of user
+	 * @param email The email of the user
+	 * @param facebook The facebook profile of user
+	 * @param twitter The twitter username of user
+	 * @param bio The biography of user
+	 * @param bmp The avatar of user
+	 */
 	public void saveProfileImg(String name, String email, String facebook, String twitter, String bio, Bitmap bmp)
 	{
 		user.setName(name);
@@ -110,6 +143,14 @@ public class UserController {
 		eso.putProfileModel(user);
 	}
 	
+	/**
+	 * Method to save a profile with no avatar image.
+	 * @param name The name of user
+	 * @param email The email of the user
+	 * @param facebook The facebook profile of user
+	 * @param twitter The twitter username of user
+	 * @param bio The biography of user
+	 */
 	public void saveProfile(String name, String email, String facebook, String twitter, String bio)
 	{
 		user.setName(name);

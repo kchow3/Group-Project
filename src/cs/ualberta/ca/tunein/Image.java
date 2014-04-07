@@ -12,7 +12,6 @@ import android.graphics.BitmapFactory;
  * Image Class:
  * This is a model for the image of a comment and uses a 
  * bitmap to store the image of a comment.
- * This is not yet complete.
  */
 public class Image implements Serializable{
 

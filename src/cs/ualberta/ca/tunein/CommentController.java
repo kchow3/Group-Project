@@ -30,6 +30,12 @@ public class CommentController{
 		this.comment = aComment;
 	}
 	
+	/**
+	 * Contrstuctor to construct a controller for loading
+	 * in replys to a comment.
+	 * @param aComment The comment to get replies to
+	 * @param adap The adapter to update.
+	 */
 	public CommentController(Comment aComment, ReplyViewAdapter adap) 
 	{
 		this.comment = aComment;
@@ -66,11 +72,10 @@ public class CommentController{
 	/**
 	 * Method to create a reply to a comment with image.
 	 * @param currentComment The topic comment that the reply will belong to.
-	 * @param act The activity that calls this method.
+	 * @param cntxt The appication context
 	 * @param title The title of the comment.
 	 * @param text The text of the comment.
 	 * @param img The image of the comment.
-	 * @param isReply Check if the added comment will be reply of reply.
 	 */
 	public void addReplyImg(String parentID, Context cntxt, String title, String text, Bitmap bmp) {
 		
@@ -98,10 +103,9 @@ public class CommentController{
 	/**
 	 * Method to create a reply to a comment with image.
 	 * @param currentComment The topic comment that the reply will belong to.
-	 * @param act The activity that calls this method.
+	 * @param cntxt The appication context
 	 * @param title The title of the comment.
 	 * @param text The text of the comment.
-	 * @param isReply Check if the added comment will be reply of reply.
 	 */
 	public void addReply(String parentID, Context cntxt, String title, String text) {
 		
@@ -142,7 +146,7 @@ public class CommentController{
 	/**
 	 * Method to check if the current user is the comment author
 	 * this is used to check credentials.
-	 * @param act Activity that this method is called from.
+	 * @param cntxt The appication context
 	 * @return The resulting boolean of the check.
 	 */
 	public boolean checkValid(Context cntxt) {
@@ -165,8 +169,7 @@ public class CommentController{
 	/**
 	 * This method goes through elastic search and gets the passed in
 	 * comment's replies and also their replies.
-	 * @param act
-	 * @param aComment
+	 * @param cntxt The appication context
 	 */
 	public void loadCommentReplies(Context cntxt)
 	{
@@ -174,6 +177,10 @@ public class CommentController{
 		eso.getRepliesByParentId(comment.getElasticID(), comment, cntxt, viewAdapter);
 	}
 	
+	/**
+	 * This method loads a comment from elastic search.
+	 * @param cntxt The appication context
+	 */
 	public void loadComment(Context cntxt)
 	{
 		ElasticSearchOperations eso = new ElasticSearchOperations();
